@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.bak
+.idea/
+.vscode/
+node_modules/
+.env
+.env.*
+!.env.example
+project/.thumbnail
+project/screenshots/
+project/uploads/
+project/*-print-*.dc.html
+project/Prolinker Results.html

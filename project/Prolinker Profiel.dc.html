@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  input, textarea { font-family: inherit; color: var(--text); }
+  input::placeholder, textarea::placeholder { color: var(--faint,#A2A5B2); }
+  input:focus, textarea:focus { outline: none; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>Mijn profiel | ProLinker</title>
+<meta name="robots" content="noindex, nofollow">
+</helmet>
+
+<div data-screen-label="Mijn profiel" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
+    <a href="Prolinker Homepage.dc.html" style="display: inline-flex; align-items: center;"><img src="assets/prolinker-mark.png" alt="ProLinker" style="height: 26px; width: 26px; display: block; object-fit: contain; filter: {{ logoFilter }};"></a>
+    <a href="Prolinker Voor jou v2.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); font-size: 14px; font-weight: 600; color: var(--text,#152431); position: fixed; top: 16px; right: 28px; z-index: 30;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.backToFeed }}</a>
+  </header>
+
+  <main style="max-width: 720px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
+
+    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; animation: plk-rise 0.5s ease both;">
+      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.022em;">{{ t.title }}</h1>
+      <span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span>
+    </div>
+
+    <div style="margin-top: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.05s both;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.completeness }}</span>
+        <span style="font-size: 14px; font-weight: 700;">{{ pct }}%</span>
+      </div>
+      <div style="margin-top: 9px; height: 6px; border-radius: 999px; background: var(--hairline,#ECEDF2); overflow: hidden;"><div style="width: {{ pctW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.4s ease;"></div></div>
+      <sc-if value="{{ hasMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top: 11px; display: flex; flex-wrap: wrap; gap: 6px;">
+          <sc-for list="{{ missing }}" as="m" hint-placeholder-count="1">
+            <span style="padding: 3px 11px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 600;">{{ m }}</span>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.1s both;">
+
+      <div style="padding: 22px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+        <div style="flex-shrink: 0; width: 86px; height: 86px; border-radius: 50%; overflow: hidden;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-avatar" shape="circle" placeholder="{{ t.avatarPh }}" hint-size="86px,86px"></x-import>
+        </div>
+        <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" value="{{ pName }}" onInput="{{ onName }}" placeholder="{{ t.namePh }}" aria-label="{{ t.namePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 7px 10px; margin-left: -10px; font-size: 19px; font-weight: 700; letter-spacing: -0.01em;" style-hover="background: var(--panel,#F7F8FB);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
+          <input type="text" value="{{ pHeadline }}" onInput="{{ onHeadline }}" placeholder="{{ t.headlinePh }}" aria-label="{{ t.headlinePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 6px 10px; margin-left: -10px; font-size: 14.5px; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
+        </div>
+      </div>
+
+      <div style="padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 26px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+        <div style="flex: 0 0 170px; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.rate }}</span>
+          <div style="display: flex; align-items: center; gap: 7px;">
+            <span style="font-size: 15px; font-weight: 600; color: var(--muted,#565B62);">&euro;</span>
+            <input type="text" inputMode="numeric" value="{{ pRate }}" onInput="{{ onRate }}" placeholder="75" aria-label="{{ t.rate }}" style="width: 64px; border: 1px solid var(--border,#E4E5EC); border-radius: 9px; background: var(--surface,#fff); padding: 8px 10px; font-size: 15px; font-weight: 600;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};">
+            <span style="font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ t.perHour }}</span>
+          </div>
+        </div>
+        <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.availability }}</span>
+          <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); align-self: flex-start;">
+            <sc-for list="{{ availOpts }}" as="o" hint-placeholder-count="3">
+              <button onClick="{{ o.onClick }}" style="height: 32px; padding: 0 15px; border: none; border-radius: 999px; background: {{ o.bg }}; color: {{ o.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">{{ o.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.skills }}</span>
+        <div style="margin-top: 11px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
+          <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="5">
+            <span style="display: inline-flex; align-items: center; gap: 7px; padding: 5px 8px 5px 13px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 13px; font-weight: 550;">{{ sk.label }}<button onClick="{{ sk.onRemove }}" aria-label="{{ sk.removeAria }}" style="width: 18px; height: 18px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--faint,#9AA0A6); font-size: 13px; line-height: 1;" style-hover="background: var(--hairline,#ECEDF2); color: var(--text,#152431);">&times;</button></span>
+          </sc-for>
+          <input type="text" value="{{ skillInput }}" onInput="{{ onSkillInput }}" onKeyDown="{{ onSkillKey }}" placeholder="{{ t.skillPh }}" aria-label="{{ t.skillPh }}" style="flex: 1; min-width: 150px; border: 1px dashed var(--border,#E4E5EC); border-radius: 999px; background: transparent; padding: 7px 14px; font-size: 13px;" style-focus="border-color: {{ accent }}; border-style: solid;">
+        </div>
+      </div>
+
+      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.bio }}</span>
+          <span style="font-size: 12px; color: {{ bioCountColor }};">{{ bioCount }}</span>
+        </div>
+        <textarea value="{{ pBio }}" onInput="{{ onBio }}" placeholder="{{ t.bioPh }}" aria-label="{{ t.bio }}" rows="4" style="margin-top: 10px; width: 100%; border: 1px solid var(--border,#E4E5EC); border-radius: 11px; background: var(--surface,#fff); padding: 12px 14px; font-size: 14.5px; line-height: 1.55; resize: vertical; min-height: 96px;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};"></textarea>
+      </div>
+
+      <div style="padding: 20px 22px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.portfolio }}</span>
+        </div>
+        <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+          <div style="aspect-ratio: 4 / 3; border-radius: 11px; overflow: hidden;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-port-1" shape="rounded" radius="11" placeholder="{{ t.portPh }}" hint-size="100%,100%"></x-import></div>
+          <div style="aspect-ratio: 4 / 3; border-radius: 11px; overflow: hidden;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-port-2" shape="rounded" radius="11" placeholder="{{ t.portPh }}" hint-size="100%,100%"></x-import></div>
+          <div style="aspect-ratio: 4 / 3; border-radius: 11px; overflow: hidden;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-port-3" shape="rounded" radius="11" placeholder="{{ t.portPh }}" hint-size="100%,100%"></x-import></div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1080},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+class Component extends DCLogic {
+  state = { profile: null, skillInput: '', saved: false, theme: 'light' };
+
+  static seed(name) {
+    return { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '' };
+  }
+  static load() {
+    let name = '';
+    try { name = localStorage.getItem('plk-user-name') || ''; } catch (e) {}
+    const seed = Component.seed(name);
+    try {
+      const raw = JSON.parse(localStorage.getItem('plk-profile') || 'null');
+      if (raw && typeof raw === 'object') return Object.assign({}, seed, raw);
+    } catch (e) {}
+    return seed;
+  }
+  static completeness(p, t) {
+    const checks = [
+      { ok: (p.name || '').trim().length >= 2, label: t.missName },
+      { ok: (p.headline || '').trim().length >= 8, label: t.missHeadline },
+      { ok: String(p.rate || '').trim().length > 0 && parseInt(p.rate, 10) > 0, label: t.missRate },
+      { ok: !!p.availability, label: t.missAvail },
+      { ok: (p.skills || []).length >= 3, label: t.missSkills },
+      { ok: (p.bio || '').trim().length >= 60, label: t.missBio },
+    ];
+    const done = checks.filter((c) => c.ok).length;
+    return { pct: Math.round((done / checks.length) * 100), missing: checks.filter((c) => !c.ok).map((c) => c.label) };
+  }
+
+  componentDidMount() {
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
+    this.setState({ profile: Component.load() });
+  }
+  componentWillUnmount() { clearTimeout(this._savedT); }
+
+  lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
+  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  strings() {
+    const en = {
+      backToFeed: 'To my feed', title: 'My profile', completeness: 'Profile completeness',
+      saved: 'Saved', autosave: 'Changes save automatically',
+      namePh: 'Full name', headlinePh: 'Headline, e.g. Full-stack e-commerce developer',
+      rate: 'Hourly rate', perHour: 'per hour', availability: 'Availability',
+      availNow: 'Available', availSoon: 'From Sep 1', availBusy: 'Not available',
+      skills: 'Skills', skillPh: 'Add a skill and press Enter', removeSkill: (s) => 'Remove ' + s,
+      bio: 'Bio', bioPh: 'Describe in a few sentences what you build, for whom, and what results you deliver.', bioCount: (n) => n + ' / 60+ characters',
+      portfolio: 'Portfolio', portfolioHint: 'Drop screenshots of your work', portPh: 'Drop image', avatarPh: 'Photo',
+      missName: 'Name', missHeadline: 'Headline', missRate: 'Rate', missAvail: 'Availability', missSkills: '3+ skills', missBio: 'Bio (60+ chars)',
+    };
+    const nl = {
+      backToFeed: 'Naar mijn feed', title: 'Mijn profiel', completeness: 'Profiel compleet',
+      saved: 'Opgeslagen', autosave: 'Wijzigingen worden automatisch opgeslagen',
+      namePh: 'Volledige naam', headlinePh: 'Kopregel, bijv. Full-stack e-commerce developer',
+      rate: 'Uurtarief', perHour: 'per uur', availability: 'Beschikbaarheid',
+      availNow: 'Beschikbaar', availSoon: 'Vanaf 1 sep', availBusy: 'Niet beschikbaar',
+      skills: 'Skills', skillPh: 'Typ een skill en druk op Enter', removeSkill: (s) => s + ' verwijderen',
+      bio: 'Bio', bioPh: 'Beschrijf in een paar zinnen wat je bouwt, voor wie, en welke resultaten je levert.', bioCount: (n) => n + ' / 60+ tekens',
+      portfolio: 'Portfolio', portfolioHint: 'Sleep screenshots van je werk hierheen', portPh: 'Sleep afbeelding', avatarPh: 'Foto',
+      missName: 'Naam', missHeadline: 'Kopregel', missRate: 'Tarief', missAvail: 'Beschikbaarheid', missSkills: '3+ skills', missBio: 'Bio (60+ tekens)',
+    };
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  iconEl(name, color, size) {
+    const defs = { check: [{ p: '20 6 9 17 4 12' }] };
+    return React.createElement('svg', { width: size || 14, height: size || 14, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round' }, defs[name].map((s, i) => React.createElement('polyline', { key: i, points: s.p })));
+  }
+
+  save(patch) {
+    const profile = Object.assign({}, this.state.profile, patch);
+    this.setState({ profile: profile, saved: true });
+    try {
+      localStorage.setItem('plk-profile', JSON.stringify(profile));
+      if ((profile.name || '').trim()) localStorage.setItem('plk-user-name', profile.name.trim());
+    } catch (e) {}
+    clearTimeout(this._savedT);
+    this._savedT = setTimeout(() => this.setState({ saved: false }), 1800);
+  }
+  addSkill() {
+    const v = (this.state.skillInput || '').trim();
+    if (!v) return;
+    const skills = (this.state.profile.skills || []).slice();
+    if (!skills.some((s) => s.toLowerCase() === v.toLowerCase())) skills.push(v);
+    this.setState({ skillInput: '' });
+    this.save({ skills: skills });
+  }
+
+  renderVals() {
+    const t = this.strings();
+    const accent = this.props.accentColor || '#006BC6';
+    const accentRing = this.hexToRgba(accent, 0.12);
+    const accentTint = this.hexToRgba(accent, 0.12);
+    const isDark = this.state.theme === 'dark';
+    const p = this.state.profile || Component.seed('');
+    const comp = Component.completeness(p, t);
+
+    const availOpts = [['now', t.availNow], ['soon', t.availSoon], ['busy', t.availBusy]].map((o) => ({
+      label: o[1],
+      onClick: () => this.save({ availability: o[0] }),
+      bg: p.availability === o[0] ? accent : 'transparent',
+      color: p.availability === o[0] ? '#fff' : 'var(--muted,#565B62)',
+    }));
+
+    const skills = (p.skills || []).map((s) => ({
+      label: s, removeAria: t.removeSkill(s),
+      onRemove: () => this.save({ skills: p.skills.filter((x) => x !== s) }),
+    }));
+
+    const bioLen = (p.bio || '').trim().length;
+
+    return {
+      t: t, accent: accent, accentRing: accentRing, accentTint: accentTint,
+      logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
+      pct: comp.pct, pctW: comp.pct + '%',
+      missing: comp.missing, hasMissing: comp.missing.length > 0,
+      savedVisible: this.state.saved,
+      savedLabel: this.state.saved ? t.saved : '',
+      savedColor: this.state.saved ? '#1F8A5B' : 'var(--faint,#9AA0A6)',
+      savedCheckEl: this.iconEl('check', '#1F8A5B', 13),
+      pName: p.name, onName: (e) => this.save({ name: e.target.value }),
+      pHeadline: p.headline, onHeadline: (e) => this.save({ headline: e.target.value }),
+      pRate: p.rate, onRate: (e) => this.save({ rate: e.target.value.replace(/[^0-9]/g, '').slice(0, 3) }),
+      availOpts: availOpts,
+      skills: skills,
+      skillInput: this.state.skillInput,
+      onSkillInput: (e) => this.setState({ skillInput: e.target.value }),
+      onSkillKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.addSkill(); } },
+      pBio: p.bio, onBio: (e) => this.save({ bio: e.target.value }),
+      bioCount: t.bioCount(bioLen),
+      bioCountColor: bioLen >= 60 ? '#1F8A5B' : 'var(--faint,#9AA0A6)',
+    };
+  }
+}
+</script>
+</body>
+</html>

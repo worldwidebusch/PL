@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes plk-toast { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.16s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  a:active { transform: scale(0.985); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>Jouw feed | ProLinker</title>
+<meta name="robots" content="noindex, nofollow">
+</helmet>
+
+<div data-screen-label="Feed" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+      <div style="position: relative;">
+        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F7F8FB);">
+          <span style="width: 36px; height: 36px; border-radius: 50%; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
+          <span style="font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap;">{{ firstName }}</span>
+          <span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ menuChevronRotate }};">{{ chevronEl }}</span>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
+          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+            <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="3">
+              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F7F8FB);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+            </sc-for>
+            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB);">
+              <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
+              <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
+            </button>
+            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
+            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 820px; width: 100%; margin: 0 auto; padding: 30px 32px 90px; flex: 1;">
+
+    <div style="display: flex; align-items: center; justify-content: flex-end; margin: 0 0 16px; animation: plk-rise 0.5s ease both;">
+      <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff);">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+          <button onClick="{{ f.onClick }}" style="height: 32px; padding: 0 15px; border: none; border-radius: 999px; background: {{ f.bg }}; color: {{ f.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">{{ f.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="4">
+        <div data-reveal style="display: flex; align-items: center; gap: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); transition: box-shadow 0.18s ease, border-color 0.18s ease; animation: plk-rise 0.5s ease both; animation-delay: {{ j.delay }};" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42); border-color: {{ accentRing }};">
+
+          <div onClick="{{ j.onOpen }}" style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ j.mBg }}; color: {{ j.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; align-self: flex-start; cursor: pointer;">{{ j.mLetter }}</div>
+
+          <div onClick="{{ j.onOpen }}" title="{{ t.openJob }}" style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 9px; flex-wrap: wrap;">
+              <span style="font-size: 16.5px; font-weight: 650; letter-spacing: -0.01em; color: var(--text,#152431);">{{ j.title }}</span>
+              <sc-if value="{{ j.isNew }}" hint-placeholder-val="{{ false }}">
+                <span title="{{ t.newBadge }}" style="flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: {{ accent }};"></span>
+              </sc-if>
+            </div>
+            <div style="font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ j.client }} &middot; {{ j.location }} &middot; {{ j.posted }}</div>
+            <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 3px;">
+              <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ j.rate }}</span>
+              <sc-for list="{{ j.chips }}" as="c" hint-placeholder-count="3">
+                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62); white-space: nowrap;">{{ c }}</span>
+              </sc-for>
+            </div>
+            <div style="display: flex; align-items: center; gap: 7px; margin-top: 3px;">
+              <span style="display: inline-flex; flex-shrink: 0;">{{ sparkEl }}</span>
+              <span style="font-size: 13px; font-weight: 550; color: {{ accent }};">{{ j.matchReason }}</span>
+            </div>
+          </div>
+
+          <div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px; align-self: stretch;">
+            <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700; white-space: nowrap;">{{ j.relevance }}% match</span>
+            <sc-if value="{{ j.sent }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ j.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
+            </sc-if>
+            <sc-if value="{{ j.notSent }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ j.onToggleInterest }}" title="{{ t.interestTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 20px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.interest }}</button>
+            </sc-if>
+          </div>
+
+        </div>
+      </sc-for>
+      <sc-if value="{{ emptyFilter }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 44px 20px; text-align: center; color: var(--faint,#9AA0A6); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#E4E5EC); border-radius: 14px;">{{ t.emptyFilter }}</div>
+      </sc-if>
+    </div>
+
+  </main>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ onCloseModal }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(11,17,25,0.45); backdrop-filter: blur(3px);"></div>
+    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100vw - 40px)); background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
+      <div style="display: flex; align-items: flex-start; gap: 16px;">
+        <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ modalJob.mBg }}; color: {{ modalJob.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700;">{{ modalJob.mLetter }}</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.015em;">{{ modalJob.title }}</div>
+          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ modalJob.client }} &middot; {{ modalJob.location }} &middot; {{ modalJob.posted }}</div>
+        </div>
+        <button onClick="{{ onCloseModal }}" aria-label="{{ t.close }}" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F7F8FB); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#565B62); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEDF2);">&times;</button>
+      </div>
+      <p style="margin: 18px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#565B62); text-wrap: pretty;">{{ modalJob.desc }}</p>
+      <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 16px;">
+        <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650;">{{ modalJob.rate }}</span>
+        <sc-for list="{{ modalJob.chips }}" as="c" hint-placeholder-count="3">
+          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62);">{{ c }}</span>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 7px; margin-top: 14px;">
+        <span style="display: inline-flex; flex-shrink: 0;">{{ sparkEl }}</span>
+        <span style="font-size: 13px; font-weight: 550; color: {{ accent }};">{{ modalJob.matchReason }}</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEDF2);">
+        <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700;">{{ modalJob.relevance }}% match</span>
+        <sc-if value="{{ modalJob.sent }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ modalJob.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
+        </sc-if>
+        <sc-if value="{{ modalJob.notSent }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ modalJob.onToggleInterest }}" title="{{ t.interestTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 22px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.interest }}</button>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 12px 10px 16px; animation: plk-toast 0.3s ease both;">
+      <span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>
+      <span style="font-size: 14px; color: var(--text,#152431); white-space: nowrap;">{{ t.toastMsg }}</span>
+      <button onClick="{{ onUndoToast }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F7F8FB); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEDF2);">{{ t.undo }}</button>
+    </div>
+  </sc-if>
+
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:940},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+class Component extends DCLogic {
+  state = { theme: 'light', menuOpen: false, filter: 'all', sent: {}, copied: false, toastJob: null, name: '', profile: null, modal: null };
+
+  componentDidMount() {
+    try {
+      if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); }
+      const sent = JSON.parse(localStorage.getItem('plk-feed-interested') || '{}');
+      const name = localStorage.getItem('plk-user-name') || '';
+      const seed = { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '' };
+      let profile = seed;
+      const raw = JSON.parse(localStorage.getItem('plk-profile') || 'null');
+      if (raw && typeof raw === 'object') profile = Object.assign({}, seed, raw);
+      this.setState({ sent: sent && typeof sent === 'object' ? sent : {}, name: name, profile: profile });
+    } catch (e) {}
+    this._esc = (e) => { if (e.key === 'Escape') this.setState({ modal: null, menuOpen: false }); };
+    window.addEventListener('keydown', this._esc);
+  }
+  componentWillUnmount() { clearTimeout(this._toastT); clearTimeout(this._copyT); window.removeEventListener('keydown', this._esc); }
+
+  profileComp() {
+    const p = this.state.profile || {};
+    const checks = {
+      name: (p.name || '').trim().length >= 2,
+      headline: (p.headline || '').trim().length >= 8,
+      rate: String(p.rate || '').trim().length > 0 && parseInt(p.rate, 10) > 0,
+      availability: !!p.availability,
+      skills: (p.skills || []).length >= 3,
+      bio: (p.bio || '').trim().length >= 60,
+    };
+    const keys = Object.keys(checks);
+    const done = keys.filter((k) => checks[k]).length;
+    const firstMissing = keys.find((k) => !checks[k]) || null;
+    return { pct: Math.round((done / keys.length) * 100), firstMissing: firstMissing };
+  }
+
+  descFor(id) {
+    const nl = this.lang() === 'nl';
+    const d = {
+      j1: nl ? 'Bloemenwebshop met 1.200 producten verhuist van WooCommerce naar Shopify. Je verzorgt de datamigratie, bouwt een thema op maat en optimaliseert de laadtijd. Samenwerking met hun vaste fotograaf en marketeer.' : 'Flower shop with 1,200 products moving from WooCommerce to Shopify. You handle data migration, build a custom theme and optimize load times. You work with their photographer and marketer.',
+      j2: nl ? 'Maaltijdboxbezorger wil een snelle headless storefront met abonnementen-checkout en een koppeling met hun bezorg-API. Stack: Next.js, Shopify Plus, Vercel. Er staat al een designsysteem klaar.' : 'Meal box service wants a fast headless storefront with subscription checkout and a delivery API integration. Stack: Next.js, Shopify Plus, Vercel. A design system is ready.',
+      j3: nl ? 'Interieurmerk zoekt iemand die welkomst-, verlaten-winkelwagen- en win-back-flows opzet en aan Shopify koppelt. Doel: 15% meer omzet uit e-mail binnen twee maanden.' : 'Interior brand looking for someone to build welcome, abandoned-cart and win-back flows connected to Shopify. Goal: 15% more email revenue within two months.',
+      j4: nl ? 'Outdoorretailer met fysieke winkel en webshop stapt over van Lightspeed naar Shopify. POS-koppeling en realtime voorraadsync tussen winkel en webshop zijn kritisch.' : 'Outdoor retailer with a physical store switching from Lightspeed to Shopify. POS integration and real-time inventory sync between store and webshop are critical.',
+      j5: nl ? 'Speciaalbierbrouwerij wil een eigen abonnementsapp: maandelijkse proefpakketten, pauzeren en smaken wisselen. Je bouwt de app en de koppeling met hun fulfilmentpartner.' : 'Craft brewery wants its own subscription app: monthly tasting boxes with pause and flavor swaps. You build the app and the fulfilment integration.',
+      j6: nl ? 'Meubelwebshop converteert slecht op mobiel. Je doet een audit, formuleert hypotheses en draait A/B-tests op de productpagina en checkout. Rapportage direct aan de eigenaar.' : 'Furniture store converts poorly on mobile. You run an audit, form hypotheses and A/B tests on the product page and checkout. You report directly to the owner.',
+    };
+    return d[id] || '';
+  }
+
+  lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
+  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  strings() {
+    const en = {
+      settings: 'Settings', darkMode: 'Dark mode', logout: 'Log out',
+      navFeed: 'My feed', navEarnings: 'Earnings & referrals', navProfile: 'My profile',
+      greetM: 'Good morning', greetA: 'Good afternoon', greetE: 'Good evening',
+      subGreeting: (n) => n + ' new matches for you today',
+      stripProfile: 'Profile', stripProfileCta: 'Add portfolio', stripEarnings: 'Earned in 2026', stripEarningsCta: 'Dashboard',
+      stripReferral: 'Referral link', stripReferralNote: '2% per project', copy: 'Copy', copied: 'Copied',
+      feedTitle: 'Your matches', newBadge: 'New', openJob: 'View project', close: 'Close', shareWa: 'Share your link via WhatsApp',
+      ctaBio: 'Add bio', ctaSkills: 'Add skills', ctaGeneric: 'Complete profile', ctaDone: 'View profile',
+      fAll: 'All', fNew: 'New', fSent: 'Sent',
+      interest: 'Interested', interestTitle: 'Your WhatsApp assistant sends your interest to the client', sent: 'Sent', undoTitle: 'Withdraw interest',
+      toastMsg: 'Interest sent via your WhatsApp assistant', undo: 'Undo',
+      emptyFilter: 'Nothing here yet.',
+    };
+    const nl = {
+      settings: 'Instellingen', darkMode: 'Donkere modus', logout: 'Uitloggen',
+      navFeed: 'Mijn feed', navEarnings: 'Verdiensten & referrals', navProfile: 'Mijn profiel',
+      greetM: 'Goedemorgen', greetA: 'Goedemiddag', greetE: 'Goedenavond',
+      subGreeting: (n) => n + ' nieuwe matches voor je vandaag',
+      stripProfile: 'Profiel', stripProfileCta: 'Portfolio toevoegen', stripEarnings: 'Verdiend in 2026', stripEarningsCta: 'Dashboard',
+      stripReferral: 'Referral-link', stripReferralNote: '2% per opdracht', copy: 'Kopieer', copied: 'Gekopieerd',
+      feedTitle: 'Jouw matches', newBadge: 'Nieuw', openJob: 'Bekijk opdracht', close: 'Sluiten', shareWa: 'Deel je link via WhatsApp',
+      ctaBio: 'Bio toevoegen', ctaSkills: 'Skills aanvullen', ctaGeneric: 'Profiel aanvullen', ctaDone: 'Profiel bekijken',
+      fAll: 'Alles', fNew: 'Nieuw', fSent: 'Gestuurd',
+      interest: 'Interesse', interestTitle: 'Je WhatsApp-assistent stuurt je interesse naar de opdrachtgever', sent: 'Gestuurd', undoTitle: 'Interesse intrekken',
+      toastMsg: 'Interesse gestuurd via je WhatsApp-assistent', undo: 'Ongedaan maken',
+      emptyFilter: 'Hier is nog niets.',
+    };
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  jobsData() {
+    const nl = this.lang() === 'nl';
+    return [
+      { id: 'j1', title: nl ? 'Shopify-webshop migreren en optimaliseren' : 'Migrate and optimize Shopify store', client: 'Fleur & Zo', location: 'Amsterdam', posted: nl ? '2 u geleden' : '2h ago', isNew: true, relevance: 96, mLetter: 'F', mBg: '#E8F1FB', mColor: '#0B5CAB', matchReason: nl ? '5 jaar Shopify &middot; 9,2 reviewscore'.replace('&middot;', '\u00b7') : '5 yrs Shopify \u00b7 9.2 review score', rate: '\u20ac 70\u201385 /u', chips: nl ? ['24\u201332 u/wk', '3 mnd', 'Hybride'] : ['24\u201332 h/wk', '3 mo', 'Hybrid'] },
+      { id: 'j2', title: nl ? 'Headless webshop bouwen met Next.js' : 'Build headless store with Next.js', client: 'VersBox', location: 'Rotterdam', posted: nl ? '5 u geleden' : '5h ago', isNew: true, relevance: 93, mLetter: 'V', mBg: '#E7F5EE', mColor: '#1F8A5B', matchReason: nl ? 'Next.js + Shopify Plus \u00b7 3 soortgelijke projecten' : 'Next.js + Shopify Plus \u00b7 3 similar projects', rate: '\u20ac 80\u201395 /u', chips: nl ? ['32\u201340 u/wk', '4 mnd', 'Remote'] : ['32\u201340 h/wk', '4 mo', 'Remote'] },
+      { id: 'j3', title: nl ? 'Klaviyo e-mailflows opzetten' : 'Set up Klaviyo email flows', client: 'Studio Mier', location: 'Utrecht', posted: nl ? 'Gisteren' : 'Yesterday', isNew: true, relevance: 90, mLetter: 'S', mBg: '#FBF0E7', mColor: '#B4590A', matchReason: nl ? 'Klaviyo-gecertificeerd \u00b7 retentiecases' : 'Klaviyo certified \u00b7 retention cases', rate: '\u20ac 60\u201375 /u', chips: nl ? ['8\u201316 u/wk', '6 wk', 'Remote'] : ['8\u201316 h/wk', '6 wks', 'Remote'] },
+      { id: 'j4', title: nl ? 'Migratie van Lightspeed naar Shopify' : 'Lightspeed to Shopify migration', client: 'Outdoorland', location: 'Zwolle', posted: nl ? '1 dag geleden' : '1 day ago', isNew: false, relevance: 87, mLetter: 'O', mBg: '#EEEBFB', mColor: '#5B4CC4', matchReason: nl ? '3 Lightspeed-migraties \u00b7 POS-ervaring' : '3 Lightspeed migrations \u00b7 POS experience', rate: '\u20ac 65\u201380 /u', chips: nl ? ['16\u201324 u/wk', '2 mnd', 'Hybride'] : ['16\u201324 h/wk', '2 mo', 'Hybrid'] },
+      { id: 'j5', title: nl ? 'Shopify-app voor abonnementen' : 'Shopify subscriptions app', client: 'Brouwerij Noorderlicht', location: 'Groningen', posted: nl ? '2 dagen geleden' : '2 days ago', isNew: false, relevance: 84, mLetter: 'B', mBg: '#FBEDEF', mColor: '#B42334', matchReason: nl ? 'App-development \u00b7 abonnementscases' : 'App development \u00b7 subscription cases', rate: '\u20ac 75\u201390 /u', chips: nl ? ['24 u/wk', '3 mnd', 'Remote'] : ['24 h/wk', '3 mo', 'Remote'] },
+      { id: 'j6', title: nl ? 'Performance-audit en CRO' : 'Performance audit and CRO', client: 'Van Dijk Wonen', location: 'Den Haag', posted: nl ? '3 dagen geleden' : '3 days ago', isNew: false, relevance: 81, mLetter: 'V', mBg: '#E6F4F6', mColor: '#0E7C8A', matchReason: nl ? '+18% conversie bij 4 webshops' : '+18% conversion across 4 stores', rate: '\u20ac 65\u201380 /u', chips: nl ? ['8\u201312 u/wk', '6 wk', 'Remote'] : ['8\u201312 h/wk', '6 wks', 'Remote'] },
+    ];
+  }
+
+  iconDefs() {
+    return {
+      check: [{ t: 'polyline', p: '20 6 9 17 4 12' }],
+      chevron: [{ t: 'polyline', p: '6 9 12 15 18 9' }],
+      moon: [{ t: 'path', d: 'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z' }],
+      sun: [{ t: 'circle', cx: 12, cy: 12, r: 4 }, { t: 'line', x1: 12, y1: 2, x2: 12, y2: 4 }, { t: 'line', x1: 12, y1: 20, x2: 12, y2: 22 }, { t: 'line', x1: 4.93, y1: 4.93, x2: 6.34, y2: 6.34 }, { t: 'line', x1: 17.66, y1: 17.66, x2: 19.07, y2: 19.07 }, { t: 'line', x1: 2, y1: 12, x2: 4, y2: 12 }, { t: 'line', x1: 20, y1: 12, x2: 22, y2: 12 }, { t: 'line', x1: 4.93, y1: 19.07, x2: 6.34, y2: 17.66 }, { t: 'line', x1: 17.66, y1: 6.34, x2: 19.07, y2: 4.93 }],
+      spark: [{ t: 'path', d: 'M12 3l1.9 5.7L19.6 10l-5.7 1.9L12 17.6l-1.9-5.7L4.4 10l5.7-1.9z' }],
+      logout: [{ t: 'path', d: 'M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4' }, { t: 'polyline', p: '16 17 21 12 16 7' }, { t: 'line', x1: 21, y1: 12, x2: 9, y2: 12 }],
+      wa: [{ t: 'path', d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }],
+    };
+  }
+  shapeEl(s, key) {
+    if (s.t === 'circle') return React.createElement('circle', { key: key, cx: s.cx, cy: s.cy, r: s.r });
+    if (s.t === 'line') return React.createElement('line', { key: key, x1: s.x1, y1: s.y1, x2: s.x2, y2: s.y2 });
+    if (s.t === 'polyline') return React.createElement('polyline', { key: key, points: s.p });
+    return React.createElement('path', { key: key, d: s.d });
+  }
+  iconEl(name, color, size, filled) {
+    const shapes = this.iconDefs()[name] || this.iconDefs().check;
+    return React.createElement('svg', { width: size || 18, height: size || 18, viewBox: '0 0 24 24', fill: filled ? color : 'none', stroke: filled ? 'none' : color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, shapes.map((sh, i) => this.shapeEl(sh, i)));
+  }
+
+  persistSent(sent) { try { localStorage.setItem('plk-feed-interested', JSON.stringify(sent)); } catch (e) {} }
+  toggleInterest(id) {
+    const sent = Object.assign({}, this.state.sent);
+    const sending = !sent[id];
+    if (sending) sent[id] = true; else delete sent[id];
+    this.setState({ sent: sent, toastJob: sending ? id : null });
+    this.persistSent(sent);
+    clearTimeout(this._toastT);
+    if (sending) this._toastT = setTimeout(() => this.setState({ toastJob: null }), 5000);
+  }
+  undoToast() {
+    const id = this.state.toastJob;
+    if (!id) return;
+    const sent = Object.assign({}, this.state.sent);
+    delete sent[id];
+    this.setState({ sent: sent, toastJob: null });
+    this.persistSent(sent);
+    clearTimeout(this._toastT);
+  }
+  copyReferral() {
+    const link = 'https://prolinker.com/r/rachid-7k2';
+    try { navigator.clipboard.writeText(link); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this._copyT);
+    this._copyT = setTimeout(() => this.setState({ copied: false }), 2000);
+  }
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    this.setState({ theme: next });
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('plk-theme', next); } catch (e) {}
+  }
+
+  darkMono(bg, color) {
+    // In dark mode, pastel tiles would glare; derive a dimmed tint from the label color instead.
+    return { bg: this.hexToRgba(color, 0.16), color: '#ffffff' };
+  }
+
+  renderVals() {
+    const t = this.strings();
+    const accent = this.props.accentColor || '#006BC6';
+    const accentShadow = this.hexToRgba(accent, 0.28);
+    const accentRing = this.hexToRgba(accent, 0.18);
+    const accentTint = this.hexToRgba(accent, 0.12);
+    const isDark = this.state.theme === 'dark';
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+
+    const name = ((this.state.profile && this.state.profile.name) || this.state.name || 'Rachid Benali').trim();
+    const firstName = name.split(' ')[0];
+    const initials = name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
+    const hour = new Date().getHours();
+    const greet = hour < 12 ? t.greetM : (hour < 18 ? t.greetA : t.greetE);
+
+    const all = this.jobsData();
+    const sentMap = this.state.sent;
+    const newCount = all.filter((j) => j.isNew).length;
+    const sentCount = all.filter((j) => sentMap[j.id]).length;
+    const filter = this.state.filter;
+    const visible = all.filter((j) => filter === 'all' ? true : (filter === 'new' ? j.isNew : sentMap[j.id]));
+
+    const filters = [
+      { key: 'all', label: t.fAll + ' (' + all.length + ')' },
+      { key: 'new', label: t.fNew + ' (' + newCount + ')' },
+      { key: 'sent', label: t.fSent + ' (' + sentCount + ')' },
+    ].map((f) => ({
+      label: f.label,
+      onClick: () => this.setState({ filter: f.key }),
+      bg: filter === f.key ? accent : 'transparent',
+      color: filter === f.key ? '#fff' : 'var(--muted,#565B62)',
+    }));
+
+    const decorate = (j, i) => {
+      const mono = isDark ? this.darkMono(j.mBg, j.mColor) : { bg: j.mBg, color: j.mColor };
+      return Object.assign({}, j, {
+        delay: (i * 0.05) + 's',
+        mBg: mono.bg, mColor: mono.color,
+        desc: this.descFor(j.id),
+        sent: !!sentMap[j.id], notSent: !sentMap[j.id],
+        onToggleInterest: () => this.toggleInterest(j.id),
+        onOpen: () => this.setState({ modal: j.id }),
+      });
+    };
+    const jobs = visible.map(decorate);
+    const modalSrc = this.state.modal ? all.find((x) => x.id === this.state.modal) : null;
+    const modalJob = modalSrc ? decorate(modalSrc, 0) : null;
+
+    const comp = this.profileComp();
+    const ctaMap = { bio: t.ctaBio, skills: t.ctaSkills };
+    const profileCtaLabel = comp.firstMissing ? (ctaMap[comp.firstMissing] || t.ctaGeneric) : t.ctaDone;
+
+    const shareMsg = this.lang() === 'nl'
+      ? 'Ik freelance via ProLinker. Maak gratis een account via mijn link: https://prolinker.com/r/rachid-7k2'
+      : 'I freelance via ProLinker. Create a free account with my link: https://prolinker.com/r/rachid-7k2';
+
+    return {
+      t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing, accentTint: accentTint,
+      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Geist', system-ui, sans-serif",
+      logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
+      showStrip: this.props.showStrip !== false,
+      firstName: firstName, initials: initials, avatarBg: accentTint,
+      greeting: greet + ', ' + firstName,
+      subGreeting: t.subGreeting(newCount),
+      menuOpen: this.state.menuOpen,
+      menuChevronRotate: this.state.menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      onToggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: [
+        { label: t.navFeed, href: 'Prolinker Feed.dc.html' },
+        { label: t.navEarnings, href: 'Prolinker Verdiensten.dc.html' },
+        { label: t.navProfile, href: 'Prolinker Profiel.dc.html' },
+      ],
+      onToggleTheme: () => this.toggleTheme(),
+      themeIconEl: this.iconEl(isDark ? 'sun' : 'moon', mutedIcon, 16),
+      themeSwitchBg: isDark ? accent : 'var(--border,#E4E5EC)',
+      themeKnobLeft: isDark ? '18px' : '2px',
+      logoutEl: this.iconEl('logout', mutedIcon, 15),
+      chevronEl: this.iconEl('chevron', mutedIcon, 14),
+      sparkEl: this.iconEl('spark', accent, 14, true),
+      checkGreenEl: this.iconEl('check', '#1F8A5B', 14),
+      waEl: this.iconEl('wa', '#25D366', 16, true),
+      onCopyReferral: () => this.copyReferral(),
+      copyLabel: this.state.copied ? t.copied : t.copy,
+      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#E4E5EC)',
+      copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',
+      copyColor: this.state.copied ? '#1F8A5B' : 'var(--text,#152431)',
+      filters: filters,
+      jobs: jobs,
+      emptyFilter: jobs.length === 0,
+      toastVisible: !!this.state.toastJob,
+      onUndoToast: () => this.undoToast(),
+      profilePct: comp.pct, profileBarW: comp.pct + '%', profileCtaLabel: profileCtaLabel,
+      waShareHref: 'https://wa.me/?text=' + encodeURIComponent(shareMsg),
+      waElSmall: this.iconEl('wa', '#25D366', 14, true),
+      modalOpen: !!modalJob, modalJob: modalJob || {},
+      onCloseModal: () => this.setState({ modal: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>
