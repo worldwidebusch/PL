@@ -1,0 +1,8 @@
+{
+  "appId": "com.prolinker.app",
+  "appName": "ProLinker",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

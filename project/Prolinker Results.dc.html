@@ -407,7 +407,7 @@ class Component extends DCLogic {
       nav1: 'Freelancers', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog',
       becomeFreelancer: 'Become a freelancer', becomeRecruiter: 'Become a recruiter',
       login: 'Log in', register: 'Register', theme: 'Toggle dark mode',
-      settings: 'Settings', darkMode: 'Dark mode',
+      settings: 'Settings', darkMode: 'Dark mode', referrals: 'Earn 2% with referrals',
       searchPh: 'Refine your search', newSearch: 'New search', editPost: 'Edit job post', resultsFor: 'Results for',
       fBest: 'Best match', fRated: 'Top rated', fAvail: 'Available now',
       selectAll: 'Select all', invite: 'Invite selected', viewProfile: 'View profile', notes: 'Notes', report: 'Report', inviteCard: 'Invite',
@@ -420,7 +420,7 @@ class Component extends DCLogic {
       nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
       becomeFreelancer: 'Freelancer worden', becomeRecruiter: 'Recruiter worden',
       login: 'Inloggen', register: 'Registreren', theme: 'Donkere modus',
-      settings: 'Instellingen', darkMode: 'Donkere modus',
+      settings: 'Instellingen', darkMode: 'Donkere modus', referrals: 'Verdien 2% met referrals',
       searchPh: 'Verfijn je zoekopdracht', newSearch: 'Nieuwe zoekopdracht', editPost: 'Opdracht bewerken', resultsFor: 'Resultaten voor',
       fBest: 'Beste match', fRated: 'Best beoordeeld', fAvail: 'Nu beschikbaar',
       selectAll: 'Alles selecteren', invite: 'Selectie uitnodigen', viewProfile: 'Bekijk profiel', notes: 'Notities', report: 'Rapporteer', inviteCard: 'Uitnodigen',
@@ -498,7 +498,7 @@ class Component extends DCLogic {
         const a = txt.indexOf('['), b = txt.lastIndexOf(']');
         if (a !== -1 && b !== -1) txt = txt.slice(a, b + 1);
         const arr = JSON.parse(txt);
-        if (Array.isArray(arr)) { reasons = {}; list.forEach((f, i) => { if (arr[i]) reasons[f.name] = ('' + arr[i]).trim().replace(/\s*\u2014\s*/g, ' - '); }); }
+        if (Array.isArray(arr)) { const longDash = String.fromCharCode(8212); reasons = {}; list.forEach((f, i) => { if (arr[i]) reasons[f.name] = ('' + arr[i]).trim().replace(new RegExp('\\s*' + longDash + '\\s*', 'g'), ' - '); }); }
       }
     } catch (e) { reasons = null; }
     if (!reasons) { reasons = {}; list.forEach((f) => { reasons[f.name] = this.localMatch(f, q, nl); }); }
@@ -564,13 +564,14 @@ class Component extends DCLogic {
     const related = relatedLabels.map((label) => ({ label: label, on: () => this.pickRelated(label) }));
 
     const openName = this.state.profileName;
-    const profileOpen = !!openName;
+    let profileOpen = !!openName;
     let profileVals = null, profileTabs = [], catRows = [];
     if (profileOpen) {
-      const all = this.freelancers();
-      let idx = all.findIndex((x) => x.name === openName);
-      if (idx < 0) idx = 0;
-      const f = all[idx];
+      const all = rawAll;
+      const idx = all.findIndex((x) => x.name === openName);
+      const f = idx >= 0 ? all[idx] : null;
+      if (!f || !f.p) profileOpen = false;
+      if (f && f.p) {
       const pr = f.p;
       const pal = palette[idx % palette.length];
       profileVals = {
@@ -593,6 +594,7 @@ class Component extends DCLogic {
       const catLabels = [t.mQuality, t.mComm, t.mTerm, t.mProf];
       const catVals = this.state.ratingSide === 'client' ? pr.cat.map((v) => Math.max(3, v - 1)) : pr.cat;
       catRows = catLabels.map((lb, k) => ({ label: lb, starsEl: this.starsEl(catVals[k], isDark) }));
+      }
     }
 
     return {
@@ -604,7 +606,7 @@ class Component extends DCLogic {
       gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#565B62' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
       onLogin: () => { window.location.href = 'Prolinker Login.dc.html?mode=login&role=client'; },
       onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
-      menuItems: [{ label: t.nav1, href: 'Prolinker Results.dc.html' }, { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' }, { label: t.nav4, href: 'Prolinker Homepage.dc.html' }, { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }, { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }],
+      menuItems: [{ label: t.nav1, href: 'Prolinker Results.dc.html' }, { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' }, { label: t.nav4, href: 'Prolinker Homepage.dc.html' }, { label: t.nav5, href: 'https://prolinker.com/nl/blog?page=1' }, { label: t.referrals, href: 'Prolinker Verdiensten.dc.html' }, { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }, { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }],
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
       searchShadow: isDark ? '0 1px 2px rgba(0,0,0,0.3)' : '0 1px 2px rgba(20,36,49,0.05), 0 8px 22px -16px rgba(20,36,49,0.22)',

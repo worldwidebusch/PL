@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F5F7F9;--surface:#fff;--panel:#F8FAFC;--text:#10273A;--muted:#617286;--faint:#91A0B0;--border:#DCE4EB;--hair:#E9EEF3;--blue:#2F82C8;--blue-dark:#1767AA;--danger:#A2463B;--success:#27834A}
+  :root[data-theme="dark"]{--bg:#101820;--surface:#17232D;--panel:#121D26;--text:#F5F8FA;--muted:#B4C1CC;--faint:#81909D;--border:#31414E;--hair:#263541}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Geist',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid rgba(47,130,200,.23);outline-offset:2px}
+  .plk-shell-header{height:58px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}.plk-shell-inner{max-width:1240px;height:100%;margin:0 auto;padding:0 22px;display:flex;align-items:center;gap:24px}.plk-logo{width:112px;height:auto;display:block}.plk-header-links{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:13px;font-weight:550}.plk-header-link:hover{color:var(--blue)}
+  .plk-account-btn{min-height:38px;border:0;background:transparent;padding:4px 6px;display:flex;align-items:center;gap:9px;color:var(--text);cursor:pointer}.plk-avatar{width:31px;height:31px;border-radius:50%;background:#E6F1FB;color:var(--blue-dark);border:1px solid #C9DEEF;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}.plk-account-menu{position:absolute;right:0;top:44px;width:278px;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 18px 42px rgba(16,39,58,.16);overflow:hidden;z-index:70}.plk-menu-link{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:9px 12px;border-bottom:1px solid var(--hair)}.plk-menu-link:hover{background:var(--panel)}.plk-menu-icon{width:28px;height:28px;border-radius:6px;background:#EDF4FA;color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}.plk-menu-label{display:block;font-size:13px;font-weight:650;line-height:1.2}.plk-menu-desc{display:block;margin-top:2px;color:var(--faint);font-size:10.5px;line-height:1.25}
+  .plk-main{max-width:1120px;width:100%;margin:0 auto;padding:38px 24px 72px}.plk-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}.plk-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--blue-dark)}.plk-title{margin:8px 0 0;font-size:29px;line-height:1.15;letter-spacing:-.025em}.plk-subtitle{margin:8px 0 0;max-width:650px;color:var(--muted);font-size:14px;line-height:1.55}.plk-unread-summary{flex:0 0 auto;min-height:34px;padding:0 11px;border:1px solid #C9DEEF;border-radius:7px;background:#EDF5FC;color:var(--blue-dark);display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700}.plk-unread-summary span{width:7px;height:7px;border-radius:50%;background:var(--blue)}
+  .plk-btn{min-height:36px;padding:0 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);cursor:pointer;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:7px}.plk-btn:hover{border-color:#9CBAD3;color:var(--blue-dark)}.plk-btn-primary{border-color:var(--blue);background:var(--blue);color:#fff}.plk-btn-primary:hover{background:var(--blue-dark);color:#fff}.plk-btn-danger{color:var(--danger)}.plk-btn:disabled{cursor:wait;opacity:.58}
+  .plk-loading{margin-top:25px;padding:50px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);text-align:center;font-size:13px}.plk-error{margin-top:25px;padding:15px;border:1px solid #E7B4A9;border-radius:8px;background:#FFF7F5;color:#8B3227;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12.5px}
+  .plk-workspace{height:calc(100vh - 225px);min-height:570px;max-height:760px;margin-top:25px;border:1px solid var(--border);border-radius:9px;background:var(--surface);overflow:hidden;display:grid;grid-template-columns:360px minmax(0,1fr);box-shadow:0 8px 30px rgba(16,39,58,.04)}
+  .plk-list-pane{min-width:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface)}.plk-list-tools{padding:14px 14px 12px;border-bottom:1px solid var(--border)}.plk-tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:7px;background:var(--surface);overflow:hidden}.plk-tab{min-height:36px;padding:0 9px;border:0;border-right:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:11.5px;font-weight:650}.plk-tab:last-child{border-right:0}.plk-tab:hover{color:var(--blue-dark)}.plk-tab.active{background:#EDF4FA;color:var(--blue-dark)}.plk-tab-count{margin-left:4px;color:var(--faint);font-size:9.5px}.plk-search{height:37px;margin-top:10px;border:1px solid var(--border);border-radius:7px;background:var(--panel);display:flex;align-items:center;gap:8px;padding:0 10px}.plk-search-symbol{color:var(--faint);font-size:14px}.plk-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:var(--text);font-size:12px}.plk-search-clear{width:25px;height:25px;border:0;border-radius:5px;background:transparent;color:var(--faint);cursor:pointer;font-size:17px;line-height:1}.plk-search-clear:hover{background:var(--hair);color:var(--text)}
+  .plk-thread-list{min-height:0;overflow:auto;flex:1}.plk-thread{width:100%;min-height:91px;padding:13px 14px;border:0;border-bottom:1px solid var(--hair);background:var(--surface);color:var(--text);cursor:pointer;text-align:left;display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px}.plk-thread:hover{background:var(--panel)}.plk-thread.selected{background:#EDF5FC;box-shadow:inset 3px 0 0 var(--blue)}.plk-thread.unread .plk-thread-sender,.plk-thread.unread .plk-thread-subject{font-weight:750}.plk-person-avatar{width:36px;height:36px;border-radius:50%;background:var(--avatar-bg);color:var(--blue-dark);border:1px solid #D4E2EE;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;grid-row:1 / span 3}.plk-thread-copy{min-width:0}.plk-thread-top{display:flex;align-items:center;gap:6px}.plk-thread-sender{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;font-weight:650}.plk-unread-dot{width:7px;height:7px;flex:0 0 auto;border-radius:50%;background:var(--blue)}.plk-thread-subject{margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:11.5px;font-weight:600}.plk-thread-preview{margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--faint);font-size:10.5px}.plk-thread-time{padding-top:1px;color:var(--faint);font-size:9.5px;white-space:nowrap}.plk-list-empty{padding:55px 24px;text-align:center}.plk-empty-title{font-size:14px;font-weight:700}.plk-empty-text{margin:7px auto 16px;color:var(--muted);font-size:12px;line-height:1.5;max-width:270px}
+  .plk-conversation{min-width:0;min-height:0;display:flex;flex-direction:column;background:var(--panel)}.plk-conversation-head{min-height:70px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:11px}.plk-mobile-back{display:none;width:34px;height:34px;flex:0 0 auto;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);cursor:pointer;font-size:18px}.plk-conversation-person{min-width:0;flex:1}.plk-conversation-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px;font-weight:750}.plk-conversation-meta{margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--faint);font-size:10.5px}.plk-conversation-actions{display:flex;align-items:center;gap:8px}.plk-thread-status{padding:7px 12px;border-bottom:1px solid #E7B4A9;background:#FFF7F5;color:#8B3227;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11.5px}.plk-thread-loading{padding:7px 14px;border-bottom:1px solid var(--hair);background:var(--surface);color:var(--faint);font-size:10.5px;text-align:center}
+  .plk-message-scroll{min-height:0;flex:1;overflow:auto;padding:20px 22px}.plk-message-day{text-align:center;margin:0 0 16px;color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:9.5px}.plk-message-row{display:flex;margin-top:10px}.plk-message-row.outgoing{justify-content:flex-end}.plk-message-wrap{max-width:min(76%,560px)}.plk-message-sender{margin:0 5px 4px;color:var(--faint);font-size:9.5px}.plk-message-row.outgoing .plk-message-sender{text-align:right}.plk-message-bubble{padding:10px 12px;border:1px solid var(--border);border-radius:5px 10px 10px 10px;background:var(--surface);color:var(--text);font-size:12.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}.plk-message-row.outgoing .plk-message-bubble{border-color:#BFD9EF;border-radius:10px 5px 10px 10px;background:#E8F3FC}.plk-message-time{margin:4px 5px 0;color:var(--faint);font-size:9px}.plk-message-row.outgoing .plk-message-time{text-align:right}.plk-message-empty{height:100%;min-height:220px;display:flex;align-items:center;justify-content:center;padding:25px;text-align:center;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .plk-composer{padding:12px 14px 11px;border-top:1px solid var(--border);background:var(--surface)}.plk-compose-row{display:flex;align-items:flex-end;gap:9px}.plk-compose-field{min-width:0;flex:1}.plk-compose-field textarea{width:100%;min-height:42px;max-height:120px;resize:vertical;border:1px solid var(--border);border-radius:7px;background:var(--panel);color:var(--text);padding:10px 11px;font-size:12.5px;line-height:1.4}.plk-compose-field textarea[aria-invalid="true"]{border-color:#D48878}.plk-compose-meta{min-height:16px;margin:3px 2px 0;display:flex;justify-content:space-between;gap:12px;color:var(--faint);font-size:9.5px}.plk-compose-error{color:#9A3C31}.plk-counter.over{color:#9A3C31;font-weight:700}.plk-send{min-width:88px;height:42px}.plk-no-selection{height:100%;display:flex;align-items:center;justify-content:center;padding:30px;text-align:center}.plk-no-selection-icon{width:48px;height:48px;margin:0 auto 14px;border-radius:50%;background:#E8F3FC;color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}.plk-no-selection-title{font-size:15px;font-weight:750}.plk-no-selection-text{max-width:340px;margin:7px auto 0;color:var(--muted);font-size:12.5px;line-height:1.55}.plk-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;max-width:calc(100vw - 28px);padding:10px 15px;border-radius:7px;background:#10273A;color:#fff;box-shadow:0 10px 32px rgba(16,39,58,.28);font-size:12px;font-weight:650}.plk-footer{max-width:1120px;margin:0 auto;padding:0 24px 27px;color:var(--faint);font-size:11px}
+  @media(max-width:780px){.plk-header-links{display:none}.plk-main{padding-top:30px}.plk-workspace{height:calc(100vh - 188px);min-height:550px;grid-template-columns:1fr}.plk-list-pane{border-right:0}.plk-mobile-hidden{display:none}.plk-mobile-back{display:inline-flex;align-items:center;justify-content:center}.plk-conversation-actions .plk-btn{padding:0 9px}.plk-message-scroll{padding:17px 14px}.plk-message-wrap{max-width:86%}}
+  @media(max-width:560px){.plk-shell-header{height:54px}.plk-shell-inner{padding:0 14px}.plk-logo{width:100px}.plk-account-name{display:none}.plk-account-menu{position:fixed;left:10px;right:10px;top:60px;width:auto;max-height:calc(100vh - 72px);overflow:auto}.plk-main{padding:25px 14px 52px}.plk-page-head{align-items:flex-start}.plk-title{font-size:25px}.plk-subtitle{font-size:13px}.plk-unread-summary{min-height:31px;padding:0 8px;font-size:10.5px}.plk-workspace{margin-top:19px;height:calc(100vh - 170px);min-height:510px;border-radius:8px}.plk-thread{padding-left:12px;padding-right:12px}.plk-conversation-head{padding:10px}.plk-conversation-head>.plk-person-avatar{display:none}.plk-conversation-actions .plk-btn{font-size:11px}.plk-message-wrap{max-width:91%}.plk-compose-row{align-items:stretch}.plk-send{min-width:72px;height:auto}.plk-compose-meta span:first-child{display:none}.plk-footer{padding:0 14px 22px}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
+<title>Mijn berichten | ProLinker</title>
+<meta name="robots" content="noindex,nofollow">
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;">
+  <header class="plk-shell-header"><div class="plk-shell-inner">
+    <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
+    <nav class="plk-header-links" aria-label="Hoofdnavigatie"><a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a><a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a><a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a><a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a><a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a></nav>
+    <div style="position:relative;margin-left:auto;">
+      <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Accountmenu openen"><span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size:12.5px;font-weight:650;">{{ userName }}</span><span style="font-size:10px;color:var(--faint);">{{ menuChevron }}</span></button>
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><button type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position:fixed;inset:0;z-index:60;border:0;background:transparent;"></button><div class="plk-account-menu" role="menu"><div style="padding:11px 12px;border-bottom:1px solid var(--hair);"><div style="font-size:12.5px;font-weight:700;">{{ userName }}</div><div style="margin-top:2px;color:var(--faint);font-size:10.5px;">{{ roleLabel }}</div></div><sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7"><a class="plk-menu-link" href="{{ item.href }}" role="menuitem" style="background:{{ item.bg }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a></sc-for><div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border-top:1px solid var(--hair);"><button type="button" onClick="{{ onTheme }}" style="min-height:42px;border:0;background:var(--surface);color:var(--muted);cursor:pointer;font-size:11px;font-weight:650;">{{ themeLabel }}</button><button type="button" onClick="{{ onLogout }}" style="min-height:42px;border:0;background:var(--surface);color:#A2463B;cursor:pointer;font-size:11px;font-weight:650;">Uitloggen</button></div></div></sc-if>
+    </div>
+  </div></header>
+
+  <main class="plk-main" style="flex:1;">
+    <div class="plk-page-head"><div><div class="plk-eyebrow">Communicatie</div><h1 class="plk-title">Mijn berichten</h1><p class="plk-subtitle">Houd gesprekken, afspraken en vervolgstappen overzichtelijk bij.</p></div><div class="plk-unread-summary" aria-label="{{ unreadAria }}"><span aria-hidden="true"></span>{{ unreadLabel }}</div></div>
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">Je gesprekken worden geladen...</div></sc-if>
+    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ errorMessage }}</span><button class="plk-btn" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <section class="plk-workspace" aria-label="Berichten">
+        <aside class="plk-list-pane {{ listMobileClass }}" aria-label="Gesprekkenlijst">
+          <div class="plk-list-tools"><div class="plk-tabs" role="tablist" aria-label="Berichtenmappen"><button class="plk-tab {{ inboxTabClass }}" type="button" role="tab" aria-selected="{{ inboxSelected }}" onClick="{{ onInbox }}">Inbox <span class="plk-tab-count">{{ inboxCount }}</span></button><button class="plk-tab {{ archivedTabClass }}" type="button" role="tab" aria-selected="{{ archivedSelected }}" onClick="{{ onArchived }}">Gearchiveerd <span class="plk-tab-count">{{ archivedCount }}</span></button></div><label class="plk-search"><span class="plk-search-symbol" aria-hidden="true">&#8981;</span><input type="search" value="{{ query }}" onInput="{{ onQuery }}" placeholder="Zoek in gesprekken" aria-label="Zoek in gesprekken"><sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}"><button class="plk-search-clear" type="button" onClick="{{ onClearQuery }}" aria-label="Zoekopdracht wissen">&times;</button></sc-if></label></div>
+          <div class="plk-thread-list">
+            <sc-if value="{{ hasThreads }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ threads }}" as="thread" hint-placeholder-count="5"><button class="plk-thread {{ thread.stateClass }}" type="button" onClick="{{ thread.onOpen }}" aria-label="{{ thread.ariaLabel }}" aria-pressed="{{ thread.selected }}"><span class="plk-person-avatar" style="--avatar-bg:{{ thread.avatarBg }};">{{ thread.initials }}</span><span class="plk-thread-copy"><span class="plk-thread-top"><span class="plk-thread-sender">{{ thread.sender }}</span><sc-if value="{{ thread.unread }}" hint-placeholder-val="{{ false }}"><span class="plk-unread-dot" aria-hidden="true"></span></sc-if></span><span class="plk-thread-subject">{{ thread.subject }}</span><span class="plk-thread-preview">{{ thread.preview }}</span></span><span class="plk-thread-time">{{ thread.timeLabel }}</span></button></sc-for></sc-if>
+            <sc-if value="{{ noThreads }}" hint-placeholder-val="{{ false }}"><div class="plk-list-empty"><div class="plk-empty-title">{{ emptyTitle }}</div><div class="plk-empty-text">{{ emptyText }}</div><sc-if value="{{ showClearSearch }}" hint-placeholder-val="{{ false }}"><button class="plk-btn" type="button" onClick="{{ onClearQuery }}">Zoekopdracht wissen</button></sc-if><sc-if value="{{ showInboxAction }}" hint-placeholder-val="{{ false }}"><button class="plk-btn" type="button" onClick="{{ onInbox }}">Naar inbox</button></sc-if><sc-if value="{{ showOpportunityAction }}" hint-placeholder-val="{{ false }}"><a class="plk-btn plk-btn-primary" href="{{ opportunityHref }}">{{ opportunityLabel }}</a></sc-if></div></sc-if>
+          </div>
+        </aside>
+
+        <section class="plk-conversation {{ conversationMobileClass }}" aria-label="Geselecteerd gesprek">
+          <sc-if value="{{ hasSelected }}" hint-placeholder-val="{{ false }}">
+            <header class="plk-conversation-head"><button class="plk-mobile-back" type="button" onClick="{{ onBackToList }}" aria-label="Terug naar gesprekken">&#8249;</button><span class="plk-person-avatar" style="--avatar-bg:{{ selectedAvatarBg }};">{{ selectedInitials }}</span><div class="plk-conversation-person"><div class="plk-conversation-title">{{ selectedSubject }}</div><div class="plk-conversation-meta">{{ selectedSender }} | {{ selectedDate }}</div></div><div class="plk-conversation-actions"><button class="plk-btn {{ archiveButtonClass }}" type="button" onClick="{{ onArchive }}" disabled="{{ actionBusy }}">{{ archiveLabel }}</button></div></header>
+            <sc-if value="{{ threadLoading }}" hint-placeholder-val="{{ false }}"><div class="plk-thread-loading" role="status">Gesprek wordt bijgewerkt...</div></sc-if>
+            <sc-if value="{{ hasThreadError }}" hint-placeholder-val="{{ false }}"><div class="plk-thread-status" role="alert"><span>{{ threadError }}</span><button class="plk-btn" type="button" onClick="{{ onRetryThread }}">Opnieuw</button></div></sc-if>
+            <div class="plk-message-scroll" ref="{{ messageScrollRef }}"><sc-if value="{{ hasEntries }}" hint-placeholder-val="{{ true }}"><div class="plk-message-day">{{ conversationDate }}</div><sc-for list="{{ entries }}" as="entry" hint-placeholder-count="4"><div class="plk-message-row {{ entry.direction }}"><div class="plk-message-wrap"><div class="plk-message-sender">{{ entry.sender }}</div><div class="plk-message-bubble">{{ entry.text }}</div><div class="plk-message-time">{{ entry.timeLabel }}</div></div></div></sc-for></sc-if><sc-if value="{{ noEntries }}" hint-placeholder-val="{{ false }}"><div class="plk-message-empty">Er staan nog geen berichten in dit gesprek. Verstuur hieronder het eerste bericht.</div></sc-if></div>
+            <form class="plk-composer" onSubmit="{{ onSend }}"><div class="plk-compose-row"><div class="plk-compose-field"><label for="plk-message-draft" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Schrijf een bericht</label><textarea id="plk-message-draft" value="{{ draft }}" onInput="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="Schrijf een bericht..." aria-invalid="{{ draftInvalid }}" aria-describedby="plk-compose-meta"></textarea><div class="plk-compose-meta" id="plk-compose-meta"><span>Ctrl of Cmd + Enter om te versturen</span><span class="plk-counter {{ counterClass }}">{{ draftCount }} / 4000</span></div><sc-if value="{{ hasDraftError }}" hint-placeholder-val="{{ false }}"><div class="plk-compose-error" role="alert">{{ draftError }}</div></sc-if></div><button class="plk-btn plk-btn-primary plk-send" type="submit" disabled="{{ sending }}">{{ sendLabel }}</button></div></form>
+          </sc-if>
+          <sc-if value="{{ noSelected }}" hint-placeholder-val="{{ true }}"><div class="plk-no-selection"><div><div class="plk-no-selection-icon" aria-hidden="true">B</div><div class="plk-no-selection-title">Kies een gesprek</div><div class="plk-no-selection-text">Selecteer links een gesprek om berichten te lezen en direct te reageren.</div></div></div></sc-if>
+        </section>
+      </section>
+    </sc-if>
+  </main>
+  <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Alle gesprekken op een plek.</footer>
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}"><div class="plk-toast" role="status">{{ toast }}</div></sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { loading: true, error: '', threads: [], session: null, folder: 'inbox', query: '', selectedId: '', selected: null, threadLoading: false, threadError: '', menuOpen: false, theme: 'light', actionBusy: false, sending: false, draft: '', draftError: '', toast: '' };
+
+  componentDidMount() {
+    document.documentElement.setAttribute('lang', 'nl');
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (error) {}
+    if (!window.ProLinkerApp) { this.setState({ loading: false, error: 'De app-service kon niet worden geladen.' }); return; }
+    const session = window.ProLinkerApp.session.require({ next: 'Prolinker Berichten.dc.html' });
+    if (!session) return;
+    let folder = 'inbox';
+    let requested = '';
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('folder') === 'archived') folder = 'archived';
+      requested = params.get('conversation') || '';
+    } catch (error) {}
+    this.setState({ session: session, folder: folder });
+    this.load(requested, true);
+    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
+    window.addEventListener('keydown', this._keyHandler);
+  }
+
+  componentWillUnmount() {
+    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+    clearTimeout(this._toastTimer);
+    clearTimeout(this._scrollTimer);
+  }
+
+  async load(requestedId, keepSelection) {
+    this.setState({ loading: true, error: '' });
+    try {
+      const results = await Promise.all([window.ProLinkerApp.messages.list({ archived: false }), window.ProLinkerApp.messages.list({ archived: true })]);
+      const inbox = this.unwrapList(results[0]).map((item, index) => this.normalizeThread(item, index, false));
+      const archived = this.unwrapList(results[1]).map((item, index) => this.normalizeThread(item, index, true));
+      const byId = {};
+      inbox.concat(archived).forEach((item) => { byId[item.id] = item; });
+      const threads = Object.keys(byId).map((key) => byId[key]).sort((a, b) => this.timeValue(b.at) - this.timeValue(a.at));
+      const targetId = keepSelection === false ? '' : String(requestedId || this.state.selectedId || '');
+      let selected = targetId ? threads.find((item) => item.id === targetId) || null : null;
+      let folder = this.state.folder;
+      if (selected && requestedId) folder = selected.archived ? 'archived' : 'inbox';
+      this.setState({ threads: threads, selectedId: selected ? selected.id : '', selected: selected, folder: folder, loading: false, error: '', threadError: '' });
+      if (selected) { this.scrollToLatest(); this.hydrateThread(selected.id, selected.unread); }
+    } catch (error) {
+      this.setState({ loading: false, error: error && error.message ? error.message : 'Berichten laden is niet gelukt.' });
+    }
+  }
+
+  unwrapList(value) {
+    if (Array.isArray(value)) return value;
+    if (!value || typeof value !== 'object') return [];
+    if (Array.isArray(value.threads)) return value.threads;
+    if (Array.isArray(value.messages)) return value.messages;
+    if (Array.isArray(value.items)) return value.items;
+    if (Array.isArray(value.results)) return value.results;
+    if (value.data && value.data !== value) return this.unwrapList(value.data);
+    if (value.result && value.result !== value) return this.unwrapList(value.result);
+    return [];
+  }
+
+  unwrapThread(value) {
+    if (!value || typeof value !== 'object') return value;
+    if (value.thread && typeof value.thread === 'object') return value.thread;
+    if (value.conversation && typeof value.conversation === 'object') return value.conversation;
+    if (value.data && value.data !== value) return this.unwrapThread(value.data);
+    if (value.result && value.result !== value) return this.unwrapThread(value.result);
+    return value;
+  }
+
+  text(value, fallback) {
+    if (value === undefined || value === null || value === '') return fallback || '';
+    if (typeof value === 'object') return String(value.name || value.displayName || value.label || value.title || value.text || fallback || '');
+    return String(value);
+  }
+
+  initials(value) {
+    const parts = this.text(value, 'PL').trim().split(/\s+/).filter(Boolean);
+    return parts.slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
+  }
+
+  timeValue(value) { const parsed = new Date(value || 0).getTime(); return Number.isFinite(parsed) ? parsed : 0; }
+
+  normalizeEntry(raw, index, thread, outgoingHint) {
+    raw = raw && typeof raw === 'object' ? raw : {};
+    const directionValue = this.text(raw.direction || raw.type || raw.flow).toLowerCase();
+    const outgoing = outgoingHint === true || raw.isMine === true || raw.fromMe === true || raw.mine === true || ['outgoing','sent','outbound'].indexOf(directionValue) >= 0;
+    const sender = this.text(raw.sender || raw.author || raw.from || raw.senderName, outgoing ? this.userName() : thread.sender);
+    return {
+      id: this.text(raw.id || raw.uuid || raw.messageId, thread.id + '-entry-' + (index + 1)),
+      sender: sender,
+      direction: outgoing ? 'outgoing' : 'incoming',
+      text: this.text(raw.text || raw.body || raw.content || raw.message),
+      at: raw.at || raw.createdAt || raw.created_at || raw.sentAt || raw.timestamp || thread.at || new Date().toISOString(),
+      read: raw.read !== false && raw.isRead !== false
+    };
+  }
+
+  normalizeThread(value, index, archivedHint) {
+    const raw = this.unwrapThread(value);
+    const item = raw && typeof raw === 'object' ? raw : {};
+    const participants = Array.isArray(item.participants) ? item.participants : [];
+    const participant = participants.find((person) => person && person.isCurrentUser !== true && person.isMe !== true) || participants[0] || null;
+    const sender = this.text(item.sender || item.senderName || item.contact || item.participant || participant, 'ProLinker');
+    const id = this.text(item.id || item.uuid || item.threadId || item.conversationId, (archivedHint ? 'archived-' : 'inbox-') + 'message-' + (index + 1));
+    const base = { id: id, sender: sender, at: item.at || item.updatedAt || item.updated_at || item.lastMessageAt || item.createdAt || new Date().toISOString() };
+    const sourceEntries = Array.isArray(item.messages) ? item.messages : (Array.isArray(item.entries) ? item.entries : (Array.isArray(item.replies) ? item.replies : []));
+    const messages = sourceEntries.map((entry, entryIndex) => this.normalizeEntry(entry, entryIndex, base, false));
+    const last = messages.length ? messages[messages.length - 1] : null;
+    const unreadCount = Number(item.unreadCount || item.unread_count || 0);
+    const unread = item.unread === true || item.isUnread === true || item.read === false || unreadCount > 0;
+    const archived = archivedHint === true || item.archived === true || item.isArchived === true || this.text(item.status).toLowerCase() === 'archived';
+    return {
+      id: id,
+      sender: sender,
+      subject: this.text(item.subject || item.title || item.topic, 'Gesprek met ' + sender),
+      preview: this.text(item.preview || item.snippet || item.lastMessage || (last && last.text), 'Nog geen bericht'),
+      unread: unread,
+      archived: archived,
+      at: item.at || item.updatedAt || item.updated_at || item.lastMessageAt || (last && last.at) || base.at,
+      href: this.text(item.href),
+      messages: messages,
+      raw: item
+    };
+  }
+
+  userName() {
+    const session = this.state.session || {};
+    return this.text(session.name, session.role === 'client' ? 'ProLinker opdrachtgever' : 'ProLinker professional');
+  }
+
+  replaceThread(next) {
+    this.setState((state) => {
+      let found = false;
+      const threads = state.threads.map((item) => {
+        if (item.id !== next.id) return item;
+        found = true;
+        return next;
+      });
+      if (!found) threads.push(next);
+      threads.sort((a, b) => this.timeValue(b.at) - this.timeValue(a.at));
+      return { threads: threads, selected: state.selectedId === next.id ? next : state.selected };
+    });
+    this.scrollToLatest();
+  }
+
+  setThreadRead(id) {
+    this.setState((state) => {
+      const threads = state.threads.map((item) => item.id === id ? Object.assign({}, item, { unread: false, messages: item.messages.map((entry) => Object.assign({}, entry, { read: true })) }) : item);
+      const selected = state.selected && state.selected.id === id ? Object.assign({}, state.selected, { unread: false, messages: state.selected.messages.map((entry) => Object.assign({}, entry, { read: true })) }) : state.selected;
+      return { threads: threads, selected: selected };
+    });
+  }
+
+  async persistRead(id) {
+    try { await window.ProLinkerApp.messages.markRead(id); }
+    catch (error) { this.toast(error && error.message ? error.message : 'Gelezen status opslaan is niet gelukt.'); }
+  }
+
+  async hydrateThread(id, shouldMark) {
+    if (!id) return;
+    this.setState({ threadLoading: true, threadError: '' });
+    if (shouldMark) { this.setThreadRead(id); this.persistRead(id); }
+    try {
+      const raw = await window.ProLinkerApp.messages.get(id);
+      const current = this.state.threads.find((item) => item.id === id) || this.state.selected;
+      let detail = this.normalizeThread(raw, 0, current ? current.archived : false);
+      detail.id = id;
+      if (current) {
+        detail = Object.assign({}, current, detail, {
+          id: current.id,
+          archived: current.archived || detail.archived,
+          messages: detail.messages.length ? detail.messages : current.messages,
+          unread: shouldMark ? false : detail.unread
+        });
+      }
+      if (!shouldMark && detail.unread) { detail.unread = false; detail.messages = detail.messages.map((entry) => Object.assign({}, entry, { read: true })); this.persistRead(id); }
+      this.replaceThread(detail);
+      this.setState({ threadLoading: false, threadError: '' });
+    } catch (error) {
+      this.setState({ threadLoading: false, threadError: error && error.message ? error.message : 'Gesprek laden is niet gelukt.' });
+    }
+  }
+
+  openThread(item) {
+    this.setState({ selectedId: item.id, selected: item, draft: '', draftError: '', threadError: '', menuOpen: false });
+    this.updateUrl(this.state.folder, item.id);
+    this.scrollToLatest();
+    this.hydrateThread(item.id, item.unread);
+  }
+
+  closeThread() {
+    this.setState({ selectedId: '', selected: null, draft: '', draftError: '', threadError: '' });
+    this.updateUrl(this.state.folder, '');
+  }
+
+  setFolder(folder) {
+    if (folder !== 'archived') folder = 'inbox';
+    this.setState({ folder: folder, selectedId: '', selected: null, draft: '', draftError: '', threadError: '' });
+    this.updateUrl(folder, '');
+  }
+
+  updateUrl(folder, conversationId) {
+    try {
+      const url = new URL(window.location.href);
+      if (folder === 'archived') url.searchParams.set('folder', 'archived'); else url.searchParams.delete('folder');
+      if (conversationId) url.searchParams.set('conversation', conversationId); else url.searchParams.delete('conversation');
+      history.replaceState({}, '', url.pathname + url.search);
+    } catch (error) {}
+  }
+
+  async archiveSelected() {
+    const thread = this.state.selected;
+    if (!thread || this.state.actionBusy) return;
+    const restoring = thread.archived === true;
+    this.setState({ actionBusy: true, threadError: '' });
+    try {
+      if (restoring) await window.ProLinkerApp.messages.restore(thread.id); else await window.ProLinkerApp.messages.archive(thread.id);
+      this.toast(restoring ? 'Gesprek teruggezet naar je inbox.' : 'Gesprek gearchiveerd.');
+      this.updateUrl(this.state.folder, '');
+      await this.load('', false);
+    } catch (error) {
+      this.setState({ threadError: error && error.message ? error.message : 'Gesprek bijwerken is niet gelukt.' });
+    }
+    this.setState({ actionBusy: false });
+  }
+
+  returnedEntry(value, thread, body) {
+    if (!value || typeof value !== 'object') return null;
+    let candidate = value.message && typeof value.message === 'object' ? value.message : (value.entry && typeof value.entry === 'object' ? value.entry : null);
+    if (!candidate && (value.text !== undefined || value.body !== undefined || value.content !== undefined)) candidate = value;
+    if (!candidate) return null;
+    return this.normalizeEntry(candidate, thread.messages.length, thread, true);
+  }
+
+  async sendDraft(event) {
+    if (event && event.preventDefault) event.preventDefault();
+    const thread = this.state.selected;
+    if (!thread || this.state.sending) return;
+    const body = String(this.state.draft || '').trim();
+    if (!body) { this.setState({ draftError: 'Schrijf eerst een bericht.' }); return; }
+    if (body.length > 4000) { this.setState({ draftError: 'Je bericht mag maximaal 4000 tekens bevatten.' }); return; }
+    this.setState({ sending: true, draftError: '', threadError: '' });
+    try {
+      const result = await window.ProLinkerApp.messages.send(thread.id, body);
+      const returnedThreadValue = result && result.thread ? result.thread : (result && (Array.isArray(result.messages) || result.subject || result.threadId || result.conversationId) ? result : null);
+      let updated = returnedThreadValue ? this.normalizeThread(returnedThreadValue, 0, false) : Object.assign({}, thread);
+      if (returnedThreadValue) updated = Object.assign({}, thread, updated, { id: thread.id, archived: false, messages: updated.messages.length ? updated.messages : thread.messages });
+      let entry = this.returnedEntry(result, updated, body);
+      if (!entry) entry = { id: thread.id + '-reply-' + Date.now(), sender: this.userName(), direction: 'outgoing', text: body, at: new Date().toISOString(), read: true };
+      const exists = updated.messages.some((item) => item.id === entry.id) || updated.messages.slice(-3).some((item) => item.direction === 'outgoing' && String(item.text || '').trim() === body);
+      if (!exists) updated.messages = updated.messages.concat([entry]);
+      updated.preview = body;
+      updated.at = entry.at;
+      updated.unread = false;
+      updated.archived = false;
+      this.replaceThread(updated);
+      const wasArchived = thread.archived;
+      this.setState({ selectedId: updated.id, selected: updated, draft: '', draftError: '', sending: false, folder: wasArchived ? 'inbox' : this.state.folder });
+      this.updateUrl(wasArchived ? 'inbox' : this.state.folder, updated.id);
+      this.toast('Bericht verstuurd.');
+    } catch (error) {
+      this.setState({ sending: false, draftError: error && error.message ? error.message : 'Bericht versturen is niet gelukt.' });
+    }
+  }
+
+  scrollToLatest() {
+    clearTimeout(this._scrollTimer);
+    this._scrollTimer = setTimeout(() => { if (this._messageScroll) this._messageScroll.scrollTop = this._messageScroll.scrollHeight; }, 0);
+  }
+
+  toast(message) {
+    clearTimeout(this._toastTimer);
+    this.setState({ toast: message });
+    this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 2800);
+  }
+
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('plk-theme', next); } catch (error) {}
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+    this.setState({ theme: next, menuOpen: false });
+  }
+
+  formatListTime(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    const now = new Date();
+    if (date.toDateString() === now.toDateString()) return date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+    const days = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() - new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()) / 86400000);
+    if (days === 1) return 'Gisteren';
+    return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+  }
+
+  formatDate(value, includeTime) {
+    if (!value) return 'Datum onbekend';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return this.text(value, 'Datum onbekend');
+    const options = includeTime ? { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleString('nl-NL', options);
+  }
+
+  renderVals() {
+    const session = this.state.session || { role: 'freelancer', name: 'ProLinker gebruiker' };
+    const role = session.role === 'client' ? 'client' : 'freelancer';
+    const userName = this.userName();
+    const menuItems = window.ProLinkerApp ? window.ProLinkerApp.routes.accountMenu(role).map((item) => Object.assign({}, item, { bg: item.key === 'messages' ? 'var(--panel)' : 'transparent' })) : [];
+    const inbox = this.state.threads.filter((item) => !item.archived);
+    const archived = this.state.threads.filter((item) => item.archived);
+    const unreadCount = inbox.filter((item) => item.unread).length;
+    const query = this.state.query.trim().toLowerCase();
+    const folderThreads = this.state.folder === 'archived' ? archived : inbox;
+    const filtered = folderThreads.filter((item) => !query || [item.sender,item.subject,item.preview].concat(item.messages.map((entry) => entry.text)).join(' ').toLowerCase().indexOf(query) >= 0);
+    const selected = this.state.selected;
+    const palette = ['#EAF2FB','#E8F5EF','#F5EFFB','#FFF2E8','#EAF5F6','#F3F0E8'];
+    const threads = filtered.map((item, index) => Object.assign({}, item, {
+      initials: this.initials(item.sender), avatarBg: palette[index % palette.length], timeLabel: this.formatListTime(item.at), selected: !!selected && selected.id === item.id,
+      stateClass: (item.unread ? 'unread ' : '') + (selected && selected.id === item.id ? 'selected' : ''), ariaLabel: (item.unread ? 'Ongelezen gesprek. ' : '') + item.sender + '. ' + item.subject,
+      onOpen: () => this.openThread(item)
+    }));
+    const entries = selected ? selected.messages.map((entry) => Object.assign({}, entry, { sender: entry.direction === 'outgoing' ? 'Jij' : entry.sender, timeLabel: this.formatDate(entry.at, true) })) : [];
+    const noFolderItems = folderThreads.length === 0;
+    const emptyTitle = query ? 'Geen gesprekken gevonden' : (this.state.folder === 'archived' ? 'Nog niets gearchiveerd' : 'Je inbox is leeg');
+    const emptyText = query ? 'Probeer een andere naam, onderwerp of zoekterm.' : (this.state.folder === 'archived' ? 'Gesprekken die je archiveert verschijnen hier.' : 'Nieuwe gesprekken over opdrachten en samenwerkingen verschijnen hier automatisch.');
+    const draftLength = String(this.state.draft || '').length;
+    return {
+      menuOpen:this.state.menuOpen,menuChevron:this.state.menuOpen?'\u25B2':'\u25BC',onToggleMenu:()=>this.setState((state)=>({menuOpen:!state.menuOpen})),onCloseMenu:()=>this.setState({menuOpen:false}),menuItems:menuItems,userName:userName,userInitials:this.initials(userName),roleLabel:role==='client'?'Opdrachtgever':'Freelancer',onTheme:()=>this.toggleTheme(),themeLabel:this.state.theme==='dark'?'Lichte modus':'Donkere modus',onLogout:()=>window.ProLinkerApp.session.logout(),
+      unreadLabel:unreadCount===1?'1 ongelezen':unreadCount+' ongelezen',unreadAria:unreadCount===1?'1 ongelezen gesprek':unreadCount+' ongelezen gesprekken',loading:this.state.loading,hasError:!!this.state.error,errorMessage:this.state.error,onRetry:()=>this.load('', true),ready:!this.state.loading&&!this.state.error,
+      listMobileClass:selected?'plk-mobile-hidden':'',conversationMobileClass:selected?'':'plk-mobile-hidden',inboxTabClass:this.state.folder==='inbox'?'active':'',archivedTabClass:this.state.folder==='archived'?'active':'',inboxSelected:this.state.folder==='inbox',archivedSelected:this.state.folder==='archived',inboxCount:inbox.length,archivedCount:archived.length,onInbox:()=>this.setFolder('inbox'),onArchived:()=>this.setFolder('archived'),query:this.state.query,hasQuery:!!this.state.query,onQuery:(event)=>this.setState({query:event.target.value}),onClearQuery:()=>this.setState({query:''}),
+      threads:threads,hasThreads:threads.length>0,noThreads:threads.length===0,emptyTitle:emptyTitle,emptyText:emptyText,showClearSearch:!!query,showInboxAction:!query&&this.state.folder==='archived'&&noFolderItems,showOpportunityAction:!query&&this.state.folder==='inbox'&&noFolderItems,opportunityHref:role==='client'?'Prolinker Mijn opdrachten.dc.html?role=client':'Prolinker Voor jou v2.dc.html',opportunityLabel:role==='client'?'Bekijk je opdrachten':'Bekijk nieuwe opdrachten',
+      hasSelected:!!selected,noSelected:!selected,selectedAvatarBg:'#EAF2FB',selectedInitials:selected?this.initials(selected.sender):'PL',selectedSubject:selected?selected.subject:'',selectedSender:selected?selected.sender:'',selectedDate:selected?this.formatDate(selected.at,false):'',onBackToList:()=>this.closeThread(),onArchive:()=>this.archiveSelected(),actionBusy:this.state.actionBusy,archiveLabel:this.state.actionBusy?'Bezig...':(selected&&selected.archived?'Terugzetten':'Archiveren'),archiveButtonClass:selected&&selected.archived?'':'plk-btn-danger',threadLoading:this.state.threadLoading,hasThreadError:!!this.state.threadError,threadError:this.state.threadError,onRetryThread:()=>selected&&this.hydrateThread(selected.id,false),conversationDate:selected?this.formatDate(selected.at,false):'',entries:entries,hasEntries:entries.length>0,noEntries:entries.length===0,messageScrollRef:(element)=>{this._messageScroll=element;},
+      draft:this.state.draft,onDraft:(event)=>this.setState({draft:event.target.value,draftError:''}),onDraftKey:(event)=>{if((event.ctrlKey||event.metaKey)&&event.key==='Enter')this.sendDraft(event);},draftInvalid:!!this.state.draftError||draftLength>4000,hasDraftError:!!this.state.draftError,draftError:this.state.draftError,draftCount:draftLength,counterClass:draftLength>4000?'over':'',onSend:(event)=>this.sendDraft(event),sending:this.state.sending,sendLabel:this.state.sending?'Versturen...':'Versturen',showToast:!!this.state.toast,toast:this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

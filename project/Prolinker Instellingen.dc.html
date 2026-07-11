@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F5F7F9; --surface:#fff; --panel:#F8FAFC; --text:#10273A; --muted:#617286; --faint:#91A0B0; --border:#DCE4EB; --hair:#E9EEF3; --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; --green:#2FA95B; --danger:#A2463B; }
+  :root[data-theme="dark"] { --bg:#101820; --surface:#17232D; --panel:#121D26; --text:#F5F8FA; --muted:#B4C1CC; --faint:#81909D; --border:#31414E; --hair:#263541; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  html,body { margin:0; min-height:100%; }
+  body { background:var(--bg); color:var(--text); font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; }
+  button,input,select { font:inherit; }
+  button { -webkit-tap-highlight-color:transparent; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,130,200,.23); outline-offset:2px; }
+  .plk-shell-header { height:58px; background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; }
+  .plk-shell-inner { max-width:1240px; height:100%; margin:0 auto; padding:0 22px; display:flex; align-items:center; gap:24px; }
+  .plk-logo { width:112px; height:auto; display:block; }
+  .plk-header-links { margin-left:auto; display:flex; align-items:center; gap:22px; color:var(--text); font-size:13px; font-weight:550; }
+  .plk-header-link:hover { color:var(--blue); }
+  .plk-account-btn { min-height:38px; border:0; background:transparent; padding:4px 6px; display:flex; align-items:center; gap:9px; color:var(--text); cursor:pointer; }
+  .plk-avatar { width:31px; height:31px; border-radius:50%; background:#E6F1FB; color:var(--blue-dark); border:1px solid #C9DEEF; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
+  .plk-account-menu { position:absolute; right:0; top:44px; width:278px; background:var(--surface); border:1px solid var(--border); border-radius:8px; box-shadow:0 18px 42px rgba(16,39,58,.16); overflow:hidden; z-index:70; }
+  .plk-menu-link { display:grid; grid-template-columns:30px 1fr; gap:10px; padding:9px 12px; border-bottom:1px solid var(--hair); }
+  .plk-menu-link:hover { background:var(--panel); }
+  .plk-menu-icon { width:28px; height:28px; border-radius:6px; background:#EDF4FA; color:var(--blue-dark); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; }
+  .plk-menu-label { display:block; font-size:13px; font-weight:650; line-height:1.2; }
+  .plk-menu-desc { display:block; margin-top:2px; color:var(--faint); font-size:10.5px; line-height:1.25; }
+  .plk-main { max-width:1060px; width:100%; margin:0 auto; padding:38px 24px 80px; }
+  .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; }
+  .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-dark); }
+  .plk-title { margin:8px 0 0; font-size:29px; line-height:1.15; letter-spacing:-.025em; }
+  .plk-subtitle { margin:8px 0 0; max-width:620px; color:var(--muted); font-size:14px; line-height:1.55; }
+  .plk-unsaved { flex:0 0 auto; display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:11.5px; }
+  .plk-unsaved-dot { width:7px; height:7px; border-radius:50%; background:var(--orange); }
+  .plk-settings-layout { display:grid; grid-template-columns:210px minmax(0,1fr); align-items:start; gap:16px; }
+  .plk-side { position:sticky; top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); padding:7px; }
+  .plk-side-link { display:flex; align-items:center; gap:9px; min-height:40px; padding:8px 10px; border-radius:6px; color:var(--muted); font-size:12.5px; font-weight:650; }
+  .plk-side-link:hover { background:var(--panel); color:var(--text); }
+  .plk-side-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#EDF4FA; color:var(--blue-dark); font-size:9px; font-weight:800; }
+  .plk-settings-form { min-width:0; display:flex; flex-direction:column; gap:14px; }
+  .plk-section { scroll-margin-top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); overflow:hidden; }
+  .plk-section-head { padding:16px 18px 14px; border-bottom:1px solid var(--hair); }
+  .plk-section-title { margin:0; font-size:15px; font-weight:730; letter-spacing:-.01em; }
+  .plk-section-note { margin:4px 0 0; color:var(--muted); font-size:11.5px; line-height:1.45; }
+  .plk-section-body { padding:18px; }
+  .plk-identity-grid,.plk-field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .plk-identity-grid { margin-bottom:17px; }
+  .plk-readonly { min-height:67px; padding:11px 12px; border:1px solid var(--hair); border-radius:7px; background:var(--panel); }
+  .plk-field-label { display:block; margin-bottom:6px; color:var(--muted); font-size:11px; font-weight:650; }
+  .plk-readonly-value { font-size:13px; font-weight:680; line-height:1.35; overflow-wrap:anywhere; }
+  .plk-verified { display:inline-flex; align-items:center; gap:5px; margin-top:4px; color:#237A45; font-size:10.5px; font-weight:650; }
+  .plk-verified-dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+  .plk-field { min-width:0; }
+  .plk-input,.plk-select { width:100%; height:40px; border:1px solid var(--border); border-radius:7px; background:var(--surface); color:var(--text); padding:0 11px; font-size:12.5px; }
+  .plk-input:hover,.plk-select:hover { border-color:#B8CBDC; }
+  .plk-input[aria-invalid="true"] { border-color:#C96B5E; background:#FFF9F7; }
+  :root[data-theme="dark"] .plk-input[aria-invalid="true"] { background:#2B2020; }
+  .plk-help { margin-top:5px; color:var(--faint); font-size:10.5px; line-height:1.4; }
+  .plk-field-error { margin-top:5px; color:var(--danger); font-size:10.5px; font-weight:600; }
+  .plk-choice-row { display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:66px; padding:12px 18px; border-bottom:1px solid var(--hair); }
+  .plk-choice-row:last-child { border-bottom:0; }
+  .plk-choice-copy { min-width:0; }
+  .plk-choice-title { font-size:12.5px; font-weight:680; line-height:1.35; }
+  .plk-choice-desc { margin-top:3px; color:var(--muted); font-size:11px; line-height:1.4; }
+  .plk-switch-button { flex:0 0 auto; display:flex; align-items:center; gap:8px; border:0; background:transparent; color:var(--faint); padding:5px 0 5px 8px; cursor:pointer; }
+  .plk-switch-label { width:22px; font-size:10px; font-weight:700; text-align:right; }
+  .plk-switch { width:38px; height:22px; border-radius:999px; position:relative; transition:background .16s ease; }
+  .plk-switch-knob { position:absolute; top:2px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(16,39,58,.25); transition:left .16s ease; }
+  .plk-integration { display:grid; grid-template-columns:36px minmax(0,1fr) auto; align-items:center; gap:12px; padding:17px 18px; }
+  .plk-integration-icon { width:36px; height:36px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; }
+  .plk-integration-title { font-size:12.5px; font-weight:700; }
+  .plk-integration-desc { margin-top:3px; color:var(--muted); font-size:11px; line-height:1.4; }
+  .plk-mode-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 8px; border:1px solid var(--border); border-radius:6px; background:var(--panel); color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:600; white-space:nowrap; }
+  .plk-mode-dot { width:6px; height:6px; border-radius:50%; }
+  .plk-action-bar { position:sticky; bottom:12px; z-index:10; min-height:62px; padding:10px 12px 10px 16px; border:1px solid var(--border); border-radius:8px; background:var(--surface); box-shadow:0 12px 30px rgba(16,39,58,.1); display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .plk-action-status { min-width:0; color:var(--muted); font-size:11.5px; line-height:1.35; }
+  .plk-action-status strong { color:var(--text); }
+  .plk-actions { display:flex; align-items:center; gap:8px; }
+  .plk-btn { min-height:38px; padding:0 14px; border:1px solid var(--border); border-radius:7px; background:var(--surface); color:var(--text); cursor:pointer; font-size:12.5px; font-weight:650; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+  .plk-btn:hover { border-color:#9CBAD3; color:var(--blue-dark); }
+  .plk-btn-primary { min-width:112px; border-color:var(--blue); background:var(--blue); color:#fff; }
+  .plk-btn-primary:hover { background:var(--blue-dark); color:#fff; }
+  .plk-btn:disabled { cursor:not-allowed; opacity:.55; }
+  .plk-loading { padding:44px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--muted); text-align:center; font-size:13px; }
+  .plk-error { padding:14px 16px; border:1px solid #E7B4A9; border-radius:8px; background:#FFF7F5; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:12.5px; }
+  :root[data-theme="dark"] .plk-error { background:#2B2020; color:#F0B7AE; border-color:#6E3B35; }
+  .plk-success { color:#237A45; font-weight:650; }
+  .plk-save-error { color:var(--danger); font-weight:650; }
+  .plk-footer { max-width:1060px; margin:0 auto; padding:0 24px 28px; color:var(--faint); font-size:11px; }
+  @media (max-width:850px) { .plk-header-links { display:none; } .plk-settings-layout { grid-template-columns:1fr; } .plk-side { position:static; display:flex; overflow:auto; gap:3px; } .plk-side-link { flex:0 0 auto; } }
+  @media (max-width:560px) {
+    .plk-shell-header { height:54px; } .plk-shell-inner { padding:0 14px; } .plk-logo { width:100px; }
+    .plk-account-name { display:none; } .plk-account-menu { position:fixed; left:10px; right:10px; top:60px; width:auto; max-height:calc(100vh - 72px); overflow:auto; }
+    .plk-main { padding:26px 14px 62px; } .plk-page-head { align-items:flex-start; margin-bottom:18px; } .plk-title { font-size:25px; } .plk-subtitle { font-size:13px; }
+    .plk-unsaved { display:none; } .plk-side-icon { display:none; } .plk-side-link { min-height:34px; padding:7px 9px; font-size:11.5px; }
+    .plk-section-head { padding:14px; } .plk-section-body { padding:14px; } .plk-identity-grid,.plk-field-grid { grid-template-columns:1fr; }
+    .plk-choice-row { padding:12px 14px; } .plk-choice-desc { font-size:10.5px; }
+    .plk-integration { grid-template-columns:34px 1fr; padding:14px; } .plk-mode-badge { grid-column:2; justify-self:start; }
+    .plk-action-bar { bottom:8px; padding:9px; align-items:stretch; flex-direction:column; } .plk-actions { width:100%; } .plk-actions .plk-btn { flex:1; }
+    .plk-action-status { text-align:center; } .plk-footer { padding:0 14px 22px; }
+  }
+  @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
+<title>Instellingen | ProLinker</title>
+<meta name="robots" content="noindex,nofollow">
+</helmet>
+
+<div style="min-height:100vh; display:flex; flex-direction:column;">
+  <header class="plk-shell-header">
+    <div class="plk-shell-inner">
+      <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
+      <nav class="plk-header-links" aria-label="Hoofdnavigatie">
+        <a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a>
+        <a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a>
+        <a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a>
+      </nav>
+      <div style="position:relative; margin-left:auto;">
+        <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Accountmenu openen">
+          <span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size:12.5px; font-weight:650;">{{ userName }}</span><span style="font-size:10px; color:var(--faint);">{{ menuChevron }}</span>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position:fixed; inset:0; z-index:60; border:0; background:transparent;"></button>
+          <div class="plk-account-menu" role="menu">
+            <div style="padding:11px 12px; border-bottom:1px solid var(--hair);"><div style="font-size:12.5px; font-weight:700;">{{ userName }}</div><div style="margin-top:2px; color:var(--faint); font-size:10.5px;">{{ roleLabel }}</div></div>
+            <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7">
+              <a class="plk-menu-link" href="{{ item.href }}" role="menuitem" style="background:{{ item.bg }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a>
+            </sc-for>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--hair); border-top:1px solid var(--hair);">
+              <button type="button" onClick="{{ onTheme }}" style="min-height:42px; border:0; background:var(--surface); color:var(--muted); cursor:pointer; font-size:11px; font-weight:650;">{{ themeLabel }}</button>
+              <button type="button" onClick="{{ onLogout }}" style="min-height:42px; border:0; background:var(--surface); color:#A2463B; cursor:pointer; font-size:11px; font-weight:650;">Uitloggen</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <main class="plk-main" style="flex:1;">
+    <div class="plk-page-head">
+      <div><div class="plk-eyebrow">Persoonlijke voorkeuren</div><h1 class="plk-title">Instellingen</h1><p class="plk-subtitle">Beheer je accountvoorkeuren, meldingen en privacy vanuit een plek.</p></div>
+      <sc-if value="{{ dirty }}" hint-placeholder-val="{{ false }}"><span class="plk-unsaved"><span class="plk-unsaved-dot"></span>Niet-opgeslagen wijzigingen</span></sc-if>
+    </div>
+
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">Je instellingen worden geladen...</div></sc-if>
+    <sc-if value="{{ hasFatalError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ fatalError }}</span><button class="plk-btn" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <div class="plk-settings-layout">
+        <nav class="plk-side" aria-label="Instellingensecties">
+          <sc-for list="{{ sectionLinks }}" as="section" hint-placeholder-count="4">
+            <a class="plk-side-link" href="{{ section.href }}"><span class="plk-side-icon">{{ section.icon }}</span>{{ section.label }}</a>
+          </sc-for>
+        </nav>
+
+        <form class="plk-settings-form" onSubmit="{{ onSave }}" noValidate="noValidate">
+          <section class="plk-section" id="account" aria-labelledby="account-title">
+            <div class="plk-section-head"><h2 class="plk-section-title" id="account-title">Account</h2><p class="plk-section-note">Je WhatsApp-account is de beveiligde basis van je ProLinker-profiel.</p></div>
+            <div class="plk-section-body">
+              <div class="plk-identity-grid">
+                <div class="plk-readonly"><span class="plk-field-label">Naam</span><div class="plk-readonly-value">{{ userName }}</div></div>
+                <div class="plk-readonly"><span class="plk-field-label">WhatsApp-contact</span><div class="plk-readonly-value" dir="ltr">{{ whatsappContact }}</div><span class="plk-verified"><span class="plk-verified-dot"></span>Geverifieerde sessie</span></div>
+              </div>
+              <div class="plk-field-grid">
+                <label class="plk-field"><span class="plk-field-label">Taal</span><select class="plk-select" value="{{ language }}" onChange="{{ onLanguage }}" disabled="{{ saving }}"><option value="nl">Nederlands</option><option value="en">English</option></select><span class="plk-help">Voor navigatie, meldingen en systeemteksten.</span></label>
+                <label class="plk-field" for="plk-location"><span class="plk-field-label">Plaats of regio</span><input class="plk-input" id="plk-location" type="text" value="{{ location }}" onInput="{{ onLocation }}" maxLength="80" placeholder="Bijv. Utrecht" autoComplete="address-level2" aria-invalid="{{ locationInvalid }}" aria-describedby="plk-location-help"><span class="plk-help" id="plk-location-help">Optioneel, maximaal 80 tekens.</span><sc-if value="{{ hasLocationError }}" hint-placeholder-val="{{ false }}"><span class="plk-field-error" role="alert">{{ locationError }}</span></sc-if></label>
+                <label class="plk-field"><span class="plk-field-label">Werkvoorkeur</span><select class="plk-select" value="{{ remotePreference }}" onChange="{{ onRemotePreference }}" disabled="{{ saving }}"><option value="remote">Remote</option><option value="hybrid">Hybride</option><option value="onsite">Op locatie</option><option value="flexible">Geen voorkeur</option></select><span class="plk-help">Helpt ProLinker om relevantere matches te tonen.</span></label>
+              </div>
+            </div>
+          </section>
+
+          <section class="plk-section" id="notifications" aria-labelledby="notifications-title">
+            <div class="plk-section-head"><h2 class="plk-section-title" id="notifications-title">Meldingen</h2><p class="plk-section-note">Kies welke belangrijke updates je via je ProLinker-account wilt ontvangen.</p></div>
+            <sc-for list="{{ notificationItems }}" as="item" hint-placeholder-count="4">
+              <div class="plk-choice-row"><div class="plk-choice-copy"><div class="plk-choice-title">{{ item.title }}</div><div class="plk-choice-desc">{{ item.description }}</div></div><button class="plk-switch-button" type="button" role="switch" aria-checked="{{ item.checked }}" aria-label="{{ item.ariaLabel }}" onClick="{{ item.onToggle }}" disabled="{{ saving }}"><span class="plk-switch-label">{{ item.stateLabel }}</span><span class="plk-switch" style="background:{{ item.trackBg }};"><span class="plk-switch-knob" style="left:{{ item.knobLeft }};"></span></span></button></div>
+            </sc-for>
+          </section>
+
+          <section class="plk-section" id="privacy" aria-labelledby="privacy-title">
+            <div class="plk-section-head"><h2 class="plk-section-title" id="privacy-title">Privacy</h2><p class="plk-section-note">Bepaal hoe andere ProLinker-leden je profiel kunnen vinden en benaderen.</p></div>
+            <sc-for list="{{ privacyItems }}" as="item" hint-placeholder-count="2">
+              <div class="plk-choice-row"><div class="plk-choice-copy"><div class="plk-choice-title">{{ item.title }}</div><div class="plk-choice-desc">{{ item.description }}</div></div><button class="plk-switch-button" type="button" role="switch" aria-checked="{{ item.checked }}" aria-label="{{ item.ariaLabel }}" onClick="{{ item.onToggle }}" disabled="{{ saving }}"><span class="plk-switch-label">{{ item.stateLabel }}</span><span class="plk-switch" style="background:{{ item.trackBg }};"><span class="plk-switch-knob" style="left:{{ item.knobLeft }};"></span></span></button></div>
+            </sc-for>
+          </section>
+
+          <section class="plk-section" id="integration" aria-labelledby="integration-title">
+            <div class="plk-section-head"><h2 class="plk-section-title" id="integration-title">Integratie-status</h2><p class="plk-section-note">Technische status van de gegevensbron voor dit account.</p></div>
+            <div class="plk-integration"><span class="plk-integration-icon" style="background:{{ integrationIconBg }}; color:{{ integrationIconColor }};">{{ integrationIcon }}</span><div><div class="plk-integration-title">{{ integrationTitle }}</div><div class="plk-integration-desc">{{ integrationDescription }}</div></div><span class="plk-mode-badge"><span class="plk-mode-dot" style="background:{{ integrationDot }};"></span>{{ integrationMode }}</span></div>
+          </section>
+
+          <sc-if value="{{ hasSubmitError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ submitError }}</span><button class="plk-btn" type="button" onClick="{{ onDismissError }}">Sluiten</button></div></sc-if>
+
+          <div class="plk-action-bar">
+            <div class="plk-action-status" aria-live="polite"><sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}"><span class="plk-success">Instellingen opgeslagen.</span></sc-if><sc-if value="{{ saving }}" hint-placeholder-val="{{ false }}"><strong>Wijzigingen opslaan...</strong></sc-if><sc-if value="{{ idleStatus }}" hint-placeholder-val="{{ true }}"><span>{{ statusText }}</span></sc-if></div>
+            <div class="plk-actions"><button class="plk-btn" type="button" onClick="{{ onReset }}" disabled="{{ resetDisabled }}">Ongedaan maken</button><button class="plk-btn plk-btn-primary" type="submit" disabled="{{ saveDisabled }}">{{ saveLabel }}</button></div>
+          </div>
+        </form>
+      </div>
+    </sc-if>
+  </main>
+  <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Werk slimmer met je netwerk.</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  state = {
+    loading: true, saving: false, fatalError: '', submitError: '', notice: '', session: null, sourceSettings: null,
+    baseline: null, menuOpen: false, theme: 'light', language: 'nl', location: '', remotePreference: 'remote',
+    notifications: { matches: true, messages: true, applicationUpdates: true, referralUpdates: true },
+    privacy: { searchable: true, contactable: true }, validation: {}
+  };
+
+  componentDidMount() {
+    document.documentElement.setAttribute('lang', 'nl');
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (error) {}
+    if (!window.ProLinkerApp) { this.setState({ loading: false, fatalError: 'De app-service kon niet worden geladen.' }); return; }
+    const session = window.ProLinkerApp.session.require({ next: 'Prolinker Instellingen.dc.html' });
+    if (!session) return;
+    this.setState({ session: session });
+    this.load();
+    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
+    this._beforeUnload = (event) => { if (!this.isDirty()) return; event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('keydown', this._keyHandler);
+    window.addEventListener('beforeunload', this._beforeUnload);
+  }
+
+  componentWillUnmount() {
+    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+    if (this._beforeUnload) window.removeEventListener('beforeunload', this._beforeUnload);
+  }
+
+  isObject(value) { return !!value && typeof value === 'object' && !Array.isArray(value); }
+  boolean(value, fallback) { return typeof value === 'boolean' ? value : fallback; }
+
+  normalizeSettings(value) {
+    const settings = this.isObject(value) ? value : {};
+    const notifications = this.isObject(settings.notifications) ? settings.notifications : {};
+    const privacy = this.isObject(settings.privacy) ? settings.privacy : {};
+    const language = settings.language === 'en' ? 'en' : 'nl';
+    const location = typeof privacy.location === 'string' ? privacy.location : (typeof settings.location === 'string' ? settings.location : '');
+    const remoteRaw = privacy.remotePreference || settings.remotePreference;
+    const remotePreference = ['remote', 'hybrid', 'onsite', 'flexible'].indexOf(remoteRaw) >= 0 ? remoteRaw : 'remote';
+    return {
+      language: language,
+      location: location,
+      remotePreference: remotePreference,
+      notifications: {
+        matches: this.boolean(notifications.matches, true),
+        messages: this.boolean(notifications.messages, true),
+        applicationUpdates: this.boolean(notifications.applicationUpdates, this.boolean(notifications.applications, true)),
+        referralUpdates: this.boolean(notifications.referralUpdates, this.boolean(notifications.referrals, true))
+      },
+      privacy: {
+        searchable: this.boolean(privacy.searchable, true),
+        contactable: this.boolean(privacy.contactable, true)
+      }
+    };
+  }
+
+  clone(value) { return JSON.parse(JSON.stringify(value)); }
+  draft() { return { language: this.state.language, location: this.state.location, remotePreference: this.state.remotePreference, notifications: this.clone(this.state.notifications), privacy: this.clone(this.state.privacy) }; }
+  draftKey(value) { try { return JSON.stringify(value || {}); } catch (error) { return ''; } }
+  isDirty() { return !!this.state.baseline && this.draftKey(this.draft()) !== this.draftKey(this.state.baseline); }
+
+  applyDraft(draft, extra) {
+    this.setState(Object.assign({
+      language: draft.language, location: draft.location, remotePreference: draft.remotePreference,
+      notifications: this.clone(draft.notifications), privacy: this.clone(draft.privacy), validation: {}
+    }, extra || {}));
+  }
+
+  async load() {
+    this.setState({ loading: true, fatalError: '', submitError: '', notice: '' });
+    try {
+      const settings = await window.ProLinkerApp.settings.get();
+      const draft = this.normalizeSettings(settings);
+      this.applyDraft(draft, { loading: false, fatalError: '', sourceSettings: this.isObject(settings) ? settings : {}, baseline: this.clone(draft) });
+      document.documentElement.setAttribute('lang', draft.language);
+    } catch (error) {
+      this.setState({ loading: false, fatalError: error && error.message ? error.message : 'Instellingen laden is niet gelukt.' });
+    }
+  }
+
+  validate() {
+    const errors = {};
+    const location = String(this.state.location || '').trim();
+    if (location.length === 1) errors.location = 'Vul minimaal 2 tekens in of laat dit veld leeg.';
+    else if (location.length > 80) errors.location = 'Gebruik maximaal 80 tekens.';
+    else if (/[<>]/.test(location)) errors.location = 'Gebruik geen punthaken in je locatie.';
+    if (['nl', 'en'].indexOf(this.state.language) < 0) errors.language = 'Kies een geldige taal.';
+    if (['remote', 'hybrid', 'onsite', 'flexible'].indexOf(this.state.remotePreference) < 0) errors.remotePreference = 'Kies een geldige werkvoorkeur.';
+    return errors;
+  }
+
+  payload() {
+    const source = this.isObject(this.state.sourceSettings) ? this.state.sourceSettings : {};
+    return {
+      language: this.state.language,
+      notifications: Object.assign({}, this.isObject(source.notifications) ? source.notifications : {}, {
+        matches: !!this.state.notifications.matches,
+        messages: !!this.state.notifications.messages,
+        applicationUpdates: !!this.state.notifications.applicationUpdates,
+        referralUpdates: !!this.state.notifications.referralUpdates
+      }),
+      privacy: Object.assign({}, this.isObject(source.privacy) ? source.privacy : {}, {
+        searchable: !!this.state.privacy.searchable,
+        contactable: !!this.state.privacy.contactable,
+        location: String(this.state.location || '').trim(),
+        remotePreference: this.state.remotePreference
+      })
+    };
+  }
+
+  async save(event) {
+    if (event && event.preventDefault) event.preventDefault();
+    if (this.state.saving) return;
+    const validation = this.validate();
+    if (Object.keys(validation).length) {
+      this.setState({ validation: validation, notice: '', submitError: '' });
+      if (validation.location) requestAnimationFrame(() => { const input = document.getElementById('plk-location'); if (input) input.focus(); });
+      return;
+    }
+    if (!this.isDirty()) return;
+    const payload = this.payload();
+    this.setState({ saving: true, submitError: '', notice: '', validation: {} });
+    try {
+      const response = await window.ProLinkerApp.settings.update(payload);
+      const returned = this.isObject(response) ? response : {};
+      const merged = Object.assign({}, payload, returned, {
+        notifications: Object.assign({}, payload.notifications, this.isObject(returned.notifications) ? returned.notifications : {}),
+        privacy: Object.assign({}, payload.privacy, this.isObject(returned.privacy) ? returned.privacy : {})
+      });
+      const savedDraft = this.normalizeSettings(merged);
+      this.applyDraft(savedDraft, { saving: false, sourceSettings: merged, baseline: this.clone(savedDraft), notice: 'saved', submitError: '' });
+      document.documentElement.setAttribute('lang', savedDraft.language);
+    } catch (error) {
+      this.setState({ saving: false, submitError: error && error.message ? error.message : 'Opslaan is niet gelukt. Probeer het opnieuw.' });
+    }
+  }
+
+  resetDraft() {
+    if (!this.state.baseline || this.state.saving) return;
+    this.applyDraft(this.state.baseline, { notice: '', submitError: '' });
+  }
+
+  changeField(key, value) {
+    const next = { notice: '', submitError: '' };
+    next[key] = value;
+    if (key === 'location') next.validation = Object.assign({}, this.state.validation, { location: '' });
+    this.setState(next);
+  }
+
+  toggleNotification(key) {
+    if (this.state.saving) return;
+    const next = Object.assign({}, this.state.notifications);
+    next[key] = !next[key];
+    this.setState({ notifications: next, notice: '', submitError: '' });
+  }
+
+  togglePrivacy(key) {
+    if (this.state.saving) return;
+    const next = Object.assign({}, this.state.privacy);
+    next[key] = !next[key];
+    this.setState({ privacy: next, notice: '', submitError: '' });
+  }
+
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('plk-theme', next); } catch (error) {}
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+    this.setState({ theme: next, menuOpen: false });
+  }
+
+  initials(name) {
+    const parts = String(name || 'ProLinker').trim().split(/\s+/).filter(Boolean);
+    return ((parts[0] || 'P').charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : 'L')).toUpperCase();
+  }
+
+  switchItem(key, title, description, checked, kind) {
+    return {
+      key: key, title: title, description: description, checked: checked,
+      ariaLabel: title + (checked ? ' uitschakelen' : ' inschakelen'), stateLabel: checked ? 'Aan' : 'Uit',
+      trackBg: checked ? 'var(--blue)' : 'var(--border)', knobLeft: checked ? '18px' : '2px',
+      onToggle: kind === 'privacy' ? () => this.togglePrivacy(key) : () => this.toggleNotification(key)
+    };
+  }
+
+  renderVals() {
+    const app = window.ProLinkerApp;
+    const session = this.state.session || { role: 'freelancer', name: 'ProLinker gebruiker', contact: '' };
+    const role = session.role === 'client' ? 'client' : 'freelancer';
+    const userName = String(session.name || 'ProLinker gebruiker').trim();
+    const whatsappContact = app ? (app.session.normalizeWhatsapp(session.contact) || String(session.contact || '')) : String(session.contact || '');
+    let currentKey = 'settings';
+    try { if (new URLSearchParams(window.location.search).get('section') === 'profiel') currentKey = 'profile'; } catch (error) {}
+    const menuItems = app ? app.routes.accountMenu(role).map((item) => Object.assign({}, item, { bg: item.key === currentKey ? 'var(--panel)' : 'transparent' })) : [];
+    const dirty = this.isDirty();
+    const config = app ? app.getConfig() : { mode: 'local', baseUrl: '' };
+    const connected = config.mode === 'api';
+    const notificationItems = [
+      this.switchItem('matches', 'Nieuwe matches', 'Ontvang een melding wanneer ProLinker een relevante nieuwe match vindt.', !!this.state.notifications.matches, 'notification'),
+      this.switchItem('messages', 'Nieuwe berichten', 'Blijf op de hoogte van nieuwe gesprekken en antwoorden.', !!this.state.notifications.messages, 'notification'),
+      this.switchItem('applicationUpdates', 'Sollicitatie-updates', 'Krijg statuswijzigingen over sollicitaties en reacties.', !!this.state.notifications.applicationUpdates, 'notification'),
+      this.switchItem('referralUpdates', 'Referral-updates', 'Ontvang updates over uitnodigingen en referralverdiensten.', !!this.state.notifications.referralUpdates, 'notification')
+    ];
+    const privacyItems = [
+      this.switchItem('searchable', 'Profiel vindbaar', 'Andere ingelogde ProLinker-leden kunnen je profiel in zoekresultaten vinden.', !!this.state.privacy.searchable, 'privacy'),
+      this.switchItem('contactable', 'Contactverzoeken toestaan', 'Andere leden mogen je via ProLinker een contact- of netwerkverzoek sturen.', !!this.state.privacy.contactable, 'privacy')
+    ];
+    return {
+      menuOpen: this.state.menuOpen, menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC',
+      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })), onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: menuItems, userName: userName, userInitials: this.initials(userName), whatsappContact: whatsappContact,
+      roleLabel: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
+      onTheme: () => this.toggleTheme(), themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
+      onLogout: () => app.session.logout(),
+      loading: this.state.loading, ready: !this.state.loading && !this.state.fatalError, hasFatalError: !!this.state.fatalError, fatalError: this.state.fatalError, onRetry: () => this.load(),
+      sectionLinks: [{ href: '#account', icon: 'A', label: 'Account' }, { href: '#notifications', icon: 'M', label: 'Meldingen' }, { href: '#privacy', icon: 'P', label: 'Privacy' }, { href: '#integration', icon: 'I', label: 'Integratie-status' }],
+      language: this.state.language, location: this.state.location, remotePreference: this.state.remotePreference, saving: this.state.saving,
+      onLanguage: (event) => this.changeField('language', event.target.value), onLocation: (event) => this.changeField('location', event.target.value), onRemotePreference: (event) => this.changeField('remotePreference', event.target.value),
+      locationInvalid: !!this.state.validation.location, hasLocationError: !!this.state.validation.location, locationError: this.state.validation.location || '',
+      notificationItems: notificationItems, privacyItems: privacyItems,
+      integrationIcon: connected ? '\u2713' : 'L', integrationIconBg: connected ? '#E9F6EE' : '#FFF1E3', integrationIconColor: connected ? '#237A45' : '#A65300',
+      integrationTitle: connected ? 'Verbonden API' : 'Lokale mockgegevens',
+      integrationDescription: connected ? 'Voorkeuren worden via de geconfigureerde ProLinker API geladen en opgeslagen.' : 'Deze prototypeversie bewaart accountgegevens lokaal in deze browser.',
+      integrationMode: connected ? 'API verbonden' : 'Lokale modus', integrationDot: connected ? '#2FA95B' : '#ED8500',
+      dirty: dirty, saved: this.state.notice === 'saved', idleStatus: !this.state.saving && this.state.notice !== 'saved',
+      statusText: dirty ? 'Je hebt wijzigingen die nog niet zijn opgeslagen.' : 'Alle wijzigingen zijn opgeslagen.',
+      hasSubmitError: !!this.state.submitError, submitError: this.state.submitError, onDismissError: () => this.setState({ submitError: '' }),
+      onSave: (event) => this.save(event), onReset: () => this.resetDraft(), resetDisabled: !dirty || this.state.saving,
+      saveDisabled: !dirty || this.state.saving, saveLabel: this.state.saving ? 'Opslaan...' : 'Wijzigingen opslaan'
+    };
+  }
+}
+</script>
+</body>
+</html>

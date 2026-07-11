@@ -1,0 +1,3 @@
+*.js -text
+*.mjs -text
+manifest.json text eol=lf

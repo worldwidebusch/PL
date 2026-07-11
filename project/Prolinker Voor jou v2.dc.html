@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -62,21 +63,18 @@
   .plk-map-control:disabled { opacity: 0.42; cursor: default !important; transform: none !important; }
   .plk-map-control:disabled:hover { background: #F3F6FA !important; color: #344054 !important; }
   .plk-map-viewport:focus-visible { outline: 3px solid rgba(27,92,184,0.55) !important; outline-offset: -3px; }
-  .plk-market-filterbar { scrollbar-width: none; }
-  .plk-market-filterbar::-webkit-scrollbar { display: none; }
   .plk-market-density-tile { transition: opacity 0.18s ease, filter 0.18s ease; }
   .plk-market-density-tile:hover { opacity: 1 !important; filter: brightness(0.94) saturate(1.14); }
-  .plk-feed-shell { width: 100%; max-width: 1080px; margin: 24px auto 0; }
-  .plk-feed-list { display: flex; flex-direction: column; gap: 14px; }
-  .plk-feed-result { display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 14px; align-items: center; }
-  .plk-feed-rank { width: 34px; height: 34px; border-radius: 50%; border: 1px solid #D8DEE7; background: #FFFFFF; color: #657184; display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 800; }
-  .plk-feed-card { min-height: 196px; display: grid; grid-template-columns: 88px minmax(0,1fr) 154px; gap: 20px; padding: 20px 22px; border: 1px solid var(--border,#E4E5EC); border-radius: 11px; background: var(--surface,#FFFFFF); box-shadow: 0 1px 2px rgba(20,36,49,0.04); transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }
-  .plk-feed-card:hover { border-color: #9CB9D8; box-shadow: 0 18px 38px -26px rgba(20,36,49,0.46); transform: translateY(-1px); }
+  .plk-feed-shell { width: 100%; max-width: 1120px; margin: 30px auto 0; }
+  .plk-feed-list { display: flex; flex-direction: column; gap: 12px; }
+  .plk-feed-result { display: block; }
+  .plk-feed-card { min-height: 220px; display: grid; grid-template-columns: 82px minmax(0,1fr) 164px; gap: 22px; padding: 24px 26px; border: 1px solid #DDE3EA; border-radius: 10px; background: var(--surface,#FFFFFF); box-shadow: 0 1px 2px rgba(20,36,49,0.035); transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }
+  .plk-feed-card:hover { border-color: #96B4D6; box-shadow: 0 16px 34px -28px rgba(20,36,49,0.5); transform: translateY(-1px); }
   .plk-feed-card[data-state="sent"] { border-color: #77C8A7; background: linear-gradient(145deg, rgba(239,251,245,0.98), var(--surface,#FFFFFF)); }
   .plk-feed-card[data-state="review"] { border-color: #D9B66E; background: linear-gradient(145deg, rgba(255,249,234,0.98), var(--surface,#FFFFFF)); }
-  .plk-feed-category { width: 72px; height: 72px; align-self: start; justify-self: center; border-radius: 50%; border: 1px solid rgba(109,128,153,0.16); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 0 0 5px rgba(255,255,255,0.32); }
-  .plk-feed-category:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 5px rgba(255,255,255,0.42), 0 10px 22px -16px rgba(20,36,49,0.44); }
-  .plk-feed-category svg { width: 30px; height: 30px; }
+  .plk-feed-category { width: 68px; height: 68px; align-self: start; justify-self: center; border-radius: 50%; border: 1px solid rgba(109,128,153,0.17); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 0 0 4px rgba(255,255,255,0.34); }
+  .plk-feed-category:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 4px rgba(255,255,255,0.4), 0 10px 22px -17px rgba(20,36,49,0.44); }
+  .plk-feed-category svg { width: 29px; height: 29px; }
   .plk-feed-facts { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 9px 17px; margin-top: 12px; }
   .plk-feed-fact { min-width: 142px; flex: 1 1 156px; display: inline-flex; align-items: flex-start; gap: 7px; color: var(--text,#152431); }
   .plk-feed-fact-icon { width: 18px; height: 18px; margin-top: 1px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #738096; }
@@ -86,12 +84,28 @@
   .plk-modal-category { width: 52px; height: 52px; flex-shrink: 0; border-radius: 50%; border: 1px solid rgba(109,128,153,0.16); display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 4px rgba(255,255,255,0.34); }
   .plk-modal-facts { margin-top: 15px; padding: 13px 15px; border-radius: 12px; background: #F7F9FC; }
   .plk-feed-description { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .plk-feed-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-top: auto; padding-top: 15px; }
+  .plk-feed-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 16px; }
   .plk-feed-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; text-align: right; }
   .plk-search-row { position: relative; overflow: visible; transform: none !important; }
   .plk-search-row[data-location-open="true"] { z-index: 49; }
+  .plk-feed-search { height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 13px 0 15px; border: 1px solid #D8DEE7; border-radius: 10px; background: #FFFFFF; box-shadow: 0 2px 7px rgba(16,30,54,0.035); }
+  .plk-filter-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .plk-filter-control { height: 38px; display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid #D8DEE7; border-radius: 8px; background: #FFFFFF; color: #243247; font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .plk-filter-control[data-active="true"] { border-color: #7FA9D5; background: #F2F7FC; color: #164E8B; }
+  .plk-filter-popover { position: absolute; z-index: 48; top: 46px; left: 0; width: 250px; padding: 8px; border: 1px solid #DDE3EA; border-radius: 10px; background: #FFFFFF; box-shadow: 0 24px 54px -22px rgba(10,28,54,0.42); animation: plk-pop 0.16s ease both; }
+  .plk-filter-option { width: 100%; min-height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border: none; border-radius: 7px; background: transparent; color: #354258; font-family: inherit; font-size: 12.5px; font-weight: 650; text-align: left; cursor: pointer; }
+  .plk-filter-option[data-active="true"] { background: #EEF5FC; color: #124D8E; font-weight: 800; }
+  .plk-filter-option:hover { background: #F4F7FA; }
+  .plk-more-panel { width: 390px; padding: 15px; }
+  .plk-desktop-controls, .plk-desktop-feed { display: block; }
+  .plk-mobile-controls, .plk-mobile-feed { display: none; }
+  .plk-mobile-filter-sheet { position: fixed; z-index: 76; left: 10px; right: 10px; bottom: 10px; max-height: calc(100dvh - 78px); overflow-y: auto; padding: 18px 16px; border: 1px solid #DDE3EA; border-radius: 12px; background: #FFFFFF; box-shadow: 0 28px 70px -22px rgba(10,28,54,0.52); animation: plk-rise 0.2s ease both; }
+  .plk-mobile-activity { display: flex; flex-direction: column; }
+  .plk-activity-item { width: 100%; display: grid; grid-template-columns: 44px minmax(0,1fr) 18px; gap: 11px; align-items: center; padding: 14px 2px; border: none; border-bottom: 1px solid #E3E7ED; background: transparent; color: #172438; font-family: inherit; text-align: left; cursor: pointer; }
+  .plk-activity-item:first-child { border-top: 1px solid #E3E7ED; }
+  .plk-activity-icon { width: 40px; height: 40px; border: 1px solid rgba(109,128,153,0.17); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
   .plk-location-wrap { position: relative; flex-shrink: 0; overflow: visible; }
-  .plk-location-panel { position: absolute; z-index: 48; top: 52px; right: 0; width: min(370px, calc(100vw - 28px)); max-height: calc(100dvh - 216px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #DDE3EA; border-radius: 16px; background: #FFFFFF; box-shadow: 0 28px 70px -24px rgba(10,28,54,0.46); animation: plk-pop 0.18s ease both; }
+  .plk-location-panel { position: absolute; z-index: 48; top: 46px; left: 0; width: min(370px, calc(100vw - 28px)); max-height: calc(100dvh - 216px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #DDE3EA; border-radius: 10px; background: #FFFFFF; box-shadow: 0 28px 70px -24px rgba(10,28,54,0.46); animation: plk-pop 0.18s ease both; }
   .plk-location-choice:hover { border-color: #A9C4E2 !important; background: #F2F7FC !important; }
   .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; }
   .plk-map-ring { animation: plk-breathe 8s ease-in-out infinite; }
@@ -102,7 +116,6 @@
     .plk-nav-tabs button, .plk-nav-tabs a { display: none !important; }
     .plk-nav-inner { padding-left: 18px !important; padding-right: 18px !important; gap: 14px !important; }
     .plk-search-row { width: 100%; }
-    .plk-market-filterbar { align-items: flex-start !important; flex-wrap: nowrap !important; overflow-x: auto !important; }
     .plk-feed-card { grid-template-columns: 70px minmax(0,1fr); }
     .plk-feed-category { width: 62px; height: 62px; }
     .plk-feed-category svg { width: 27px; height: 27px; }
@@ -125,22 +138,11 @@
     .plk-modal-actions > button { flex: 1; min-width: 110px; }
     .plk-page-title { font-size: 28px !important; }
     .plk-page-subtitle { font-size: 13px !important; }
-    .plk-search-row { flex-wrap: wrap; }
-    .plk-search-row > div:first-child { flex-basis: 100%; }
-    .plk-location-wrap, .plk-location { width: 100%; }
-    .plk-location { justify-content: center; }
-    .plk-location-panel { position: fixed; left: 10px; right: 10px; top: 72px; width: auto; max-height: calc(100dvh - 84px); overflow-y: auto; }
+    .plk-search-row { display: block !important; }
+    .plk-desktop-controls, .plk-desktop-feed { display: none !important; }
+    .plk-mobile-controls, .plk-mobile-feed { display: block !important; }
     .plk-feed-shell { margin-top: 18px; }
-    .plk-feed-result { grid-template-columns: 1fr; }
-    .plk-feed-rank { display: none; }
-    .plk-feed-card { min-height: 0; grid-template-columns: 48px minmax(0,1fr); gap: 13px; padding: 16px; border-radius: 12px; }
-    .plk-feed-category { width: 46px; height: 46px; }
-    .plk-feed-category svg { width: 21px; height: 21px; }
-    .plk-feed-facts { gap: 9px 12px; }
-    .plk-feed-fact { min-width: 124px; flex-basis: calc(50% - 6px); }
     .plk-modal-category { width: 44px; height: 44px; }
-    .plk-feed-side { grid-column: 1 / -1; }
-    .plk-feed-actions { grid-column: 1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
@@ -158,7 +160,7 @@
         <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-          <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 304px; max-height: calc(100vh - 90px); overflow-y: auto; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 16px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 9px;">
+          <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 292px; max-height: calc(100vh - 82px); overflow-y: auto; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 7px;">
             <div style="padding: 8px 10px 6px;">
               <div style="font-size: 14px; font-weight: 800; color: var(--text,#152431);">ProLinker</div>
               <div style="margin-top: 2px; font-size: 11.5px; color: var(--muted,#6B6E7B);">Werk en talent, direct verbonden</div>
@@ -168,14 +170,14 @@
                 <div style="padding: 11px 10px 5px; font-family: 'JetBrains Mono', monospace; font-size: 9px; line-height: 1; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ mi.section }}</div>
               </sc-if>
               <sc-if value="{{ mi.label }}" hint-placeholder-val="false">
-                <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" aria-current="{{ mi.current }}" style="display: flex; align-items: center; gap: 11px; min-height: 48px; padding: 8px 10px; border-radius: 10px; background: {{ mi.bg }}; color: var(--text,#152431); cursor: pointer;">
-                  <span style="width: 32px; height: 32px; border-radius: 9px; background: {{ mi.iconBg }}; color: {{ mi.iconColor }}; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; font-weight: 850;">{{ mi.symbol }}</span>
-                  <span style="min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13.5px; line-height: 1.2; font-weight: {{ mi.weight }};">{{ mi.label }}</span><span style="font-size: 10.5px; line-height: 1.25; color: var(--muted,#6B6E7B);">{{ mi.description }}</span></span>
+                <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" onClick="{{ mi.onClick }}" aria-current="{{ mi.current }}" style="display: flex; align-items: center; gap: 9px; min-height: 40px; padding: 6px 8px; border-radius: 7px; background: {{ mi.bg }}; color: var(--text,#152431); cursor: pointer;">
+                  <span style="width: 27px; height: 27px; border-radius: 7px; background: {{ mi.iconBg }}; color: {{ mi.iconColor }}; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 850;">{{ mi.symbol }}</span>
+                  <span style="min-width: 0; display: flex; flex-direction: column; gap: 1px;"><span style="font-size: 13px; line-height: 1.2; font-weight: {{ mi.weight }};">{{ mi.label }}</span><span style="font-size: 10px; line-height: 1.2; color: var(--muted,#6B6E7B);">{{ mi.description }}</span></span>
                 </a>
               </sc-if>
             </sc-for>
             <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">Instellingen</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">Weergave</div>
             <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB);">
               <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>Donkere modus</span>
               <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
@@ -201,6 +203,84 @@
       <p class="plk-page-subtitle" style="margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: #5A6472;">Alle kansen uit de markt, gerangschikt op jouw profiel.</p>
     </div>
 
+    <div class="plk-search-row" data-location-open="{{ locationOpen }}" style="margin-top: 20px; animation: plk-rise 0.5s ease both; animation-delay: 0.04s;">
+      <div class="plk-feed-search">
+        <span style="display: inline-flex; flex-shrink: 0;">{{ searchEl }}</span>
+        <input type="search" value="{{ query }}" onInput="{{ onQuery }}" aria-label="Zoek op functie, skill of opdrachtgever" placeholder="Zoek een opdracht, skill of opdrachtgever" style="flex: 1; min-width: 0; border: none; outline: none; background: none; font-family: inherit; font-size: 14px; color: #16233A;">
+        <button type="button" class="{{ micClass }}" onClick="{{ onToggleMic }}" aria-label="{{ micLabel }}" title="{{ micLabel }}" aria-pressed="{{ micListening }}" style="flex-shrink: 0; width: 36px; height: 36px; padding: 0; border: 1px solid {{ micBorder }}; border-radius: 50%; background: {{ micBg }}; color: {{ micColor }}; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;">{{ micEl }}</button>
+      </div>
+
+      <div class="plk-desktop-controls">
+        <div class="plk-filter-toolbar" aria-label="Opdrachtfilters">
+          <div style="position: relative;">
+            <button class="plk-filter-control" data-active="{{ workformActive }}" onClick="{{ onToggleWorkform }}" aria-haspopup="menu" aria-expanded="{{ workformOpen }}">Werkvorm: {{ workformLabel }}<span style="display: inline-flex;">{{ chevronEl }}</span></button>
+            <sc-if value="{{ workformOpen }}" hint-placeholder-val="false"><div onClick="{{ onCloseFilters }}" style="position: fixed; inset: 0; z-index: 47;"></div><div class="plk-filter-popover" role="menu" aria-label="Werkvorm"><sc-for list="{{ opportunityTypeOptions }}" as="op" hint-placeholder-count="3"><button class="plk-filter-option" data-active="{{ op.active }}" role="menuitemradio" aria-checked="{{ op.active }}" onClick="{{ op.onClick }}"><span>{{ op.label }}</span><span>{{ op.selectedMark }}</span></button></sc-for></div></sc-if>
+          </div>
+
+          <div class="plk-location-wrap">
+            <button class="plk-filter-control" data-active="{{ locationControlActive }}" onClick="{{ onToggleLocation }}" aria-haspopup="dialog" aria-expanded="{{ locationOpen }}">{{ pinEl }}Locatie: {{ locationLabel }}<span style="display: inline-flex;">{{ chevronEl }}</span></button>
+            <sc-if value="{{ locationOpen }}" hint-placeholder-val="false">
+              <div onClick="{{ onCloseLocation }}" style="position: fixed; inset: 0; z-index: 47;"></div>
+              <div class="plk-location-panel" role="dialog" aria-label="Locatie en afstand">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;"><div><div style="font-size: 15px; font-weight: 800; color: #101E36;">Locatie</div><div style="margin-top: 3px; font-size: 12px; color: #667184;">Remote, of een stad binnen jouw afstand.</div></div><button onClick="{{ onCloseLocation }}" aria-label="Locatiefilter sluiten" style="width: 28px; height: 28px; border: none; border-radius: 50%; background: #F0F3F7; color: #667184; font-family: inherit; font-size: 17px; cursor: pointer;">&times;</button></div>
+                <button class="plk-location-choice" onClick="{{ onSelectRemoteOnly }}" aria-pressed="{{ remoteOnly }}" style="width: 100%; margin-top: 13px; padding: 10px 11px; display: flex; align-items: center; gap: 10px; border: 1px solid {{ remoteOnlyBorder }}; border-radius: 8px; background: {{ remoteOnlyBg }}; color: #16304F; font-family: inherit; cursor: pointer; text-align: left;"><span style="width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: #E7F7F0; color: #12835B; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900;">R</span><span style="min-width: 0; flex: 1;"><span style="display: block; font-size: 12.5px; font-weight: 800;">Alleen remote</span><span style="display: block; margin-top: 1px; font-size: 10.5px; color: #6D7888;">Geen plaats of afstand nodig</span></span><span style="font-size: 11px; font-weight: 750; color: #1B5CB8;">{{ remoteOnlySelectedLabel }}</span></button>
+                <div style="display: flex; align-items: center; gap: 8px; height: 40px; margin-top: 12px; padding: 0 10px; border: 1px solid #DDE3EA; border-radius: 8px; background: #FAFBFC;"><span style="display: inline-flex;">{{ searchEl }}</span><input type="search" value="{{ locationQuery }}" onInput="{{ onLocationQuery }}" aria-label="Zoek een stad" placeholder="Kies een stad" style="flex: 1; min-width: 0; border: none; outline: none; background: transparent; font-family: inherit; font-size: 13px; color: #16233A;"></div>
+                <button class="plk-location-choice" onClick="{{ onUseCurrentLocation }}" disabled="{{ locationLoading }}" style="width: 100%; margin-top: 7px; padding: 9px 10px; display: flex; align-items: center; gap: 9px; border: 1px solid #DDE3EA; border-radius: 8px; background: #FFFFFF; color: #16304F; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;"><span style="display: inline-flex;">{{ targetEl }}</span>{{ currentLocationLabel }}</button>
+                <div style="display: grid; gap: 5px; margin-top: 7px; max-height: 168px; overflow-y: auto;"><sc-for list="{{ locationOptions }}" as="lo" hint-placeholder-count="6"><button class="plk-location-choice" onClick="{{ lo.onClick }}" aria-pressed="{{ lo.active }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border: 1px solid {{ lo.border }}; border-radius: 8px; background: {{ lo.bg }}; color: #16233A; font-family: inherit; cursor: pointer; text-align: left;"><span><span style="display: block; font-size: 12.5px; font-weight: 750;">{{ lo.name }}</span><span style="display: block; margin-top: 1px; font-size: 10.5px; color: #7A8494;">{{ lo.country }}</span></span><span style="font-size: 11px; font-weight: 750; color: #1B5CB8;">{{ lo.selectedLabel }}</span></button></sc-for></div>
+                <sc-if value="{{ locationActive }}" hint-placeholder-val="false"><div style="height: 1px; margin: 12px 0 11px; background: #E8EBF0;"></div><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;"><span style="font-size: 12px; font-weight: 800; color: #29374B;">Maximale afstand</span><span style="font-size: 12px; font-weight: 800; color: #1B5CB8;">{{ radiusLabel }}</span></div><div role="radiogroup" aria-label="Maximale afstand" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;"><sc-for list="{{ radiusOptions }}" as="rd" hint-placeholder-count="6"><button role="radio" aria-checked="{{ rd.active }}" onClick="{{ rd.onClick }}" style="height: 30px; padding: 0 9px; border: 1px solid {{ rd.border }}; border-radius: 7px; background: {{ rd.bg }}; color: {{ rd.color }}; font-family: inherit; font-size: 11.5px; font-weight: 750; cursor: pointer;">{{ rd.label }}</button></sc-for></div><button onClick="{{ onToggleIncludeRemote }}" aria-pressed="{{ includeRemote }}" style="width: 100%; margin-top: 10px; padding: 8px 0 1px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: none; background: none; color: #354258; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;"><span>Ook remote</span><span style="width: 38px; height: 22px; border-radius: 999px; background: {{ remoteSwitchBg }}; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 2px; left: {{ remoteKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span></span></button></sc-if>
+                <div aria-live="polite" style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #E8EBF0; font-size: 11px; color: #657184;">{{ locationScopeLabel }}</div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="position: relative;">
+            <button class="plk-filter-control" data-active="{{ postedActive }}" onClick="{{ onTogglePosted }}" aria-haspopup="menu" aria-expanded="{{ postedOpen }}">Geplaatst: {{ postedLabel }}<span style="display: inline-flex;">{{ chevronEl }}</span></button>
+            <sc-if value="{{ postedOpen }}" hint-placeholder-val="false"><div onClick="{{ onCloseFilters }}" style="position: fixed; inset: 0; z-index: 47;"></div><div class="plk-filter-popover" role="menu" aria-label="Geplaatst"><sc-for list="{{ postedOptions }}" as="po" hint-placeholder-count="5"><button class="plk-filter-option" data-active="{{ po.active }}" role="menuitemradio" aria-checked="{{ po.active }}" onClick="{{ po.onClick }}"><span>{{ po.label }}</span><span>{{ po.selectedMark }}</span></button></sc-for></div></sc-if>
+          </div>
+
+          <div style="position: relative;">
+            <button class="plk-filter-control" data-active="{{ moreFiltersActive }}" onClick="{{ onToggleMore }}" aria-haspopup="dialog" aria-expanded="{{ moreOpen }}">Meer filters<span>{{ moreFilterCount }}</span><span style="display: inline-flex;">{{ chevronEl }}</span></button>
+            <sc-if value="{{ moreOpen }}" hint-placeholder-val="false"><div onClick="{{ onCloseFilters }}" style="position: fixed; inset: 0; z-index: 47;"></div><div class="plk-filter-popover plk-more-panel" role="dialog" aria-label="Meer filters"><div style="font-size: 12px; font-weight: 800; color: #2E3B50;">Start</div><div role="radiogroup" aria-label="Start opdracht" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;"><sc-for list="{{ startOptions }}" as="so" hint-placeholder-count="4"><button role="radio" aria-checked="{{ so.active }}" onClick="{{ so.onClick }}" style="height: 32px; padding: 0 10px; border: 1px solid {{ so.border }}; border-radius: 7px; background: {{ so.bg }}; color: {{ so.color }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ so.label }}</button></sc-for></div><div style="height: 1px; margin: 14px 0; background: #E7EBF0;"></div><div style="font-size: 12px; font-weight: 800; color: #2E3B50;">Uren per week</div><div role="radiogroup" aria-label="Uren per week" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;"><sc-for list="{{ hoursOptions }}" as="ho" hint-placeholder-count="5"><button role="radio" aria-checked="{{ ho.active }}" onClick="{{ ho.onClick }}" style="height: 32px; padding: 0 10px; border: 1px solid {{ ho.border }}; border-radius: 7px; background: {{ ho.bg }}; color: {{ ho.color }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ ho.label }}</button></sc-for></div><div style="display: flex; justify-content: flex-end; margin-top: 14px;"><button onClick="{{ onResetMoreFilters }}" style="height: 32px; padding: 0 10px; border: 1px solid #D8DEE7; border-radius: 7px; background: #FFFFFF; color: #536075; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">Wissen</button></div></div></sc-if>
+          </div>
+          <span aria-live="polite" style="margin-left: auto; font-size: 12px; font-weight: 700; color: #647184;">{{ resultLabel }}</span>
+        </div>
+      </div>
+
+      <div class="plk-mobile-controls">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 11px;"><span style="font-size: 12px; font-weight: 700; color: #647184;">{{ resultLabel }}</span><button class="plk-filter-control" onClick="{{ onOpenMobileFilters }}" aria-haspopup="dialog" aria-expanded="{{ mobileFiltersOpen }}">Filters{{ mobileFilterCount }}</button></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 13px; padding: 10px 0; border-top: 1px solid #E1E6ED;"><span aria-live="polite" style="font-size: 11.5px; color: #778296;">{{ lastRefreshedLabel }}</span><button onClick="{{ onRefreshFeed }}" style="height: 34px; display: inline-flex; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid #CDD7E2; border-radius: 7px; background: #FFFFFF; color: #174F8B; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;">{{ refreshEl }}Verversen</button></div>
+        <sc-if value="{{ mobileFiltersOpen }}" hint-placeholder-val="false"><div onClick="{{ onCloseMobileFilters }}" style="position: fixed; inset: 0; z-index: 75; background: rgba(10,22,40,0.34);"></div><div class="plk-mobile-filter-sheet" role="dialog" aria-modal="true" aria-label="Filters">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;"><div><div style="font-size: 18px; font-weight: 800; color: #101E36;">Filters</div><div style="margin-top: 2px; font-size: 12px; color: #687488;">Verfijn de activity feed.</div></div><button onClick="{{ onCloseMobileFilters }}" aria-label="Filters sluiten" style="width: 30px; height: 30px; border: 1px solid #D8DEE7; border-radius: 50%; background: #FFFFFF; color: #647184; font-size: 18px; cursor: pointer;">&times;</button></div>
+          <div style="margin-top: 18px; font-size: 11.5px; font-weight: 800; color: #536075;">Werkvorm</div><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px;"><sc-for list="{{ opportunityTypeOptions }}" as="op" hint-placeholder-count="3"><button onClick="{{ op.onClick }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ op.border }}; border-radius: 7px; background: {{ op.bg }}; color: {{ op.color }}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ op.label }}</button></sc-for></div>
+          <div style="margin-top: 17px; font-size: 11.5px; font-weight: 800; color: #536075;">Locatie</div><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px;"><button onClick="{{ onSelectRemoteOnly }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ remoteOnlyBorder }}; border-radius: 7px; background: {{ remoteOnlyBg }}; color: #174F8B; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;">Remote</button><button onClick="{{ onUseCurrentLocation }}" disabled="{{ locationLoading }}" style="height: 34px; padding: 0 10px; border: 1px solid #D8DEE7; border-radius: 7px; background: #FFFFFF; color: #536075; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">Mijn locatie</button><sc-for list="{{ mobileLocationOptions }}" as="lo" hint-placeholder-count="4"><button onClick="{{ lo.onClick }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ lo.border }}; border-radius: 7px; background: {{ lo.bg }}; color: #536075; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ lo.name }}</button></sc-for></div>
+          <sc-if value="{{ locationActive }}" hint-placeholder-val="false"><div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px;"><sc-for list="{{ radiusOptions }}" as="rd" hint-placeholder-count="6"><button onClick="{{ rd.onClick }}" style="height: 32px; padding: 0 9px; border: 1px solid {{ rd.border }}; border-radius: 7px; background: {{ rd.bg }}; color: {{ rd.color }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ rd.label }}</button></sc-for></div><button onClick="{{ onToggleIncludeRemote }}" style="margin-top: 9px; height: 32px; padding: 0 9px; border: 1px solid #D8DEE7; border-radius: 7px; background: #FFFFFF; color: #536075; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">Ook remote: {{ includeRemoteLabel }}</button></sc-if>
+          <div style="margin-top: 17px; font-size: 11.5px; font-weight: 800; color: #536075;">Geplaatst</div><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px;"><sc-for list="{{ postedOptions }}" as="po" hint-placeholder-count="5"><button onClick="{{ po.onClick }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ po.border }}; border-radius: 7px; background: {{ po.bg }}; color: {{ po.color }}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ po.label }}</button></sc-for></div>
+          <div style="margin-top: 17px; font-size: 11.5px; font-weight: 800; color: #536075;">Start</div><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px;"><sc-for list="{{ startOptions }}" as="so" hint-placeholder-count="4"><button onClick="{{ so.onClick }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ so.border }}; border-radius: 7px; background: {{ so.bg }}; color: {{ so.color }}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ so.label }}</button></sc-for></div>
+          <div style="margin-top: 17px; font-size: 11.5px; font-weight: 800; color: #536075;">Uren per week</div><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px;"><sc-for list="{{ hoursOptions }}" as="ho" hint-placeholder-count="5"><button onClick="{{ ho.onClick }}" style="height: 34px; padding: 0 10px; border: 1px solid {{ ho.border }}; border-radius: 7px; background: {{ ho.bg }}; color: {{ ho.color }}; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ ho.label }}</button></sc-for></div>
+          <button onClick="{{ onCloseMobileFilters }}" style="width: 100%; height: 42px; margin-top: 20px; border: none; border-radius: 8px; background: #0A1F3F; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Toon {{ marketFilterSummary }}</button>
+        </div></sc-if>
+      </div>
+      <sc-if value="{{ apiSyncVisible }}" hint-placeholder-val="false"><div role="status" aria-live="polite" style="margin-top: 9px; font-size: 11.5px; font-weight: 650; color: {{ apiSyncColor }};">{{ apiSyncMessage }}</div></sc-if>
+    </div>
+
+    <section class="plk-feed-shell plk-desktop-feed" aria-label="Gerangschikte opdrachten voor jou">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 15px;"><div><h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste kansen voor jou</h2><p style="margin: 5px 0 0; font-size: 13.5px; color: var(--muted,#667184);">Automatisch gerangschikt op jouw profiel.</p></div><span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8A93A1);">{{ feedRangeLabel }}</span></div>
+      <div class="plk-feed-list"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><div class="plk-feed-result" data-reveal><article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
+        <button class="plk-feed-category" onClick="{{ job.onOpen }}" aria-label="Bekijk {{ job.title }}, categorie {{ job.categoryLabel }}" title="{{ job.categoryLabel }}" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.categoryIconEl }}</button>
+        <div style="min-width: 0; display: flex; flex-direction: column;"><div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 18px; line-height: 1.25; font-weight: 800; letter-spacing: -0.018em; text-align: left; cursor: pointer;">{{ job.title }}</button><span style="padding: 3px 8px; border-radius: 999px; background: {{ job.kindBg }}; color: {{ job.kindColor }}; font-size: 10.5px; font-weight: 800; white-space: nowrap;">{{ job.kindLabel }}</span><sc-if value="{{ job.isNew }}" hint-placeholder-val="false"><span style="padding: 3px 8px; border-radius: 999px; background: #F2ECFC; color: #7653A8; font-size: 10.5px; font-weight: 800;">Nieuw</span></sc-if></div><div style="margin-top: 5px; font-size: 13px; color: var(--faint,#8A93A1);">{{ job.metaLine }}</div><p class="plk-feed-description" style="margin: 9px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted,#5A6472);">{{ job.description }}</p>
+        <div class="plk-feed-facts" aria-label="Belangrijkste opdrachtgegevens"><sc-for list="{{ job.facts }}" as="fact" hint-placeholder-count="6"><span class="plk-feed-fact" title="{{ fact.label }}: {{ fact.value }}"><span class="plk-feed-fact-icon" style="color: {{ fact.color }};">{{ fact.iconEl }}</span><span class="plk-feed-fact-copy"><span class="plk-feed-fact-label">{{ fact.label }}</span><span class="plk-feed-fact-value">{{ fact.value }}</span></span></span></sc-for></div>
+        <div class="plk-feed-actions"><button onClick="{{ job.onOpen }}" style="height: 38px; padding: 0 15px; border: none; border-radius: 8px; background: #0A1F3F; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Bekijk opdracht</button><button onClick="{{ job.onApply }}" style="height: 38px; padding: 0 15px; border: 1px solid {{ job.applyBorder }}; border-radius: 8px; background: {{ job.applyBg }}; color: {{ job.applyColor }}; font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">{{ job.applyLabel }}</button><button onClick="{{ job.onSave }}" aria-pressed="{{ job.saved }}" style="height: 38px; padding: 0 12px; border: 1px solid {{ job.saveBorder }}; border-radius: 8px; background: transparent; color: var(--muted,#5A6472); font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer;">{{ job.saveLabel }}</button></div></div>
+        <aside class="plk-feed-side"><span style="padding: 6px 13px; border-radius: 999px; background: {{ job.matchBg }}; color: {{ job.matchColor }}; font-size: 13px; font-weight: 850; white-space: nowrap;">{{ job.relevance }}% match</span><span style="font-size: 11.5px; color: var(--faint,#8A93A1);">{{ job.valueLabel }}</span></aside>
+      </article></div></sc-for></div>
+    </section>
+
+    <section class="plk-feed-shell plk-mobile-feed" aria-label="Activity feed met opdrachten">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 10px;"><div><h2 style="margin: 0; font-size: 19px; line-height: 1.2; font-weight: 800; color: #152431;">Nieuwe kansen</h2><p style="margin: 4px 0 0; font-size: 12.5px; color: #6B7688;">Tik om de opdracht direct te openen.</p></div><span style="font-size: 10.5px; color: #8993A3;">{{ feedRangeLabel }}</span></div>
+      <div class="plk-mobile-activity"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><a class="plk-activity-item" href="{{ job.jobHref }}" onClick="{{ job.onOpen }}" aria-label="Open {{ job.title }}"><span class="plk-activity-icon" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.mobileCategoryIconEl }}</span><span style="min-width: 0;"><span style="display: block; font-size: 14px; line-height: 1.3; font-weight: 800; color: #14243A;">{{ job.title }}</span><span style="display: block; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: #697589;">{{ job.company }}</span><span style="display: block; margin-top: 5px; font-size: 11px; color: #1B5CB8;">{{ job.activitySummary }}</span></span><span style="display: inline-flex; color: #8390A3;">{{ mobileChevronEl }}</span></a></sc-for></div>
+    </section>
+    <sc-if value="{{ feedHasMore }}" hint-placeholder-val="true"><div style="display: flex; justify-content: center; padding: 24px 0 4px;"><button onClick="{{ onLoadMore }}" style="height: 40px; padding: 0 16px; border: 1px solid #CFD7E2; border-radius: 8px; background: var(--surface,#FFFFFF); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Meer kansen laden</button></div></sc-if>
+
+    <sc-if value="{{ legacyFeedUiVisible }}" hint-placeholder-val="false">
     <div class="plk-search-row" data-location-open="{{ locationOpen }}" style="display: flex; align-items: center; gap: 10px; margin-top: 20px; animation: plk-rise 0.5s ease both; animation-delay: 0.04s;">
       <div style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 9px; height: 44px; padding: 0 14px; background: #ffffff; border: 1px solid #DDE2E9; border-radius: 11px; box-shadow: 0 2px 7px rgba(16,30,54,0.04);">
         <span style="display: inline-flex; flex-shrink: 0;">{{ searchEl }}</span>
@@ -238,7 +318,7 @@
               </div>
               <button onClick="{{ onToggleIncludeRemote }}" aria-pressed="{{ includeRemote }}" style="width: 100%; margin-top: 11px; padding: 9px 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: none; background: none; color: #354258; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;"><span style="text-align: left;">Ook remote kansen</span><span style="width: 38px; height: 22px; border-radius: 999px; background: {{ remoteSwitchBg }}; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 2px; left: {{ remoteKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span></span></button>
             </sc-if>
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #E8EBF0;"><button onClick="{{ onClearLocation }}" style="border: none; background: none; color: #5D6878; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;">Heel NL &amp; BE</button><span style="font-size: 11px; color: #657184; text-align: right;">{{ locationScopeLabel }}</span></div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #E8EBF0;"><button onClick="{{ onClearLocation }}" style="border: none; background: none; color: #5D6878; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;">Alleen remote</button><span style="font-size: 11px; color: #657184; text-align: right;">{{ locationScopeLabel }}</span></div>
           </div>
         </sc-if>
       </div>
@@ -315,7 +395,6 @@
       <div class="plk-feed-list">
         <sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24">
           <div class="plk-feed-result" data-reveal>
-            <span class="plk-feed-rank" title="Positie {{ job.rank }}">{{ job.rank }}</span>
             <article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
               <button class="plk-feed-category" onClick="{{ job.onOpen }}" aria-label="Bekijk {{ job.title }}, categorie {{ job.categoryLabel }}" title="{{ job.categoryLabel }}" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.categoryIconEl }}</button>
 
@@ -370,6 +449,7 @@
         </div>
       </sc-if>
     </section>
+    </sc-if>
 
     <sc-if value="{{ legacyMapVisible }}" hint-placeholder-val="false">
     <section aria-label="Persoonlijke kansenkaart" style="position: relative; height: clamp(680px, calc(100vh - 300px), 980px); overflow: hidden; margin-top: 16px; border: 1px solid #DDE3EA; border-radius: 22px; background: radial-gradient(circle at 50% 48%, #EEF5FC 0%, #F4F7FA 42%, #E9EEF4 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.72), 0 20px 50px -35px rgba(10,28,54,0.35); animation: plk-rise 0.5s ease both; animation-delay: 0.11s;">
@@ -701,7 +781,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { menuOpen: false, theme: 'light', sortOpen: false, filter: 'alles', sort: 'aanbevolen', query: '', locationOpen: false, locationKey: 'all', locationQuery: '', radiusKm: 75, includeRemote: false, currentLat: null, currentLng: null, locationLoading: false, opportunityType: 'freelance', relevanceFloor: 0, postedFilter: 'all', startFilter: 'all', hoursFilter: 'all', saved: {}, hidden: {}, sent: {}, review: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, promoHidden: false, cols: 3, name: '', authenticated: false, authRole: null, mapZoom: 0.32, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, listening: false, feedShown: 24 };
+  state = { menuOpen: false, theme: 'light', sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false, mobileFiltersOpen: false, refreshCount: 0, filter: 'alles', sort: 'aanbevolen', query: '', locationOpen: false, locationKey: 'remote', locationQuery: '', radiusKm: 75, includeRemote: false, currentLat: null, currentLng: null, locationLoading: false, opportunityType: 'freelance', relevanceFloor: 0, postedFilter: 'all', startFilter: 'all', hoursFilter: 'all', saved: {}, hidden: {}, sent: {}, review: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, promoHidden: false, cols: 3, name: '', authenticated: false, authRole: null, mapZoom: 0.32, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, listening: false, feedShown: 24, apiSyncStatus: 'idle', apiSyncMessage: '' };
 
   isValidWhatsappSession(session, requiredRole) {
     if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
@@ -721,8 +801,13 @@ class Component extends DCLogic {
       freelancerSession = this.isValidWhatsappSession(session, 'freelancer');
       const locationPrefs = freelancerSession ? this.getLS('plk-vj2-location') : {};
       const savedRadius = [25, 50, 75, 100, 150, 250].indexOf(Number(locationPrefs.radiusKm)) !== -1 ? Number(locationPrefs.radiusKm) : 75;
-      const locationCandidate = typeof locationPrefs.locationKey === 'string' && locationPrefs.locationKey !== 'current' ? locationPrefs.locationKey : 'all';
-      const savedLocationKey = locationCandidate === 'all' || locationCandidate === 'remote' || this.locationDirectory().some((place) => place.key === locationCandidate) ? locationCandidate : 'all';
+      const locationCandidate = typeof locationPrefs.locationKey === 'string' && locationPrefs.locationKey !== 'current' ? locationPrefs.locationKey : 'remote';
+      const savedLocationKey = locationCandidate === 'remote' || this.locationDirectory().some((place) => place.key === locationCandidate) ? locationCandidate : 'remote';
+      let requestedJob = null;
+      try {
+        const value = new URLSearchParams(window.location.search || '').get('job');
+        requestedJob = value && /^[a-zA-Z0-9_-]{1,80}$/.test(value) ? value : null;
+      } catch (queryError) {}
       if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
       this.setState({
         saved: freelancerSession ? this.getLS('plk-vj2-saved') : {},
@@ -736,7 +821,8 @@ class Component extends DCLogic {
         theme: savedTheme,
         locationKey: savedLocationKey,
         radiusKm: savedRadius,
-        includeRemote: !!locationPrefs.includeRemote
+        includeRemote: !!locationPrefs.includeRemote,
+        modalId: requestedJob
       });
     } catch (e) {}
     if (freelancerSession) this.loadAgentRun();
@@ -759,7 +845,8 @@ class Component extends DCLogic {
       const tag = ((e.target && e.target.tagName) || '').toLowerCase();
       if (e.key === 'Escape') {
         if (this.state.listening && this._recog) { try { this._recog.stop(); } catch (err) {} }
-        this.setState({ modalId: null, whyId: null, cardMenuId: null, sortOpen: false, menuOpen: false, locationOpen: false });
+        if (this.state.modalId) this.closeOpportunity();
+        this.setState({ modalId: null, whyId: null, cardMenuId: null, sortOpen: false, menuOpen: false, locationOpen: false, workformOpen: false, postedOpen: false, moreOpen: false, mobileFiltersOpen: false });
         return;
       }
       if (this.state.modalId) {
@@ -786,6 +873,7 @@ class Component extends DCLogic {
       else if (e.key === '0') { e.preventDefault(); this.recenterMap(); }
     };
     window.addEventListener('keydown', this._esc);
+    if (this.isApiMode()) this.syncRemoteOpportunities();
   }
   componentDidUpdate() {
     const before = this._lastModalId || null;
@@ -824,6 +912,7 @@ class Component extends DCLogic {
     clearTimeout(this._locationFitT);
     clearTimeout(this._feedScrollTimer);
     clearTimeout(this._detailWallRefreshT);
+    if (this._opportunityAbort) this._opportunityAbort.abort();
     if (typeof document !== 'undefined') document.documentElement.style.overflow = this._pageOverflowBeforeModal || '';
     clearTimeout(this._toastT); clearTimeout(this._focusT);
   }
@@ -904,6 +993,160 @@ class Component extends DCLogic {
       }
     } catch (e) {}
     if (typeof window !== 'undefined') window.location.href = this.freelancerLoginHref();
+  }
+
+  appAdapter() {
+    return typeof window !== 'undefined' && window.ProLinkerApp ? window.ProLinkerApp : null;
+  }
+  isApiMode() {
+    const app = this.appAdapter();
+    try { return !!(app && app.getConfig && app.getConfig().mode === 'api'); } catch (e) { return false; }
+  }
+  apiErrorMessage(error, fallback) {
+    if (error && error.code === 'AUTH_REQUIRED') return 'Log opnieuw in om deze actie te synchroniseren.';
+    if (error && error.code === 'TIMEOUT') return 'De server reageert niet op tijd. Probeer het opnieuw.';
+    if (error && error.status === 409) return 'Deze sollicitatie was al verstuurd.';
+    return String((error && error.message) || fallback || 'Synchroniseren is niet gelukt.');
+  }
+  apiNumber(value) {
+    if (value === null || value === undefined || value === '') return null;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+  clearMarketCaches() {
+    this._canonicalMarket = null;
+    this._canonicalById = {};
+    this._latestAgentCandidateIds = [];
+    this._latestOverviewTiles = [];
+    this._mapFitSignature = null;
+    ['_mosaicLayoutCache', '_marketDensityCache', '_wallItemsCache', '_overviewTileCache'].forEach((key) => {
+      const cache = this[key];
+      if (cache && cache.clear) cache.clear();
+    });
+  }
+  normalizeApiOpportunity(dto, index) {
+    if (!dto || typeof dto !== 'object') return null;
+    const id = String(dto.id || dto.opportunityId || '').trim();
+    const title = String(dto.title || dto.name || '').trim();
+    if (!id || !title || !/^[a-zA-Z0-9_-]{1,80}$/.test(id)) return null;
+    const companyValue = dto.company && typeof dto.company === 'object' ? (dto.company.name || dto.company.displayName) : dto.company;
+    const company = String(companyValue || dto.clientName || dto.organizationName || 'Opdrachtgever').trim();
+    const locationObject = dto.location && typeof dto.location === 'object' ? dto.location : {};
+    const location = String(dto.locationLabel || locationObject.label || locationObject.name || dto.city || (typeof dto.location === 'string' ? dto.location : '') || '').trim();
+    const remote = dto.remote === true || locationObject.remote === true || /\bremote\b/i.test(location);
+    const typeValue = String(dto.opportunityType || dto.type || 'freelance').toLowerCase();
+    const opportunityType = typeValue === 'employment' || typeValue === 'job' || typeValue === 'loondienst' ? 'employment' : 'freelance';
+    const sourceValue = String(dto.source || 'external').toLowerCase();
+    const source = sourceValue === 'internal' || sourceValue === 'prolinker' ? 'internal' : (sourceValue === 'partner' ? 'partner' : 'external');
+    let relevance = this.apiNumber(dto.relevance === undefined ? (dto.matchScore === undefined ? dto.match : dto.matchScore) : dto.relevance);
+    if (relevance === null) relevance = 55 + (this.stableHash(id + '|relevance') % 41);
+    relevance = Math.max(0, Math.min(100, Math.round(relevance)));
+    const hoursObject = dto.hoursPerWeek && typeof dto.hoursPerWeek === 'object' ? dto.hoursPerWeek : {};
+    const hoursMinValue = this.apiNumber(dto.hoursMin === undefined ? hoursObject.min : dto.hoursMin);
+    const hoursMaxValue = this.apiNumber(dto.hoursMax === undefined ? hoursObject.max : dto.hoursMax);
+    const hoursMin = hoursMinValue === null ? null : Math.max(0, hoursMinValue);
+    const hoursMax = hoursMaxValue === null ? hoursMin : Math.max(hoursMin || 0, hoursMaxValue);
+    let postedHours = this.apiNumber(dto.postedHoursAgo);
+    const postedAt = dto.postedAt || dto.publishedAt || dto.createdAt;
+    if (postedHours === null && postedAt) {
+      const postedTime = new Date(postedAt).getTime();
+      if (Number.isFinite(postedTime)) postedHours = Math.max(0, Math.floor((Date.now() - postedTime) / 3600000));
+    }
+    if (postedHours === null) postedHours = 24 + (this.stableHash(id + '|posted') % 696);
+    let closingDays = this.apiNumber(dto.closingDays === undefined ? dto.daysLeft : dto.closingDays);
+    const closesAt = dto.closesAt || dto.deadline;
+    if (closingDays === null && closesAt) {
+      const closeTime = new Date(closesAt).getTime();
+      if (Number.isFinite(closeTime)) closingDays = Math.max(0, Math.ceil((closeTime - Date.now()) / 86400000));
+    }
+    if (closingDays !== null) closingDays = Math.max(0, closingDays);
+    const rateObject = dto.rate && typeof dto.rate === 'object' ? dto.rate : {};
+    const rate = String(dto.rateLabel || rateObject.label || dto.compensationLabel || (typeof dto.rate === 'string' ? dto.rate : '') || (opportunityType === 'employment' ? 'Salaris in overleg' : 'Tarief in overleg'));
+    const durationValue = this.apiNumber(dto.durationWeeks);
+    const durationWeeks = durationValue !== null && durationValue > 0 ? Math.round(durationValue) : undefined;
+    const latValue = this.apiNumber(dto.latitude === undefined ? (dto.lat === undefined ? (locationObject.latitude === undefined ? locationObject.lat : locationObject.latitude) : dto.lat) : dto.latitude);
+    const lngValue = this.apiNumber(dto.longitude === undefined ? (dto.lng === undefined ? (locationObject.longitude === undefined ? locationObject.lng : locationObject.longitude) : dto.lng) : dto.longitude);
+    const metaChips = [];
+    if (remote) metaChips.push('Remote');
+    else if (location) metaChips.push(location);
+    if (hoursMin !== null) metaChips.push(hoursMin + (hoursMax !== null && hoursMax !== hoursMin ? '\u2013' + hoursMax : '') + ' u/wk');
+    if (durationWeeks) metaChips.push(durationWeeks + ' weken');
+    const isNew = postedHours <= 24;
+    const labels = [source === 'internal' ? 'intern' : 'extern'];
+    if (isNew) labels.push('nieuw');
+    const reasons = Array.isArray(dto.reasons) ? dto.reasons.map(String).filter(Boolean).slice(0, 8) : [];
+    if (!reasons.length) reasons.push(relevance + '% match met jouw profiel en voorkeuren');
+    return {
+      id: id,
+      title: title,
+      sub: String(dto.summary || dto.subtitle || dto.shortDescription || '').trim(),
+      co: company,
+      source: source,
+      labels: labels,
+      chips: [{ i: isNew ? 'spark' : (remote ? 'pin' : 'mail'), t: isNew ? 'Nieuw' : (remote ? 'Remote' : (location || 'Nieuwe kans')) }],
+      match: relevance,
+      relevance: relevance,
+      rate: rate,
+      dl: closingDays,
+      h: postedHours,
+      postedHoursAgo: postedHours,
+      isNew: isNew,
+      remote: remote,
+      location: location,
+      locationKey: String(dto.locationKey || locationObject.key || ''),
+      country: String(dto.country || locationObject.country || ''),
+      lat: latValue === null ? undefined : latValue,
+      lng: lngValue === null ? undefined : lngValue,
+      hoursMin: hoursMin,
+      hoursMax: hoursMax,
+      durationWeeks: durationWeeks,
+      startBucket: ['direct', 'next_month', 'later'].indexOf(dto.startBucket) >= 0 ? dto.startBucket : undefined,
+      metaChips: metaChips,
+      desc: String(dto.description || dto.details || dto.summary || 'Bekijk de opdracht voor alle details en voorwaarden.').trim(),
+      reasons: reasons,
+      opportunityType: opportunityType,
+      _apiSaved: dto.saved === true,
+      _apiHidden: dto.hidden === true,
+      _apiApplied: ['submitted', 'sent', 'accepted', 'interview'].indexOf(String(dto.applicationStatus || '').toLowerCase()) >= 0
+    };
+  }
+  async syncRemoteOpportunities(options) {
+    options = options || {};
+    const app = this.appAdapter();
+    if (!this.isApiMode() || !app || !app.opportunities || !app.opportunities.list) return [];
+    if (this._opportunityAbort) this._opportunityAbort.abort();
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    this._opportunityAbort = controller;
+    const requestId = (this._opportunityRequestId || 0) + 1;
+    this._opportunityRequestId = requestId;
+    if (this._mounted) this.setState({ apiSyncStatus: 'loading', apiSyncMessage: options.refresh ? 'Nieuwe kansen ophalen...' : 'Kansen synchroniseren...' });
+    try {
+      const response = await app.opportunities.list({ limit: 250, refresh: !!options.refresh, signal: controller ? controller.signal : undefined });
+      if (!this._mounted || requestId !== this._opportunityRequestId) return [];
+      const rawItems = Array.isArray(response) ? response : (response && Array.isArray(response.items) ? response.items : (response && Array.isArray(response.opportunities) ? response.opportunities : []));
+      const seen = {};
+      const remote = rawItems.map((item, index) => this.normalizeApiOpportunity(item, index)).filter((item) => {
+        if (!item || seen[item.id]) return false;
+        seen[item.id] = true;
+        return true;
+      });
+      this._remoteOpportunities = remote;
+      this.clearMarketCaches();
+      const saved = Object.assign({}, this.state.saved);
+      const hidden = Object.assign({}, this.state.hidden);
+      const sent = Object.assign({}, this.state.sent);
+      remote.forEach((item) => {
+        if (item._apiSaved) saved[item.id] = true;
+        if (item._apiHidden) hidden[item.id] = true;
+        if (item._apiApplied) sent[item.id] = true;
+      });
+      this.setState({ saved: saved, hidden: hidden, sent: sent, feedShown: 24, apiSyncStatus: 'synced', apiSyncMessage: remote.length + (remote.length === 1 ? ' API-kans gesynchroniseerd.' : ' API-kansen gesynchroniseerd.') });
+      return remote;
+    } catch (error) {
+      if (controller && controller.signal.aborted) return [];
+      if (this._mounted && requestId === this._opportunityRequestId) this.setState({ apiSyncStatus: 'error', apiSyncMessage: this.apiErrorMessage(error, 'API-kansen konden niet worden geladen. De lokale feed blijft beschikbaar.') });
+      return [];
+    }
   }
 
   clampZoom(v) { return Math.max(0.006, Math.min(0.72, Number(v) || 0.006)); }
@@ -1268,7 +1511,8 @@ class Component extends DCLogic {
 
   opportunityLocationFor(x) {
     const directory = this.locationDirectory();
-    const lat = Number(x && x.lat); const lng = Number(x && x.lng);
+    const lat = x && x.lat !== null && x.lat !== undefined && x.lat !== '' ? Number(x.lat) : NaN;
+    const lng = x && x.lng !== null && x.lng !== undefined && x.lng !== '' ? Number(x.lng) : NaN;
     if (Number.isFinite(lat) && Number.isFinite(lng)) {
       return { key: (x.locationKey || 'source'), name: x.locationName || x.location || 'Locatie bekend', country: x.country || '', lat: lat, lng: lng };
     }
@@ -1371,8 +1615,8 @@ class Component extends DCLogic {
 
   clearLocation() {
     this._mapDrag = null;
-    this.setState({ locationKey: 'all', locationQuery: '', locationOpen: false, currentLat: null, currentLng: null, locationLoading: false, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, feedShown: 24 });
-    this.persistLocation({ locationKey: 'all' });
+    this.setState({ locationKey: 'remote', locationQuery: '', locationOpen: false, currentLat: null, currentLng: null, locationLoading: false, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, feedShown: 24 });
+    this.persistLocation({ locationKey: 'remote' });
     this.scheduleLocationFit();
   }
 
@@ -1405,7 +1649,7 @@ class Component extends DCLogic {
 
   setPostedFilter(value) {
     if (['all', 'today', 'week', 'fortnight', 'month'].indexOf(value) === -1) return;
-    this.setState({ postedFilter: value, mapX: 0, mapY: 0, activeCluster: null, feedShown: 24 });
+    this.setState({ postedFilter: value, postedOpen: false, mapX: 0, mapY: 0, activeCluster: null, feedShown: 24 });
   }
 
   setHoursFilter(value) {
@@ -1414,7 +1658,7 @@ class Component extends DCLogic {
 
   setOpportunityType(value) {
     this._mapDrag = null;
-    this.setState({ opportunityType: value, modalId: null, mapX: 0, mapY: 0, mapZoom: this.fitMapZoom(this.state.relevanceFloor, value), mapDragging: false, activeCluster: null, feedShown: 24 });
+    this.setState({ opportunityType: value, workformOpen: false, modalId: null, mapX: 0, mapY: 0, mapZoom: this.fitMapZoom(this.state.relevanceFloor, value), mapDragging: false, activeCluster: null, feedShown: 24 });
   }
 
   setQuery(value) {
@@ -2005,6 +2249,7 @@ class Component extends DCLogic {
       check: [{ t: 'polyline', p: '20 6 9 17 4 12' }],
       chevron: [{ t: 'polyline', p: '6 9 12 15 18 9' }],
       search: [{ t: 'circle', cx: 11, cy: 11, r: 7 }, { t: 'line', x1: 20.5, y1: 20.5, x2: 16.3, y2: 16.3 }],
+      refresh: [{ t: 'path', d: 'M20 6v5h-5' }, { t: 'path', d: 'M4 18v-5h5' }, { t: 'path', d: 'M18.7 9A7 7 0 0 0 6.2 6.2L4 8' }, { t: 'path', d: 'M5.3 15A7 7 0 0 0 17.8 17.8L20 16' }],
       mic: [{ t: 'rect', x: 9, y: 2, w: 6, h: 11, rx: 3 }, { t: 'path', d: 'M19 10v2a7 7 0 0 1-14 0v-2' }, { t: 'line', x1: 12, y1: 19, x2: 12, y2: 22 }],
       pin: [{ t: 'path', d: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z' }, { t: 'circle', cx: 12, cy: 10, r: 3 }],
       target: [{ t: 'circle', cx: 12, cy: 12, r: 7 }, { t: 'circle', cx: 12, cy: 12, r: 2 }, { t: 'line', x1: 12, y1: 2, x2: 12, y2: 5 }, { t: 'line', x1: 12, y1: 19, x2: 12, y2: 22 }, { t: 'line', x1: 2, y1: 12, x2: 5, y2: 12 }, { t: 'line', x1: 19, y1: 12, x2: 22, y2: 12 }],
@@ -2083,11 +2328,72 @@ class Component extends DCLogic {
   }
 
   showToast(msg, undo) { clearTimeout(this._toastT); this.setState({ toast: { msg: msg, undo: undo || null } }); this._toastT = setTimeout(() => this.setState({ toast: null }), 5200); }
+  queueApiAction(scope, id, work) {
+    if (!this._apiActionQueues) this._apiActionQueues = {};
+    const key = scope + ':' + id;
+    const before = this._apiActionQueues[key] || Promise.resolve();
+    const current = before.catch(() => {}).then(work);
+    const tracked = current.catch(() => {}).finally(() => { if (this._apiActionQueues && this._apiActionQueues[key] === tracked) delete this._apiActionQueues[key]; });
+    this._apiActionQueues[key] = tracked;
+    return current;
+  }
+  applicationIdempotencyKey(id) {
+    let account = 'freelancer';
+    try {
+      const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
+      account = String((session && session.role) || 'freelancer') + '|' + String((session && session.contact) || 'account').replace(/\D/g, '');
+    } catch (e) {}
+    return 'plk-application-v1-' + this.stableHash(account + '|' + String(id || '')).toString(36);
+  }
+  submitApiApplication(id, opportunity, route, automated) {
+    const app = this.appAdapter();
+    if (!app || !app.applications || !app.applications.create) return Promise.reject(new Error('De sollicitatie-API is niet beschikbaar.'));
+    if (!this._applicationPending) this._applicationPending = {};
+    if (this._applicationPending[id]) return this._applicationPending[id];
+    const request = Promise.resolve(app.applications.create({
+      opportunityId: id,
+      source: (opportunity && opportunity.source) || 'external',
+      route: route && route.key ? route.key : 'direct',
+      automated: automated === true
+    }, { idempotencyKey: this.applicationIdempotencyKey(id) })).catch((error) => {
+      if (error && error.status === 409) return { duplicate: true, opportunityId: id, status: 'submitted' };
+      throw error;
+    });
+    this._applicationPending[id] = request;
+    request.finally(() => { if (this._applicationPending && this._applicationPending[id] === request) delete this._applicationPending[id]; }).catch(() => {});
+    return request;
+  }
   openOpportunity(id, e) {
     if (e && e.stopPropagation) e.stopPropagation();
     if (this._suppressCardClickUntil && Date.now() < this._suppressCardClickUntil) return;
     if (typeof document !== 'undefined') this._modalReturnFocus = (e && e.currentTarget) || document.activeElement;
     this.setState({ modalId: id });
+  }
+  openOpportunityLink(id, e) {
+    if (e && e.preventDefault) e.preventDefault();
+    this.openOpportunity(id, e);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('job', id);
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch (err) {}
+  }
+  closeOpportunity() {
+    this.setState({ modalId: null });
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('job');
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch (err) {}
+  }
+  refreshTieRank(id, round) {
+    return this.stableHash(String(id || '') + '|refresh|' + String(round || 0));
+  }
+  refreshFeed() {
+    const nextRound = Number(this.state.refreshCount || 0) + 1;
+    this.setState({ refreshCount: nextRound, refreshedAt: Date.now(), feedShown: 24, mobileFiltersOpen: false });
+    if (this.isApiMode()) this.syncRemoteOpportunities({ refresh: true });
+    this.showToast('Feed ververst. De nieuwste kansen staan bovenaan.');
   }
   sourceLabelFor(x) {
     if (x && x.source === 'internal') return 'Geplaatst op ProLinker';
@@ -2117,7 +2423,7 @@ class Component extends DCLogic {
     const hours = { all: 'alle uren', light: 'tot 16 u', medium: '17-24 u', substantial: '25-32 u', full: '33+ u' }[this.state.hoursFilter] || 'alle uren';
     const posted = { all: 'elke plaatsingsdatum', today: 'vandaag geplaatst', week: 'laatste 7 dagen', fortnight: 'laatste 14 dagen', month: 'laatste 30 dagen' }[this.state.postedFilter] || 'elke plaatsingsdatum';
     const center = this.activeLocationCenter();
-    const location = this.state.locationKey === 'remote' ? 'alleen remote' : (center ? center.name + ', ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : 'heel NL & BE');
+    const location = this.state.locationKey === 'remote' ? 'alleen remote' : (center ? center.name + ', ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : 'alleen remote');
     const relevance = this.state.relevanceFloor > 0 ? this.state.relevanceFloor + '%+' : 'alle scores';
     const query = this.state.query.trim();
     return {
@@ -2269,6 +2575,7 @@ class Component extends DCLogic {
     this._agentTimer = setTimeout(() => this.agentTick(), 120);
   }
   agentTick() {
+    if (this.isApiMode()) { this.agentTickApi(); return; }
     const run = this._agentRun;
     if (!run || run.status !== 'running') return;
     const total = run.targetIds.length;
@@ -2309,6 +2616,58 @@ class Component extends DCLogic {
     this.syncAgentPanel();
     this.scheduleAgentTick();
   }
+  async agentTickApi() {
+    if (this._agentApiTickActive) return;
+    const run = this._agentRun;
+    if (!run || run.status !== 'running') return;
+    this._agentApiTickActive = true;
+    const total = run.targetIds.length;
+    const chunk = total <= 100 ? 3 : (total <= 500 ? 6 : 10);
+    let handled = 0;
+    let failures = 0;
+    const requests = [];
+    while (run.index < total && handled < chunk) {
+      const id = run.targetIds[run.index++];
+      handled++;
+      if ((this.state.sent || {})[id] || (this.state.review || {})[id] || (this.state.hidden || {})[id] || (this._applicationPending && this._applicationPending[id])) { run.skipped++; continue; }
+      const opportunity = this._canonicalById && this._canonicalById[id];
+      const route = this.applicationRouteFor(opportunity);
+      if (!route.automatic) {
+        this.state.review[id] = true;
+        run.reviewNeeded++;
+        this.paintReviewCard(id, true);
+        continue;
+      }
+      this.state.sent[id] = true;
+      this.paintAgentCard(id, true);
+      requests.push(this.submitApiApplication(id, opportunity, route, true).then(() => {
+        run.succeeded++;
+      }).catch(() => {
+        delete this.state.sent[id];
+        this.paintAgentCard(id, false);
+        run.skipped++;
+        failures++;
+      }));
+    }
+    try { await Promise.all(requests); } finally { this._agentApiTickActive = false; }
+    if (!this._mounted || this._agentRun !== run) return;
+    run.updatedAt = Date.now();
+    this.setState({ sent: Object.assign({}, this.state.sent), review: Object.assign({}, this.state.review) });
+    this.setLS('plk-vj2-sent', this.state.sent);
+    this.setLS('plk-vj2-review', this.state.review);
+    this.persistAgentRun();
+    if (run.index >= total) {
+      run.status = 'complete';
+      run.completedAt = Date.now();
+      this.persistAgentRun();
+      this.syncAgentPanel();
+      this.showToast(run.succeeded.toLocaleString('nl-NL') + ' bevestigd en groen, ' + run.reviewNeeded.toLocaleString('nl-NL') + ' vragen om controle' + (failures ? ', ' + failures.toLocaleString('nl-NL') + ' niet gesynchroniseerd' : '') + '.');
+      return;
+    }
+    this.syncAgentPanel();
+    if (failures) this.showToast(failures.toLocaleString('nl-NL') + (failures === 1 ? ' sollicitatie kon' : ' sollicitaties konden') + ' niet worden gesynchroniseerd.');
+    if (run.status === 'running') this.scheduleAgentTick();
+  }
   pauseAgent() {
     if (!this._agentRun || this._agentRun.status !== 'running') return;
     clearTimeout(this._agentTimer);
@@ -2328,28 +2687,64 @@ class Component extends DCLogic {
     this.scheduleAgentTick();
   }
   toggleSave(id, title) {
-    const m = Object.assign({}, this.state.saved); const on = !m[id];
+    const previous = Object.assign({}, this.state.saved);
+    const m = Object.assign({}, previous); const on = !m[id];
     if (on) m[id] = true; else delete m[id];
     this.setState({ saved: m }); this.setLS('plk-vj2-saved', m);
     if (on) this.showToast('Bewaard. Je vindt dit terug onder Opgeslagen.');
+    if (!this.isApiMode()) return;
+    if (!this._saveActionVersion) this._saveActionVersion = {};
+    const version = (this._saveActionVersion[id] || 0) + 1;
+    this._saveActionVersion[id] = version;
+    const app = this.appAdapter();
+    this.queueApiAction('save', id, () => on ? app.opportunities.save(id, {}) : app.opportunities.unsave(id)).catch((error) => {
+      if (!this._mounted || this._saveActionVersion[id] !== version) return;
+      this.setState({ saved: previous }); this.setLS('plk-vj2-saved', previous);
+      this.showToast(this.apiErrorMessage(error, 'Bewaren kon niet worden gesynchroniseerd.'));
+    });
   }
   hide(id, msg) {
-    const m = Object.assign({}, this.state.hidden); m[id] = true;
+    const previous = Object.assign({}, this.state.hidden);
+    const m = Object.assign({}, previous); m[id] = true;
     this.setState({ hidden: m, whyId: null, cardMenuId: null, modalId: null }); this.setLS('plk-vj2-hidden', m);
     clearTimeout(this._focusT); this._focusT = setTimeout(() => { const v = document.querySelector('.plk-map-viewport'); if (v && v.focus) v.focus({ preventScroll: true }); }, 60);
-    this.showToast(msg || 'Verborgen. Deze kans zie je niet meer.', () => {
-      const mm = Object.assign({}, this.state.hidden); delete mm[id];
-      this.setState({ hidden: mm, toast: null }); this.setLS('plk-vj2-hidden', mm);
+    this.showToast(msg || 'Verborgen. Deze kans zie je niet meer.', () => this.restore(id));
+    if (!this.isApiMode()) return;
+    if (!this._hideActionVersion) this._hideActionVersion = {};
+    const version = (this._hideActionVersion[id] || 0) + 1;
+    this._hideActionVersion[id] = version;
+    const app = this.appAdapter();
+    this.queueApiAction('hide', id, () => app.opportunities.hide(id, { value: true, reason: msg || 'hidden' })).catch((error) => {
+      if (!this._mounted || this._hideActionVersion[id] !== version) return;
+      this.setState({ hidden: previous }); this.setLS('plk-vj2-hidden', previous);
+      this.showToast(this.apiErrorMessage(error, 'Verbergen kon niet worden gesynchroniseerd.'));
     });
   }
   restore(id) {
-    const m = Object.assign({}, this.state.hidden); delete m[id];
+    const previous = Object.assign({}, this.state.hidden);
+    const m = Object.assign({}, previous); delete m[id];
     this.setState({ hidden: m, modalId: null }); this.setLS('plk-vj2-hidden', m);
     clearTimeout(this._focusT); this._focusT = setTimeout(() => { const v = document.querySelector('.plk-map-viewport'); if (v && v.focus) v.focus({ preventScroll: true }); }, 60);
     this.showToast('Kans hersteld op je kaart.');
+    if (!this.isApiMode()) return;
+    if (!this._hideActionVersion) this._hideActionVersion = {};
+    const version = (this._hideActionVersion[id] || 0) + 1;
+    this._hideActionVersion[id] = version;
+    const app = this.appAdapter();
+    this.queueApiAction('hide', id, () => app.opportunities.hide(id, { value: false })).catch((error) => {
+      if (!this._mounted || this._hideActionVersion[id] !== version) return;
+      this.setState({ hidden: previous }); this.setLS('plk-vj2-hidden', previous);
+      this.showToast(this.apiErrorMessage(error, 'Herstellen kon niet worden gesynchroniseerd.'));
+    });
   }
   toggleInterest(id, opportunityType) {
     if (!this.requireFreelancerAuth()) return;
+    if (this.isApiMode() && ((this.state.sent || {})[id] || (this._applicationPending && this._applicationPending[id]))) {
+      this.showToast('Je sollicitatie voor deze kans is al verstuurd.');
+      return;
+    }
+    const previousSent = Object.assign({}, this.state.sent);
+    const previousReview = Object.assign({}, this.state.review);
     const m = Object.assign({}, this.state.sent); const on = !m[id];
     const review = Object.assign({}, this.state.review);
     if (on) m[id] = true; else delete m[id];
@@ -2359,6 +2754,20 @@ class Component extends DCLogic {
     this.setState({ sent: m, review: review }); this.setLS('plk-vj2-sent', m); this.setLS('plk-vj2-review', review);
     const opportunity = this._canonicalById && this._canonicalById[id];
     const route = this.applicationRouteFor(opportunity || { id: id, source: 'external' });
+    if (on && this.isApiMode()) {
+      this.showToast('Sollicitatie wordt veilig verstuurd...');
+      this.submitApiApplication(id, opportunity, route, false).then(() => {
+        if (this._mounted) this.showToast('Sollicitatie bevestigd. Verzendroute: ' + route.label + '.');
+      }).catch((error) => {
+        if (!this._mounted) return;
+        this.paintAgentCard(id, !!previousSent[id]);
+        this.paintReviewCard(id, !!previousReview[id]);
+        this.setState({ sent: previousSent, review: previousReview });
+        this.setLS('plk-vj2-sent', previousSent); this.setLS('plk-vj2-review', previousReview);
+        this.showToast(this.apiErrorMessage(error, 'De sollicitatie kon niet worden verstuurd.'));
+      });
+      return;
+    }
     if (on) this.showToast('Sollicitatie bevestigd. Verzendroute: ' + route.label + '.', () => {
       const mm = Object.assign({}, this.state.sent); delete mm[id]; this.paintAgentCard(id, false);
       this.setState({ sent: mm, toast: null }); this.setLS('plk-vj2-sent', mm);
@@ -2946,7 +3355,7 @@ class Component extends DCLogic {
     });
   }
 
-  feedCard(x, index) {
+  feedCard(x) {
     const saved = !!this.state.saved[x.id];
     const sent = !!this.state.sent[x.id];
     const review = !!this.state.review[x.id];
@@ -2962,12 +3371,15 @@ class Component extends DCLogic {
     const reason = (x.reasons && x.reasons[0]) || (relevance + '% match met jouw profiel en voorkeuren');
     return {
       id: x.id,
-      rank: index + 1,
       title: x.title,
       categoryLabel: category.label,
       categoryBg: category.bg,
       categoryColor: category.color,
       categoryIconEl: this.iconEl(category.icon, category.color, 30),
+      mobileCategoryIconEl: this.iconEl(category.icon, category.color, 20),
+      company: x.co || 'Opdrachtgever',
+      jobHref: 'Prolinker Voor jou v2.dc.html?job=' + encodeURIComponent(x.id),
+      activitySummary: this.postedFeedLabel(x) + ' \u00b7 ' + relevance + '% match',
       kindLabel: employment ? 'Loondienst' : 'Freelance',
       kindBg: employment ? '#FFF0E2' : '#E7F0FC',
       kindColor: employment ? '#A25A14' : '#1B5CB8',
@@ -2991,7 +3403,7 @@ class Component extends DCLogic {
       applyBorder: sent ? '#91CDB5' : (review ? '#B8780E' : '#006BC6'),
       state: sent ? 'sent' : (review ? 'review' : 'open'),
       ariaLabel: x.title + ', ' + relevance + '% match, ' + (x.co || 'opdrachtgever') + ', ' + this.marketStatusLabel(x) + ', ' + interestedLabel + ', ' + closingLabel,
-      onOpen: (e) => this.openOpportunity(x.id, e),
+      onOpen: (e) => this.openOpportunityLink(x.id, e),
       onApply: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleInterest(x.id, x.opportunityType); },
       onSave: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleSave(x.id); }
     };
@@ -3162,7 +3574,20 @@ class Component extends DCLogic {
       if (isNew) labels.push('nieuw');
       return Object.assign({}, x, { opportunityType: 'freelance', relevance: relevanceById[x.id], startBucket: this.startBucketFor(x), isNew: isNew, labels: labels });
     });
-    this._canonicalMarket = this.marketWithValueSpans(curated.concat(this.fullMarketData(), this.employmentMarketData()));
+    const localMarket = curated.concat(this.fullMarketData(), this.employmentMarketData());
+    const mergedById = {};
+    const merged = [];
+    localMarket.concat(this._remoteOpportunities || []).forEach((item) => {
+      if (!item || !item.id) return;
+      if (mergedById[item.id] === undefined) {
+        mergedById[item.id] = merged.length;
+        merged.push(item);
+      } else {
+        const at = mergedById[item.id];
+        merged[at] = Object.assign({}, merged[at], item);
+      }
+    });
+    this._canonicalMarket = this.marketWithValueSpans(merged);
     this._canonicalById = {};
     this._canonicalMarket.forEach((x) => { this._canonicalById[x.id] = x; });
     return this._canonicalMarket;
@@ -3179,7 +3604,8 @@ class Component extends DCLogic {
     let selectedMarket = canonicalMarket.filter((x) => this.passes(x));
     if (sortKey === 'match') selectedMarket = selectedMarket.filter((x) => (x.relevance === undefined ? x.match : x.relevance) >= 90);
     else if (sortKey === 'sluit') selectedMarket = selectedMarket.filter((x) => x.dl !== null && x.dl !== undefined && x.dl <= 5);
-    selectedMarket.sort((a, b) => (b.relevance === undefined ? b.match : b.relevance) - (a.relevance === undefined ? a.match : a.relevance) || b.valueSpan - a.valueSpan || String(a.id).localeCompare(String(b.id)));
+    const refreshRound = Number(this.state.refreshCount || 0);
+    selectedMarket.sort((a, b) => (b.relevance === undefined ? b.match : b.relevance) - (a.relevance === undefined ? a.match : a.relevance) || (refreshRound ? this.refreshTieRank(a.id, refreshRound) - this.refreshTieRank(b.id, refreshRound) : b.valueSpan - a.valueSpan || String(a.id).localeCompare(String(b.id))));
     this._latestAgentCandidateIds = selectedMarket.map((x) => x.id);
 
     const chipDefs = [['alles', 'Ontdekken'], ['intern', 'Via ProLinker'], ['extern', 'Buiten ProLinker'], ['remote', 'Op afstand'], ['opgeslagen', 'Bewaard'], ['controle', 'Controle nodig'], ['verzonden', 'Verstuurd'], ['verborgen', 'Verborgen']];
@@ -3197,9 +3623,9 @@ class Component extends DCLogic {
     }));
 
     const optionStyle = (active) => ({ bg: active ? '#0A1F3F' : '#FFFFFF', color: active ? '#FFFFFF' : '#596579', border: active ? '#0A1F3F' : '#D8DEE7' });
-    const opportunityTypeOptions = [['freelance','Freelance'],['employment','Loondienst'],['all','Beide']].map((d) => Object.assign({ label: d[1], active: this.state.opportunityType === d[0], onClick: () => this.setOpportunityType(d[0]) }, optionStyle(this.state.opportunityType === d[0])));
+    const opportunityTypeOptions = [['freelance','Freelance'],['employment','Loondienst'],['all','Beide']].map((d) => Object.assign({ label: d[1], active: this.state.opportunityType === d[0], selectedMark: this.state.opportunityType === d[0] ? '\u2713' : '', onClick: () => this.setOpportunityType(d[0]) }, optionStyle(this.state.opportunityType === d[0])));
     const relevanceOptions = [[90,'90%'],[75,'75%'],[50,'50%'],[0,'Alle scores']].map((d) => Object.assign({ label: d[1], active: this.state.relevanceFloor === d[0], onClick: () => this.setRelevanceFloor(d[0]) }, optionStyle(this.state.relevanceFloor === d[0])));
-    const postedOptions = [['all','Altijd'],['today','Vandaag'],['week','7 dagen'],['fortnight','14 dagen'],['month','30 dagen']].map((d) => Object.assign({ label: d[1], active: this.state.postedFilter === d[0], onClick: () => this.setPostedFilter(d[0]) }, optionStyle(this.state.postedFilter === d[0])));
+    const postedOptions = [['all','Altijd'],['today','Vandaag'],['week','7 dagen'],['fortnight','14 dagen'],['month','30 dagen']].map((d) => Object.assign({ label: d[1], active: this.state.postedFilter === d[0], selectedMark: this.state.postedFilter === d[0] ? '\u2713' : '', onClick: () => this.setPostedFilter(d[0]) }, optionStyle(this.state.postedFilter === d[0])));
     const startOptions = [['all','Elke start'],['direct','Direct'],['next_month','Volgende maand'],['later','Later']].map((d) => Object.assign({ label: d[1], active: this.state.startFilter === d[0], onClick: () => this.setStartFilter(d[0]) }, optionStyle(this.state.startFilter === d[0])));
     const hoursOptions = [['all','Alle uren'],['light','Tot 16 u'],['medium','17-24 u'],['substantial','25-32 u'],['full','33+ u']].map((d) => Object.assign({ label: d[1], active: this.state.hoursFilter === d[0], onClick: () => this.setHoursFilter(d[0]) }, optionStyle(this.state.hoursFilter === d[0])));
 
@@ -3208,7 +3634,7 @@ class Component extends DCLogic {
     const visibleCount = selectedMarket.length;
     const visibleLabel = visibleCount.toLocaleString('nl-NL');
     const feedLimit = Math.max(24, Number(this.state.feedShown) || 24);
-    const feedItems = selectedMarket.slice(0, feedLimit).map((item, index) => this.feedCard(item, index));
+    const feedItems = selectedMarket.slice(0, feedLimit).map((item) => this.feedCard(item));
     const feedVisible = Math.min(feedLimit, visibleCount);
     this._latestFeedCount = visibleCount;
     const scopeCount = scopeMarket.length;
@@ -3217,7 +3643,7 @@ class Component extends DCLogic {
     const resultLabel = visibleLabel + (visibleCount === 1 ? ' resultaat' : ' resultaten');
     const locationCenter = this.activeLocationCenter();
     const remoteOnly = this.state.locationKey === 'remote';
-    const locationLabel = remoteOnly ? 'Alleen remote' : (locationCenter ? locationCenter.name + ' \u00b7 ' + this.state.radiusKm + ' km' : 'Heel NL & BE');
+    const locationLabel = remoteOnly ? 'Remote' : (locationCenter ? locationCenter.name + ' \u00b7 ' + this.state.radiusKm + ' km' : 'Remote');
     const locationNeedle = this.normalizeLocationText(this.state.locationQuery).trim();
     const locationPlaces = this.locationDirectory().slice().sort((a, b) => (a.key === this.state.locationKey ? -1 : 0) - (b.key === this.state.locationKey ? -1 : 0));
     const locationOptions = locationPlaces.filter((place) => {
@@ -3243,6 +3669,10 @@ class Component extends DCLogic {
     const agentDone = agentRun ? Math.min(agentTotal, Number(agentRun.index) || 0) : 0;
     const agentProgressPct = agentTotal ? Math.round(agentDone / agentTotal * 100) : 0;
     const agentPrimary = this.agentPrimaryUi(agentRun, agentEligibleCount);
+    const workformLabel = { freelance: 'Freelance', employment: 'Loondienst', all: 'Beide' }[this.state.opportunityType] || 'Freelance';
+    const postedLabel = { all: 'Altijd', today: 'Vandaag', week: '7 dagen', fortnight: '14 dagen', month: '30 dagen' }[this.state.postedFilter] || 'Altijd';
+    const moreCount = (this.state.startFilter !== 'all' ? 1 : 0) + (this.state.hoursFilter !== 'all' ? 1 : 0);
+    const mobileCount = (this.state.opportunityType !== 'freelance' ? 1 : 0) + (!remoteOnly ? 1 : 0) + (this.state.postedFilter !== 'all' ? 1 : 0) + moreCount;
 
     return {
       initials: initials,
@@ -3252,19 +3682,20 @@ class Component extends DCLogic {
       accentShadow: 'rgba(0,107,198,0.28)',
       menuOpen: this.state.menuOpen,
       menuChevronRotate: this.state.menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-      onToggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen, locationOpen: false, sortOpen: false })),
+      onToggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen, locationOpen: false, sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false })),
       onCloseMenu: () => this.setState({ menuOpen: false }),
       menuItems: [
-        { section: 'Werk vinden' },
-        { label: 'Kansen voor jou', description: 'Jouw persoonlijke markt', href: 'Prolinker Voor jou v2.dc.html', symbol: 'K', current: 'page', bg: '#EDF5FC', iconBg: '#DCEBFA', iconColor: '#1B5CB8', weight: 800 },
-        { label: 'Freelancers ontdekken', description: 'Vind expertise in het netwerk', href: 'Prolinker Results.dc.html', symbol: 'F', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
-        { section: 'Voor opdrachtgevers' },
-        { label: 'Opdracht plaatsen', description: 'Ontvang direct passende matches', href: 'Prolinker Homepage.dc.html', symbol: '+', current: false, bg: 'transparent', iconBg: '#E8F5EF', iconColor: '#12835B', weight: 650 },
-        { label: 'Recruiter worden', description: 'Bouw je talentnetwerk', href: 'Prolinker Login.dc.html?mode=register&role=client', symbol: 'R', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
-        { section: 'ProLinker' },
-        { label: 'Hoe het werkt', description: 'Van profiel naar samenwerking', href: 'https://prolinker.com/how-it-works', symbol: '?', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
-        { label: 'Freelancer worden', description: 'Maak je profiel compleet', href: this.state.authenticated ? 'Prolinker Profiel.dc.html' : 'Prolinker Login.dc.html?mode=register&role=freelancer', symbol: 'P', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
-        { label: 'Blog', description: 'Inzichten over de nieuwe markt', href: 'https://prolinker.com/blog', symbol: 'B', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 }
+        { section: 'Mijn account' },
+        { label: 'Dashboard', description: 'Overzicht en activiteit', href: 'Prolinker Dashboard.dc.html', symbol: 'D', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { label: 'Netwerk', description: 'Connecties en referrals', href: 'Prolinker Netwerk.dc.html', symbol: 'N', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { label: 'Mijn opdrachten', description: 'Reacties en samenwerkingen', href: 'Prolinker Mijn opdrachten.dc.html', symbol: 'O', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { label: 'Berichten', description: 'Gesprekken met opdrachtgevers', href: 'Prolinker Berichten.dc.html', symbol: 'B', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { label: 'Profiel', description: 'CV, expertise en voorkeuren', href: 'Prolinker Profiel.dc.html', symbol: 'P', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { label: 'Verdiensten', description: 'Inkomsten en 2% referrals', href: 'Prolinker Verdiensten.dc.html', symbol: '2%', current: false, bg: 'transparent', iconBg: '#E8F5EF', iconColor: '#12835B', weight: 650 },
+        { label: 'Instellingen', description: 'Account en meldingen', href: 'Prolinker Instellingen.dc.html', symbol: 'I', current: false, bg: 'transparent', iconBg: 'var(--panel,#F7F8FB)', iconColor: '#5C6878', weight: 650 },
+        { section: 'Werk' },
+        { label: 'Kansen voor jou', description: 'Jouw persoonlijke opdrachtfeed', href: 'Prolinker Voor jou v2.dc.html', symbol: 'K', current: 'page', bg: '#EDF5FC', iconBg: '#DCEBFA', iconColor: '#1B5CB8', weight: 800 },
+        { label: 'Uitloggen', description: 'Sessie veilig afsluiten', href: 'Prolinker Login.dc.html?mode=login&role=freelancer', onClick: (e) => { if (e && e.preventDefault) e.preventDefault(); this.logoutFreelancer(); }, symbol: '\u2192', current: false, bg: 'transparent', iconBg: '#F7ECEC', iconColor: '#A84A4A', weight: 650 }
       ],
       onToggleTheme: () => this.toggleTheme(),
       themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
@@ -3280,7 +3711,7 @@ class Component extends DCLogic {
       chatEl: this.iconEl('chat', 'rgba(255,255,255,0.78)', 17),
       bellEl: this.iconEl('bell', 'rgba(255,255,255,0.78)', 17),
       onMessages: () => this.showToast('Je hebt geen ongelezen berichten.'),
-      onNotifications: () => this.showToast('3 nieuwe kansen zijn aan je kaart toegevoegd.'),
+      onNotifications: () => this.showToast('3 nieuwe kansen zijn aan je feed toegevoegd.'),
       chevronNavEl: this.iconEl('chevron', 'rgba(255,255,255,0.6)', 13),
       chevronEl: this.iconEl('chevron', '#8A93A1', 13),
       searchEl: this.iconEl('search', '#8A93A1', 15),
@@ -3293,6 +3724,32 @@ class Component extends DCLogic {
       micColor: this.state.listening ? '#006BC6' : (this.speechSupported() ? '#506071' : '#8A93A1'),
       micEl: this.iconEl('mic', this.state.listening ? '#006BC6' : (this.speechSupported() ? '#506071' : '#8A93A1'), 18),
       onToggleMic: () => this.toggleVoice(),
+      workformOpen: this.state.workformOpen,
+      postedOpen: this.state.postedOpen,
+      moreOpen: this.state.moreOpen,
+      mobileFiltersOpen: this.state.mobileFiltersOpen,
+      workformLabel: workformLabel,
+      workformActive: this.state.opportunityType !== 'freelance',
+      postedLabel: postedLabel,
+      postedActive: this.state.postedFilter !== 'all',
+      moreFiltersActive: moreCount > 0,
+      moreFilterCount: moreCount ? '(' + moreCount + ')' : '',
+      mobileFilterCount: mobileCount ? ' (' + mobileCount + ')' : '',
+      apiSyncVisible: this.isApiMode() && this.state.apiSyncStatus !== 'idle',
+      apiSyncMessage: this.state.apiSyncMessage,
+      apiSyncColor: this.state.apiSyncStatus === 'error' ? '#A23F3F' : (this.state.apiSyncStatus === 'synced' ? '#147553' : '#526174'),
+      lastRefreshedLabel: this.state.refreshedAt ? 'Laatst ververst om ' + new Date(this.state.refreshedAt).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) : 'Laatst ververst: nog niet',
+      includeRemoteLabel: this.state.includeRemote ? 'aan' : 'uit',
+      refreshEl: this.iconEl('refresh', '#174F8B', 14),
+      mobileChevronEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#8390A3', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('polyline', { points: '9 18 15 12 9 6' })),
+      onToggleWorkform: () => this.setState((s) => ({ workformOpen: !s.workformOpen, postedOpen: false, moreOpen: false, locationOpen: false, menuOpen: false })),
+      onTogglePosted: () => this.setState((s) => ({ postedOpen: !s.postedOpen, workformOpen: false, moreOpen: false, locationOpen: false, menuOpen: false })),
+      onToggleMore: () => this.setState((s) => ({ moreOpen: !s.moreOpen, workformOpen: false, postedOpen: false, locationOpen: false, menuOpen: false })),
+      onCloseFilters: () => this.setState({ workformOpen: false, postedOpen: false, moreOpen: false }),
+      onResetMoreFilters: () => this.setState({ startFilter: 'all', hoursFilter: 'all', feedShown: 24 }),
+      onOpenMobileFilters: () => this.setState({ mobileFiltersOpen: true, workformOpen: false, postedOpen: false, moreOpen: false, locationOpen: false }),
+      onCloseMobileFilters: () => this.setState({ mobileFiltersOpen: false }),
+      onRefreshFeed: () => this.refreshFeed(),
       pinEl: this.iconEl('pin', '#5A6472', 15),
       targetEl: this.iconEl('target', '#1B5CB8', 16),
       pinAccentEl: this.iconEl('pin', '#1B5CB8', 14),
@@ -3324,7 +3781,8 @@ class Component extends DCLogic {
       locationOpen: this.state.locationOpen,
       locationActive: !!locationCenter,
       locationLabel: locationLabel,
-      locationButtonBorder: this.state.locationKey !== 'all' ? '#8FB5DA' : '#DDE2E9',
+      locationControlActive: !remoteOnly,
+      locationButtonBorder: !remoteOnly ? '#8FB5DA' : '#DDE2E9',
       locationChevronRotate: this.state.locationOpen ? 'rotate(180deg)' : 'rotate(0deg)',
       remoteOnly: remoteOnly,
       remoteOnlyBorder: remoteOnly ? '#7FA9D5' : '#DDE3EA',
@@ -3333,6 +3791,7 @@ class Component extends DCLogic {
       locationQuery: this.state.locationQuery,
       locationQueryClearVisible: !!this.state.locationQuery,
       locationOptions: locationOptions,
+      mobileLocationOptions: locationOptions.slice(0, 4),
       locationNoResults: locationOptions.length === 0,
       radiusOptions: radiusOptions,
       radiusLabel: this.state.radiusKm + ' km',
@@ -3341,10 +3800,10 @@ class Component extends DCLogic {
       remoteKnobLeft: this.state.includeRemote ? '18px' : '2px',
       locationLoading: this.state.locationLoading,
       currentLocationLabel: this.state.locationLoading ? 'Locatie bepalen...' : (this.state.locationKey === 'current' ? 'Mijn locatie opnieuw bepalen' : 'Gebruik mijn locatie'),
-      locationScopeLabel: remoteOnly ? scopeLabel + ' remote kansen' : (locationCenter ? scopeLabel + ' binnen ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : scopeLabel + ' in NL & BE'),
+      locationScopeLabel: remoteOnly ? scopeLabel + ' remote kansen' : (locationCenter ? scopeLabel + ' binnen ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : scopeLabel + ' remote kansen'),
       marketCountLabel: scopeLabel + (scopeCount === 1 ? ' kans in je markt' : ' kansen in je markt'),
       marketNewLabel: newInScope.toLocaleString('nl-NL') + ' nieuw',
-      onToggleLocation: () => this.setState((s) => ({ locationOpen: !s.locationOpen, menuOpen: false, sortOpen: false })),
+      onToggleLocation: () => this.setState((s) => ({ locationOpen: !s.locationOpen, menuOpen: false, sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false })),
       onCloseLocation: () => this.setState({ locationOpen: false, locationQuery: '' }),
       onLocationQuery: (e) => this.setState({ locationQuery: e.target.value || '' }),
       onClearLocationQuery: () => this.setState({ locationQuery: '' }),
@@ -3397,6 +3856,7 @@ class Component extends DCLogic {
       feedRangeLabel: visibleCount ? feedVisible.toLocaleString('nl-NL') + ' van ' + visibleLabel : '0 kansen',
       feedHasMore: feedVisible < visibleCount,
       onLoadMore: () => this.setState({ feedShown: Math.min(visibleCount, feedLimit + 24) }),
+      legacyFeedUiVisible: false,
       legacyMapVisible: false,
       showFeatured: false,
       showWide: false,
@@ -3414,7 +3874,7 @@ class Component extends DCLogic {
       emptyText: this.state.filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik Bewaren bij een opdracht om kansen hier terug te vinden.' : (remoteOnly ? 'Geen remote kansen met deze filters. Pas je zoekopdracht of filters aan.' : (locationCenter ? 'Geen kansen binnen ' + this.state.radiusKm + ' km van ' + locationCenter.name + '. Vergroot je afstand of pas je filters aan.' : 'Geen kansen in deze feed. Pas je zoekopdracht of filters aan.')),
       onCloseOverlays: () => this.setState({ whyId: null, cardMenuId: null }),
       modalOpen: !!modalSrc, modalItem: modalItem,
-      onCloseModal: () => { this.setState({ modalId: null }); },
+      onCloseModal: () => this.closeOpportunity(),
       toastVisible: !!toast,
       toastMsg: toast ? toast.msg : '',
       toastUndoable: !!(toast && toast.undo),

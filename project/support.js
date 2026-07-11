@@ -114,7 +114,7 @@
     .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
       padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
       border-radius:4px;white-space:pre-wrap;pointer-events:none}
-    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts \u2014 keep both
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts; keep both
        in sync until dc-runtime regains a build step. */
     @media print {
       @page { margin: 0.5cm; }
@@ -497,7 +497,7 @@
             }
             warnUnresolved(
               ctx,
-              "{{ " + p.trim() + " }} never resolved \u2014 rendered as empty"
+              "{{ " + p.trim() + " }} never resolved; rendered as empty"
             );
             return null;
           }
@@ -635,7 +635,7 @@
         style: hostStyle || { display: "contents" }
       } : null;
       if (!C) {
-        const error = urlBindable ? "x-import `from` cannot contain {{ \u2026 }} \u2014 module URLs are resolved at parse time; use a literal URL" : host.resolveExternalError(url, name);
+        const error = urlBindable ? "x-import `from` cannot contain {{ \u2026 }}; module URLs are resolved at parse time, so use a literal URL" : host.resolveExternalError(url, name);
         const ph = host.placeholder({
           key: wrapper ? void 0 : key,
           name,
@@ -1041,13 +1041,36 @@
   }
 
   // src/cdn.ts
+  var SUPPORT_BASE_URL = (() => {
+    const current = document.currentScript;
+    try {
+      return new URL(".", current && current.src ? current.src : document.baseURI).href;
+    } catch {
+      return document.baseURI || "./";
+    }
+  })();
+  function localVendorUrl(fileName) {
+    try {
+      return new URL("assets/vendor/" + fileName, SUPPORT_BASE_URL).href;
+    } catch {
+      return "assets/vendor/" + fileName;
+    }
+  }
+  var REACT_LOCAL_URL = localVendorUrl("react-18.3.1.production.min.js");
   var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
+  var REACT_DOM_LOCAL_URL = localVendorUrl("react-dom-18.3.1.production.min.js");
   var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  var BABEL_LOCAL_URL = localVendorUrl("babel-standalone-7.29.0.min.js");
   var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
   var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
-  function cdnScriptFor(url, sri) {
+  function localScriptFor(localUrl, cdnUrl) {
+    const res = window.__resources;
+    const v = res ? res[localUrl] || res[cdnUrl] : void 0;
+    return typeof v === "string" && v ? { src: v } : { src: localUrl };
+  }
+  function fallbackScriptFor(url, sri) {
     const res = window.__resources;
     const v = res ? res[url] : void 0;
     return typeof v === "string" && v ? { src: v } : { src: url, integrity: sri };
@@ -1077,17 +1100,10 @@
     function ensureBabel() {
       if (window.Babel) return Promise.resolve();
       if (babelLoading) return babelLoading;
-      const babel = cdnScriptFor(BABEL_URL, BABEL_SRI);
-      babelLoading = new Promise((res, rej) => {
-        const s = document.createElement("script");
-        s.src = babel.src;
-        if (babel.integrity) {
-          s.integrity = babel.integrity;
-          s.crossOrigin = "anonymous";
-        }
-        s.onload = () => res();
-        s.onerror = rej;
-        document.head.appendChild(s);
+      const babel = localScriptFor(BABEL_LOCAL_URL, BABEL_URL);
+      const fallback = fallbackScriptFor(BABEL_URL, BABEL_SRI);
+      babelLoading = loadRuntimeScript(babel, fallback).then(() => {
+        if (!window.Babel) throw new Error("dc-runtime: Babel failed to initialize");
       });
       return babelLoading;
     }
@@ -1132,7 +1148,7 @@
         console.info(
           "[dc-runtime] x-import: loaded",
           url,
-          "\u2014 exports:",
+          "- exports:",
           Object.keys(module.exports),
           "window globals:",
           Object.keys(globals)
@@ -1172,7 +1188,7 @@
           url,
           "loaded but has no component named",
           JSON.stringify(name),
-          "\u2014 available exports:",
+          "- available exports:",
           Object.keys(mod),
           "window globals:",
           Object.keys(globals),
@@ -1233,7 +1249,7 @@
             url,
             "loaded but no custom element",
             JSON.stringify(name),
-            "is registered and window." + name + " is not a function \u2014 rendering <" + name + "> as an unknown element."
+            "is registered and window." + name + " is not a function; rendering <" + name + "> as an unknown element."
           );
         }
       }
@@ -1461,7 +1477,7 @@
             url,
             "returned",
             res2.status,
-            "\u2014 the reference renders as an empty placeholder."
+            "- the reference renders as an empty placeholder."
           );
           return "";
         }
@@ -1473,7 +1489,7 @@
           console.error(
             '[dc-runtime] sibling fetch for "' + name + '":',
             url,
-            "has no <x-dc> block \u2014 not a Design Component."
+            "has no <x-dc> block; it is not a Design Component."
           );
           return;
         }
@@ -1521,7 +1537,7 @@
         console.error(
           "[dc-runtime] logic class eval FAILED for",
           name,
-          "\u2014 the template renders with props only.",
+          "- the template renders with props only.",
           e
         );
         r.logicError = name + ": " + (e instanceof Error && e.message ? e.message : String(e));
@@ -1641,15 +1657,29 @@
       document.head.appendChild(s);
     });
   }
+  function loadRuntimeScript(local, fallback) {
+    return loadScript(local.src, local.integrity).catch((error) => {
+      if (window.location.protocol !== "file:" || local.src === fallback.src) {
+        throw error;
+      }
+      return loadScript(fallback.src, fallback.integrity);
+    });
+  }
   function loadReactUmd() {
     const w = window;
     if (w.React && w.ReactDOM) return Promise.resolve();
-    const react = cdnScriptFor(REACT_URL, REACT_SRI);
-    const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
-    return Promise.all([
-      loadScript(react.src, react.integrity),
-      loadScript(reactDom.src, reactDom.integrity)
-    ]).then(() => void 0);
+    const react = localScriptFor(REACT_LOCAL_URL, REACT_URL);
+    const reactFallback = fallbackScriptFor(REACT_URL, REACT_SRI);
+    const reactDom = localScriptFor(REACT_DOM_LOCAL_URL, REACT_DOM_URL);
+    const reactDomFallback = fallbackScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
+    const reactReady = w.React ? Promise.resolve() : loadRuntimeScript(react, reactFallback);
+    return reactReady.then(() => {
+      if (!w.React) throw new Error("dc-runtime: React failed to initialize");
+      if (w.ReactDOM) return;
+      return loadRuntimeScript(reactDom, reactDomFallback);
+    }).then(() => {
+      if (!w.ReactDOM) throw new Error("dc-runtime: ReactDOM failed to initialize");
+    });
   }
   function init() {
     const runtime = createRuntime(document);

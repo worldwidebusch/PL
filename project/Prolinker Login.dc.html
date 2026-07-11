@@ -76,6 +76,10 @@
           <h1 style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
           <p style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
 
+          <sc-if value="{{ showReferralNotice }}" hint-placeholder-val="{{ false }}">
+            <div style="width: 100%; margin-top: 18px; padding: 12px 15px; border: 1px solid rgba(0,107,198,0.18); border-radius: 10px; background: rgba(0,107,198,0.06); color: var(--text,#152431); font-size: 13.5px; line-height: 1.45; text-align: center;">{{ t.referralNotice }}</div>
+          </sc-if>
+
           <div style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
             <div role="radiogroup" aria-label="{{ t.roleLabel }}">
               <div style="margin: 0 0 7px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
@@ -163,7 +167,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', contact: '', touched: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '' };
+  state = { mode: 'login', step: 'form', role: null, name: '', contact: '', touched: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '' };
 
   componentDidMount() {
     this._els = [];
@@ -172,7 +176,7 @@ class Component extends DCLogic {
       if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); }
     } catch (e) {}
     let mode = (this.props.startMode === 'Register') ? 'register' : 'login';
-    let role = null; let next = ''; let saved = ''; let savedName = '';
+    let role = null; let next = ''; let saved = ''; let savedName = ''; let referralCode = '';
     try {
       const params = new URLSearchParams(window.location.search);
       const m = params.get('mode'); if (m === 'register' || m === 'login') mode = m;
@@ -180,12 +184,13 @@ class Component extends DCLogic {
       const savedRole = localStorage.getItem('plk-user-role');
       role = requestedRole === 'client' || requestedRole === 'freelancer' ? requestedRole : (savedRole === 'client' || savedRole === 'freelancer' ? savedRole : null);
       next = this.safeNext(params.get('next') || '');
+      referralCode = this.safeReferralCode(params.get('ref') || '');
       saved = localStorage.getItem('plk-auth-contact') || '';
       if (!this.isPhone(saved)) saved = '';
       savedName = localStorage.getItem('plk-user-name') || '';
     } catch (e) {}
     document.title = mode === 'register' ? (this.lang() === 'nl' ? 'Registreren | ProLinker' : 'Register | ProLinker') : (this.lang() === 'nl' ? 'Inloggen | ProLinker' : 'Log in | ProLinker');
-    this.setState({ mode: mode, role: role, contact: saved, name: savedName, next: next });
+    this.setState({ mode: mode, role: role, contact: saved, name: savedName, next: next, referralCode: referralCode });
     this._onKey = (e) => { if (e.key === 'Escape' && this.state.step === 'code' && !this.state.verifying) this.backToForm(); };
     window.addEventListener('keydown', this._onKey);
   }
@@ -194,9 +199,29 @@ class Component extends DCLogic {
   lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
   hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
   safeNext(value) {
-    const candidate = String(value || '').replace(/^\.\//, '');
-    const allowed = ['Prolinker Homepage.dc.html', 'Prolinker Brief.dc.html', 'Prolinker Results.dc.html', 'Prolinker Voor jou v2.dc.html', 'Prolinker Profiel.dc.html', 'Prolinker Verdiensten.dc.html'];
-    return allowed.indexOf(candidate) !== -1 ? candidate : '';
+    const candidate = String(value || '').trim().replace(/^\.\//, '');
+    if (!candidate || candidate.indexOf('..') >= 0 || /^(?:[a-z]+:)?\/\//i.test(candidate) || /[\r\n]/.test(candidate)) return '';
+    const match = candidate.match(/^([^?#]+)([?#].*)?$/);
+    if (!match) return '';
+    const allowed = [
+      'Prolinker Homepage.dc.html',
+      'Prolinker Brief.dc.html',
+      'Prolinker Intake.dc.html',
+      'Prolinker Results.dc.html',
+      'Prolinker Voor jou v2.dc.html',
+      'Prolinker Dashboard.dc.html',
+      'Prolinker Netwerk.dc.html',
+      'Prolinker Mijn opdrachten.dc.html',
+      'Prolinker Berichten.dc.html',
+      'Prolinker Profiel.dc.html',
+      'Prolinker Verdiensten.dc.html',
+      'Prolinker Instellingen.dc.html'
+    ];
+    return allowed.indexOf(match[1]) !== -1 ? match[1] + (match[2] || '') : '';
+  }
+  safeReferralCode(value) {
+    const candidate = String(value || '').trim().toLowerCase();
+    return /^[a-z0-9-]{4,48}$/.test(candidate) ? candidate : '';
   }
 
   strings() {
@@ -216,6 +241,7 @@ class Component extends DCLogic {
       successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View opportunities',
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
       codeAria: (n) => 'Digit ' + n,
+      referralNotice: 'You were invited by a ProLinker member. Your referral will be linked after freelancer registration.',
     };
     const nl = {
       loginTitle: 'Welkom terug', registerTitle: 'Maak je account',
@@ -233,6 +259,7 @@ class Component extends DCLogic {
       successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten',
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
       codeAria: (n) => 'Cijfer ' + n,
+      referralNotice: 'Je bent uitgenodigd door een ProLinker-lid. Je referral wordt gekoppeld na je freelancerregistratie.',
     };
     return this.lang() === 'nl' ? nl : en;
   }
@@ -321,6 +348,11 @@ class Component extends DCLogic {
       localStorage.setItem('plk-auth-contact', contact);
       if (name) localStorage.setItem('plk-user-name', name);
       localStorage.setItem('plk-user-role', role);
+      if (this.state.mode === 'register' && role === 'freelancer') {
+        const referralCode = this.safeReferralCode(this.state.referralCode);
+        if (referralCode) localStorage.setItem('plk-referred-by', referralCode);
+        else localStorage.removeItem('plk-referred-by');
+      }
     } catch (e) {}
     this.setState({ step: 'done', codeError: false, verifying: false, name: name, role: role });
   }
@@ -340,11 +372,13 @@ class Component extends DCLogic {
     clearInterval(this._cd); clearTimeout(this._vt);
     const role = this.state.role;
     const nextRoute = this.safeNext(this.state.next);
-    this.setState({ mode: nextMode, role: role, next: nextRoute, step: 'form', touched: false, codeError: false, verifying: false, code: ['', '', '', '', '', ''] });
+    const referralCode = this.safeReferralCode(this.state.referralCode);
+    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, codeError: false, verifying: false, code: ['', '', '', '', '', ''] });
     try {
       const query = ['mode=' + encodeURIComponent(nextMode)];
       if (role) query.push('role=' + encodeURIComponent(role));
       if (nextRoute) query.push('next=' + encodeURIComponent(nextRoute));
+      if (referralCode) query.push('ref=' + encodeURIComponent(referralCode));
       history.replaceState(null, '', '?' + query.join('&'));
     } catch (e) {}
   }
@@ -401,6 +435,7 @@ class Component extends DCLogic {
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       showForm: this.state.step === 'form', showCode: this.state.step === 'code', showDone: this.state.step === 'done',
       isRegister: isRegister,
+      showReferralNotice: isRegister && this.state.role === 'freelancer' && !!this.safeReferralCode(this.state.referralCode),
       heading: isRegister ? t.registerTitle : t.loginTitle,
       subheading: isRegister ? t.registerSub : t.loginSub,
       altModeLabel: isRegister ? t.switchToLogin : t.switchToRegister,

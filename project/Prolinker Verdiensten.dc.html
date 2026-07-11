@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -12,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; }
   :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -25,6 +26,45 @@
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
   a:active { transform: scale(0.985); }
+  button:focus-visible, a:focus-visible { outline: 3px solid rgba(0,107,198,0.22); outline-offset: 2px; }
+  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#E4E5EC); position: sticky; top: 0; z-index: 50; }
+  .plk-shell-inner { max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 24px; }
+  .plk-logo { width: 112px; height: auto; display: block; }
+  .plk-header-links { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 13px; font-weight: 550; }
+  .plk-header-link { color: var(--text,#152431); }
+  .plk-header-link:hover { color: var(--blue,#2F82C8); }
+  .plk-account-wrap { position: relative; margin-left: auto; }
+  .plk-account-btn { min-height: 38px; border: 0; background: transparent; padding: 4px 6px; display: flex; align-items: center; gap: 9px; color: var(--text,#152431); cursor: pointer; }
+  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E6F1FB; color: var(--blue-dark,#1767AA); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
+  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--text,#152431); }
+  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431); }
+  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #EDF4FA; color: var(--blue-dark,#1767AA); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+  .plk-menu-label { display: block; font-size: 13px; font-weight: 650; line-height: 1.2; }
+  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px; line-height: 1.25; }
+  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#565B62); cursor: pointer; font-size: 11px; font-weight: 650; }
+  .plk-menu-action:hover { background: var(--panel,#F7F8FB); }
+  .plk-menu-scrim:active { transform: none !important; }
+  .plk-ref-row:last-child { border-bottom: none !important; }
+  @media (max-width: 850px) { .plk-header-links { display: none; } }
+  @media (max-width: 660px) {
+    .plk-earnings-main { padding: 20px 14px 64px !important; }
+    .plk-ledger-head { display: none !important; }
+    .plk-ref-row { grid-template-columns: 42px 1fr auto !important; gap: 10px !important; }
+    .plk-ref-gross { grid-column: 2; }
+    .plk-ref-status { grid-column: 3; grid-row: 1; }
+    .plk-ref-earned { grid-column: 3; grid-row: 2; }
+    .plk-share-line { align-items: stretch !important; }
+    .plk-share-actions { width: 100%; }
+    .plk-share-actions > * { flex: 1; }
+  }
+  @media (max-width: 560px) {
+    .plk-shell-header { height: 54px; }
+    .plk-shell-inner { padding: 0 14px; }
+    .plk-logo { width: 100px; }
+    .plk-account-name { display: none; }
+    .plk-account-menu { position: fixed; left: 10px; right: 10px; top: 60px; width: auto; max-height: calc(100vh - 72px); overflow: auto; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
@@ -34,78 +74,110 @@
 
 <div data-screen-label="Verdiensten" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
 
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
-    <a href="Prolinker Homepage.dc.html" style="display: inline-flex; align-items: center;"><img src="assets/prolinker-mark.png" alt="ProLinker" style="height: 26px; width: 26px; display: block; object-fit: contain; filter: {{ logoFilter }};"></a>
-    <a href="Prolinker Voor jou v2.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); font-size: 14px; font-weight: 600; color: var(--text,#152431); position: fixed; top: 16px; right: 28px; z-index: 30;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.backToFeed }}</a>
+  <header class="plk-shell-header">
+    <div class="plk-shell-inner">
+      <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+      <nav class="plk-header-links" aria-label="Hoofdnavigatie">
+        <a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a>
+        <a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a>
+        <a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a>
+      </nav>
+      <div class="plk-account-wrap">
+        <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-haspopup="menu" aria-label="Accountmenu openen">
+          <span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size: 12.5px; font-weight: 650;">{{ userName }}</span><span style="font-size: 10px; color: var(--faint,#9AA0A6);">{{ menuChevron }}</span>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <button class="plk-menu-scrim" type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 60; border: 0; background: transparent;"></button>
+          <div class="plk-account-menu" role="menu">
+            <div style="padding: 11px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2);"><div style="font-size: 12.5px; font-weight: 700;">{{ userName }}</div><div style="margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px;">{{ roleLabel }}</div></div>
+            <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7">
+              <a class="plk-menu-link" href="{{ item.href }}" role="menuitem" aria-current="{{ item.current }}" style="background: {{ item.bg }}; box-shadow: {{ item.activeShadow }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a>
+            </sc-for>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline,#ECEDF2); border-top: 1px solid var(--hairline,#ECEDF2);">
+              <button class="plk-menu-action" type="button" onClick="{{ onTheme }}">{{ themeLabel }}</button>
+              <button class="plk-menu-action" type="button" onClick="{{ onLogout }}" style="color: #A2463B;">Uitloggen</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
   </header>
 
-  <main style="max-width: 820px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
-
+  <main class="plk-earnings-main" style="max-width: 920px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
     <div style="animation: plk-rise 0.5s ease both;">
-      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.022em;">{{ t.title }}</h1>
+      <h1 style="margin: 0; font-size: 30px; font-weight: 750; letter-spacing: -0.025em;">{{ pageTitle }}</h1>
+      <p style="margin: 8px 0 0; max-width: 650px; color: var(--muted,#565B62); font-size: 15px; line-height: 1.55;">{{ pageSubtitle }}</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 24px; animation: plk-rise 0.5s ease 0.05s both;">
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statPaid }}</span>
-        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 4.250</span>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; margin-top: 24px; animation: plk-rise 0.5s ease 0.05s both;">
+      <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.workPaid }}</span>
+          <span style="font-size: 23px; font-weight: 700;">{{ workPaid }}</span>
+        </div>
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.workPending }}</span>
+          <span style="font-size: 23px; font-weight: 700;">{{ workPending }}</span>
+        </div>
+      </sc-if>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.refPaid }}</span>
+        <span style="font-size: 23px; font-weight: 700; color: #087A55;">{{ referralPaid }}</span>
       </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statPending }}</span>
-        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 1.280</span>
-      </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statReferral }}</span>
-        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 86</span>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.refPending }}</span>
+        <span style="font-size: 23px; font-weight: 700;">{{ referralPending }}</span>
       </div>
     </div>
+    <sc-if value="{{ earningsErrorVisible }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top: 10px; padding: 10px 12px; border: 1px solid #E7B4A9; border-radius: 8px; background: #FFF7F5; color: #8B3227; font-size: 12.5px;">{{ earningsError }}</div></sc-if>
 
-    <div style="margin-top: 26px; animation: plk-rise 0.5s ease 0.1s both;">
-      <h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">{{ t.payouts }}</h2>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); overflow: hidden;">
-        <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
-          <div style="display: flex; align-items: center; gap: 16px; padding: 15px 20px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
-            <div style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">{{ p.mLetter }}</div>
-            <div style="flex: 1; min-width: 0;">
-              <div style="font-size: 14.5px; font-weight: 600;">{{ p.project }}</div>
-              <div style="margin-top: 2px; font-size: 13px; color: var(--faint,#9AA0A6);">{{ p.client }} &middot; {{ p.date }}</div>
+    <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
+      <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.1s both;">
+        <h2 style="margin: 0 0 11px; font-size: 17px; font-weight: 700;">{{ t.payouts }}</h2>
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; overflow: hidden;">
+          <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+              <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 8px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ p.mLetter }}</div>
+              <div style="flex: 1; min-width: 0;"><div style="font-size: 14px; font-weight: 650;">{{ p.project }}</div><div style="margin-top: 2px; font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ p.client }} &middot; {{ p.date }}</div></div>
+              <span style="flex-shrink: 0; padding: 4px 9px; border-radius: 7px; font-size: 11.5px; font-weight: 650; background: {{ p.statusBg }}; color: {{ p.statusColor }};">{{ p.statusLabel }}</span>
+              <span style="flex-shrink: 0; width: 82px; text-align: right; font-size: 14.5px; font-weight: 700;">{{ p.amount }}</span>
             </div>
-            <span style="flex-shrink: 0; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 650; background: {{ p.statusBg }}; color: {{ p.statusColor }};">{{ p.statusLabel }}</span>
-            <span style="flex-shrink: 0; width: 84px; text-align: right; font-size: 15px; font-weight: 700; letter-spacing: -0.01em;">{{ p.amount }}</span>
+          </sc-for>
+          <div style="display: flex; justify-content: flex-end; padding: 12px 18px; background: var(--panel,#F7F8FB);"><span style="font-size: 12.5px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span></div>
+        </div>
+      </section>
+    </sc-if>
+
+    <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.15s both;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 11px;">
+        <div><h2 style="margin: 0; font-size: 19px; font-weight: 750;">{{ t.referrals }}</h2><p style="margin: 5px 0 0; color: var(--muted,#565B62); font-size: 13.5px; line-height: 1.45;">{{ t.refExplanation }}</p></div>
+        <span style="flex-shrink: 0; padding: 6px 9px; border: 1px solid rgba(0,107,198,0.2); border-radius: 7px; background: rgba(0,107,198,0.07); color: #006BC6; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">2%</span>
+      </div>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; overflow: hidden;">
+        <div class="plk-share-line" style="padding: 18px; border-bottom: 1px solid var(--hairline,#ECEDF2); display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#565B62); background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
+          <div class="plk-share-actions" style="display: flex; gap: 8px;">
+            <button onClick="{{ onCopy }}" style="height: 38px; padding: 0 14px; border: 1px solid {{ copyBorder }}; border-radius: 8px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 650; color: {{ copyColor }};">{{ copyLabel }}</button>
+            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
+          </div>
+        </div>
+
+        <div class="plk-ledger-head" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; padding: 10px 18px; background: var(--panel,#F7F8FB); border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--faint,#9AA0A6); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;"><span></span><span>{{ t.freelancer }}</span><span>{{ t.grossValue }}</span><span>{{ t.status }}</span><span style="text-align:right;">{{ t.yourTwoPercent }}</span></div>
+        <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="3">
+          <div class="plk-ref-row" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+            <div style="width: 38px; height: 38px; border-radius: 8px; background: {{ r.mBg }}; color: {{ r.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">{{ r.initials }}</div>
+            <div><div style="font-size: 14px; font-weight: 650;">{{ r.name }}</div><div style="margin-top: 2px; font-size: 12px; color: var(--faint,#9AA0A6);">{{ r.meta }}</div></div>
+            <div class="plk-ref-gross" style="font-size: 13px; color: var(--muted,#565B62);">{{ r.grossLabel }}</div>
+            <span class="plk-ref-status" style="justify-self: start; padding: 4px 8px; border-radius: 7px; font-size: 11px; font-weight: 650; background: {{ r.statusBg }}; color: {{ r.statusColor }};">{{ r.statusLabel }}</span>
+            <span class="plk-ref-earned" style="text-align: right; font-size: 14.5px; font-weight: 750;">{{ r.earnedLabel }}</span>
           </div>
         </sc-for>
-        <div style="display: flex; align-items: center; justify-content: flex-end; padding: 13px 20px; background: var(--panel,#F7F8FB);">
-          <span style="font-size: 13px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span>
-        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; padding: 13px 18px; background: var(--panel,#F7F8FB); font-size: 12.5px;"><span>{{ t.paid }}: <b>{{ referralPaid }}</b></span><span>{{ t.pending }}: <b>{{ referralPending }}</b></span></div>
       </div>
-    </div>
-
-    <div style="margin-top: 26px; animation: plk-rise 0.5s ease 0.15s both;">
-      <h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">{{ t.referrals }}</h2>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
-
-        <div style="padding: 18px 20px; border-bottom: 1px solid var(--hairline,#ECEDF2); display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
-          <div style="flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0;">
-            <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted,#565B62); background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 999px; padding: 8px 14px;">prolinker.com/r/rachid-7k2</span>
-            <button onClick="{{ onCopy }}" style="flex-shrink: 0; height: 36px; padding: 0 15px; border: 1px solid {{ copyBorder }}; border-radius: 999px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: {{ copyColor }};">{{ copyLabel }}</button>
-            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0 15px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="border-color: #25D366; background: rgba(37,211,102,0.08); color: var(--text,#152431);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.share }}</a>
-          </div>
-        </div>
-
-        <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="2">
-          <div style="display: flex; align-items: center; gap: 16px; padding: 15px 20px; border-bottom: {{ r.rowBorder }};">
-            <div style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: {{ r.mBg }}; color: {{ r.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ r.initials }}</div>
-            <div style="flex: 1; min-width: 0;">
-              <div style="font-size: 14.5px; font-weight: 600;">{{ r.name }}</div>
-              <div style="margin-top: 2px; font-size: 13px; color: var(--faint,#9AA0A6);">{{ r.meta }}</div>
-            </div>
-            <span style="flex-shrink: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em;">{{ r.earned }}</span>
-          </div>
-        </sc-for>
-
-      </div>
-    </div>
-
+      <p style="margin: 10px 2px 0; color: var(--faint,#9AA0A6); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
+    </section>
   </main>
 
   <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
@@ -114,52 +186,93 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { copied: false, theme: 'light' };
+  state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false };
 
-  isValidWhatsappFreelancerSession(session) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp' || session.role !== 'freelancer') return false;
+  isValidWhatsappSession(session) {
+    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (session.role !== 'client' && session.role !== 'freelancer') return false;
     const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
     if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
     return (contact.match(/\d/g) || []).length >= 8;
   }
 
-  requireFreelancerSession() {
+  requireSession() {
+    if (window.ProLinkerApp && window.ProLinkerApp.session) {
+      const session = window.ProLinkerApp.session.require({ next: 'Prolinker Verdiensten.dc.html' });
+      if (this.isValidWhatsappSession(session)) {
+        this.setState({ session: session });
+        return true;
+      }
+      return false;
+    }
     try {
       const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
-      if (this.isValidWhatsappFreelancerSession(session)) return true;
+      if (this.isValidWhatsappSession(session)) {
+        this.setState({ session: session });
+        return true;
+      }
     } catch (e) {}
-    window.location.href = 'Prolinker Login.dc.html?mode=login&role=freelancer&next=Prolinker%20Verdiensten.dc.html';
+    window.location.href = 'Prolinker Login.dc.html?mode=login&next=Prolinker%20Verdiensten.dc.html';
     return false;
   }
 
   componentDidMount() {
-    if (!this.requireFreelancerSession()) return;
+    if (!this.requireSession()) return;
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
+    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
+    window.addEventListener('keydown', this._keyHandler);
+    this.loadEarnings();
   }
-  componentWillUnmount() { clearTimeout(this._copyT); }
+  componentWillUnmount() {
+    clearTimeout(this._copyT);
+    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+  }
+
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('plk-theme', next); } catch (e) {}
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+    this.setState({ theme: next, menuOpen: false });
+  }
 
   lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
 
+  async loadEarnings() {
+    if (!window.ProLinkerApp || !window.ProLinkerApp.earnings) return;
+    try {
+      const earnings = await window.ProLinkerApp.earnings.get();
+      this.setState({ earnings: earnings && typeof earnings === 'object' ? earnings : null, earningsError: '' });
+    } catch (error) {
+      this.setState({ earningsError: this.strings().apiError });
+    }
+  }
+
   strings() {
     const en = {
-      backToFeed: 'To my feed', title: 'Earnings & referrals', subtitle: 'Paid out via ProLinker in 2026',
-      statPaid: 'Paid out 2026', statPending: 'Pending', statReferral: 'Referral earnings',
-      payouts: 'Payouts', payoutNote: 'Payouts follow within 5 working days after approval', total: 'Total',
+      back: 'Back', freelancerTitle: 'Earnings & referrals', clientTitle: 'Referral program', apiError: 'Live earnings could not be loaded. Local referral data remains available.',
+      freelancerSubtitle: 'Your work payouts and referral earnings in one place.', clientSubtitle: 'Invite freelancers and follow your referral earnings.',
+      workPaid: 'Work paid in 2026', workPending: 'Work pending', refPaid: 'Referral paid', refPending: 'Referral pending',
+      payouts: 'Freelancer payouts', total: 'Total',
       paid: 'Paid', pending: 'Pending',
-      referrals: 'Referrals', refShareTitle: 'Invite freelancers, earn 2%', refShareSub: 'You receive 2% of every project they complete in year one',
+      referrals: 'Invite freelancers, earn 2%', refExplanation: 'You earn 2% of the gross value of work your referrals process through ProLinker.',
       copy: 'Copy link', copied: 'Copied', share: 'Share', shareWa: 'Share your link via WhatsApp',
-      yourShare: 'your 2%', refNote: 'Referral earnings are added to your monthly payout.',
-      joined: 'joined', projects: (n) => n + ' projects',
+      freelancer: 'Freelancer', grossValue: 'Processed value', status: 'Status', yourTwoPercent: 'Your 2%',
+      processed: 'processed via ProLinker', projects: (n) => n + ' projects',
+      prototypeNote: 'Prototype: this ledger and its payouts are simulated locally in this browser. Production attribution and payouts require a secure backend.',
+      shareMessage: (link) => 'Join ProLinker as a freelancer through my referral link: ' + link,
     };
     const nl = {
-      backToFeed: 'Naar mijn feed', title: 'Verdiensten & referrals', subtitle: 'Uitbetaald via ProLinker in 2026',
-      statPaid: 'Uitbetaald 2026', statPending: 'In behandeling', statReferral: 'Referral-inkomsten',
-      payouts: 'Uitbetalingen', payoutNote: 'Uitbetaling volgt binnen 5 werkdagen na goedkeuring', total: 'Totaal',
+      back: 'Terug', freelancerTitle: 'Verdiensten & referrals', clientTitle: 'Referralprogramma', apiError: 'Live verdiensten konden niet worden geladen. Lokale referralgegevens blijven beschikbaar.',
+      freelancerSubtitle: 'Je uitbetalingen en referral-inkomsten op een plek.', clientSubtitle: 'Nodig freelancers uit en volg je referral-inkomsten.',
+      workPaid: 'Werk uitbetaald in 2026', workPending: 'Werk in behandeling', refPaid: 'Referral uitbetaald', refPending: 'Referral in behandeling',
+      payouts: 'Freelanceruitbetalingen', total: 'Totaal',
       paid: 'Uitbetaald', pending: 'In behandeling',
-      referrals: 'Referrals', refShareTitle: 'Nodig freelancers uit, verdien 2%', refShareSub: 'Je ontvangt 2% van elke opdracht die zij het eerste jaar afronden',
+      referrals: 'Nodig freelancers uit, verdien 2%', refExplanation: 'Je verdient 2% van de bruto waarde van werk dat jouw referrals via ProLinker verwerken.',
       copy: 'Kopieer link', copied: 'Gekopieerd', share: 'Delen', shareWa: 'Deel je link via WhatsApp',
-      yourShare: 'jouw 2%', refNote: 'Referral-inkomsten worden bij je maandelijkse uitbetaling opgeteld.',
-      joined: 'lid sinds', projects: (n) => n + ' opdrachten',
+      freelancer: 'Freelancer', grossValue: 'Verwerkte waarde', status: 'Status', yourTwoPercent: 'Jouw 2%',
+      processed: 'verwerkt via ProLinker', projects: (n) => n + ' opdrachten',
+      prototypeNote: 'Prototype: dit overzicht en de uitbetalingen zijn lokaal gesimuleerd in deze browser. Voor echte toewijzing en uitbetaling is een beveiligde backend nodig.',
+      shareMessage: (link) => 'Word freelancer op ProLinker via mijn referrallink: ' + link,
     };
     return this.lang() === 'nl' ? nl : en;
   }
@@ -168,8 +281,37 @@ class Component extends DCLogic {
     return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: color }, React.createElement('path', { d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }));
   }
 
-  copyLink() {
-    try { navigator.clipboard.writeText('https://prolinker.com/r/rachid-7k2'); } catch (e) {}
+  referralCode(session) {
+    const rawName = String((session && session.name) || 'member').toLowerCase();
+    const slug = rawName.normalize ? rawName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 20) : 'member';
+    const source = String((session && session.contact) || '') + '|' + rawName;
+    let hash = 2166136261;
+    for (let i = 0; i < source.length; i += 1) { hash ^= source.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+    const suffix = (hash >>> 0).toString(36).slice(0, 8);
+    const code = ((slug || 'member') + '-' + suffix).replace(/[^a-z0-9-]/g, '').slice(0, 48);
+    return /^[a-z0-9-]{4,48}$/.test(code) ? code : 'member-2percent';
+  }
+
+  referralLink(session) {
+    try {
+      const url = new URL('Prolinker Login.dc.html', window.location.href);
+      url.search = '';
+      url.searchParams.set('mode', 'register');
+      url.searchParams.set('role', 'freelancer');
+      url.searchParams.set('ref', this.referralCode(session));
+      return url.href;
+    } catch (e) {
+      return 'Prolinker Login.dc.html?mode=register&role=freelancer&ref=' + encodeURIComponent(this.referralCode(session));
+    }
+  }
+
+  copyLink(link) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link);
+      else {
+        const area = document.createElement('textarea'); area.value = link; area.setAttribute('readonly', 'readonly'); area.style.position = 'fixed'; area.style.opacity = '0'; document.body.appendChild(area); area.select(); document.execCommand('copy'); document.body.removeChild(area);
+      }
+    } catch (e) {}
     this.setState({ copied: true });
     clearTimeout(this._copyT);
     this._copyT = setTimeout(() => this.setState({ copied: false }), 2000);
@@ -180,6 +322,19 @@ class Component extends DCLogic {
     const accent = this.props.accentColor || '#006BC6';
     const isDark = this.state.theme === 'dark';
     const nl = this.lang() === 'nl';
+    const session = this.state.session || { role: 'client', name: 'Member', contact: '+31000000000' };
+    const isFreelancer = session.role === 'freelancer';
+    const role = isFreelancer ? 'freelancer' : 'client';
+    const userName = String(session.name || (isFreelancer ? 'ProLinker professional' : 'ProLinker opdrachtgever')).trim();
+    const userInitials = userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
+    const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
+      ? window.ProLinkerApp.routes.accountMenu(role).map((item) => {
+        const active = item.key === 'earnings';
+        return Object.assign({}, item, { bg: active ? 'var(--panel,#F7F8FB)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F82C8)' : 'none', current: active ? 'page' : 'false' });
+      })
+      : [];
+    const referralLink = this.referralLink(session);
+    const earnings = this.state.earnings || {};
 
     const dim = (bg, color) => isDark ? { mBg: 'rgba(255,255,255,0.10)', mColor: '#ffffff' } : { mBg: bg, mColor: color };
     const paidStyle = { statusBg: 'rgba(31,138,91,0.12)', statusColor: '#1F8A5B', statusLabel: t.paid };
@@ -192,20 +347,52 @@ class Component extends DCLogic {
       Object.assign({ project: nl ? 'Checkout-optimalisatie' : 'Checkout optimization', client: 'Studio Kade', date: nl ? '15 feb 2026' : 'Feb 15, 2026', amount: '\u20ac 1.000', mLetter: 'S' }, dim('#FBF0E7', '#B4590A'), paidStyle),
     ];
 
-    const referrals = [
-      Object.assign({ name: 'Lisa de Wit', initials: 'LW', meta: t.projects(3), earned: '\u20ac 54', rowBorder: '1px solid var(--hairline,#ECEDF2)' }, dim('#FBEDEF', '#B42334')),
-      Object.assign({ name: 'Tom Jansen', initials: 'TJ', meta: t.projects(2), earned: '\u20ac 32', rowBorder: 'none' }, dim('#E6F4F6', '#0E7C8A')),
-    ];
-
-    const shareMsg = nl
-      ? 'Ik freelance via ProLinker. Maak gratis een account via mijn link: https://prolinker.com/r/rachid-7k2'
-      : 'I freelance via ProLinker. Create a free account with my link: https://prolinker.com/r/rachid-7k2';
+    const formatMoney = (value) => new Intl.NumberFormat(nl ? 'nl-NL' : 'en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    const ledger = [
+      { name: 'Lisa de Wit', initials: 'LW', projects: 3, gross: 2700, status: 'paid' },
+      { name: 'Tom Jansen', initials: 'TJ', projects: 2, gross: 1600, status: 'pending' },
+      { name: 'Nora Bakker', initials: 'NB', projects: 4, gross: 4550, status: 'paid' },
+    ].map((entry, index) => {
+      const style = entry.status === 'paid' ? paidStyle : pendStyle;
+      const colors = [dim('#FBEDEF', '#B42334'), dim('#E6F4F6', '#0E7C8A'), dim('#E8F1FB', '#0B5CAB')][index];
+      return Object.assign({}, entry, colors, style, {
+        meta: t.projects(entry.projects),
+        grossLabel: formatMoney(entry.gross) + ' ' + t.processed,
+        earned: entry.gross * 0.02,
+        earnedLabel: formatMoney(entry.gross * 0.02),
+      });
+    });
+    const referralPaidValue = ledger.filter((r) => r.status === 'paid').reduce((sum, r) => sum + r.earned, 0);
+    const referralPendingValue = ledger.filter((r) => r.status === 'pending').reduce((sum, r) => sum + r.earned, 0);
+    const shareMsg = t.shareMessage(referralLink);
 
     return {
       t: t, accent: accent,
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
-      payouts: payouts, referrals: referrals,
-      onCopy: () => this.copyLink(),
+      menuOpen: this.state.menuOpen,
+      menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC',
+      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })),
+      onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: menuItems,
+      userName: userName,
+      userInitials: userInitials,
+      roleLabel: isFreelancer ? 'Freelancer' : 'Opdrachtgever',
+      onTheme: () => this.toggleTheme(),
+      themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
+      onLogout: () => { if (window.ProLinkerApp && window.ProLinkerApp.session) window.ProLinkerApp.session.logout(); },
+      pageTitle: isFreelancer ? t.freelancerTitle : t.clientTitle,
+      pageSubtitle: isFreelancer ? t.freelancerSubtitle : t.clientSubtitle,
+      showFreelancerPayouts: isFreelancer,
+      workPaid: formatMoney(Number(earnings.available || 4250)),
+      workPending: formatMoney(Number(earnings.pending || 1280)),
+      earningsErrorVisible: !!this.state.earningsError,
+      earningsError: this.state.earningsError,
+      backHref: isFreelancer ? 'Prolinker Voor jou v2.dc.html' : 'Prolinker Homepage.dc.html',
+      payouts: payouts, referrals: ledger,
+      referralPaid: formatMoney(referralPaidValue),
+      referralPending: formatMoney(referralPendingValue),
+      referralLink: referralLink,
+      onCopy: () => this.copyLink(referralLink),
       copyLabel: this.state.copied ? t.copied : t.copy,
       copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#E4E5EC)',
       copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -12,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; }
   :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
@@ -27,6 +28,42 @@
   button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease; }
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
+  button:focus-visible, a:focus-visible { outline: 3px solid rgba(47,130,200,0.23); outline-offset: 2px; }
+  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#E4E5EC); position: sticky; top: 0; z-index: 50; }
+  .plk-shell-inner { max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 24px; }
+  .plk-logo { width: 112px; height: auto; display: block; }
+  .plk-header-links { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 13px; font-weight: 550; }
+  .plk-header-link { color: var(--text,#152431); }
+  .plk-header-link:hover { color: var(--blue,#2F82C8); }
+  .plk-account-wrap { position: relative; margin-left: auto; }
+  .plk-account-btn { min-height: 38px; border: 0; background: transparent; padding: 4px 6px; display: flex; align-items: center; gap: 9px; color: var(--text,#152431); cursor: pointer; }
+  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E6F1FB; color: var(--blue-dark,#1767AA); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
+  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--text,#152431); }
+  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431); }
+  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #EDF4FA; color: var(--blue-dark,#1767AA); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+  .plk-menu-label { display: block; font-size: 13px; font-weight: 650; line-height: 1.2; }
+  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px; line-height: 1.25; }
+  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#565B62); cursor: pointer; font-size: 11px; font-weight: 650; }
+  .plk-menu-action:hover { background: var(--panel,#F7F8FB); }
+  .plk-menu-scrim:active { transform: none !important; }
+  @media (max-width: 850px) { .plk-header-links { display: none; } }
+  @media (max-width: 600px) {
+    [data-screen-label="Mijn profiel"] main { padding-left: 18px !important; padding-right: 18px !important; }
+    .plk-cv-card { padding: 18px !important; }
+    .plk-cv-layout { display: block !important; }
+    .plk-cv-icon { margin-bottom: 12px; }
+    .plk-cv-heading { display: block !important; }
+    .plk-cv-title-block { min-width: 0 !important; }
+    .plk-cv-heading > button { width: 100%; margin-top: 14px; }
+  }
+  @media (max-width: 560px) {
+    .plk-shell-header { height: 54px; }
+    .plk-shell-inner { padding: 0 14px; }
+    .plk-logo { width: 100px; }
+    .plk-account-name { display: none; }
+    .plk-account-menu { position: fixed; left: 10px; right: 10px; top: 60px; width: auto; max-height: calc(100vh - 72px); overflow: auto; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
@@ -36,9 +73,35 @@
 
 <div data-screen-label="Mijn profiel" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
 
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
-    <a href="Prolinker Homepage.dc.html" style="display: inline-flex; align-items: center;"><img src="assets/prolinker-mark.png" alt="ProLinker" style="height: 26px; width: 26px; display: block; object-fit: contain; filter: {{ logoFilter }};"></a>
-    <a href="Prolinker Voor jou v2.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); font-size: 14px; font-weight: 600; color: var(--text,#152431); position: fixed; top: 16px; right: 28px; z-index: 30;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.backToFeed }}</a>
+  <header class="plk-shell-header">
+    <div class="plk-shell-inner">
+      <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+      <nav class="plk-header-links" aria-label="Hoofdnavigatie">
+        <a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a>
+        <a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a>
+        <a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a>
+        <a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a>
+      </nav>
+      <div class="plk-account-wrap">
+        <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-haspopup="menu" aria-label="Accountmenu openen">
+          <span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size: 12.5px; font-weight: 650;">{{ userName }}</span><span style="font-size: 10px; color: var(--faint,#9AA0A6);">{{ menuChevron }}</span>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <button class="plk-menu-scrim" type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 60; border: 0; background: transparent;"></button>
+          <div class="plk-account-menu" role="menu">
+            <div style="padding: 11px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2);"><div style="font-size: 12.5px; font-weight: 700;">{{ userName }}</div><div style="margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px;">{{ roleLabel }}</div></div>
+            <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7">
+              <a class="plk-menu-link" href="{{ item.href }}" role="menuitem" aria-current="{{ item.current }}" style="background: {{ item.bg }}; box-shadow: {{ item.activeShadow }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a>
+            </sc-for>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline,#ECEDF2); border-top: 1px solid var(--hairline,#ECEDF2);">
+              <button class="plk-menu-action" type="button" onClick="{{ onTheme }}">{{ themeLabel }}</button>
+              <button class="plk-menu-action" type="button" onClick="{{ onLogout }}" style="color: #A2463B;">Uitloggen</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
   </header>
 
   <main style="max-width: 720px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
@@ -48,7 +111,7 @@
       <span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span>
     </div>
 
-    <div style="margin-top: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.05s both;">
+    <div style="margin-top: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.05s both;">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
         <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.completeness }}</span>
         <span style="font-size: 14px; font-weight: 700;">{{ pct }}%</span>
@@ -63,7 +126,47 @@
       </sc-if>
     </div>
 
-    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.1s both;">
+    <section class="plk-cv-card" aria-labelledby="cv-upload-title" style="position: relative; margin-top: 14px; background: var(--surface,#fff); border: 1px solid {{ cvBorder }}; border-radius: 10px; padding: 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.08s both; transition: border-color 0.18s ease, background-color 0.18s ease;" onDragEnter="{{ onCvDragEnter }}" onDragOver="{{ onCvDragOver }}" onDragLeave="{{ onCvDragLeave }}" onDrop="{{ onCvDrop }}">
+      <input id="plk-cv-file" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onChange="{{ onCvInput }}" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;">
+      <div class="plk-cv-layout" style="display: flex; align-items: flex-start; gap: 16px;">
+        <div class="plk-cv-icon" aria-hidden="true" style="flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{ cvIconBg }}; color: {{ accent }}; font-size: 19px; font-weight: 800;">&#8593;</div>
+        <div style="flex: 1; min-width: 0;">
+          <div class="plk-cv-heading" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <div class="plk-cv-title-block" style="min-width: 220px; flex: 1;">
+              <h2 id="cv-upload-title" style="margin: 0; font-size: 17px; line-height: 1.3; letter-spacing: -0.01em;">{{ t.cvTitle }}</h2>
+              <p style="margin: 5px 0 0; color: var(--muted,#565B62); font-size: 13.5px; line-height: 1.5;">{{ t.cvIntro }}</p>
+            </div>
+            <button type="button" onClick="{{ onCvBrowse }}" disabled="{{ cvBusy }}" style="height: 40px; padding: 0 17px; border: 1px solid {{ cvButtonBorder }}; border-radius: 8px; background: {{ cvButtonBg }}; color: {{ cvButtonColor }}; font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: {{ cvButtonCursor }}; white-space: nowrap; opacity: {{ cvButtonOpacity }};" style-hover="box-shadow: 0 4px 14px {{ accentRing }};">{{ cvButtonLabel }}</button>
+          </div>
+
+          <div aria-live="polite" style="margin-top: 13px; min-height: 20px;">
+            <sc-if value="{{ cvIsIdle }}" hint-placeholder-val="{{ true }}">
+              <span style="font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ t.cvDropHint }}</span>
+            </sc-if>
+            <sc-if value="{{ cvIsBusy }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--muted,#565B62);"><span>{{ cvStatusLabel }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">{{ cvProgress }}%</span></div>
+              <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ cvProgress }}" style="margin-top: 8px; height: 5px; border-radius: 999px; background: var(--hairline,#ECEDF2); overflow: hidden;"><div style="width: {{ cvProgressW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.25s ease;"></div></div>
+            </sc-if>
+            <sc-if value="{{ cvIsSuccess }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 7px; color: #137A50; font-size: 13px; font-weight: 650;"><span style="display: inline-flex;">{{ savedCheckEl }}</span><span>{{ cvStatusLabel }}</span></div>
+              <div style="margin-top: 9px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
+                <span style="font-size: 12px; color: var(--faint,#9AA0A6);">{{ t.cvFilled }}</span>
+                <sc-for list="{{ cvFilledFields }}" as="field" hint-placeholder-count="4">
+                  <span style="padding: 4px 9px; border-radius: 999px; background: #E9F7F0; color: #137A50; font-size: 12px; font-weight: 650;">{{ field }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ cvIsError }}" hint-placeholder-val="{{ false }}">
+              <div role="alert" style="padding: 10px 12px; border-radius: 8px; background: #FFF2F0; color: #A33A2B; font-size: 12.5px; line-height: 1.5;">{{ cvStatusLabel }}</div>
+            </sc-if>
+          </div>
+
+          <p style="margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--hairline,#ECEDF2); color: var(--faint,#9AA0A6); font-size: 11.5px; line-height: 1.5;">{{ t.cvPrivacy }}</p>
+        </div>
+      </div>
+    </section>
+
+    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.1s both;">
 
       <div style="padding: 22px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--hairline,#ECEDF2);">
         <div style="flex-shrink: 0; width: 86px; height: 86px; border-radius: 50%; overflow: hidden;">
@@ -133,7 +236,22 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1080},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { profile: null, skillInput: '', saved: false, theme: 'light' };
+  state = {
+    profile: null,
+    profileReady: false,
+    skillInput: '',
+    saved: false,
+    theme: 'light',
+    cvStatus: 'idle',
+    cvProgress: 0,
+    cvMessage: '',
+    cvFields: [],
+    cvMeta: null,
+    cvDragActive: false,
+    syncError: '',
+    session: null,
+    menuOpen: false,
+  };
 
   isValidWhatsappFreelancerSession(session) {
     if (!session || session.authenticated !== true || session.channel !== 'whatsapp' || session.role !== 'freelancer') return false;
@@ -143,26 +261,68 @@ class Component extends DCLogic {
   }
 
   requireFreelancerSession() {
+    if (window.ProLinkerApp && window.ProLinkerApp.session) {
+      const session = window.ProLinkerApp.session.require({ role: 'freelancer', next: 'Prolinker Profiel.dc.html' });
+      if (this.isValidWhatsappFreelancerSession(session)) {
+        this.setState({ session: session });
+        return true;
+      }
+      return false;
+    }
     try {
       const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
-      if (this.isValidWhatsappFreelancerSession(session)) return true;
+      if (this.isValidWhatsappFreelancerSession(session)) {
+        this.setState({ session: session });
+        return true;
+      }
     } catch (e) {}
     window.location.href = 'Prolinker Login.dc.html?mode=login&role=freelancer&next=Prolinker%20Profiel.dc.html';
     return false;
   }
 
   static seed(name) {
-    return { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '' };
+    return { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '', portfolio: [] };
   }
+
+  static sanitizeProfile(raw, seed) {
+    const source = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+    const safe = Object.assign({}, seed);
+    if (typeof source.name === 'string') safe.name = source.name.slice(0, 120);
+    if (typeof source.headline === 'string') safe.headline = source.headline.slice(0, 180);
+    if (typeof source.rate === 'string' || typeof source.rate === 'number') safe.rate = String(source.rate).replace(/[^0-9]/g, '').slice(0, 3);
+    if (['now', 'soon', 'busy'].indexOf(source.availability) >= 0) safe.availability = source.availability;
+    if (Array.isArray(source.skills)) {
+      safe.skills = source.skills.filter((s) => typeof s === 'string' && s.trim()).map((s) => s.trim().slice(0, 60)).slice(0, 24);
+    }
+    if (typeof source.bio === 'string') safe.bio = source.bio.slice(0, 1600);
+    if (Array.isArray(source.portfolio)) safe.portfolio = source.portfolio.slice(0, 12);
+    return safe;
+  }
+
   static load() {
     let name = '';
     try { name = localStorage.getItem('plk-user-name') || ''; } catch (e) {}
     const seed = Component.seed(name);
     try {
       const raw = JSON.parse(localStorage.getItem('plk-profile') || 'null');
-      if (raw && typeof raw === 'object') return Object.assign({}, seed, raw);
+      if (raw && typeof raw === 'object') return Component.sanitizeProfile(raw, seed);
     } catch (e) {}
     return seed;
+  }
+
+  static loadCvMeta() {
+    try {
+      const meta = JSON.parse(localStorage.getItem('plk-cv-meta') || 'null');
+      if (!meta || typeof meta !== 'object' || Array.isArray(meta)) return null;
+      const allowed = ['name', 'headline', 'skills', 'bio'];
+      return {
+        name: typeof meta.name === 'string' ? meta.name.slice(0, 120) : '',
+        type: typeof meta.type === 'string' ? meta.type.slice(0, 10) : '',
+        size: Number.isFinite(Number(meta.size)) ? Math.max(0, Number(meta.size)) : 0,
+        processedAt: typeof meta.processedAt === 'string' ? meta.processedAt.slice(0, 40) : '',
+        fields: Array.isArray(meta.fields) ? meta.fields.filter((f) => allowed.indexOf(f) >= 0) : [],
+      };
+    } catch (e) { return null; }
   }
   static completeness(p, t) {
     const checks = [
@@ -180,17 +340,493 @@ class Component extends DCLogic {
   componentDidMount() {
     if (!this.requireFreelancerSession()) return;
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
-    this.setState({ profile: Component.load() });
+    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
+    window.addEventListener('keydown', this._keyHandler);
+    let profile;
+    let cvMeta;
+    try { profile = Component.load(); } catch (e) { profile = Component.seed(''); }
+    try { cvMeta = Component.loadCvMeta(); } catch (e) { cvMeta = null; }
+    this.setState({
+      profile: profile,
+      profileReady: true,
+      cvMeta: cvMeta,
+      cvStatus: cvMeta && cvMeta.fields.length ? 'success' : 'idle',
+      cvFields: cvMeta && cvMeta.fields.length ? cvMeta.fields : [],
+    });
+    this.hydrateProfile(profile);
   }
-  componentWillUnmount() { clearTimeout(this._savedT); }
+  componentWillUnmount() {
+    clearTimeout(this._savedT);
+    clearTimeout(this._mammothTimeout);
+    clearTimeout(this._profileSyncT);
+    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+  }
+
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('plk-theme', next); } catch (e) {}
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+    this.setState({ theme: next, menuOpen: false });
+  }
+
+  async hydrateProfile(localProfile) {
+    if (!window.ProLinkerApp || !window.ProLinkerApp.profiles) return;
+    try {
+      const remote = await window.ProLinkerApp.profiles.get('me');
+      if (!remote || typeof remote !== 'object') return;
+      const patch = {};
+      ['name', 'headline', 'rate', 'availability', 'bio'].forEach((key) => {
+        if (remote[key] !== undefined && remote[key] !== null && String(remote[key]).trim()) patch[key] = remote[key];
+      });
+      if (Array.isArray(remote.skills) && remote.skills.length) patch.skills = remote.skills;
+      if (Array.isArray(remote.portfolio) && remote.portfolio.length) patch.portfolio = remote.portfolio;
+      const profile = Component.sanitizeProfile(Object.assign({}, localProfile, patch), Component.seed(''));
+      this.setState({ profile: profile, profileReady: true, syncError: '' });
+    } catch (error) {
+      const config = window.ProLinkerApp.getConfig ? window.ProLinkerApp.getConfig() : null;
+      if (config && config.mode === 'api') this.setState({ syncError: this.strings().syncError });
+    }
+  }
+
+  scheduleProfileSync(profile, meta, immediate) {
+    if (!window.ProLinkerApp || !window.ProLinkerApp.profiles) return;
+    clearTimeout(this._profileSyncT);
+    this.setState({ syncError: '' });
+    const run = async () => {
+      try {
+        await window.ProLinkerApp.profiles.update({
+          name: profile.name,
+          headline: profile.headline,
+          rate: profile.rate,
+          availability: profile.availability,
+          skills: profile.skills.slice(),
+          bio: profile.bio,
+          portfolio: profile.portfolio.slice(),
+          cvMeta: meta || this.state.cvMeta || null,
+        });
+        this.setState({ syncError: '' });
+      } catch (error) {
+        this.setState({ syncError: this.strings().syncError });
+      }
+    };
+    if (immediate) run();
+    else this._profileSyncT = setTimeout(run, 650);
+  }
 
   lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
   hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
+  static cleanCvText(text) {
+    return String(text || '')
+      .replace(/\u0000/g, '')
+      .replace(/\u00a0/g, ' ')
+      .replace(/\r\n?/g, '\n')
+      .split('\n')
+      .map((line) => line.replace(/[\t ]+/g, ' ').replace(/^\s*[•●▪◦*-]\s*/, '').trim())
+      .filter(Boolean)
+      .join('\n')
+      .slice(0, 300000);
+  }
+
+  static roleCatalog() {
+    return [
+      ['Full-stack developer', /\bfull[ -]?stack (?:software |web )?(?:developer|engineer)\b/i],
+      ['Frontend developer', /\bfront[ -]?end (?:developer|engineer)\b/i],
+      ['Backend developer', /\bback[ -]?end (?:developer|engineer)\b/i],
+      ['Software engineer', /\bsoftware (?:developer|engineer)\b/i],
+      ['Web developer', /\bweb developer\b/i],
+      ['Mobile app developer', /\b(?:mobile|app|ios|android) developer\b/i],
+      ['DevOps engineer', /\bdevops (?:engineer|specialist)\b/i],
+      ['Cloud engineer', /\bcloud (?:engineer|architect|specialist)\b/i],
+      ['Data scientist', /\bdata scientist\b/i],
+      ['Data engineer', /\bdata engineer\b/i],
+      ['Data analyst', /\bdata analyst\b/i],
+      ['AI engineer', /\b(?:ai|machine learning) (?:engineer|specialist|consultant)\b/i],
+      ['Cybersecurity specialist', /\b(?:cyber ?security|information security) (?:specialist|engineer|consultant|analyst)\b/i],
+      ['UX/UI designer', /\b(?:ux\/?ui|ui\/?ux|product) designer\b/i],
+      ['Graphic designer', /\bgraphic designer\b/i],
+      ['Product manager', /\bproduct (?:manager|owner)\b/i],
+      ['Project manager', /\bproject manager\b/i],
+      ['Scrum master', /\bscrum master\b/i],
+      ['Marketing specialist', /\b(?:digital |online |growth |content )?marketing (?:specialist|consultant|manager)\b/i],
+      ['Social media manager', /\bsocial media (?:specialist|manager|consultant)\b/i],
+      ['SEO specialist', /\bseo (?:specialist|consultant|manager)\b/i],
+      ['Copywriter', /\b(?:copywriter|content writer|tekstschrijver)\b/i],
+      ['Sales manager', /\b(?:sales|business development) (?:manager|consultant|specialist)\b/i],
+      ['Account manager', /\baccount manager\b/i],
+      ['Customer success manager', /\bcustomer success (?:manager|specialist)\b/i],
+      ['Recruiter', /\b(?:technical |corporate |it )?recruiter\b/i],
+      ['HR consultant', /\b(?:hr|human resources) (?:consultant|advisor|specialist|manager)\b/i],
+      ['Financial controller', /\bfinancial controller\b/i],
+      ['Accountant', /\b(?:accountant|boekhouder|bookkeeper)\b/i],
+      ['Business analyst', /\bbusiness analyst\b/i],
+      ['Operations manager', /\boperations manager\b/i],
+      ['Management consultant', /\b(?:management|strategy|business) consultant\b/i],
+      ['Virtual assistant', /\bvirtual assistant\b/i],
+      ['Translator', /\b(?:translator|vertaler|interpreter)\b/i],
+      ['Photographer', /\b(?:photographer|fotograaf|videographer)\b/i],
+      ['Interim manager', /\binterim manager\b/i],
+    ];
+  }
+
+  static skillDictionary() {
+    return [
+      ['JavaScript', ['javascript', 'ecmascript']], ['TypeScript', ['typescript']], ['React', ['react.js', 'reactjs', 'react']],
+      ['Next.js', ['next.js', 'nextjs']], ['Vue.js', ['vue.js', 'vuejs']], ['Angular', ['angular']], ['Node.js', ['node.js', 'nodejs']],
+      ['Python', ['python']], ['Django', ['django']], ['Flask', ['flask']], ['FastAPI', ['fastapi']], ['Java', ['java']],
+      ['Spring Boot', ['spring boot']], ['C#', ['c#', '.net']], ['C++', ['c++']], ['PHP', ['php']], ['Laravel', ['laravel']],
+      ['Ruby on Rails', ['ruby on rails', 'rails']], ['Go', ['golang']], ['Rust', ['rust']], ['Swift', ['swift']], ['Kotlin', ['kotlin']],
+      ['React Native', ['react native']], ['Flutter', ['flutter']], ['HTML', ['html5', 'html']], ['CSS', ['css3', 'css']], ['Sass', ['sass', 'scss']],
+      ['Tailwind CSS', ['tailwind css', 'tailwind']], ['WordPress', ['wordpress']], ['Shopify', ['shopify']], ['Webflow', ['webflow']],
+      ['SQL', ['sql']], ['PostgreSQL', ['postgresql', 'postgres']], ['MySQL', ['mysql']], ['MongoDB', ['mongodb']], ['Redis', ['redis']],
+      ['GraphQL', ['graphql']], ['REST APIs', ['rest api', 'restful']], ['Git', ['github', 'gitlab', 'git']], ['Docker', ['docker']],
+      ['Kubernetes', ['kubernetes']], ['AWS', ['amazon web services', 'aws']], ['Microsoft Azure', ['microsoft azure', 'azure']],
+      ['Google Cloud', ['google cloud platform', 'gcp']], ['Terraform', ['terraform']], ['CI/CD', ['ci/cd', 'continuous integration']],
+      ['Figma', ['figma']], ['Adobe XD', ['adobe xd']], ['Photoshop', ['photoshop']], ['Illustrator', ['illustrator']],
+      ['UX research', ['ux research', 'user research']], ['UI design', ['ui design', 'user interface design']],
+      ['SEO', ['search engine optimization', 'seo']], ['SEA', ['search engine advertising', 'sea']], ['Google Ads', ['google ads', 'adwords']],
+      ['Meta Ads', ['meta ads', 'facebook ads']], ['Google Analytics', ['google analytics', 'ga4']], ['HubSpot', ['hubspot']],
+      ['Salesforce', ['salesforce']], ['Mailchimp', ['mailchimp']], ['Klaviyo', ['klaviyo']], ['Content marketing', ['content marketing']],
+      ['Copywriting', ['copywriting']], ['Social media', ['social media']], ['Project management', ['project management', 'projectmanagement']],
+      ['Agile', ['agile']], ['Scrum', ['scrum']], ['Jira', ['jira']], ['Notion', ['notion']], ['Excel', ['microsoft excel', 'excel']],
+      ['Power BI', ['power bi', 'powerbi']], ['Tableau', ['tableau']], ['Machine learning', ['machine learning']],
+      ['Data analysis', ['data analysis', 'data analytics', 'data-analyse']], ['Recruitment', ['recruitment', 'werving en selectie']],
+      ['Finance', ['financial reporting', 'financial analysis', 'financiële analyse']], ['Bookkeeping', ['bookkeeping', 'boekhouding']],
+      ['Customer service', ['customer service', 'klantenservice']], ['B2B sales', ['b2b sales', 'b2b verkoop']],
+      ['Dutch', ['native dutch', 'dutch native', 'nederlands moedertaal']], ['English', ['fluent english', 'english fluent', 'engels vloeiend']],
+    ];
+  }
+
+  static termPosition(lower, term) {
+    const escaped = term.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('(^|[^a-z0-9])' + escaped + '(?=$|[^a-z0-9])', 'i');
+    const match = re.exec(lower);
+    return match ? match.index + match[1].length : -1;
+  }
+
+  static extractSkills(text) {
+    const lower = text.toLowerCase();
+    const found = [];
+    Component.skillDictionary().forEach((entry, dictionaryIndex) => {
+      let best = -1;
+      entry[1].forEach((term) => {
+        const position = Component.termPosition(lower, term);
+        if (position >= 0 && (best < 0 || position < best)) best = position;
+      });
+      if (best >= 0) found.push({ label: entry[0], position: best, dictionaryIndex: dictionaryIndex });
+    });
+    return found.sort((a, b) => a.position - b.position || a.dictionaryIndex - b.dictionaryIndex).slice(0, 16).map((item) => item.label);
+  }
+
+  static extractName(lines) {
+    const labelled = lines.slice(0, 40).map((line) => /^(?:name|naam)\s*:\s*(.+)$/i.exec(line)).find(Boolean);
+    const candidates = labelled ? [labelled[1]].concat(lines.slice(0, 14)) : lines.slice(0, 14);
+    const generic = /^(?:curriculum vitae|resume|résumé|cv|profile|profiel|personal details|persoonlijke gegevens|contact|about me|over mij)$/i;
+    const roleWords = /\b(?:developer|engineer|designer|manager|consultant|specialist|analyst|recruiter|accountant|marketeer|copywriter|freelancer|zzp|software|marketing|sales|data|project|product|frontend|backend|full[ -]?stack)\b/i;
+    for (let i = 0; i < candidates.length; i += 1) {
+      const value = String(candidates[i] || '').replace(/^(?:name|naam)\s*:\s*/i, '').trim();
+      if (!value || value.length < 4 || value.length > 70 || generic.test(value) || roleWords.test(value)) continue;
+      if (/[\d@/:|]/.test(value)) continue;
+      const words = value.split(/\s+/);
+      if (words.length < 2 || words.length > 6) continue;
+      if (!words.every((word) => /^[A-Za-zÀ-ÖØ-öø-ÿ'’.-]+$/.test(word))) continue;
+      const meaningful = words.filter((word) => !/^(?:van|de|der|den|het|von|zu|la|le|el)$/i.test(word));
+      if (!meaningful.length || !meaningful.every((word) => /^[A-ZÀ-ÖØ-Þ]/.test(word))) continue;
+      return value;
+    }
+    return '';
+  }
+
+  static extractHeadline(lines, name) {
+    const explicit = /^(?:headline|current role|current position|profession|functie|beroep|titel)\s*:\s*(.+)$/i;
+    for (let i = 0; i < Math.min(lines.length, 80); i += 1) {
+      const match = explicit.exec(lines[i]);
+      if (match && match[1].trim().length >= 4 && match[1].trim().length <= 120) return match[1].trim();
+    }
+    const roles = Component.roleCatalog();
+    for (let i = 0; i < Math.min(lines.length, 140); i += 1) {
+      const line = lines[i];
+      if (!line || line === name || line.length > 125 || /@|https?:|www\./i.test(line)) continue;
+      for (let r = 0; r < roles.length; r += 1) {
+        if (roles[r][1].test(line)) {
+          const cleaned = line.replace(/^\s*(?:19|20)\d{2}\s*(?:-|to|tot|heden|present).*?\s+/i, '').trim();
+          return cleaned.length >= 4 && cleaned.length <= 90 ? cleaned : roles[r][0];
+        }
+      }
+    }
+    return '';
+  }
+
+  static extractSummary(lines) {
+    const heading = /^(?:professional )?(?:summary|profile|about me|personal profile|samenvatting|profiel|over mij|persoonlijk profiel)\s*:?(.*)$/i;
+    const stop = /^(?:experience|work experience|employment|education|skills|certifications|projects|languages|contact|werkervaring|ervaring|opleiding|vaardigheden|competenties|projecten|talen)\s*:?[ ]*$/i;
+    for (let i = 0; i < lines.length; i += 1) {
+      const match = heading.exec(lines[i]);
+      if (!match) continue;
+      const parts = [];
+      if (match[1] && match[1].trim()) parts.push(match[1].trim());
+      for (let j = i + 1; j < Math.min(lines.length, i + 8); j += 1) {
+        if (stop.test(lines[j])) break;
+        if (/@|https?:|www\./i.test(lines[j])) continue;
+        parts.push(lines[j]);
+        if (parts.join(' ').length >= 420) break;
+      }
+      const summary = parts.join(' ').replace(/\s+/g, ' ').trim();
+      if (summary.length >= 45) return summary.slice(0, 520);
+    }
+    return '';
+  }
+
+  static buildProfileFromCv(text, locale) {
+    const clean = Component.cleanCvText(text);
+    const lines = clean.split('\n').filter(Boolean);
+    if (clean.length < 20 || !lines.length) return { values: {}, fields: [] };
+    const name = Component.extractName(lines);
+    const headline = Component.extractHeadline(lines, name);
+    const skills = Component.extractSkills(clean);
+    let bio = Component.extractSummary(lines);
+    const bioWasExtracted = !!bio;
+    if (!bio && (headline || skills.length)) {
+      const coreSkills = skills.slice(0, 6);
+      if (locale === 'nl') {
+        bio = headline
+          ? headline + (coreSkills.length ? ' met ervaring in ' + coreSkills.join(', ') + '.' : '.')
+          : 'Ervaren professional met expertise in ' + coreSkills.join(', ') + '.';
+      } else {
+        bio = headline
+          ? headline + (coreSkills.length ? ' with experience in ' + coreSkills.join(', ') + '.' : '.')
+          : 'Experienced professional with expertise in ' + coreSkills.join(', ') + '.';
+      }
+    }
+    const values = {};
+    const fields = [];
+    if (name) { values.name = name; fields.push('name'); }
+    if (headline) { values.headline = headline; fields.push('headline'); }
+    if (skills.length) { values.skills = skills; fields.push('skills'); }
+    if (bio) { values.bio = bio; fields.push('bio'); }
+    return { values: values, fields: fields, bioWasExtracted: bioWasExtracted };
+  }
+
+  cvFileKind(file) {
+    const name = String(file && file.name || '').toLowerCase();
+    if (/\.pdf$/.test(name)) return 'pdf';
+    if (/\.docx$/.test(name)) return 'docx';
+    if (/\.txt$/.test(name)) return 'txt';
+    return '';
+  }
+
+  async extractPdfText(file, runId) {
+    if (runId === this._cvRunId) this.setState({ cvStatus: 'parsing', cvProgress: 30, cvMessage: this.strings().cvLoadingPdf });
+    const localCompatUrl = new URL('./assets/vendor/pdfjs-compat-5.4.624.mjs', document.baseURI).href;
+    const localModuleUrl = new URL('./assets/vendor/pdfjs-5.4.624.mjs', document.baseURI).href;
+    const localWorkerUrl = new URL('./assets/vendor/pdfjs-worker-bootstrap-5.4.624.mjs', document.baseURI).href;
+    const cdnModuleUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.624/build/pdf.mjs';
+    const cdnWorkerUrl = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.624/build/pdf.worker.mjs';
+    let pdfjs;
+    let workerUrl = localWorkerUrl;
+    try {
+      await import(localCompatUrl);
+      pdfjs = await import(localModuleUrl);
+    } catch (localError) {
+      pdfjs = await import(cdnModuleUrl);
+      workerUrl = cdnWorkerUrl;
+    }
+    if (runId !== this._cvRunId) return '';
+    if (!pdfjs || !pdfjs.getDocument || !pdfjs.GlobalWorkerOptions) throw new Error('PARSER_UNAVAILABLE');
+    pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+    const arrayBuffer = await file.arrayBuffer();
+    const loadingTask = pdfjs.getDocument({ data: new Uint8Array(arrayBuffer) });
+    const documentProxy = await loadingTask.promise;
+    const pages = [];
+    try {
+      for (let pageNumber = 1; pageNumber <= documentProxy.numPages; pageNumber += 1) {
+        const page = await documentProxy.getPage(pageNumber);
+        const content = await page.getTextContent();
+        pages.push(content.items.map((item) => typeof item.str === 'string' ? item.str : '').join(' '));
+        const progress = 36 + Math.round((pageNumber / documentProxy.numPages) * 38);
+        if (runId === this._cvRunId) this.setState({ cvProgress: progress });
+      }
+    } finally {
+      if (documentProxy && typeof documentProxy.destroy === 'function') await documentProxy.destroy();
+    }
+    return pages.join('\n');
+  }
+
+  loadMammoth() {
+    if (window.mammoth && typeof window.mammoth.extractRawText === 'function') return Promise.resolve(window.mammoth);
+    if (this._mammothPromise) return this._mammothPromise;
+    const localSrc = new URL('./assets/vendor/mammoth-1.12.0.browser.min.js', document.baseURI).href;
+    const cdnSrc = 'https://cdn.jsdelivr.net/npm/mammoth@1.12.0/mammoth.browser.min.js';
+    const cdnSri = 'sha384-fWLn06AIo00H32MDcWUZTT+4Ru3OuoYn1DRH0o6JkhDl89YFSF4tJ4odze9bI+4r';
+    const loadScript = (src, integrity) => new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      let settled = false;
+      script.src = src;
+      script.async = true;
+      if (integrity) {
+        script.integrity = integrity;
+        script.crossOrigin = 'anonymous';
+      }
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(this._mammothTimeout);
+        script.onload = null;
+        script.onerror = null;
+        if (error) {
+          script.remove();
+          reject(error);
+        } else {
+          resolve(window.mammoth);
+        }
+      };
+      script.onload = () => {
+        if (window.mammoth && typeof window.mammoth.extractRawText === 'function') finish();
+        else finish(new Error('PARSER_UNAVAILABLE'));
+      };
+      script.onerror = () => finish(new Error('PARSER_UNAVAILABLE'));
+      this._mammothTimeout = setTimeout(() => finish(new Error('PARSER_UNAVAILABLE')), 15000);
+      document.head.appendChild(script);
+    });
+    this._mammothPromise = loadScript(localSrc)
+      .catch(() => loadScript(cdnSrc, cdnSri))
+      .catch(() => {
+        this._mammothPromise = null;
+        throw new Error('PARSER_UNAVAILABLE');
+      });
+    return this._mammothPromise;
+  }
+
+  async extractDocxText(file, runId) {
+    if (runId === this._cvRunId) this.setState({ cvStatus: 'parsing', cvProgress: 34, cvMessage: this.strings().cvLoadingDocx });
+    const mammoth = await this.loadMammoth();
+    if (runId !== this._cvRunId) return '';
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+    if (runId === this._cvRunId) this.setState({ cvProgress: 74 });
+    return result && typeof result.value === 'string' ? result.value : '';
+  }
+
+  async extractTxtText(file, runId) {
+    if (runId === this._cvRunId) this.setState({ cvStatus: 'parsing', cvProgress: 45, cvMessage: this.strings().cvReadingTxt });
+    const text = await file.text();
+    if (runId === this._cvRunId) this.setState({ cvProgress: 74 });
+    return text;
+  }
+
+  async processCvFile(file) {
+    const runId = Number(this._cvRunId || 0) + 1;
+    this._cvRunId = runId;
+    const t = this.strings();
+    const kind = this.cvFileKind(file);
+    if (!kind) {
+      this.setState({ cvStatus: 'error', cvProgress: 0, cvMessage: t.cvErrorType, cvFields: [], cvDragActive: false });
+      return;
+    }
+    if (!file || file.size <= 0) {
+      this.setState({ cvStatus: 'error', cvProgress: 0, cvMessage: t.cvErrorEmpty, cvFields: [], cvDragActive: false });
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      this.setState({ cvStatus: 'error', cvProgress: 0, cvMessage: t.cvErrorSize, cvFields: [], cvDragActive: false });
+      return;
+    }
+
+    this.setState({ cvStatus: 'reading', cvProgress: 12, cvMessage: t.cvReading, cvFields: [], cvDragActive: false });
+    try {
+      let text = '';
+      if (kind === 'pdf') text = await this.extractPdfText(file, runId);
+      else if (kind === 'docx') text = await this.extractDocxText(file, runId);
+      else text = await this.extractTxtText(file, runId);
+      if (runId !== this._cvRunId) return;
+      const clean = Component.cleanCvText(text);
+      if (clean.length < 20) throw new Error('NO_TEXT');
+
+      this.setState({ cvStatus: 'building', cvProgress: 84, cvMessage: t.cvBuilding });
+      const result = Component.buildProfileFromCv(clean, this.lang());
+      if (runId !== this._cvRunId) return;
+      if (!result.fields.length) throw new Error('NO_FIELDS');
+      const current = Component.sanitizeProfile(this.state.profile, Component.seed(''));
+      const importedValues = Object.assign({}, result.values);
+      const importedFields = result.fields.slice();
+      if (!result.bioWasExtracted && (current.bio || '').trim().length >= 60) {
+        delete importedValues.bio;
+        const bioIndex = importedFields.indexOf('bio');
+        if (bioIndex >= 0) importedFields.splice(bioIndex, 1);
+      }
+      const profile = Component.sanitizeProfile(Object.assign({}, current, importedValues), Component.seed(''));
+      const meta = {
+        name: String(file.name || '').slice(0, 120),
+        type: kind,
+        size: file.size,
+        processedAt: new Date().toISOString(),
+        fields: importedFields.slice(0, 4),
+      };
+      try {
+        if (runId !== this._cvRunId) return;
+        localStorage.setItem('plk-profile', JSON.stringify(profile));
+        if ((profile.name || '').trim()) localStorage.setItem('plk-user-name', profile.name.trim());
+        localStorage.setItem('plk-cv-meta', JSON.stringify(meta));
+      } catch (e) {}
+      this.setState({
+        profile: profile,
+        profileReady: true,
+        saved: true,
+        cvStatus: 'success',
+        cvProgress: 100,
+        cvMessage: t.cvComplete(file.name),
+        cvFields: importedFields,
+        cvMeta: meta,
+      });
+      this.scheduleProfileSync(profile, meta, true);
+      clearTimeout(this._savedT);
+      this._savedT = setTimeout(() => this.setState({ saved: false }), 1800);
+    } catch (error) {
+      if (runId !== this._cvRunId) return;
+      const code = error && error.message;
+      const message = code === 'NO_TEXT' ? t.cvErrorNoText : code === 'NO_FIELDS' ? t.cvErrorNoFields : t.cvErrorParser;
+      this.setState({ cvStatus: 'error', cvProgress: 0, cvMessage: message, cvFields: [], cvDragActive: false });
+    }
+  }
+
+  chooseCv() {
+    const input = document.getElementById('plk-cv-file');
+    if (input) input.click();
+  }
+
+  onCvInput(event) {
+    const file = event && event.target && event.target.files && event.target.files[0];
+    if (event && event.target) event.target.value = '';
+    if (file) this.processCvFile(file);
+  }
+
+  onCvDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+    this.setState({ cvDragActive: false });
+    if (file) this.processCvFile(file);
+  }
+
   strings() {
     const en = {
-      backToFeed: 'To my feed', title: 'My profile', completeness: 'Profile completeness',
-      saved: 'Saved', autosave: 'Changes save automatically',
+      backToFeed: 'To my feed', title: 'My profile', completeness: 'Profile completeness', syncError: 'Saved locally. API sync will retry later.',
+      saved: 'Saved', autosave: 'Changes save automatically', loadingProfile: 'Loading profile...',
+      cvTitle: 'Build your profile from your CV',
+      cvIntro: 'Upload once and we fill in your profile. You can review and edit every field afterwards.',
+      cvUpload: 'Upload CV', cvReplace: 'Upload another CV', cvRetry: 'Try another file',
+      cvDropHint: 'Drop a PDF, DOCX or TXT here, up to 8 MB.',
+      cvPrivacy: 'Private by design: your CV is processed in this browser. We never save the original file, only the profile fields you keep and basic file details.',
+      cvReading: 'Reading your CV...', cvLoadingPdf: 'Opening PDF securely...', cvLoadingDocx: 'Opening Word document securely...', cvReadingTxt: 'Reading text file...', cvBuilding: 'Building your profile...',
+      cvComplete: (name) => name + ' processed. Review or edit your profile below.',
+      cvImported: (name) => name ? name + ' was used to build this profile.' : 'Your CV was used to build this profile.',
+      cvFilled: 'Filled from your CV:',
+      cvFieldName: 'Name', cvFieldHeadline: 'Headline', cvFieldSkills: 'Skills', cvFieldBio: 'Bio',
+      cvErrorType: 'Choose a PDF, DOCX or TXT file. Other file types are not supported.',
+      cvErrorSize: 'This file is larger than 8 MB. Choose a smaller CV and try again.',
+      cvErrorEmpty: 'This file is empty. Choose a different CV.',
+      cvErrorNoText: 'No readable text was found. If this is a scanned PDF, use a text-based PDF or complete the fields manually.',
+      cvErrorNoFields: 'We could not identify reliable profile information. Try another CV or complete the fields manually.',
+      cvErrorParser: 'The CV reader is temporarily unavailable or this file could not be read. Check your connection, retry, or complete the fields manually.',
       namePh: 'Full name', headlinePh: 'Headline, e.g. Full-stack e-commerce developer',
       rate: 'Hourly rate', perHour: 'per hour', availability: 'Availability',
       availNow: 'Available', availSoon: 'From Sep 1', availBusy: 'Not available',
@@ -200,8 +836,24 @@ class Component extends DCLogic {
       missName: 'Name', missHeadline: 'Headline', missRate: 'Rate', missAvail: 'Availability', missSkills: '3+ skills', missBio: 'Bio (60+ chars)',
     };
     const nl = {
-      backToFeed: 'Naar mijn feed', title: 'Mijn profiel', completeness: 'Profiel compleet',
-      saved: 'Opgeslagen', autosave: 'Wijzigingen worden automatisch opgeslagen',
+      backToFeed: 'Naar mijn feed', title: 'Mijn profiel', completeness: 'Profiel compleet', syncError: 'Lokaal bewaard. API-synchronisatie volgt later.',
+      saved: 'Opgeslagen', autosave: 'Wijzigingen worden automatisch opgeslagen', loadingProfile: 'Profiel laden...',
+      cvTitle: 'Bouw je profiel met je cv',
+      cvIntro: 'Upload eenmalig je cv en wij vullen je profiel in. Daarna kun je elk veld controleren en aanpassen.',
+      cvUpload: 'Cv uploaden', cvReplace: 'Ander cv uploaden', cvRetry: 'Ander bestand kiezen',
+      cvDropHint: 'Sleep hier een PDF, DOCX of TXT naartoe, maximaal 8 MB.',
+      cvPrivacy: 'Privacy voorop: je cv wordt alleen in deze browser verwerkt. We bewaren nooit het originele bestand, alleen de profielvelden die je behoudt en kleine bestandsgegevens.',
+      cvReading: 'Je cv wordt gelezen...', cvLoadingPdf: 'PDF veilig openen...', cvLoadingDocx: 'Word-document veilig openen...', cvReadingTxt: 'Tekstbestand lezen...', cvBuilding: 'Je profiel wordt opgebouwd...',
+      cvComplete: (name) => name + ' is verwerkt. Controleer of pas je profiel hieronder aan.',
+      cvImported: (name) => name ? name + ' is gebruikt om dit profiel te bouwen.' : 'Je cv is gebruikt om dit profiel te bouwen.',
+      cvFilled: 'Ingevuld vanuit je cv:',
+      cvFieldName: 'Naam', cvFieldHeadline: 'Kopregel', cvFieldSkills: 'Skills', cvFieldBio: 'Bio',
+      cvErrorType: 'Kies een PDF-, DOCX- of TXT-bestand. Andere bestandstypen worden niet ondersteund.',
+      cvErrorSize: 'Dit bestand is groter dan 8 MB. Kies een kleiner cv en probeer het opnieuw.',
+      cvErrorEmpty: 'Dit bestand is leeg. Kies een ander cv.',
+      cvErrorNoText: 'Er is geen leesbare tekst gevonden. Gebruik bij een gescande PDF een PDF met selecteerbare tekst, of vul de velden handmatig in.',
+      cvErrorNoFields: 'We konden geen betrouwbare profielgegevens herkennen. Probeer een ander cv of vul de velden handmatig in.',
+      cvErrorParser: 'De cv-lezer is tijdelijk niet beschikbaar of kon dit bestand niet lezen. Controleer je verbinding, probeer het opnieuw, of vul de velden handmatig in.',
       namePh: 'Volledige naam', headlinePh: 'Kopregel, bijv. Full-stack e-commerce developer',
       rate: 'Uurtarief', perHour: 'per uur', availability: 'Beschikbaarheid',
       availNow: 'Beschikbaar', availSoon: 'Vanaf 1 sep', availBusy: 'Niet beschikbaar',
@@ -219,19 +871,22 @@ class Component extends DCLogic {
   }
 
   save(patch) {
-    const profile = Object.assign({}, this.state.profile, patch);
+    const base = Component.sanitizeProfile(this.state.profile, Component.seed(''));
+    const profile = Component.sanitizeProfile(Object.assign({}, base, patch), Component.seed(''));
     this.setState({ profile: profile, saved: true });
     try {
       localStorage.setItem('plk-profile', JSON.stringify(profile));
       if ((profile.name || '').trim()) localStorage.setItem('plk-user-name', profile.name.trim());
     } catch (e) {}
+    this.scheduleProfileSync(profile, this.state.cvMeta, false);
     clearTimeout(this._savedT);
     this._savedT = setTimeout(() => this.setState({ saved: false }), 1800);
   }
   addSkill() {
     const v = (this.state.skillInput || '').trim();
     if (!v) return;
-    const skills = (this.state.profile.skills || []).slice();
+    const profile = Component.sanitizeProfile(this.state.profile, Component.seed(''));
+    const skills = profile.skills.slice();
     if (!skills.some((s) => s.toLowerCase() === v.toLowerCase())) skills.push(v);
     this.setState({ skillInput: '' });
     this.save({ skills: skills });
@@ -243,7 +898,17 @@ class Component extends DCLogic {
     const accentRing = this.hexToRgba(accent, 0.12);
     const accentTint = this.hexToRgba(accent, 0.12);
     const isDark = this.state.theme === 'dark';
-    const p = this.state.profile || Component.seed('');
+    const p = Component.sanitizeProfile(this.state.profile, Component.seed(''));
+    const session = this.state.session || { role: 'freelancer', name: '' };
+    const role = 'freelancer';
+    const userName = String(session.name || p.name || 'ProLinker gebruiker').trim();
+    const userInitials = userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
+    const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
+      ? window.ProLinkerApp.routes.accountMenu(role).map((item) => {
+        const active = item.key === 'profile';
+        return Object.assign({}, item, { bg: active ? 'var(--panel,#F7F8FB)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F82C8)' : 'none', current: active ? 'page' : 'false' });
+      })
+      : [];
     const comp = Component.completeness(p, t);
 
     const availOpts = [['now', t.availNow], ['soon', t.availSoon], ['busy', t.availBusy]].map((o) => ({
@@ -259,16 +924,56 @@ class Component extends DCLogic {
     }));
 
     const bioLen = (p.bio || '').trim().length;
+    const cvStatus = this.state.cvStatus || 'idle';
+    const cvBusy = ['reading', 'parsing', 'building'].indexOf(cvStatus) >= 0;
+    const cvMeta = this.state.cvMeta;
+    const cvMessage = this.state.cvMessage || (cvStatus === 'success' ? t.cvImported(cvMeta && cvMeta.name) : '');
+    const fieldLabels = { name: t.cvFieldName, headline: t.cvFieldHeadline, skills: t.cvFieldSkills, bio: t.cvFieldBio };
+    const cvFilledFields = (this.state.cvFields || []).filter((field) => fieldLabels[field]).map((field) => fieldLabels[field]);
 
     return {
       t: t, accent: accent, accentRing: accentRing, accentTint: accentTint,
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
+      menuOpen: this.state.menuOpen,
+      menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC',
+      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })),
+      onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: menuItems,
+      userName: userName,
+      userInitials: userInitials,
+      roleLabel: 'Freelancer',
+      onTheme: () => this.toggleTheme(),
+      themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
+      onLogout: () => { if (window.ProLinkerApp && window.ProLinkerApp.session) window.ProLinkerApp.session.logout(); },
       pct: comp.pct, pctW: comp.pct + '%',
       missing: comp.missing, hasMissing: comp.missing.length > 0,
-      savedVisible: this.state.saved,
-      savedLabel: this.state.saved ? t.saved : '',
-      savedColor: this.state.saved ? '#1F8A5B' : 'var(--faint,#9AA0A6)',
+      savedVisible: this.state.saved && !this.state.syncError,
+      savedLabel: !this.state.profileReady ? t.loadingProfile : (this.state.syncError || (this.state.saved ? t.saved : '')),
+      savedColor: this.state.syncError ? '#A33A2B' : (this.state.saved ? '#1F8A5B' : 'var(--faint,#9AA0A6)'),
       savedCheckEl: this.iconEl('check', '#1F8A5B', 13),
+      cvBusy: cvBusy,
+      cvIsIdle: cvStatus === 'idle',
+      cvIsBusy: cvBusy,
+      cvIsSuccess: cvStatus === 'success',
+      cvIsError: cvStatus === 'error',
+      cvStatusLabel: cvMessage,
+      cvProgress: this.state.cvProgress || 0,
+      cvProgressW: (this.state.cvProgress || 0) + '%',
+      cvFilledFields: cvFilledFields,
+      cvBorder: this.state.cvDragActive ? accent : (cvStatus === 'error' ? '#E3A89F' : 'var(--border,#E4E5EC)'),
+      cvIconBg: this.state.cvDragActive ? accentTint : 'var(--panel,#F7F8FB)',
+      cvButtonLabel: cvBusy ? t.cvReading : (cvStatus === 'success' ? t.cvReplace : (cvStatus === 'error' ? t.cvRetry : t.cvUpload)),
+      cvButtonBg: cvBusy ? 'var(--panel,#F7F8FB)' : accent,
+      cvButtonBorder: cvBusy ? 'var(--border,#E4E5EC)' : accent,
+      cvButtonColor: cvBusy ? 'var(--faint,#9AA0A6)' : '#fff',
+      cvButtonCursor: cvBusy ? 'wait' : 'pointer',
+      cvButtonOpacity: cvBusy ? '0.72' : '1',
+      onCvBrowse: () => { if (!cvBusy) this.chooseCv(); },
+      onCvInput: (e) => this.onCvInput(e),
+      onCvDragEnter: (e) => { e.preventDefault(); if (!cvBusy) this.setState({ cvDragActive: true }); },
+      onCvDragOver: (e) => { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; if (!cvBusy && !this.state.cvDragActive) this.setState({ cvDragActive: true }); },
+      onCvDragLeave: (e) => { e.preventDefault(); if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) this.setState({ cvDragActive: false }); },
+      onCvDrop: (e) => { if (cvBusy) { e.preventDefault(); return; } this.onCvDrop(e); },
       pName: p.name, onName: (e) => this.save({ name: e.target.value }),
       pHeadline: p.headline, onHeadline: (e) => this.save({ headline: e.target.value }),
       pRate: p.rate, onRate: (e) => this.save({ rate: e.target.value.replace(/[^0-9]/g, '').slice(0, 3) }),

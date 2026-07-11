@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "package": "react",
+      "version": "18.3.1",
+      "file": "react-18.3.1.production.min.js",
+      "source": "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
+      "bytes": 10751,
+      "sha384": "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"
+    },
+    {
+      "package": "react-dom",
+      "version": "18.3.1",
+      "file": "react-dom-18.3.1.production.min.js",
+      "source": "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
+      "bytes": 131835,
+      "sha384": "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
+    },
+    {
+      "package": "@babel/standalone",
+      "version": "7.29.0",
+      "file": "babel-standalone-7.29.0.min.js",
+      "source": "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js",
+      "bytes": 3137752,
+      "sha384": "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    },
+    {
+      "package": "pdfjs-dist",
+      "version": "5.4.624",
+      "file": "pdfjs-5.4.624.mjs",
+      "source": "https://unpkg.com/pdfjs-dist@5.4.624/build/pdf.mjs",
+      "bytes": 798756,
+      "sha384": "sha384-hJN3HZWe92e4hm2Fm6x3YgWTQesl0W3LQwx6uxTswznGp5Ax8cWniwWtKySY5z3m"
+    },
+    {
+      "package": "prolinker-pdfjs-compat",
+      "version": "5.4.624-1",
+      "file": "pdfjs-compat-5.4.624.mjs",
+      "source": "local compatibility shim for pdfjs-dist@5.4.624",
+      "bytes": 1881,
+      "sha384": "sha384-37yh+dZwboUf65mXOKvQhB7JHfAQYRygkZ5Msjztnxq3i+04pG3e5GeUi4NQ0t72"
+    },
+    {
+      "package": "pdfjs-dist",
+      "version": "5.4.624",
+      "file": "pdfjs-worker-5.4.624.mjs",
+      "source": "https://unpkg.com/pdfjs-dist@5.4.624/build/pdf.worker.mjs",
+      "bytes": 1978100,
+      "sha384": "sha384-yph0pcWsZPte+8/VHzlCkTE3P6FhDE75A2JhuCgjxskWxjQaS/C5p1dRKoRax8SZ"
+    },
+    {
+      "package": "prolinker-pdfjs-worker-bootstrap",
+      "version": "5.4.624-1",
+      "file": "pdfjs-worker-bootstrap-5.4.624.mjs",
+      "source": "local worker bootstrap for pdfjs-dist@5.4.624",
+      "bytes": 105,
+      "sha384": "sha384-52eHvDQFL7cVxCu6g+GXHYpQikFm/kDoFzvpbRevVWAe1sv9mRO5hCCDUYKsDgNF"
+    },
+    {
+      "package": "mammoth",
+      "version": "1.12.0",
+      "file": "mammoth-1.12.0.browser.min.js",
+      "source": "https://unpkg.com/mammoth@1.12.0/mammoth.browser.min.js",
+      "bytes": 635882,
+      "sha384": "sha384-fWLn06AIo00H32MDcWUZTT+4Ru3OuoYn1DRH0o6JkhDl89YFSF4tJ4odze9bI+4r"
+    }
+  ]
+}

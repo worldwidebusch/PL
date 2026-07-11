@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ProLinker</string>
+    <string name="title_activity_main">ProLinker</string>
+    <string name="package_name">com.prolinker.app</string>
+    <string name="custom_url_scheme">com.prolinker.app</string>
+</resources>

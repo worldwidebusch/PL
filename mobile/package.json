@@ -1,0 +1,35 @@
+{
+  "name": "prolinker-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capacitor wrapper for the ProLinker web prototype",
+  "scripts": {
+    "doctor": "cap doctor",
+    "prepare:web": "node scripts/prepare-web.mjs",
+    "add:android": "npm run prepare:web && cap add android",
+    "add:ios": "npm run prepare:web && cap add ios",
+    "copy": "npm run prepare:web && cap copy",
+    "copy:android": "npm run prepare:web && cap copy android",
+    "copy:ios": "npm run prepare:web && cap copy ios",
+    "assets": "npm run assets:android && npm run assets:ios",
+    "assets:android": "capacitor-assets generate --android --iconBackgroundColor=#ffffff --iconBackgroundColorDark=#102532 --splashBackgroundColor=#ffffff --splashBackgroundColorDark=#102532",
+    "assets:ios": "capacitor-assets generate --ios --iconBackgroundColor=#ffffff --iconBackgroundColorDark=#102532 --splashBackgroundColor=#ffffff --splashBackgroundColorDark=#102532",
+    "sync": "npm run prepare:web && cap sync",
+    "sync:android": "npm run prepare:web && cap sync android",
+    "sync:ios": "npm run prepare:web && cap sync ios",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.4.1",
+    "@capacitor/core": "8.4.1",
+    "@capacitor/ios": "8.4.1"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.4.1"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

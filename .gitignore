@@ -15,3 +15,18 @@ project/screenshots/
 project/uploads/
 project/*-print-*.dc.html
 project/Prolinker Results.html
+
+# Capacitor-generated build state and copied web assets
+mobile/www/project/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/**/build/
+mobile/android/app/src/main/assets/public/
+mobile/android/**/*.jks
+mobile/android/**/*.keystore
+mobile/android/keystore.properties
+mobile/ios/App/Pods/
+mobile/ios/App/App/public/
+mobile/ios/DerivedData/
+mobile/ios/**/*.mobileprovision
+mobile/ios/**/*.p12
