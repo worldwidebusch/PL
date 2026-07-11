@@ -34,6 +34,7 @@
   button:disabled { cursor: not-allowed !important; transform: none !important; box-shadow: none !important; }
   .plk-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
   .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
+  #plk-home-query:focus-visible { outline: none !important; outline-offset: 0; }
   .plk-brand:hover { opacity: 0.78; }
   .plk-glass-nav { box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); }
   .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
@@ -198,6 +199,14 @@
 class Component extends DCLogic {
   state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 15, anim: '', listening: false, theme: 'light', menuOpen: false, authenticated: false, authRole: null, authName: '' };
 
+  isValidWhatsappSession(session, requiredRole) {
+    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (requiredRole && session.role !== requiredRole) return false;
+    const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
+    if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
+    return (contact.match(/\d/g) || []).length >= 8;
+  }
+
   componentDidMount() {
     this.updateCols();
     this._onResize = () => this.updateCols();
@@ -211,7 +220,7 @@ class Component extends DCLogic {
       }
       const rawSession = localStorage.getItem('plk-auth-session');
       const session = rawSession ? JSON.parse(rawSession) : null;
-      if (session && session.authenticated === true) this.setState({ authenticated: true, authRole: session.role === 'client' ? 'client' : 'freelancer', authName: String(session.name || localStorage.getItem('plk-user-name') || '').trim() });
+      if (this.isValidWhatsappSession(session) && (session.role === 'client' || session.role === 'freelancer')) this.setState({ authenticated: true, authRole: session.role, authName: String(session.name || localStorage.getItem('plk-user-name') || '').trim() });
     } catch (e) {}
     this._onKey = (e) => { if (e.key === 'Escape' && this.state.menuOpen) this.closeMenu(); };
     window.addEventListener('keydown', this._onKey);

@@ -89,7 +89,7 @@
               <input class="plk-auth-input" id="plk-auth-name" name="name" type="text" autocomplete="name" enterKeyHint="next" value="{{ nameVal }}" onInput="{{ onNameInput }}" ref="{{ nameRef }}" aria-invalid="{{ nameInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.namePh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
             </sc-if>
             <label for="plk-auth-contact" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.contactLabel }}</label>
-            <input class="plk-auth-input" id="plk-auth-contact" name="contact" type="text" inputMode="email" autocomplete="username" enterKeyHint="go" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
+            <input class="plk-auth-input" id="plk-auth-contact" name="contact" type="tel" inputMode="tel" autocomplete="tel" enterKeyHint="go" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
           </div>
 
           <div id="plk-auth-errors" role="alert" aria-live="polite" style="width: 100%; min-height: 22px; margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
@@ -103,7 +103,7 @@
             </sc-if>
           </div>
 
-          <button class="plk-auth-primary" type="submit" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 50px; margin-top: 6px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ t.continueLabel }}</span><span style="font-size: 17px; line-height: 1;">→</span></button>
+          <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 50px; margin-top: 6px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }}; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ t.continueLabel }}</span><span style="font-size: 17px; line-height: 1;">→</span></button>
           <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
@@ -181,6 +181,7 @@ class Component extends DCLogic {
       role = requestedRole === 'client' || requestedRole === 'freelancer' ? requestedRole : (savedRole === 'client' || savedRole === 'freelancer' ? savedRole : null);
       next = this.safeNext(params.get('next') || '');
       saved = localStorage.getItem('plk-auth-contact') || '';
+      if (!this.isPhone(saved)) saved = '';
       savedName = localStorage.getItem('plk-user-name') || '';
     } catch (e) {}
     document.title = mode === 'register' ? (this.lang() === 'nl' ? 'Registreren | ProLinker' : 'Register | ProLinker') : (this.lang() === 'nl' ? 'Inloggen | ProLinker' : 'Log in | ProLinker');
@@ -201,16 +202,16 @@ class Component extends DCLogic {
   strings() {
     const en = {
       loginTitle: 'Welcome back', registerTitle: 'Create your account',
-      loginSub: 'Log in with your email or phone number. No password needed.',
-      registerSub: 'Free to join. You only pay for work that gets done.',
+      loginSub: 'Log in securely with your WhatsApp number. No password needed.',
+      registerSub: 'Create your free account with your WhatsApp number.',
       switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
       roleLabel: 'What do you want to do?', roleClient: 'I need freelancers', roleFreelancer: "I'm a freelancer",
-      nameLabel: 'Full name', contactLabel: 'Email or phone', namePh: 'Full name', contactPh: 'Email or phone number',
-      continueLabel: 'Continue', codeHint: 'Passwordless demo login with a local verification code',
-      errContact: 'Enter a valid email address or phone number', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker',
-      codeTitleWa: 'Verify your phone', codeTitleMail: 'Verify your email',
-      codeSentWa: 'Use the demo code below for ', codeSentMail: 'Use the demo code below for ',
-      verifying: 'Checking code...', resend: 'Resend code', resendIn: (s) => 'Resend in ' + s + 's', editContact: 'Use a different address',
+      nameLabel: 'Full name', contactLabel: 'WhatsApp number', namePh: 'Full name', contactPh: '+1 202 555 0123',
+      continueLabel: 'Continue with WhatsApp', codeHint: 'Secure demo login via WhatsApp',
+      errContact: 'Enter a valid WhatsApp number with at least 8 digits', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker',
+      codeTitleWa: 'Verify your WhatsApp number',
+      codeSentWa: 'Use the demo WhatsApp code below for ',
+      verifying: 'Checking code...', resend: 'Resend WhatsApp code', resendIn: (s) => 'Resend in ' + s + 's', editContact: 'Use a different WhatsApp number',
       invalidCode: 'That code is not correct. Try 123456.', demoCode: 'Demo code: 123456',
       successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View opportunities',
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
@@ -218,16 +219,16 @@ class Component extends DCLogic {
     };
     const nl = {
       loginTitle: 'Welkom terug', registerTitle: 'Maak je account',
-      loginSub: 'Log in met je e-mail of telefoonnummer. Geen wachtwoord nodig.',
-      registerSub: 'Gratis account. Je betaalt alleen voor uitgevoerd werk.',
+      loginSub: 'Log veilig in met je WhatsApp-nummer. Geen wachtwoord nodig.',
+      registerSub: 'Maak gratis je account met je WhatsApp-nummer.',
       switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
       roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
-      nameLabel: 'Volledige naam', contactLabel: 'E-mail of telefoon', namePh: 'Volledige naam', contactPh: 'E-mail of telefoonnummer',
-      continueLabel: 'Doorgaan', codeHint: 'Wachtwoordloze demo-login met een lokale verificatiecode',
-      errContact: 'Voer een geldig e-mailadres of telefoonnummer in', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken',
-      codeTitleWa: 'Verifieer je telefoon', codeTitleMail: 'Verifieer je e-mail',
-      codeSentWa: 'Gebruik onderstaande democode voor ', codeSentMail: 'Gebruik onderstaande democode voor ',
-      verifying: 'Code controleren...', resend: 'Code opnieuw sturen', resendIn: (s) => 'Opnieuw sturen in ' + s + 's', editContact: 'Ander adres gebruiken',
+      nameLabel: 'Volledige naam', contactLabel: 'WhatsApp-nummer', namePh: 'Volledige naam', contactPh: '+31 6 12345678',
+      continueLabel: 'Doorgaan met WhatsApp', codeHint: 'Veilige demo-login via WhatsApp',
+      errContact: 'Vul een geldig WhatsApp-nummer met minimaal 8 cijfers in', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken',
+      codeTitleWa: 'Verifieer je WhatsApp-nummer',
+      codeSentWa: 'Gebruik onderstaande WhatsApp-democode voor ',
+      verifying: 'Code controleren...', resend: 'WhatsApp-code opnieuw sturen', resendIn: (s) => 'Opnieuw sturen in ' + s + 's', editContact: 'Ander WhatsApp-nummer gebruiken',
       invalidCode: 'Die code klopt niet. Probeer 123456.', demoCode: 'Democode: 123456',
       successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten',
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
@@ -258,8 +259,6 @@ class Component extends DCLogic {
   }
 
   isPhone(v) { const s = (v || '').trim(); return /^[+0-9][0-9 ()\-.]{5,}$/.test(s) && (s.replace(/[^0-9]/g, '').length >= 8); }
-  isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || '').trim()); }
-
   startCountdown() {
     clearInterval(this._cd);
     this.setState({ resendIn: 30 });
@@ -284,9 +283,9 @@ class Component extends DCLogic {
   }
 
   submitForm() {
-    const contactOk = this.isPhone(this.state.contact) || this.isEmail(this.state.contact);
+    const contactOk = this.isPhone(this.state.contact);
     const nameOk = this.state.mode === 'login' || (this.state.name || '').trim().length >= 2;
-    const roleOk = this.state.mode === 'login' || this.state.role === 'client' || this.state.role === 'freelancer';
+    const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
     if (!contactOk || !nameOk || !roleOk) {
       this.setState({ touched: true });
       setTimeout(() => {
@@ -316,8 +315,7 @@ class Component extends DCLogic {
     const contact = (this.state.contact || '').trim();
     let name = (this.state.name || '').trim();
     try { if (!name) name = (localStorage.getItem('plk-user-name') || '').trim(); } catch (e) {}
-    if (!name && this.isEmail(contact)) name = contact.split('@')[0].replace(/[._-]+/g, ' ');
-    const session = { version: 1, authenticated: true, contact: contact, name: name, role: role, createdAt: Date.now() };
+    const session = { version: 2, authenticated: true, channel: 'whatsapp', contact: contact, name: name, role: role, createdAt: Date.now() };
     try {
       localStorage.setItem('plk-auth-session', JSON.stringify(session));
       localStorage.setItem('plk-auth-contact', contact);
@@ -361,7 +359,7 @@ class Component extends DCLogic {
     const mode = this.state.mode;
     const isRegister = mode === 'register';
 
-    const contactOk = this.isPhone(this.state.contact) || this.isEmail(this.state.contact);
+    const contactOk = this.isPhone(this.state.contact);
     const nameOk = !isRegister || (this.state.name || '').trim().length >= 2;
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
     const valid = contactOk && nameOk && roleOk;
@@ -373,7 +371,6 @@ class Component extends DCLogic {
       else if (!contactOk) errors.push(t.errContact);
     }
 
-    const viaWa = this.isPhone(this.state.contact);
     const roleActive = (r) => this.state.role === r;
 
     const codeBoxes = this.state.code.map((v, i) => ({
@@ -426,15 +423,15 @@ class Component extends DCLogic {
       contactRef: (el) => { this._contactInput = el; },
       onFieldKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitForm(); } },
       errors: errors, showErrors: errors.length > 0,
-      continueOpacity: valid ? 1 : 0.4, continueCursor: valid ? 'pointer' : 'not-allowed',
+      continueDisabled: !valid, continueOpacity: valid ? 1 : 0.4, continueCursor: valid ? 'pointer' : 'not-allowed',
       onSubmitForm: () => this.submitForm(),
       onSubmitFormEvent: (e) => { if (e && e.preventDefault) e.preventDefault(); this.submitForm(); },
       hintIconEl: this.iconEl('shield', isDark ? 'rgba(255,255,255,0.72)' : '#6B7480', 13),
-      codeTitle: viaWa ? t.codeTitleWa : t.codeTitleMail,
-      codeSubA: viaWa ? t.codeSentWa : t.codeSentMail,
+      codeTitle: t.codeTitleWa,
+      codeSubA: t.codeSentWa,
       contactShown: (this.state.contact || '').trim(),
-      channelIconBg: viaWa ? 'rgba(37,211,102,0.14)' : accentTint,
-      channelIconEl: viaWa ? this.iconEl('wa', '#25D366', 28, true) : this.iconEl('mail', accent, 26),
+      channelIconBg: 'rgba(37,211,102,0.14)',
+      channelIconEl: this.iconEl('wa', '#25D366', 28, true),
       codeBoxes: codeBoxes,
       codeInvalid: this.state.codeError,
       codeBorder: this.state.codeError ? '#D92D20' : 'var(--border,#E4E5EC)',

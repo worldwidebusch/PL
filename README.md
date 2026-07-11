@@ -31,9 +31,10 @@ The freelancer opportunity feed contains the canonical current feed design. The 
 
 Authentication is intentionally a local static demo, not production authentication.
 
+- Login and registration accept a WhatsApp phone number only.
 - Use verification code `123456`.
 - The demo session, contact details, role, brief, profile, preferences and simulated application history are stored in `localStorage` in the current browser.
-- No message is actually sent by email or WhatsApp.
+- No WhatsApp message is actually sent.
 - Jobs, freelancers, relevance scores, matches and application activity are simulated mock data. No application is sent to an employer or external platform.
 - Do not enter sensitive or confidential information. Demo data can persist after the browser closes and is cleared when the user logs out or clears the site's browser data.
 - Before production, replace this flow with a secure server-side authentication provider and protected application routes.

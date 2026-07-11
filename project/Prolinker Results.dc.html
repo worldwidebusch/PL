@@ -270,6 +270,14 @@
 class Component extends DCLogic {
   state = { theme: 'light', query: '', text: '', filter: 'best', selected: {}, expanded: {}, scanning: true, profileName: null, profileTab: 'desc', ratingSide: 'freelancer', contactOpen: false, menuOpen: false, matchReasons: null, matchLoading: false, cardMenu: null, shown: 8 };
 
+  isValidWhatsappSession(session, requiredRole) {
+    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (requiredRole && session.role !== requiredRole) return false;
+    const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
+    if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
+    return (contact.match(/\d/g) || []).length >= 8;
+  }
+
   componentDidMount() {
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
     let q = '';
@@ -283,7 +291,7 @@ class Component extends DCLogic {
       localStorage.setItem('plk-query', q);
       const rawSession = localStorage.getItem('plk-auth-session');
       const session = rawSession ? JSON.parse(rawSession) : null;
-      clientAuthenticated = !!(session && session.authenticated === true && session.role === 'client');
+      clientAuthenticated = this.isValidWhatsappSession(session, 'client');
     } catch (e) {}
     if (!clientAuthenticated) {
       window.location.href = 'Prolinker Login.dc.html?mode=login&role=client&next=Prolinker%20Results.dc.html';

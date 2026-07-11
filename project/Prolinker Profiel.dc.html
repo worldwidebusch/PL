@@ -135,6 +135,22 @@
 class Component extends DCLogic {
   state = { profile: null, skillInput: '', saved: false, theme: 'light' };
 
+  isValidWhatsappFreelancerSession(session) {
+    if (!session || session.authenticated !== true || session.channel !== 'whatsapp' || session.role !== 'freelancer') return false;
+    const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
+    if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
+    return (contact.match(/\d/g) || []).length >= 8;
+  }
+
+  requireFreelancerSession() {
+    try {
+      const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
+      if (this.isValidWhatsappFreelancerSession(session)) return true;
+    } catch (e) {}
+    window.location.href = 'Prolinker Login.dc.html?mode=login&role=freelancer&next=Prolinker%20Profiel.dc.html';
+    return false;
+  }
+
   static seed(name) {
     return { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '' };
   }
@@ -162,6 +178,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    if (!this.requireFreelancerSession()) return;
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
     this.setState({ profile: Component.load() });
   }

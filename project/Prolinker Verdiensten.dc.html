@@ -116,7 +116,24 @@
 class Component extends DCLogic {
   state = { copied: false, theme: 'light' };
 
+  isValidWhatsappFreelancerSession(session) {
+    if (!session || session.authenticated !== true || session.channel !== 'whatsapp' || session.role !== 'freelancer') return false;
+    const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
+    if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
+    return (contact.match(/\d/g) || []).length >= 8;
+  }
+
+  requireFreelancerSession() {
+    try {
+      const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
+      if (this.isValidWhatsappFreelancerSession(session)) return true;
+    } catch (e) {}
+    window.location.href = 'Prolinker Login.dc.html?mode=login&role=freelancer&next=Prolinker%20Verdiensten.dc.html';
+    return false;
+  }
+
   componentDidMount() {
+    if (!this.requireFreelancerSession()) return;
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
   }
   componentWillUnmount() { clearTimeout(this._copyT); }
