@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes plk-toast { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes plk-pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.16s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  a:active { transform: scale(0.985); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>Voor jou | ProLinker</title>
+<meta name="robots" content="noindex, nofollow">
+</helmet>
+
+<div data-screen-label="Voor jou" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+      <div style="position: relative;">
+        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F7F8FB);">
+          <span style="width: 36px; height: 36px; border-radius: 50%; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
+          <span style="font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap;">{{ firstName }}</span>
+          <span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ menuChevronRotate }};">{{ chevronEl }}</span>
+        </button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
+          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+            <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="3">
+              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F7F8FB);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+            </sc-for>
+            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB);">
+              <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
+              <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
+            </button>
+            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
+            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ newPillVisible }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ onInsertNew }}" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 28; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #ffffff; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 26px {{ accentShadow }}; animation: plk-toast 0.3s ease both;">{{ newLabel }}</button>
+  </sc-if>
+
+  <main style="max-width: 1320px; width: 100%; margin: 0 auto; padding: 14px 32px 90px; flex: 1;">
+
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 0 0 18px; animation: plk-rise 0.5s ease both;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: var(--text,#152431);">Voor jou</h1>
+        <div style="font-size: 14.5px; color: var(--muted,#565B62);">{{ subGreeting }}</div>
+      </div>
+      <div style="position: relative; flex-shrink: 0;">
+        <button onClick="{{ onToggleSort }}" style="display: inline-flex; align-items: center; gap: 9px; height: 38px; padding: 0 16px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;" style-hover="border-color: {{ accentRing }};"><span style="color: var(--faint,#9AA0A6); font-weight: 500;">Sorteren</span>{{ sortLabel }}</button>
+        <sc-if value="{{ sortOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ onCloseSort }}" style="position: fixed; inset: 0; z-index: 35;"></div>
+          <div role="menu" style="position: absolute; right: 0; top: 44px; z-index: 40; width: 198px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 6px; animation: plk-pop 0.18s ease both;">
+            <sc-for list="{{ sortOptions }}" as="so" hint-placeholder-count="4">
+              <button role="menuitem" onClick="{{ so.onClick }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: {{ so.weight }}; color: {{ so.color }}; text-align: left;" style-hover="background: var(--panel,#F7F8FB);">{{ so.label }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 20px; animation: plk-rise 0.5s ease both; animation-delay: 0.05s;">
+      <sc-for list="{{ filterChips }}" as="f" hint-placeholder-count="8">
+        <button onClick="{{ f.onClick }}" style="height: 34px; padding: 0 15px; border: 1px solid {{ f.bd }}; border-radius: 999px; background: {{ f.bg }}; color: {{ f.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accentRing }};">{{ f.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: {{ gridTemplate }}; gap: 16px;">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+        <article data-reveal style="grid-column: {{ it.colSpan }}; grid-row: {{ it.rowSpan }}; position: relative; display: flex; flex-direction: column; min-width: 0; background: {{ it.cardBg }}; border: 1px solid {{ it.cardBorder }}; border-radius: 16px; padding: {{ it.pad }}; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease both; animation-delay: {{ it.delay }}; transition: box-shadow 0.18s ease, border-color 0.18s ease;" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42);">
+
+          <sc-if value="{{ it.isCompact }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; align-items: center; gap: 13px; flex: 1; min-width: 0;">
+              <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 11px; background: {{ it.tileBg }}; color: {{ it.tileColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ it.tileContent }}</div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+                <div style="font-size: 14px; font-weight: 650; letter-spacing: -0.005em; color: var(--text,#152431); text-wrap: pretty;">{{ it.title }}</div>
+                <div style="font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ it.sub }}</div>
+              </div>
+              <sc-if value="{{ it.statusText }}" hint-placeholder-val="{{ false }}">
+                <span style="flex-shrink: 0; padding: 4px 10px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 11.5px; font-weight: 700; white-space: nowrap;">{{ it.statusText }}</span>
+              </sc-if>
+              <sc-if value="{{ it.ctaSmall }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ it.onCta }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaSmall }}</button>
+              </sc-if>
+              <sc-if value="{{ it.ctaHref }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ it.ctaHref }}" style="flex-shrink: 0; display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-size: 12.5px; font-weight: 600; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaHrefLabel }}</a>
+              </sc-if>
+              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 30px; height: 30px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEDF2);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#565B62);">&#8943;</span></button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ it.isFull }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; align-items: flex-start; gap: 13px;">
+              <div onClick="{{ it.onOpen }}" style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: {{ it.tileBg }}; color: {{ it.tileColor }}; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; cursor: {{ it.titleCursor }};">{{ it.tileContent }}</div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 2px;">
+                <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
+                  <span style="font-size: 13.5px; font-weight: 650; color: var(--text,#152431); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.co }}</span>
+                </div>
+                <div style="font-size: 12.5px; color: var(--faint,#9AA0A6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.metaLine }}</div>
+              </div>
+              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 32px; height: 32px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEDF2);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#565B62);">&#8943;</span></button>
+            </div>
+
+            <sc-if value="{{ it.hasLabels }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 14px;">
+                <sc-for list="{{ it.labelChips }}" as="lb" hint-placeholder-count="2">
+                  <span style="padding: 3px 9px; border-radius: 7px; background: {{ lb.bg }}; color: {{ lb.color }}; border: 1px solid {{ lb.bd }}; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; white-space: nowrap;">{{ lb.text }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <div onClick="{{ it.onOpen }}" style="margin-top: 10px; font-size: {{ it.titleSize }}; font-weight: 700; letter-spacing: -0.015em; line-height: 1.22; color: var(--text,#152431); cursor: {{ it.titleCursor }}; text-wrap: pretty;">{{ it.title }}</div>
+
+            <sc-if value="{{ it.showDesc }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--muted,#565B62); display: -webkit-box; -webkit-line-clamp: {{ it.descClamp }}; -webkit-box-orient: vertical; overflow: hidden; text-wrap: pretty;">{{ it.desc }}</p>
+            </sc-if>
+
+            <sc-if value="{{ it.rate }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
+                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ it.rate }}</span>
+                <sc-for list="{{ it.chips }}" as="c" hint-placeholder-count="3">
+                  <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12px; font-weight: 500; color: var(--muted,#565B62); white-space: nowrap;">{{ c }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <div style="flex: 1;"></div>
+
+            <sc-if value="{{ it.reasonList }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 16px;">
+                <sc-for list="{{ it.reasonList }}" as="r" hint-placeholder-count="3">
+                  <div style="font-size: 13px; font-weight: 550; color: {{ accent }};">{{ r }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ it.reason }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top: 14px; font-size: 12.5px; font-weight: 550; color: {{ accent }}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.reason }}</div>
+            </sc-if>
+
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline,#ECEDF2);">
+              <sc-if value="{{ it.matchLabel }}" hint-placeholder-val="{{ false }}">
+                <span style="padding: 4px 11px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 700; white-space: nowrap;">{{ it.matchLabel }}</span>
+              </sc-if>
+              <sc-if value="{{ it.hasWhy }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ it.onWhy }}" style="border: none; background: none; padding: 4px 2px; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--faint,#9AA0A6); cursor: pointer; white-space: nowrap;" style-hover="color: var(--text,#152431);">Waarom zie ik dit?</button>
+              </sc-if>
+              <div style="flex: 1;"></div>
+              <sc-if value="{{ it.secondaryLabel }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ it.onSecondary }}" style="height: {{ it.pHeight }}; padding: 0 16px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: transparent; color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accentRing }};">{{ it.secondaryLabel }}</button>
+              </sc-if>
+              <sc-if value="{{ it.primaryLabel }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ it.onPrimary }}" style="display: inline-flex; align-items: center; gap: 7px; height: {{ it.pHeight }}; padding: 0 17px; border: {{ it.pBorder }}; border-radius: 999px; background: {{ it.pBg }}; color: {{ it.pColor }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: {{ it.pShadow }};" style-hover="transform: translateY(-1px);">{{ it.primaryLabel }}</button>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ it.whyOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ onCloseOverlays }}" style="position: fixed; inset: 0; z-index: 45;"></div>
+            <div role="dialog" aria-label="Waarom zie je dit" style="position: absolute; left: 14px; right: 14px; bottom: 58px; z-index: 46; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 14px 16px; animation: plk-pop 0.18s ease both;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 9px;">Waarom zie je dit</div>
+              <div style="display: flex; flex-direction: column; gap: 7px;">
+                <sc-for list="{{ it.whyReasons }}" as="wr" hint-placeholder-count="3">
+                  <div style="font-size: 13px; color: var(--text,#152431); line-height: 1.4;">{{ wr }}</div>
+                </sc-for>
+              </div>
+              <div style="margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--hairline,#ECEDF2); font-size: 11.5px; line-height: 1.45; color: var(--faint,#9AA0A6);">Gebaseerd op je profiel, voorkeuren en activiteit. Niet goed? Kies "Niet relevant" via het menu.</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ it.cardMenuOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ onCloseOverlays }}" style="position: fixed; inset: 0; z-index: 45;"></div>
+            <div role="menu" style="position: absolute; right: 12px; top: 48px; z-index: 46; width: 210px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 6px; animation: plk-pop 0.18s ease both;">
+              <sc-for list="{{ it.menuActions }}" as="ma" hint-placeholder-count="4">
+                <button role="menuitem" onClick="{{ ma.onClick }}" style="width: 100%; display: block; text-align: left; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 500; color: {{ ma.color }};" style-hover="background: var(--panel,#F7F8FB);">{{ ma.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+        </article>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ emptyFilter }}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 48px 20px; text-align: center; color: var(--faint,#9AA0A6); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#E4E5EC); border-radius: 16px; margin-top: 4px;">{{ emptyText }}</div>
+    </sc-if>
+
+  </main>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ onCloseModal }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(11,17,25,0.45); backdrop-filter: blur(3px);"></div>
+    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(580px, calc(100vw - 40px)); max-height: min(86vh, 720px); overflow: auto; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
+      <div style="display: flex; align-items: flex-start; gap: 16px;">
+        <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ modalItem.tileBg }}; color: {{ modalItem.tileColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700;">{{ modalItem.tileContent }}</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.015em; color: var(--text,#152431); text-wrap: pretty;">{{ modalItem.title }}</div>
+          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ modalItem.co }} &middot; {{ modalItem.metaLine }}</div>
+        </div>
+        <button onClick="{{ onCloseModal }}" aria-label="Sluiten" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F7F8FB); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#565B62); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEDF2);">&times;</button>
+      </div>
+      <sc-if value="{{ modalItem.hasLabels }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 16px;">
+          <sc-for list="{{ modalItem.labelChips }}" as="lb" hint-placeholder-count="2">
+            <span style="padding: 3px 9px; border-radius: 7px; background: {{ lb.bg }}; color: {{ lb.color }}; border: 1px solid {{ lb.bd }}; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; white-space: nowrap;">{{ lb.text }}</span>
+          </sc-for>
+        </div>
+      </sc-if>
+      <p style="margin: 16px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#565B62); text-wrap: pretty;">{{ modalItem.desc }}</p>
+      <sc-if value="{{ modalItem.rate }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 16px;">
+          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650; color: var(--text,#152431);">{{ modalItem.rate }}</span>
+          <sc-for list="{{ modalItem.chips }}" as="c" hint-placeholder-count="3">
+            <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62);">{{ c }}</span>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ modalItem.hasWhy }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top: 18px; padding: 14px 16px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 12px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 9px;">Waarom dit bij je past</div>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <sc-for list="{{ modalItem.whyReasons }}" as="wr" hint-placeholder-count="3">
+              <div style="font-size: 13px; color: var(--text,#152431); line-height: 1.4;">{{ wr }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEDF2);">
+        <sc-if value="{{ modalItem.matchLabel }}" hint-placeholder-val="{{ false }}">
+          <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700;">{{ modalItem.matchLabel }}</span>
+        </sc-if>
+        <div style="flex: 1;"></div>
+        <sc-if value="{{ modalItem.primaryLabel }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ modalItem.onPrimary }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border: {{ modalItem.pBorder }}; border-radius: 999px; background: {{ modalItem.pBg }}; color: {{ modalItem.pColor }}; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: {{ modalItem.pShadow }};" style-hover="transform: translateY(-1px);">{{ modalItem.primaryLabel }}</button>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 80; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 14px 10px 16px; animation: plk-toast 0.3s ease both; max-width: calc(100vw - 40px);">
+      <span style="font-size: 14px; color: var(--text,#152431); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ toastMsg }}</span>
+      <sc-if value="{{ toastUndoable }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ onToastUndo }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F7F8FB); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEDF2);">Ongedaan maken</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Aanbevolen&quot;,&quot;Meest recent&quot;,&quot;Beste match&quot;,&quot;Sluit binnenkort&quot;],&quot;default&quot;:&quot;Aanbevolen&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Gedrag&quot;},&quot;showNewIndicator&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Gedrag&quot;}}">
+class Component extends DCLogic {
+  state = { theme: 'light', menuOpen: false, filter: 'alles', sort: null, sortOpen: false, saved: {}, hidden: {}, sent: {}, accepted: {}, followed: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, newReady: false, inserted: false, cols: 4, name: '' };
+
+  componentDidMount() {
+    try {
+      if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); }
+      this.setState({
+        saved: this.getLS('plk-wall-saved'), hidden: this.getLS('plk-wall-hidden'), sent: this.getLS('plk-wall-sent'),
+        accepted: this.getLS('plk-wall-accepted'), followed: this.getLS('plk-wall-follow'),
+        name: localStorage.getItem('plk-user-name') || ''
+      });
+    } catch (e) {}
+    this._onResize = () => this.setState({ cols: this.colsFor() });
+    this.setState({ cols: this.colsFor() });
+    window.addEventListener('resize', this._onResize);
+    this._esc = (e) => { if (e.key === 'Escape') this.setState({ modalId: null, whyId: null, cardMenuId: null, sortOpen: false, menuOpen: false }); };
+    window.addEventListener('keydown', this._esc);
+    if (this.props.showNewIndicator !== false) this._newT = setTimeout(() => this.setState({ newReady: true }), 2800);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._onResize); window.removeEventListener('keydown', this._esc); clearTimeout(this._newT); clearTimeout(this._toastT); }
+
+  colsFor() { const w = window.innerWidth; return w >= 1060 ? 4 : (w >= 700 ? 2 : 1); }
+  getLS(k) { try { const v = JSON.parse(localStorage.getItem(k) || '{}'); return v && typeof v === 'object' && v !== null ? v : {}; } catch (e) { return {}; } }
+  setLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  itemsData() {
+    return [
+      { id: 'inv1', type: 'invitation', source: 'internal', variant: 'featured', co: 'VersBox', letter: 'V', icon: 'code', tbg: '#E7F5EE', tc: '#1F8A5B', verified: true, isNew: true,
+        title: 'Headless storefront uitbouwen met Next.js', place: 'Remote', age: '3 u geleden', h: 3, dl: 5,
+        rate: '\u20ac 80\u201395 /u', chips: ['32\u201340 u/wk', '4 mnd', 'Next.js', 'Shopify Plus', 'Reageer binnen 5 dagen'],
+        desc: 'VersBox nodigde je persoonlijk uit op basis van je Shopify Plus-werk. Je bouwt de nieuwe headless storefront met abonnementen-checkout en koppelt de bezorg-API. Het designsysteem staat klaar; je werkt nauw samen met hun interne team.',
+        match: 96, reasons: ['Deze klant heeft je uitgenodigd', 'Next.js en Shopify Plus staan in jouw skills', 'Past bij jouw uurtarief', 'Je rondde 3 vergelijkbare opdrachten af'],
+        labels: ['uitnodiging', 'intern'], sig: { rel: 0.97, q: 0.9, u: 0.85, rs: 1, e: 0.6, x: 0.05 } },
+      { id: 'a1', type: 'assignment', source: 'internal', variant: 'standard', co: 'Fleur & Zo', letter: 'F', icon: 'cart', tbg: '#E8F1FB', tc: '#0B5CAB', verified: true, isNew: true,
+        title: 'Shopify-webshop migreren en optimaliseren', place: 'Amsterdam \u00b7 Hybride', age: '2 u geleden', h: 2, dl: 14,
+        rate: '\u20ac 70\u201385 /u', chips: ['24\u201332 u/wk', '3 mnd', 'Shopify', 'CRO'],
+        desc: 'Bloemenwebshop met 1.200 producten verhuist van WooCommerce naar Shopify. Je verzorgt de datamigratie, bouwt een thema op maat en optimaliseert de laadtijd. Samenwerking met hun vaste fotograaf en marketeer.',
+        match: 94, reason: 'Past bij jouw vaardigheden', reasons: ['Past bij jouw vaardigheden: Shopify, Liquid en CRO', '94% overlap met je profiel en tarief', 'Geverifieerde opdrachtgever met complete briefing'],
+        labels: ['intern', 'nieuw'], sig: { rel: 0.94, q: 0.85, u: 0.45, rs: 0.3, e: 0.5, x: 0.05 } },
+      { id: 'u1', type: 'application_update', source: 'internal', variant: 'compact', co: 'Studio Mier', letter: 'S', icon: 'eye', tbg: '#FBF0E7', tc: '#B4590A',
+        title: 'Studio Mier heeft je reactie bekeken', sub: 'Klaviyo e-mailflows \u00b7 gisteren gereageerd', status: 'Bekeken', h: 18,
+        sig: { rel: 0.8, q: 0.6, u: 0.7, rs: 0.8, e: 0.9, x: 0 } },
+      { id: 'a2', type: 'assignment', source: 'external', variant: 'standard', co: 'Retail Republiek', letter: 'R', icon: 'monitor', tbg: '#EEEBFB', tc: '#5B4CC4', isNew: true,
+        title: 'Shopify POS-implementatie retailketen', place: 'Utrecht \u00b7 Hybride', age: '7 u geleden', h: 7, dl: 10,
+        rate: '\u20ac 65\u201380 /u', chips: ['16\u201324 u/wk', '2 mnd', 'Shopify POS'],
+        desc: 'Landelijke keten met 14 winkels koppelt Shopify POS aan de webshop. Realtime voorraadsync tussen winkels en online is kritisch. Externe opdracht via het partnernetwerk; reageren verloopt gewoon via ProLinker.',
+        match: 88, reason: 'In jouw voorkeurssector', reasons: ['In jouw voorkeurssector: retail en e-commerce', 'Past bij jouw hybride werkvoorkeur', 'Ter verbreding: via het externe partnernetwerk'],
+        labels: ['extern', 'nieuw'], sig: { rel: 0.88, q: 0.72, u: 0.4, rs: 0.15, e: 0.4, x: 0.3 } },
+      { id: 'a3', type: 'assignment', source: 'internal', variant: 'wide', co: 'Outdoorland', letter: 'O', icon: 'swap', tbg: '#E6F4F6', tc: '#0E7C8A', verified: true,
+        title: 'Migratie van Lightspeed naar Shopify', place: 'Zwolle \u00b7 Hybride', age: 'Gisteren', h: 26, dl: 2, urgent: 'Sluit over 2 dagen',
+        rate: '\u20ac 65\u201380 /u', chips: ['16\u201324 u/wk', '2 mnd', 'Lightspeed', 'POS'],
+        desc: 'Outdoorretailer met fysieke winkel en webshop stapt over van Lightspeed naar Shopify. POS-koppeling en realtime voorraadsync tussen winkel en webshop zijn kritisch.',
+        match: 87, reason: '3 Lightspeed-migraties in jouw portfolio', reasons: ['Sluit over 2 dagen', '3 Lightspeed-migraties in jouw portfolio', 'Vergelijkbaar met eerdere opdrachten'],
+        labels: ['intern'], sig: { rel: 0.87, q: 0.8, u: 0.95, rs: 0.3, e: 0.5, x: 0.05 } },
+      { id: 'ref1', type: 'referral', source: 'internal', variant: 'compact', co: 'TechWorks', letter: 'T', icon: 'users', tbg: '#E8F1FB', tc: '#0B5CAB',
+        title: 'Ken jij een senior PHP-developer?', sub: 'TechWorks \u00b7 beloning \u00b1 \u20ac 480 (2%)', cta: 'Refereer', ctaClick: 'refer', h: 30,
+        sig: { rel: 0.5, q: 0.7, u: 0.3, rs: 0.6, e: 0.5, x: 0.2 } },
+      { id: 'c1', type: 'company', source: 'internal', variant: 'standard', co: 'Brouwerij Noorderlicht', letter: 'B', icon: 'building', tbg: '#FBEDEF', tc: '#B42334', verified: true,
+        title: 'Brouwerij Noorderlicht', place: 'Groningen', age: 'Actief deze week', h: 40,
+        desc: 'Plaatste dit kwartaal 6 e-commerce-opdrachten in jouw vakgebied; 3 staan nu open. Volg het bedrijf om nieuwe opdrachten direct bovenaan je wall te zien.',
+        reason: 'Populair binnen jouw netwerk', reasons: ['Populair binnen jouw netwerk', 'Plaatst regelmatig opdrachten in jouw vakgebied', '3 openstaande opdrachten in e-commerce'],
+        labels: ['bedrijf'], sig: { rel: 0.7, q: 0.8, u: 0.25, rs: 0.55, e: 0.5, x: 0.35 } },
+      { id: 'a4', type: 'assignment', source: 'internal', variant: 'standard', co: 'Van Dijk Wonen', letter: 'V', icon: 'trendingUp', tbg: '#E7F5EE', tc: '#1F8A5B',
+        title: 'Performance-audit en CRO voor meubelwebshop', place: 'Den Haag \u00b7 Remote', age: '6 dagen geleden', h: 140, dl: 4,
+        rate: '\u20ac 65\u201380 /u', chips: ['8\u201312 u/wk', '6 wk', 'A/B-testen'],
+        desc: 'Meubelwebshop converteert slecht op mobiel. Je doet een audit, formuleert hypotheses en draait A/B-tests op de productpagina en checkout. Rapportage direct aan de eigenaar.',
+        match: 90, reason: 'Vergelijkbaar met eerdere opdrachten', reasons: ['Vergelijkbaar met eerdere opdrachten', 'Hoge match, ondanks 6 dagen oud', 'Jouw CRO-resultaten passen bij de vraag'],
+        labels: ['intern'], sig: { rel: 0.9, q: 0.8, u: 0.5, rs: 0.35, e: 0.6, x: 0.05 } },
+      { id: 'p1', type: 'profile_recommendation', source: 'platform', variant: 'compact', co: 'ProLinker', icon: 'user',
+        title: 'Voeg 2 portfolio-items toe', sub: 'Profielen met portfolio krijgen 3\u00d7 meer uitnodigingen', cta: 'Toevoegen', ctaHref: 'Prolinker Profiel.dc.html', h: 5,
+        sig: { rel: 0.65, q: 0.5, u: 0.45, rs: 0.3, e: 0.8, x: 0.1 } },
+      { id: 'ann1', type: 'announcement', source: 'platform', variant: 'wide', co: 'ProLinker', icon: 'megaphone',
+        title: 'Nieuw: automatische facturatie', place: 'Platformupdate', age: 'Vandaag', h: 8,
+        desc: 'Facturen en btw worden per opdracht automatisch klaargezet op basis van je gewerkte uren. Jij controleert en verstuurt met \u00e9\u00e9n klik.',
+        labels: ['platform'], sig: { rel: 0.45, q: 0.6, u: 0.35, rs: 0.2, e: 0.3, x: 0.1 } },
+      { id: 'a5', type: 'assignment', source: 'internal', variant: 'standard', co: 'Brouwerij Noorderlicht', letter: 'B', icon: 'repeat', tbg: '#FBEDEF', tc: '#B42334', verified: true,
+        title: 'Shopify-app voor abonnementen', place: 'Groningen \u00b7 Remote', age: '2 dagen geleden', h: 50, dl: 9,
+        rate: '\u20ac 75\u201390 /u', chips: ['24 u/wk', '3 mnd', 'App-development'],
+        desc: 'Speciaalbierbrouwerij wil een eigen abonnementsapp: maandelijkse proefpakketten, pauzeren en smaken wisselen. Je bouwt de app en de koppeling met hun fulfilmentpartner.',
+        match: 84, reason: 'Past bij jouw tarief', reasons: ['Past bij jouw uurtarief', 'Abonnementscases in je portfolio', 'Geverifieerde opdrachtgever'],
+        labels: ['intern'], sig: { rel: 0.84, q: 0.75, u: 0.4, rs: 0.3, e: 0.4, x: 0.1 } },
+      { id: 'n1', type: 'network_update', source: 'internal', variant: 'compact', co: 'Kade 12', letter: 'K', icon: 'bell', tbg: '#E8F1FB', tc: '#0B5CAB',
+        title: 'Kade 12 plaatste 3 nieuwe opdrachten', sub: 'Je volgt dit bedrijf \u00b7 vandaag', status: '3 nieuw', h: 6, isNew: true,
+        sig: { rel: 0.6, q: 0.55, u: 0.3, rs: 0.7, e: 0.5, x: 0.1 } },
+      { id: 'a6', type: 'assignment', source: 'external', variant: 'standard', co: 'Huis & Haard', letter: 'H', icon: 'tag', tbg: '#FBF0E7', tc: '#B4590A',
+        title: 'Google Shopping-feed optimaliseren', place: 'Remote', age: '3 dagen geleden', h: 70, dl: 21,
+        rate: '\u20ac 60\u201375 /u', chips: ['8\u201316 u/wk', 'Doorlopend', 'Feeds', 'SEA'],
+        desc: 'Woonwinkel wil de productfeed voor Google Shopping en Meta professionaliseren. Je richt feeds in, structureert campagnes en rapporteert maandelijks aan de marketingmanager.',
+        match: 81, reason: 'Past bij jouw remote-voorkeur', reasons: ['Past bij jouw remote-voorkeur', 'Raakvlak met je CRO- en datawerk', 'Extern, via een geverifieerde partner'],
+        labels: ['extern'], sig: { rel: 0.81, q: 0.65, u: 0.35, rs: 0.1, e: 0.35, x: 0.3 } },
+      { id: 's1', type: 'saved_search', source: 'platform', variant: 'compact', co: 'ProLinker', icon: 'search', isNew: true,
+        title: '4 nieuwe resultaten voor "Shopify \u00b7 remote"', sub: 'Opgeslagen zoekopdracht \u00b7 vandaag', cta: 'Bekijk', ctaClick: 'nieuw', h: 4,
+        sig: { rel: 0.68, q: 0.55, u: 0.4, rs: 0.4, e: 0.7, x: 0.1 } },
+      { id: 'a7', type: 'assignment', source: 'internal', variant: 'standard', co: 'Lumen Studio\u2019s', letter: 'L', icon: 'creditCard', tbg: '#EEEBFB', tc: '#5B4CC4',
+        title: 'Checkout-optimalisatie verlichtingswebshop', place: 'Eindhoven \u00b7 Hybride', age: '4 dagen geleden', h: 96, dl: 8,
+        rate: '\u20ac 60\u201370 /u', chips: ['8\u201312 u/wk', '6 wk', 'Checkout'],
+        desc: 'Verlichtingswebshop ziet veel uitval in de laatste checkoutstap. Je analyseert de funnel, versimpelt formulieren en test verbeteringen. Buiten je vaste sectoren, maar sterk passend bij je CRO-profiel.',
+        match: 79, reason: 'Nieuw voor jou', reasons: ['Nieuw voor jou: buiten je vaste sectoren', 'Sterk raakvlak met je checkout-werk', 'Bewust getoond ter ontdekking'],
+        labels: ['intern', 'ontdek'], sig: { rel: 0.76, q: 0.6, u: 0.3, rs: 0.1, e: 0.3, x: 0.8 } },
+      { id: 'a8', type: 'assignment', source: 'internal', variant: 'standard', co: 'Bloom & Co', letter: 'B', icon: 'mail', tbg: '#FBEDEF', tc: '#B42334', isNew: true, justIn: true,
+        title: 'Klaviyo-flows voor beautymerk', place: 'Amsterdam \u00b7 Remote', age: 'Zojuist', h: 0.2, dl: 18,
+        rate: '\u20ac 65\u201380 /u', chips: ['8\u201316 u/wk', '2 mnd', 'Klaviyo'],
+        desc: 'Beautymerk wil welkomst-, verlaten-winkelwagen- en win-backflows in Klaviyo, gekoppeld aan Shopify. Klein team, snelle start, duidelijke KPI\u2019s.',
+        match: 92, reason: 'Zojuist geplaatst \u00b7 past bij jouw skills', reasons: ['Zojuist geplaatst', 'Klaviyo staat in jouw skills', 'Past bij jouw tarief'],
+        labels: ['intern', 'nieuw'], sig: { rel: 0.92, q: 0.8, u: 0.5, rs: 0.3, e: 0.5, x: 0.1 } },
+      { id: 'u2', type: 'application_update', source: 'internal', variant: 'compact', co: 'Outdoorland', letter: 'O', icon: 'send', tbg: '#E6F4F6', tc: '#0E7C8A', isNew: true, justIn: true,
+        title: 'Je reactie is doorgestuurd naar de hiring manager', sub: 'Migratie Lightspeed \u00b7 zojuist', status: 'Doorgestuurd', h: 0.1,
+        sig: { rel: 0.82, q: 0.6, u: 0.75, rs: 0.8, e: 0.85, x: 0 } },
+    ];
+  }
+
+  halfLife(type) { return ({ announcement: 18, network_update: 24, saved_search: 24, profile_recommendation: 72, assignment: 96, company: 120, application_update: 200, invitation: 300, referral: 600 })[type] || 96; }
+  score(it) {
+    const rec = Math.exp(-(it.h || 0) / this.halfLife(it.type));
+    const s = it.sig || {};
+    return 0.4 * (s.rel || 0) + 0.2 * rec + 0.15 * (s.q || 0) + 0.1 * (s.u || 0) + 0.05 * (s.rs || 0) + 0.05 * (s.e || 0) + 0.05 * (s.x || 0);
+  }
+  diversify(list) {
+    const out = list.slice();
+    for (let i = 1; i < out.length; i++) {
+      const prev = out[i - 1];
+      const sameCo = out[i].co && prev.co && out[i].co === prev.co && out[i].co !== 'ProLinker';
+      const third = i > 1 && out[i].type === prev.type && out[i - 2].type === out[i].type;
+      if (sameCo || third) {
+        for (let j = i + 1; j < out.length; j++) {
+          const cand = out[j];
+          const candThird = i > 1 && cand.type === prev.type && out[i - 2].type === cand.type;
+          if (cand.co !== prev.co && !candThird) { out.splice(i, 0, out.splice(j, 1)[0]); break; }
+        }
+      }
+    }
+    return out;
+  }
+  unitsFor(it, cols) { const v = it.variant; if ((v === 'featured' || v === 'wide') && cols >= 2) return 2; return 1; }
+  packOrder(list, cols) {
+    if (cols === 1) return list.slice();
+    const pool = list.slice(); const out = []; let free = cols; let reserved = 0;
+    while (pool.length) {
+      let idx = pool.findIndex((p) => this.unitsFor(p, cols) <= free);
+      if (idx < 0) idx = 0;
+      const it = pool.splice(idx, 1)[0];
+      const u = this.unitsFor(it, cols);
+      out.push(it);
+      if (it.variant === 'featured' && cols >= 3) reserved += u;
+      free -= u;
+      if (free <= 0) { free = cols - reserved; reserved = 0; if (free <= 0) free = cols; }
+    }
+    return out;
+  }
+  sortKeyFor(label) { return ({ 'Aanbevolen': 'aanbevolen', 'Meest recent': 'recent', 'Beste match': 'match', 'Sluit binnenkort': 'deadline' })[label] || 'aanbevolen'; }
+
+  labelDef(k, c) {
+    const isDark = this.state.theme === 'dark';
+    const green = isDark ? '#63D9A5' : '#1F8A5B';
+    const purple = isDark ? '#B9AEF5' : '#5B4CC4';
+    const defs = {
+      intern: { text: 'Intern', bg: c.accentTint, color: c.accent, bd: 'transparent' },
+      extern: { text: 'Extern', bg: 'transparent', color: 'var(--muted,#565B62)', bd: 'var(--border,#E4E5EC)' },
+      uitnodiging: { text: 'Uitnodiging', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
+      nieuw: { text: 'Nieuw', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
+      platform: { text: 'Platform', bg: 'var(--panel,#F7F8FB)', color: 'var(--muted,#565B62)', bd: 'var(--hairline,#ECEDF2)' },
+      bedrijf: { text: 'Aanbevolen bedrijf', bg: 'var(--panel,#F7F8FB)', color: 'var(--muted,#565B62)', bd: 'var(--hairline,#ECEDF2)' },
+      ontdek: { text: 'Nieuw voor jou', bg: 'rgba(91,76,196,0.14)', color: purple, bd: 'transparent' },
+    };
+    return defs[k];
+  }
+
+  iconDefs() {
+    return {
+      check: [{ t: 'polyline', p: '20 6 9 17 4 12' }],
+      chevron: [{ t: 'polyline', p: '6 9 12 15 18 9' }],
+      moon: [{ t: 'path', d: 'M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z' }],
+      sun: [{ t: 'circle', cx: 12, cy: 12, r: 4 }, { t: 'line', x1: 12, y1: 2, x2: 12, y2: 4 }, { t: 'line', x1: 12, y1: 20, x2: 12, y2: 22 }, { t: 'line', x1: 4.93, y1: 4.93, x2: 6.34, y2: 6.34 }, { t: 'line', x1: 17.66, y1: 17.66, x2: 19.07, y2: 19.07 }, { t: 'line', x1: 2, y1: 12, x2: 4, y2: 12 }, { t: 'line', x1: 20, y1: 12, x2: 22, y2: 12 }, { t: 'line', x1: 4.93, y1: 19.07, x2: 6.34, y2: 17.66 }, { t: 'line', x1: 17.66, y1: 6.34, x2: 19.07, y2: 4.93 }],
+      spark: [{ t: 'path', d: 'M12 3l1.9 5.7L19.6 10l-5.7 1.9L12 17.6l-1.9-5.7L4.4 10l5.7-1.9z' }],
+      logout: [{ t: 'path', d: 'M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4' }, { t: 'polyline', p: '16 17 21 12 16 7' }, { t: 'line', x1: 21, y1: 12, x2: 9, y2: 12 }],
+      bookmark: [{ t: 'path', d: 'M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z' }],
+      dots: [{ t: 'circle', cx: 5, cy: 12, r: 1.7 }, { t: 'circle', cx: 12, cy: 12, r: 1.7 }, { t: 'circle', cx: 19, cy: 12, r: 1.7 }],
+      arrowUp: [{ t: 'line', x1: 12, y1: 19, x2: 12, y2: 5 }, { t: 'polyline', p: '5 12 12 5 19 12' }],
+      search: [{ t: 'circle', cx: 11, cy: 11, r: 7 }, { t: 'line', x1: 20.5, y1: 20.5, x2: 16.3, y2: 16.3 }],
+      user: [{ t: 'path', d: 'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2' }, { t: 'circle', cx: 12, cy: 7, r: 4 }],
+      megaphone: [{ t: 'path', d: 'M3 11l18-5v12L3 14v-3z' }, { t: 'path', d: 'M11.6 16.8a3 3 0 11-5.8-1.6' }],
+      cart: [{ t: 'circle', cx: 9, cy: 21, r: 1 }, { t: 'circle', cx: 20, cy: 21, r: 1 }, { t: 'path', d: 'M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6' }],
+      code: [{ t: 'polyline', p: '16 18 22 12 16 6' }, { t: 'polyline', p: '8 6 2 12 8 18' }],
+      eye: [{ t: 'path', d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' }, { t: 'circle', cx: 12, cy: 12, r: 3 }],
+      monitor: [{ t: 'rect', x: 2, y: 3, w: 20, h: 14, rx: 2 }, { t: 'line', x1: 8, y1: 21, x2: 16, y2: 21 }, { t: 'line', x1: 12, y1: 17, x2: 12, y2: 21 }],
+      swap: [{ t: 'polyline', p: '23 4 23 10 17 10' }, { t: 'polyline', p: '1 20 1 14 7 14' }, { t: 'path', d: 'M3.51 9a9 9 0 0114.85-3.36L23 10' }, { t: 'path', d: 'M1 14l4.64 4.36A9 9 0 0020.49 15' }],
+      users: [{ t: 'path', d: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2' }, { t: 'circle', cx: 9, cy: 7, r: 4 }, { t: 'path', d: 'M23 21v-2a4 4 0 00-3-3.87' }, { t: 'path', d: 'M16 3.13a4 4 0 010 7.75' }],
+      building: [{ t: 'rect', x: 5, y: 3, w: 14, h: 18, rx: 2 }, { t: 'path', d: 'M10 21v-4h4v4' }, { t: 'line', x1: 9, y1: 8, x2: 10, y2: 8 }, { t: 'line', x1: 14, y1: 8, x2: 15, y2: 8 }, { t: 'line', x1: 9, y1: 12, x2: 10, y2: 12 }, { t: 'line', x1: 14, y1: 12, x2: 15, y2: 12 }],
+      trendingUp: [{ t: 'polyline', p: '23 6 13.5 15.5 8.5 10.5 1 18' }, { t: 'polyline', p: '17 6 23 6 23 12' }],
+      repeat: [{ t: 'polyline', p: '17 1 21 5 17 9' }, { t: 'path', d: 'M3 11V9a4 4 0 014-4h14' }, { t: 'polyline', p: '7 23 3 19 7 15' }, { t: 'path', d: 'M21 13v2a4 4 0 01-4 4H3' }],
+      bell: [{ t: 'path', d: 'M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9' }, { t: 'path', d: 'M13.73 21a2 2 0 01-3.46 0' }],
+      tag: [{ t: 'path', d: 'M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.83z' }, { t: 'circle', cx: 7, cy: 7, r: 1.5 }],
+      mail: [{ t: 'rect', x: 2, y: 4, w: 20, h: 16, rx: 2 }, { t: 'polyline', p: '22 6 12 13 2 6' }],
+      send: [{ t: 'line', x1: 22, y1: 2, x2: 11, y2: 13 }, { t: 'path', d: 'M22 2l-7 20-4-9-9-4 22-7z' }],
+      creditCard: [{ t: 'rect', x: 1, y: 4, w: 22, h: 16, rx: 2 }, { t: 'line', x1: 1, y1: 10, x2: 23, y2: 10 }],
+      briefcase: [{ t: 'rect', x: 2, y: 7, w: 20, h: 14, rx: 2 }, { t: 'path', d: 'M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16' }],
+      wa: [{ t: 'path', d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }],
+    };
+  }
+  shapeEl(s, key) {
+    if (s.t === 'rect') return React.createElement('rect', { key: key, x: s.x, y: s.y, width: s.w, height: s.h, rx: s.rx });
+    if (s.t === 'circle') return React.createElement('circle', { key: key, cx: s.cx, cy: s.cy, r: s.r });
+    if (s.t === 'line') return React.createElement('line', { key: key, x1: s.x1, y1: s.y1, x2: s.x2, y2: s.y2 });
+    if (s.t === 'polyline') return React.createElement('polyline', { key: key, points: s.p });
+    return React.createElement('path', { key: key, d: s.d });
+  }
+  iconEl(name, color, size, filled) {
+    const shapes = this.iconDefs()[name] || this.iconDefs().check;
+    return React.createElement('svg', { width: size || 18, height: size || 18, viewBox: '0 0 24 24', fill: filled ? color : 'none', stroke: filled ? 'none' : color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, shapes.map((sh, i) => this.shapeEl(sh, i)));
+  }
+
+  showToast(msg, undo, icon) { clearTimeout(this._toastT); this.setState({ toast: { msg: msg, undo: undo || null, icon: icon || 'check' } }); this._toastT = setTimeout(() => this.setState({ toast: null }), 5200); }
+  toggleSave(id) {
+    const m = Object.assign({}, this.state.saved); const on = !m[id];
+    if (on) m[id] = true; else delete m[id];
+    this.setState({ saved: m }); this.setLS('plk-wall-saved', m);
+    if (on) this.showToast('Bewaard. Je vindt dit terug onder Opgeslagen.');
+  }
+  hide(id, msg) {
+    const m = Object.assign({}, this.state.hidden); m[id] = true;
+    this.setState({ hidden: m, whyId: null, cardMenuId: null }); this.setLS('plk-wall-hidden', m);
+    this.showToast(msg || 'Verborgen. Deze kans zie je niet meer.', () => this.unhide(id));
+  }
+  unhide(id) {
+    const m = Object.assign({}, this.state.hidden); delete m[id];
+    this.setState({ hidden: m, toast: null }); this.setLS('plk-wall-hidden', m);
+  }
+  toggleInterest(id) {
+    const m = Object.assign({}, this.state.sent); const on = !m[id];
+    if (on) m[id] = true; else delete m[id];
+    this.setState({ sent: m }); this.setLS('plk-wall-sent', m);
+    if (on) this.showToast('Interesse gestuurd via je WhatsApp-assistent.', () => {
+      const mm = Object.assign({}, this.state.sent); delete mm[id];
+      this.setState({ sent: mm, toast: null }); this.setLS('plk-wall-sent', mm);
+    }, 'wa');
+  }
+  toggleAccept(x) {
+    const m = Object.assign({}, this.state.accepted); const on = !m[x.id];
+    if (on) m[x.id] = true; else delete m[x.id];
+    this.setState({ accepted: m }); this.setLS('plk-wall-accepted', m);
+    if (on) this.showToast('Uitnodiging geaccepteerd. ' + x.co + ' ontvangt direct bericht.', () => {
+      const mm = Object.assign({}, this.state.accepted); delete mm[x.id];
+      this.setState({ accepted: mm, toast: null }); this.setLS('plk-wall-accepted', mm);
+    });
+  }
+  toggleFollow(co) {
+    const m = Object.assign({}, this.state.followed); const on = !m[co];
+    if (on) m[co] = true; else delete m[co];
+    this.setState({ followed: m, cardMenuId: null }); this.setLS('plk-wall-follow', m);
+    if (on) this.showToast('Je volgt ' + co + ' nu. Nieuwe opdrachten verschijnen in je wall.');
+  }
+  share(x) {
+    try { navigator.clipboard.writeText('https://prolinker.com/o/' + x.id); } catch (e) {}
+    this.showToast('Link gekopieerd naar je klembord.');
+  }
+  copyReferral() {
+    try { navigator.clipboard.writeText('https://prolinker.com/r/rachid-7k2'); } catch (e) {}
+    this.showToast('Referral-link gekopieerd. Delen maar!');
+  }
+  report() { this.showToast('Bedankt voor je melding. We kijken ernaar.'); }
+  insertNew() {
+    this.setState({ inserted: true, newReady: false });
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+  }
+
+  menuFor(x, saved, followed) {
+    const acts = [];
+    const add = (label, fn, danger) => acts.push({ label: label, onClick: () => { this.setState({ cardMenuId: null }); fn(); }, color: danger ? '#D92D20' : 'var(--text,#152431)' });
+    if (x.type === 'assignment' || x.type === 'invitation') {
+      add(saved ? 'Verwijderen uit bewaard' : 'Bewaren', () => this.toggleSave(x.id));
+      add('Delen', () => this.share(x));
+      if (x.co) add(followed ? 'Ontvolg ' + x.co : 'Volg ' + x.co, () => this.toggleFollow(x.co));
+      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort kansen.'));
+      add('Verbergen', () => this.hide(x.id));
+      add('Meld probleem', () => this.report(), true);
+    } else if (x.type === 'company') {
+      add(followed ? 'Ontvolgen' : 'Volgen', () => this.toggleFollow(x.co));
+      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort kansen.'));
+      add('Verbergen', () => this.hide(x.id));
+    } else if (x.type === 'referral') {
+      add('Delen', () => this.copyReferral());
+      add('Verbergen', () => this.hide(x.id));
+    } else {
+      add('Verbergen', () => this.hide(x.id));
+    }
+    return acts;
+  }
+
+  decorate(x, i, c) {
+    const isDark = this.state.theme === 'dark';
+    const cols = this.state.cols;
+    const v = x.variant;
+    const compact = v === 'compact';
+    const featured = v === 'featured';
+    const tile = isDark
+      ? { bg: this.hexToRgba(x.tc || c.accent, 0.16), color: '#ffffff' }
+      : { bg: x.tbg || c.accentTint, color: x.tc || c.accent };
+    const units = this.unitsFor(x, cols);
+    const saved = !!this.state.saved[x.id];
+    const sent = !!this.state.sent[x.id];
+    const accepted = !!this.state.accepted[x.id];
+    const followed = !!this.state.followed[x.co];
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+
+    const labels = [];
+    if (x.urgent) labels.push({ text: x.urgent, bg: 'rgba(217,45,32,0.12)', color: isDark ? '#FF8A80' : '#D92D20', bd: 'transparent' });
+    (x.labels || []).forEach((k) => { const d = this.labelDef(k, c); if (d) labels.push(d); });
+
+    let primaryLabel = null, pDone = false, onPrimary = null, secondaryLabel = null, onSecondary = null, ghost = false;
+    if (x.type === 'assignment') { primaryLabel = sent ? 'Gestuurd' : 'Interesse'; pDone = sent; onPrimary = () => this.toggleInterest(x.id); }
+    else if (x.type === 'invitation') { primaryLabel = accepted ? 'Geaccepteerd' : 'Accepteer uitnodiging'; pDone = accepted; onPrimary = () => this.toggleAccept(x); secondaryLabel = 'Bekijk opdracht'; onSecondary = () => this.setState({ modalId: x.id }); }
+    else if (x.type === 'company') { primaryLabel = followed ? 'Gevolgd' : 'Volg bedrijf'; pDone = followed; onPrimary = () => this.toggleFollow(x.co); }
+    else if (x.type === 'announcement') { primaryLabel = 'Lees meer'; ghost = true; onPrimary = () => this.setState({ modalId: x.id }); }
+
+    const openable = !!x.desc;
+    let onCta;
+    if (x.ctaClick === 'refer') onCta = () => this.copyReferral();
+    else if (x.ctaClick === 'nieuw') onCta = () => this.setState({ filter: 'nieuw' });
+
+    return Object.assign({}, x, {
+      isCompact: compact, isFull: !compact,
+      colSpan: units === 2 ? 'span 2' : 'auto',
+      rowSpan: featured && cols >= 3 ? 'span 2' : 'auto',
+      pad: featured ? '26px 28px' : (compact ? '14px 16px' : '20px 22px'),
+      cardBg: compact ? 'var(--panel,#F7F8FB)' : 'var(--surface,#ffffff)',
+      cardBorder: featured ? c.accentRing : 'var(--border,#E4E5EC)',
+      delay: Math.min(i * 0.04, 0.5) + 's',
+      tileBg: tile.bg, tileColor: tile.color,
+      tileContent: this.iconEl(x.icon || 'briefcase', tile.color, compact ? 17 : 20),
+      titleSize: featured ? '25px' : (v === 'wide' ? '19px' : (x.type === 'announcement' ? '18px' : '16.5px')),
+      titleCursor: openable ? 'pointer' : 'default',
+      onOpen: openable ? () => this.setState({ modalId: x.id }) : undefined,
+      metaLine: [x.place, x.age].filter(Boolean).join(' \u00b7 '),
+      hasLabels: labels.length > 0, labelChips: labels,
+      showDesc: !!x.desc && (featured || v === 'wide' || x.type === 'company'),
+      descClamp: featured ? 4 : (x.type === 'company' ? 3 : 2),
+      reasonList: featured ? (x.reasons || []).slice(0, 3) : null,
+      reason: featured ? null : x.reason,
+      hasWhy: !compact && !!(x.reasons && x.reasons.length),
+      onWhy: () => this.setState({ whyId: this.state.whyId === x.id ? null : x.id, cardMenuId: null }),
+      whyOpen: this.state.whyId === x.id,
+      whyReasons: x.reasons || [],
+      matchLabel: x.match ? x.match + '% match' : null,
+      saveEl: this.iconEl('bookmark', saved ? c.accent : mutedIcon, 16, saved),
+      saveTitle: saved ? 'Verwijderen uit bewaard' : 'Bewaren',
+      onSave: () => this.toggleSave(x.id),
+      onMenu: () => this.setState({ cardMenuId: this.state.cardMenuId === x.id ? null : x.id, whyId: null }),
+      cardMenuOpen: this.state.cardMenuId === x.id,
+      menuActions: this.menuFor(x, saved, followed),
+      primaryLabel: primaryLabel, onPrimary: onPrimary, pDone: pDone,
+      pBg: pDone ? 'var(--panel,#F7F8FB)' : (ghost ? 'transparent' : c.accent),
+      pColor: pDone || ghost ? 'var(--text,#152431)' : '#ffffff',
+      pBorder: pDone || ghost ? '1.5px solid var(--border,#E4E5EC)' : '1.5px solid transparent',
+      pShadow: pDone || ghost ? 'none' : '0 4px 14px ' + c.accentShadow,
+      pHeight: featured ? '42px' : '36px',
+      secondaryLabel: secondaryLabel, onSecondary: onSecondary,
+      statusText: x.status || null,
+      onCta: onCta,
+      ctaSmall: x.cta && !x.ctaHref ? x.cta : null,
+      ctaHref: x.ctaHref || null, ctaHrefLabel: x.ctaHref ? x.cta : null,
+    });
+  }
+
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    this.setState({ theme: next });
+    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('plk-theme', next); } catch (e) {}
+  }
+
+  renderVals() {
+    const accent = this.props.accentColor || '#006BC6';
+    const c = { accent: accent, accentShadow: this.hexToRgba(accent, 0.28), accentRing: this.hexToRgba(accent, 0.18), accentTint: this.hexToRgba(accent, 0.12) };
+    const isDark = this.state.theme === 'dark';
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+    const name = (this.state.name || 'Rachid Benali').trim();
+    const firstName = name.split(' ')[0];
+    const initials = name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
+
+    let all = this.itemsData();
+    if (!this.state.inserted) all = all.filter((x) => !x.justIn);
+    all.forEach((x) => { x._score = this.score(x); });
+    const hidden = this.state.hidden;
+    const filter = this.state.filter;
+    const passes = (x) => {
+      if (hidden[x.id]) return false;
+      if (filter === 'alles') return true;
+      if (filter === 'opdrachten') return x.type === 'assignment' || x.type === 'invitation';
+      if (filter === 'intern') return x.source === 'internal' && (x.type === 'assignment' || x.type === 'invitation');
+      if (filter === 'extern') return x.source === 'external';
+      if (filter === 'nieuw') return !!x.isNew;
+      if (filter === 'uitnodigingen') return x.type === 'invitation';
+      if (filter === 'referrals') return x.type === 'referral';
+      if (filter === 'opgeslagen') return !!this.state.saved[x.id];
+      return true;
+    };
+    let vis = all.filter(passes);
+    const sortKey = this.state.sort || this.sortKeyFor(this.props.defaultSort);
+    if (sortKey === 'recent') vis.sort((a, b) => (a.h || 0) - (b.h || 0));
+    else if (sortKey === 'match') vis.sort((a, b) => (b.match || 0) - (a.match || 0) || b._score - a._score);
+    else if (sortKey === 'deadline') vis.sort((a, b) => (a.dl || 999) - (b.dl || 999) || b._score - a._score);
+    else { vis.sort((a, b) => b._score - a._score); vis = this.diversify(vis); }
+    const cols = this.state.cols;
+    let seq = vis.map((x) => (sortKey !== 'aanbevolen' && x.variant === 'featured') ? Object.assign({}, x, { variant: 'wide' }) : x);
+    seq = this.packOrder(seq, cols);
+    const items = seq.map((x, i) => this.decorate(x, i, c));
+
+    const savedCount = all.filter((x) => this.state.saved[x.id] && !hidden[x.id]).length;
+    const newCount = all.filter((x) => x.isNew && !hidden[x.id]).length;
+    const chipDefs = [['alles', 'Alles'], ['opdrachten', 'Opdrachten'], ['intern', 'Intern'], ['extern', 'Extern'], ['nieuw', 'Nieuw'], ['uitnodigingen', 'Uitnodigingen'], ['referrals', 'Referrals'], ['opgeslagen', 'Opgeslagen']];
+    const filterChips = chipDefs.map((d) => {
+      const active = filter === d[0];
+      let label = d[1];
+      if (d[0] === 'nieuw' && newCount > 0) label = label + ' (' + newCount + ')';
+      if (d[0] === 'opgeslagen' && savedCount > 0) label = label + ' (' + savedCount + ')';
+      return { label: label, onClick: () => this.setState({ filter: d[0] }), bg: active ? accent : 'var(--surface,#fff)', color: active ? '#ffffff' : 'var(--muted,#565B62)', bd: active ? accent : 'var(--border,#E4E5EC)' };
+    });
+
+    const sortLabels = { aanbevolen: 'Aanbevolen', recent: 'Meest recent', match: 'Beste match', deadline: 'Sluit binnenkort' };
+    const sortOptions = Object.keys(sortLabels).map((k) => ({
+      label: sortLabels[k], active: k === sortKey,
+      weight: k === sortKey ? 650 : 500,
+      color: k === sortKey ? 'var(--text,#152431)' : 'var(--muted,#565B62)',
+      onClick: () => this.setState({ sort: k, sortOpen: false }),
+    }));
+
+    const modalSrc = this.state.modalId ? all.find((x) => x.id === this.state.modalId) : null;
+    const modalItem = modalSrc ? this.decorate(modalSrc, 0, c) : {};
+    const toast = this.state.toast;
+
+    return {
+      t: { settings: 'Instellingen', darkMode: 'Donkere modus', logout: 'Uitloggen' },
+      accent: accent, accentShadow: c.accentShadow, accentRing: c.accentRing, accentTint: c.accentTint,
+      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Geist', system-ui, sans-serif",
+      firstName: firstName, initials: initials, avatarBg: c.accentTint,
+      menuOpen: this.state.menuOpen,
+      menuChevronRotate: this.state.menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      onToggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: [
+        { label: 'Voor jou', href: 'Prolinker Voor jou.dc.html' },
+        { label: 'Mijn feed', href: 'Prolinker Feed.dc.html' },
+        { label: 'Verdiensten & referrals', href: 'Prolinker Verdiensten.dc.html' },
+        { label: 'Mijn profiel', href: 'Prolinker Profiel.dc.html' },
+      ],
+      onToggleTheme: () => this.toggleTheme(),
+      themeIconEl: this.iconEl(isDark ? 'sun' : 'moon', mutedIcon, 16),
+      themeSwitchBg: isDark ? accent : 'var(--border,#E4E5EC)',
+      themeKnobLeft: isDark ? '18px' : '2px',
+      logoutEl: this.iconEl('logout', mutedIcon, 15),
+      chevronEl: this.iconEl('chevron', mutedIcon, 14),
+      sparkEl: this.iconEl('spark', accent, 13, true),
+      checkGreenEl: this.iconEl('check', '#1F8A5B', 14),
+      checkAccentEl: this.iconEl('check', accent, 13),
+      verifiedEl: this.iconEl('check', isDark ? '#63D9A5' : '#1F8A5B', 9),
+      dotsEl: this.iconEl('dots', mutedIcon, 17, true),
+      arrowUpEl: this.iconEl('arrowUp', '#ffffff', 14),
+      subGreeting: newCount + ' nieuwe kansen vandaag \u00b7 gerangschikt op wat bij jou past',
+      newPillVisible: this.props.showNewIndicator !== false && this.state.newReady && !this.state.inserted,
+      newLabel: '2 nieuwe kansen',
+      onInsertNew: () => this.insertNew(),
+      sortLabel: sortLabels[sortKey],
+      sortOpen: this.state.sortOpen,
+      sortChevronRotate: this.state.sortOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      onToggleSort: () => this.setState((s) => ({ sortOpen: !s.sortOpen })),
+      onCloseSort: () => this.setState({ sortOpen: false }),
+      sortOptions: sortOptions,
+      filterChips: filterChips,
+      gridTemplate: cols === 4 ? 'repeat(4, minmax(0, 1fr))' : (cols === 2 ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)'),
+      items: items,
+      emptyFilter: items.length === 0,
+      emptyText: filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik het bladwijzericoon op een kaart om kansen hier terug te vinden.' : 'Geen kansen in deze weergave. Pas je filters aan of kom later terug.',
+      onCloseOverlays: () => this.setState({ whyId: null, cardMenuId: null }),
+      modalOpen: !!modalSrc, modalItem: modalItem,
+      onCloseModal: () => this.setState({ modalId: null }),
+      toastVisible: !!toast,
+      toastMsg: toast ? toast.msg : '',
+      toastUndoable: !!(toast && toast.undo),
+      onToastUndo: toast && toast.undo ? toast.undo : undefined,
+      toastIconEl: toast && toast.icon === 'wa' ? this.iconEl('wa', '#25D366', 16, true) : this.iconEl('check', '#1F8A5B', 15),
+    };
+  }
+}
+</script>
+</body>
+</html>

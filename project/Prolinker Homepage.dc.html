@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FFFFFF; --text:#152431; --muted:#626B77; --faint:#89919D; --surface:#ffffff; --panel:#F7F8FB; --border:#E1E5EB; --hairline:#ECEEF2; --glass:rgba(255,255,255,0.84); --glow:rgba(0,107,198,0.055); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); --glow:rgba(0,107,198,0.12); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  textarea, input { font-family: inherit; }
+  textarea::placeholder, input::placeholder { color: var(--faint,var(--faint,#A2A5B2)); }
+  textarea:focus, input:focus { outline: none; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes plk-pulse { 0% { box-shadow: 0 0 0 0 rgba(0,107,198,0.30); } 100% { box-shadow: 0 0 0 12px rgba(0,107,198,0); } }
+  button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.18s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  a:active { transform: scale(0.985); }
+  button:disabled { cursor: not-allowed !important; transform: none !important; box-shadow: none !important; }
+  .plk-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+  .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
+  .plk-brand:hover { opacity: 0.78; }
+  .plk-glass-nav { box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); }
+  .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
+  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
+  .plk-auth-text:hover { color: #006BC6 !important; }
+  .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(0,107,198,0.56) !important; }
+  .plk-search-shell:hover { border-color: #B7C7D8 !important; }
+  .plk-mic:hover { background: rgba(0,107,198,0.10) !important; color: #006BC6 !important; }
+  .plk-skill-chip:hover { border-color: #80AFD7 !important; color: #005DAA !important; box-shadow: 0 8px 22px -16px rgba(0,107,198,0.5) !important; transform: translateY(-1px); }
+  .plk-secondary:hover { border-color: #AFC4D9 !important; color: var(--text,#152431) !important; background: var(--panel,#F7F8FB) !important; }
+  @media (max-width: 640px) {
+    .plk-home-header { padding: 12px 14px !important; }
+    .plk-home-brand img { width: 112px !important; height: auto !important; }
+    .plk-glass-nav { top: 12px !important; right: 14px !important; gap: 5px !important; padding: 5px 6px 5px 8px !important; }
+    .plk-auth-text { display: none !important; }
+    .plk-register-button, .plk-dashboard-button { height: 36px !important; padding: 0 13px !important; font-size: 13px !important; }
+    .plk-home-main { padding: 58px 16px 96px !important; }
+    .plk-home-title { font-size: clamp(34px, 11vw, 44px) !important; }
+    .plk-home-subtitle { font-size: 15.5px !important; }
+    .plk-search-shell { height: 58px !important; padding-left: 18px !important; }
+    .plk-home-footer { padding: 13px 16px !important; }
+    .plk-home-footer .plk-secondary { font-size: 13px !important; }
+    .plk-home-footer .plk-primary { height: 42px !important; padding: 0 18px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>ProLinker: Hire trusted freelancers, instantly matched by AI</title>
+<meta name="description" content="Describe your project in plain words and ProLinker's AI instantly matches you with vetted freelancers across design, IT, marketing, sales, finance, legal and admin. Post free. Pay only for work done.">
+<meta name="keywords" content="hire freelancers, freelance platform, AI freelancer matching, post a project, design, development, marketing, sales, finance, legal, virtual assistant">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://prolinker.com/post-project">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProLinker">
+<meta property="og:title" content="Hire trusted freelancers, instantly matched by AI | ProLinker">
+<meta property="og:description" content="Post your project for free and get matched with vetted freelancers in seconds.">
+<meta property="og:url" content="https://prolinker.com/post-project">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ProLinker","url":"https://prolinker.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://prolinker.com/freelancers?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","name":"ProLinker","url":"https://prolinker.com","logo":"https://prolinker.com/images/logo_pro/main-logo.png","description":"AI-powered freelance marketplace connecting businesses with vetted professionals across design, IT, marketing, sales, finance, legal and admin."},{"@type":"WebApplication","name":"ProLinker AI Project Assistant","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
+</helmet>
+
+<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+
+  <header class="plk-home-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
+    <a class="plk-brand plk-home-brand plk-focusable" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
+    <div class="plk-glass-nav" style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+      <div style="position: relative;">
+        <button class="plk-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
+          <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+            <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
+              <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+            </sc-for>
+            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <button class="plk-menu-link" role="switch" aria-checked="{{ isDark }}" onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);">
+              <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
+              <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
+            </button>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
+        <button class="plk-auth-text" onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;">{{ t.login }}</button>
+        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};">{{ t.register }}</button>
+      </sc-if>
+      <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
+        <button class="plk-auth-text" onClick="{{ onLogout }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted,#626B77); padding: 8px 4px;">{{ t.logout }}</button>
+        <button class="plk-primary plk-dashboard-button" onClick="{{ onDashboard }}" style="height: 38px; padding: 0 17px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 650; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};">{{ dashboardLabel }}</button>
+      </sc-if>
+    </div>
+  </header>
+
+  <main class="plk-home-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 72px 24px 120px; width: 100%;">
+    <div style="width: 100%; max-width: 760px; display: flex; flex-direction: column; align-items: center; animation: plk-rise 0.5s ease both;">
+
+      <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 58px; height: 58px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
+
+      <h1 class="plk-home-title" style="margin: 0; text-align: center; font-size: 46px; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; max-width: 620px; text-wrap: balance;">
+        {{ t.headA }}<span style="color: {{ nameColor }};">{{ firstName }}</span>{{ t.headB }}
+      </h1>
+      <p class="plk-home-subtitle" style="margin: 16px 0 0; text-align: center; font-size: 17px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 480px; text-wrap: pretty;">
+        {{ t.subtitle }}
+      </p>
+
+      <div style="width: 100%; margin-top: 38px;">
+        <label class="plk-visually-hidden" for="plk-home-query">{{ t.searchLabel }}</label>
+        <div class="plk-search-shell" style="display: flex; align-items: center; gap: 10px; border: 1.5px solid {{ borderColor }}; border-radius: 999px; background: var(--surface,#fff); box-shadow: {{ boxShadow }}; height: 62px; padding: 0 10px 0 24px; transition: border-color 0.15s, box-shadow 0.15s;">
+          <input
+            id="plk-home-query"
+            name="project-query"
+            type="text"
+            autocomplete="off"
+            enterKeyHint="go"
+            value="{{ text }}"
+            onInput="{{ onInput }}"
+            onFocus="{{ onFocus }}"
+            onBlur="{{ onBlur }}"
+            onKeyDown="{{ onKeyDown }}"
+            ref="{{ searchRef }}"
+            aria-invalid="{{ queryInvalid }}"
+            aria-describedby="plk-home-query-help"
+            maxLength="60"
+            placeholder="{{ animPlaceholder }}"
+            style="flex: 1; min-width: 0; height: 100%; border: none; background: transparent; outline: none; font-size: 16.5px; color: var(--text,#152431);">
+          <sc-if value="{{ micShow }}" hint-placeholder-val="{{ true }}">
+            <button class="plk-mic" type="button" onClick="{{ onToggleMic }}" title="{{ t.speak }}" aria-label="{{ t.speak }}" aria-pressed="{{ listening }}" style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; background: {{ micBg }}; animation: {{ micPulse }}; transition: background 0.15s;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ micColor }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+            </button>
+          </sc-if>
+          <button class="plk-primary" type="button" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" aria-label="{{ t.continueLabel }}" title="{{ t.continueLabel }}" style="flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; padding: 0; cursor: {{ continueCursor }}; background: {{ goBg }}; color: {{ goColor }}; font-size: 18px; line-height: 1; box-shadow: {{ goShadow }};">→</button>
+        </div>
+
+        <div id="plk-home-query-help" role="status" aria-live="polite" style="min-height: 24px; margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+          <sc-if value="{{ showErrors }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ errors }}" as="err" hint-placeholder-count="0">
+              <div style="display: flex; align-items: center; gap: 8px; color: #D92D20; font-size: 13.5px;">
+                <span style="width: 15px; height: 15px; border: 1.5px solid #D92D20; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0;">!</span>
+                <span>{{ err }}</span>
+              </div>
+            </sc-for>
+          </sc-if>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="width: 100%; max-width: 1180px; margin-top: 28px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: var(--faint,#A2A5B2); text-transform: uppercase; margin-bottom: 12px;">{{ t.tryLabel }}</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="4">
+          <button class="plk-skill-chip" type="button" onClick="{{ s.pick }}" style="display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 14px; color: var(--text,#152431); white-space: nowrap;">
+            <span style="flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;">{{ s.iconEl }}</span>
+            <span>{{ s.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ showExpandBtn }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; justify-content: center; margin-top: 22px;">
+          <button class="plk-secondary" type="button" onClick="{{ onToggleExpand }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted,#6B6E7B); white-space: nowrap;">
+            <span>{{ expandLabel }}</span>
+            <span style="font-size: 15px; line-height: 1; transform: {{ arrowTransform }}; transition: transform 0.2s;">⌄</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+
+  </main>
+
+  <footer class="plk-home-footer" style="position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; border-top: 1px solid var(--hairline,#ECEDF2); background: var(--glass,rgba(255,255,255,0.85)); backdrop-filter: blur(8px);">
+    <a class="plk-secondary" href="Prolinker Brief.dc.html" style="display: inline-flex; align-items: center; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--muted,#6B6E7B); padding: 10px 4px;">{{ t.startWithout }}</a>
+    <button class="plk-primary" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" style="display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 26px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }}; box-shadow: 0 4px 14px {{ accentShadow }};">
+      <span>{{ t.continueLabel }}</span>
+      <span style="font-size: 17px; line-height: 1;">→</span>
+    </button>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;jobCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Design&quot;,&quot;IT &amp; Development&quot;,&quot;Marketing&quot;,&quot;Sales&quot;,&quot;Finance&quot;,&quot;Legal&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+class Component extends DCLogic {
+  state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 15, anim: '', listening: false, theme: 'light', menuOpen: false, authenticated: false, authRole: null, authName: '' };
+
+  componentDidMount() {
+    this.updateCols();
+    this._onResize = () => this.updateCols();
+    window.addEventListener('resize', this._onResize);
+    this.startTyping();
+    try {
+      document.documentElement.setAttribute('lang', this.lang());
+      if (localStorage.getItem('plk-theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        this.setState({ theme: 'dark' });
+      }
+      const rawSession = localStorage.getItem('plk-auth-session');
+      const session = rawSession ? JSON.parse(rawSession) : null;
+      if (session && session.authenticated === true) this.setState({ authenticated: true, authRole: session.role === 'client' ? 'client' : 'freelancer', authName: String(session.name || localStorage.getItem('plk-user-name') || '').trim() });
+    } catch (e) {}
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.menuOpen) this.closeMenu(); };
+    window.addEventListener('keydown', this._onKey);
+  }
+  toggleMenu() { this.setState((s) => ({ menuOpen: !s.menuOpen })); }
+  closeMenu() { this.setState({ menuOpen: false }); }
+  toggleTheme() {
+    const next = this.state.theme === 'dark' ? 'light' : 'dark';
+    try {
+      if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('plk-theme', next);
+    } catch (e) {}
+    this.setState({ theme: next });
+  }
+  componentWillUnmount() {
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._onKey) window.removeEventListener('keydown', this._onKey);
+    clearTimeout(this._typeTimer);
+    if (this._recog) { try { this._recog.stop(); } catch (e) {} }
+  }
+  startTyping() {
+    const phrases = this.phrases();
+    let p = 0, c = 0, deleting = false;
+    const tick = () => {
+      if (this.state.focused || (this.state.text || '').length) { this._typeTimer = setTimeout(tick, 500); return; }
+      const cur = phrases[p];
+      if (!deleting) {
+        c++;
+        if (c >= cur.length) {
+          deleting = true;
+          this.setState({ anim: cur });
+          this._typeTimer = setTimeout(tick, 1700);
+          return;
+        }
+      } else {
+        c -= 2;
+        if (c <= 0) { c = 0; deleting = false; p = (p + 1) % phrases.length; }
+      }
+      this.setState({ anim: phrases[p].slice(0, Math.max(0, c)) });
+      this._typeTimer = setTimeout(tick, deleting ? 24 : 52);
+    };
+    this._typeTimer = setTimeout(tick, 500);
+  }
+  updateCols() {
+    const w = window.innerWidth;
+    let cols = 4;
+    if (w < 560) cols = 1;
+    else if (w < 840) cols = 2;
+    else if (w < 1120) cols = 3;
+    else cols = 4;
+    if (cols !== this.state.cols) this.setState({ cols });
+  }
+
+  hexToRgba(hex, a) {
+    let h = (hex || '#006BC6').replace('#', '');
+    if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+    const n = parseInt(h, 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
+  goToResults() {
+    const q = (this.state.text || '').trim();
+    if (q.length < 3) { this.setState({ touched: true }); return; }
+    try { localStorage.setItem('plk-query', q); } catch (e) {}
+    window.location.href = 'Prolinker Brief.dc.html?q=' + encodeURIComponent(q);
+  }
+
+  lang() {
+    const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return l.indexOf('nl') === 0 ? 'nl' : 'en';
+  }
+
+  timePersona() {
+    const h = new Date().getHours();
+    const nl = this.lang() === 'nl';
+    if (h >= 5 && h < 12) return nl ? 'vroege vogel' : 'early bird';
+    if (h >= 12 && h < 18) return nl ? 'bezige bij' : 'busy bee';
+    return nl ? 'nachtuil' : 'night owl';
+  }
+
+  strings() {
+    const en = {
+      nav1: 'Freelancers', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog',
+      becomeFreelancer: 'Become a freelancer', becomeRecruiter: 'Become a recruiter',
+      search: 'Search', headA: 'What skill are you looking for, ', headB: '?',
+      subtitle: "Search any skill and we'll match you with the best vetted professionals for it - in seconds.",
+      tryLabel: 'Popular skills', startWithout: 'Start without AI', continueLabel: 'Continue',
+      showMore: (n) => 'Show ' + n + ' more', showLess: 'Show fewer',
+      errMin: 'Enter at least 3 characters (e.g. SEO)',
+      errCaps: 'Avoid writing your whole brief in capital letters',
+      speak: 'Speak your project', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer',
+      settings: 'Settings', darkMode: 'Dark mode', login: 'Log in', register: 'Register', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View opportunities',
+    };
+    const nl = {
+      nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
+      becomeFreelancer: 'Freelancer worden', becomeRecruiter: 'Recruiter worden',
+      search: 'Zoeken', headA: 'Welke skill zoek je, ', headB: '?',
+      subtitle: 'Zoek een skill en wij koppelen je direct aan de beste geverifieerde professionals.',
+      tryLabel: 'Populaire skills', startWithout: 'Zonder AI beginnen', continueLabel: 'Doorgaan',
+      showMore: (n) => 'Toon ' + n + ' meer', showLess: 'Toon minder',
+      errMin: 'Voer minstens 3 tekens in (bijv. SEO)',
+      errCaps: 'Schrijf je briefing niet volledig in hoofdletters',
+      speak: 'Spreek je project in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer',
+      settings: 'Instellingen', darkMode: 'Donkere modus', login: 'Inloggen', register: 'Registreren', logout: 'Uitloggen', searchLabel: 'Beschrijf de skill of opdracht die je nodig hebt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten',
+    };
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  phrases() {
+    const en = [
+      'Logo & brand design',
+      'Shopify developer',
+      'SEO specialist',
+      'Video editor',
+      'Bookkeeper',
+      'Mobile app developer',
+    ];
+    const nl = [
+      'Logo- & merkontwerp',
+      'Shopify-developer',
+      'SEO-specialist',
+      'Videobewerker',
+      'Boekhouder',
+      'Mobiele app-developer',
+    ];
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  tLabel(en) {
+    if (this.lang() !== 'nl') return en;
+    return (this.nlLabels()[en]) || en;
+  }
+
+  nlLabels() {
+    return {
+      'Logo Design': 'Logo-ontwerp', 'Brand Identity': 'Merkidentiteit', 'UI/UX Design': 'UI/UX-ontwerp', 'Web Design': 'Webdesign', 'Illustration': 'Illustratie', 'Figma Design': 'Figma-ontwerp', 'Packaging Design': 'Verpakkingsontwerp', 'Motion Graphics': 'Motion graphics', 'Infographic Design': 'Infographic-ontwerp', 'Photo Retouching': 'Fotoretouche', 'Presentation Design': 'Presentatieontwerp', 'Icon Design': 'Icoonontwerp', 'Newsletter Design': 'Nieuwsbriefontwerp', 'Book Cover Design': 'Boekomslagontwerp', 'Social Media Graphics': 'Social media-graphics', 'Design Systems': 'Designsystemen', 'Ad Banner Design': 'Advertentiebanner-ontwerp', 'Product Mockups': 'Productmockups',
+      'Web Development': 'Webontwikkeling', 'Mobile App Development': 'Mobiele app-ontwikkeling', 'WordPress': 'WordPress', 'Shopify Development': 'Shopify-ontwikkeling', 'React Development': 'React-ontwikkeling', 'Backend / API': 'Backend / API', 'Python Development': 'Python-ontwikkeling', 'DevOps & CI/CD': 'DevOps & CI/CD', 'Cloud Infrastructure': 'Cloudinfrastructuur', 'AI & Chatbots': 'AI & chatbots', 'Database Management': 'Databasebeheer', 'QA & Testing': 'QA & testen', 'Chrome Extensions': 'Chrome-extensies', 'WordPress Plugins': 'WordPress-plugins', 'E-commerce Development': 'E-commerce-ontwikkeling', 'Automation Scripts': 'Automatiseringsscripts', 'Performance Optimization': 'Prestatieoptimalisatie', 'Cybersecurity': 'Cybersecurity',
+      'SEO': 'SEO', 'Social Media Marketing': 'Social media-marketing', 'Google Ads': 'Google Ads', 'Content Marketing': 'Contentmarketing', 'Email Marketing': 'E-mailmarketing', 'Copywriting': 'Copywriting', 'Influencer Marketing': 'Influencer-marketing', 'Public Relations': 'Public relations', 'Marketing Strategy': 'Marketingstrategie', 'Conversion Optimization': 'Conversieoptimalisatie', 'TikTok Marketing': 'TikTok-marketing', 'YouTube Strategy': 'YouTube-strategie', 'Marketing Automation': 'Marketingautomatisering', 'Brand Strategy': 'Merkstrategie', 'Video Advertising': 'Video-advertenties', 'Content Calendar': 'Contentkalender', 'Media Kit Design': 'Mediakit-ontwerp', 'Growth Marketing': 'Growth marketing',
+      'Lead Generation': 'Leadgeneratie', 'Cold Outreach': 'Koude outreach', 'CRM Setup': 'CRM-inrichting', 'Appointment Setting': 'Afspraken plannen', 'Sales Strategy': 'Salesstrategie', 'LinkedIn Outreach': 'LinkedIn-outreach', 'Telemarketing': 'Telemarketing', 'Sales Copywriting': 'Sales-copywriting', 'B2B Sales': 'B2B-sales', 'Pipeline Management': 'Pijplijnbeheer', 'Sales Deck Design': 'Salesdeck-ontwerp', 'Inbound Sales': 'Inbound sales', 'Data Enrichment': 'Dataverrijking', 'Partnership Development': 'Partnerontwikkeling', 'Pricing Strategy': 'Prijsstrategie', 'Sales Training': 'Salestraining', 'Cold Email': 'Koude e-mail', 'Proposal Writing': 'Offertes schrijven',
+      'Bookkeeping': 'Boekhouding', 'Financial Modeling': 'Financieel modelleren', 'Tax Preparation': 'Belastingaangifte', 'Payroll': 'Salarisadministratie', 'Accounting': 'Accounting', 'Investor Reporting': 'Investeerdersrapportage', 'Budgeting': 'Budgettering', 'Cash Flow Forecasting': 'Cashflowprognose', 'QuickBooks': 'QuickBooks', 'Business Valuation': 'Bedrijfswaardering', 'Auditing': 'Auditing', 'VAT & Sales Tax': 'Btw & omzetbelasting', 'Expense Tracking': 'Uitgaventracking', 'Fundraising Decks': 'Fundraising-decks', 'P&L Statements': 'Winst-en-verliesrekeningen', 'Due Diligence': 'Due diligence', 'KPI Dashboards': 'KPI-dashboards', 'Financial Planning': 'Financiële planning',
+      'Contract Drafting': 'Contracten opstellen', 'NDA Review': 'NDA-beoordeling', 'Trademark Registration': 'Merkregistratie', 'Privacy Policy': 'Privacybeleid', 'GDPR Compliance': 'AVG-naleving', 'Company Incorporation': 'Bedrijf oprichten', 'Patent Filing': 'Octrooiaanvraag', 'Copyright Registration': 'Auteursrechtregistratie', 'Employment Law': 'Arbeidsrecht', 'IP Protection': 'IE-bescherming', 'Terms of Service': 'Servicevoorwaarden', 'Lease Agreements': 'Huurovereenkomsten', 'Founders Agreements': 'Oprichtersovereenkomsten', 'Shareholder Agreements': 'Aandeelhoudersovereenkomsten', 'Business Licensing': 'Vergunningen', 'Demand Letters': 'Sommatiebrieven', 'Immigration Paperwork': 'Immigratiepapieren', 'Refund Policies': 'Retourbeleid',
+      'Virtual Assistant': 'Virtuele assistent', 'Data Entry': 'Gegevensinvoer', 'Transcription': 'Transcriptie', 'Customer Support': 'Klantenservice', 'Internet Research': 'Internetonderzoek', 'Calendar Management': 'Agendabeheer', 'Notion Setup': 'Notion-inrichting', 'Live Chat Support': 'Livechat-support', 'Event Planning': 'Evenementenplanning', 'Proofreading': 'Proeflezen', 'Spreadsheet Dashboards': 'Spreadsheet-dashboards', 'Order Fulfillment': 'Orderafhandeling', 'Travel Coordination': 'Reiscoördinatie', 'Invoicing': 'Facturatie', 'File Conversion': 'Bestandsconversie', 'Community Moderation': 'Communitymoderatie', 'Document Formatting': 'Documentopmaak', 'Email Management': 'E-mailbeheer',
+    };
+  }
+
+  iconDefs() {
+    return {
+      pen: [{t:'path',d:'M12 20h9'},{t:'path',d:'M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z'}],
+      layout: [{t:'rect',x:3,y:3,w:18,h:18,rx:2},{t:'line',x1:3,y1:9,x2:21,y2:9},{t:'line',x1:9,y1:21,x2:9,y2:9}],
+      image: [{t:'rect',x:3,y:3,w:18,h:18,rx:2},{t:'circle',cx:8.5,cy:8.5,r:1.5},{t:'path',d:'M21 15l-5-5L5 21'}],
+      box: [{t:'path',d:'M21 8l-9-5-9 5v8l9 5 9-5V8z'},{t:'path',d:'M3 8l9 5 9-5'},{t:'line',x1:12,y1:22,x2:12,y2:13}],
+      presentation: [{t:'path',d:'M2 3h20'},{t:'path',d:'M4 3v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3'},{t:'path',d:'M12 15v4'},{t:'path',d:'M8 21l4-2 4 2'}],
+      layers: [{t:'path',d:'M12 2l9 5-9 5-9-5 9-5z'},{t:'path',d:'M3 12l9 5 9-5'}],
+      video: [{t:'path',d:'M23 7l-7 5 7 5V7z'},{t:'rect',x:1,y:5,w:15,h:14,rx:2}],
+      monitor: [{t:'rect',x:2,y:3,w:20,h:14,rx:2},{t:'line',x1:8,y1:21,x2:16,y2:21},{t:'line',x1:12,y1:17,x2:12,y2:21}],
+      smartphone: [{t:'rect',x:5,y:2,w:14,h:20,rx:2},{t:'circle',cx:12,cy:18,r:0.5}],
+      code: [{t:'polyline',p:'16 18 22 12 16 6'},{t:'polyline',p:'8 6 2 12 8 18'}],
+      cloud: [{t:'path',d:'M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6 1.6A3.5 3.5 0 0 0 6.5 19h11z'}],
+      bag: [{t:'path',d:'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'},{t:'line',x1:3,y1:6,x2:21,y2:6},{t:'path',d:'M16 10a4 4 0 0 1-8 0'}],
+      zap: [{t:'polygon',p:'13 2 3 14 12 14 11 22 21 10 12 10 13 2'}],
+      git: [{t:'line',x1:6,y1:3,x2:6,y2:15},{t:'circle',cx:18,cy:6,r:3},{t:'circle',cx:6,cy:18,r:3},{t:'path',d:'M18 9a9 9 0 0 1-9 9'}],
+      bar: [{t:'line',x1:12,y1:20,x2:12,y2:10},{t:'line',x1:18,y1:20,x2:18,y2:4},{t:'line',x1:6,y1:20,x2:6,y2:16}],
+      message: [{t:'path',d:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'}],
+      mail: [{t:'rect',x:2,y:4,w:20,h:16,rx:2},{t:'path',d:'M22 6l-10 7L2 6'}],
+      trend: [{t:'polyline',p:'22 7 13.5 15.5 8.5 10.5 2 17'},{t:'polyline',p:'16 7 22 7 22 13'}],
+      search: [{t:'circle',cx:11,cy:11,r:8},{t:'line',x1:21,y1:21,x2:16.65,y2:16.65}],
+      calendar: [{t:'rect',x:3,y:4,w:18,h:18,rx:2},{t:'line',x1:16,y1:2,x2:16,y2:6},{t:'line',x1:8,y1:2,x2:8,y2:6},{t:'line',x1:3,y1:10,x2:21,y2:10}],
+      megaphone: [{t:'path',d:'M3 11l18-5v12L3 14v-3z'},{t:'path',d:'M11.6 16.8a3 3 0 1 1-5.8-1.6'}],
+      filter: [{t:'polygon',p:'22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3'}],
+      users: [{t:'path',d:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'},{t:'circle',cx:9,cy:7,r:4},{t:'path',d:'M23 21v-2a4 4 0 0 0-3-3.87'},{t:'path',d:'M16 3.13a4 4 0 0 1 0 7.75'}],
+      list: [{t:'line',x1:4,y1:6,x2:20,y2:6},{t:'line',x1:4,y1:12,x2:20,y2:12},{t:'line',x1:4,y1:18,x2:20,y2:18}],
+      phone: [{t:'path',d:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z'}],
+      calculator: [{t:'rect',x:4,y:2,w:16,h:20,rx:2},{t:'line',x1:8,y1:6,x2:16,y2:6},{t:'line',x1:8,y1:14,x2:16,y2:14},{t:'line',x1:12,y1:11,x2:12,y2:18}],
+      pie: [{t:'path',d:'M21.21 15.89A10 10 0 1 1 8 2.83'},{t:'path',d:'M22 12A10 10 0 0 0 12 2v10z'}],
+      percent: [{t:'line',x1:19,y1:5,x2:5,y2:19},{t:'circle',cx:6.5,cy:6.5,r:2.5},{t:'circle',cx:17.5,cy:17.5,r:2.5}],
+      dollar: [{t:'line',x1:12,y1:1,x2:12,y2:23},{t:'path',d:'M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'}],
+      file: [{t:'path',d:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'},{t:'polyline',p:'14 2 14 8 20 8'},{t:'line',x1:16,y1:13,x2:8,y2:13},{t:'line',x1:16,y1:17,x2:8,y2:17}],
+      fileCheck: [{t:'path',d:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'},{t:'polyline',p:'14 2 14 8 20 8'},{t:'polyline',p:'9 15 11 17 15 13'}],
+      award: [{t:'circle',cx:12,cy:8,r:7},{t:'polyline',p:'8.21 13.89 7 23 12 20 17 23 15.79 13.88'}],
+      shield: [{t:'path',d:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'}],
+      shieldCheck: [{t:'path',d:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'},{t:'polyline',p:'9 12 11 14 15 10'}],
+      briefcase: [{t:'rect',x:2,y:7,w:20,h:14,rx:2},{t:'path',d:'M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'}],
+      inbox: [{t:'path',d:'M22 12h-6l-2 3h-4l-2-3H2'},{t:'path',d:'M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z'}],
+      headphones: [{t:'path',d:'M3 18v-6a9 9 0 0 1 18 0v6'},{t:'path',d:'M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z'}],
+      mic: [{t:'rect',x:9,y:2,w:6,h:11,rx:3},{t:'path',d:'M19 10v2a7 7 0 0 1-14 0v-2'},{t:'line',x1:12,y1:19,x2:12,y2:22}],
+      grid: [{t:'rect',x:3,y:3,w:7,h:7},{t:'rect',x:14,y:3,w:7,h:7},{t:'rect',x:14,y:14,w:7,h:7},{t:'rect',x:3,y:14,w:7,h:7}],
+      mapPin: [{t:'path',d:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'},{t:'circle',cx:12,cy:10,r:3}],
+      lifebuoy: [{t:'circle',cx:12,cy:12,r:10},{t:'circle',cx:12,cy:12,r:4},{t:'line',x1:4.93,y1:4.93,x2:9.17,y2:9.17},{t:'line',x1:14.83,y1:14.83,x2:19.07,y2:19.07},{t:'line',x1:14.83,y1:9.17,x2:19.07,y2:4.93},{t:'line',x1:4.93,y1:19.07,x2:9.17,y2:14.83}],
+      linkedin: [{t:'path',d:'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z'},{t:'rect',x:2,y:9,w:4,h:12},{t:'circle',cx:4,cy:4,r:2}],
+      spark: [{t:'path',d:'M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17l-1.9-5.1L4.5 10l5.6-1.4L12 3z'}],
+    };
+  }
+
+  iconName(label) {
+    const s = (label || '').toLowerCase();
+    const map = [
+      ['web development','code'],['web design','monitor'],['react','code'],['python','code'],['performance','zap'],['illustration','image'],['icon design','pen'],['mockup','image'],['ui/ux','layout'],['social media marketing','trend'],['content marketing','pen'],['public relations','megaphone'],['b2b','briefcase'],['accounting','calculator'],['financial planning','pie'],['pricing strategy','dollar'],['transcri','mic'],['invoic','mail'],
+      ['logo','pen'],['brand identity','pen'],['full brand','pen'],
+      ['figma','layout'],['ui kit','layout'],['app ui','layout'],['design system','layout'],
+      ['motion','video'],['youtube','video'],['tiktok','video'],['video','video'],['film','video'],
+      ['linkedin','linkedin'],
+      ['social','image'],['banner','image'],['infographic','image'],['retouch','image'],['photo','image'],['book cover','image'],['restaurant menu','image'],['ebook','image'],['media kit','image'],['t-shirt','image'],['illustrate','image'],['custom icons','pen'],
+      ['packaging','box'],['booth','box'],['fulfillment','box'],['order','box'],
+      ['pitch deck','presentation'],['sales deck','presentation'],['fundraising','presentation'],['presentation','presentation'],['deck','presentation'],
+      ['ux','layers'],['redesign','layers'],['notion','layers'],['workspace','layers'],
+      ['webshop','bag'],['e-commerce','bag'],['ecommerce','bag'],['shopify','bag'],['store','bag'],
+      ['landing','monitor'],['website','monitor'],
+      ['mobile app','smartphone'],['ios','smartphone'],['android','smartphone'],['chrome extension','code'],
+      ['discord','message'],['chatbot','message'],['live chat','message'],['bot','message'],['chat','message'],
+      ['wordpress','code'],['plugin','code'],['api','code'],['backend','code'],['rest','code'],['automated tests','code'],['test','code'],
+      ['vuln','shield'],['harden','shield'],['security','shield'],
+      ['cloud','cloud'],['infrastructure','cloud'],['headless','cloud'],['cms','cloud'],
+      ['migrate','git'],['ci/cd','git'],['pipeline','git'],
+      ['automate','zap'],['automation','zap'],
+      ['analytics','bar'],['tracking','bar'],['kpi','bar'],['valuation','bar'],['unit economics','bar'],['financial model','bar'],['p&l','bar'],['due diligence','bar'],['saas dashboard','bar'],['dashboard','bar'],
+      ['newsletter','mail'],['drip','mail'],['cold ','mail'],['outreach','mail'],['email','mail'],['invoice','mail'],['follow up','mail'],
+      ['instagram','trend'],['following','trend'],['grow','trend'],['conversion','trend'],['cash flow','trend'],['forecast','trend'],['investment','trend'],
+      ['press release','megaphone'],['product launch','megaphone'],['launch','megaphone'],['google ads','megaphone'],['ad campaign','megaphone'],['video ads','megaphone'],['ad copy','megaphone'],['advertis','megaphone'],['campaign','megaphone'],
+      ['seo','search'],['keyword','search'],['internet research','search'],['research','search'],
+      ['content calendar','calendar'],['calendar','calendar'],['schedule','calendar'],['appointment','calendar'],['event','calendar'],
+      ['blog','pen'],['ad copy','pen'],['copy','pen'],['script','pen'],['press','pen'],['proofread','file'],['proposal','file'],['format','file'],
+      ['funnel','filter'],['strategy','filter'],
+      ['influencer','users'],['community','users'],['moderate','users'],['team','users'],['reps','users'],['train','users'],['partnership','users'],['crm','users'],
+      ['telemarketing','phone'],['sales call','phone'],['inbound sales','phone'],['calls','phone'],
+      ['lead','list'],['qualify','list'],
+      ['bookkeep','calculator'],['quickbooks','calculator'],['reconcile','calculator'],['expense','calculator'],['audit','calculator'],['year-end','calculator'],['accounts','calculator'],
+      ['budget','pie'],['investor','pie'],
+      ['vat','percent'],['sales tax','percent'],['tax','percent'],
+      ['payroll','dollar'],['funding','dollar'],['pricing','dollar'],
+      ['nda','fileCheck'],['cookie','fileCheck'],
+      ['trademark','award'],['copyright','award'],['patent','award'],['licensing','award'],
+      ['gdpr','shieldCheck'],['compliance','shieldCheck'],
+      ['privacy','shield'],['ip protection','shield'],
+      ['contract','file'],['agreement','file'],['terms','file'],['lease','file'],['refund','file'],['demand letter','file'],['employment','file'],['founders','file'],['shareholder','file'],['immigration','file'],
+      ['incorporate','briefcase'],['company','briefcase'],['business funding','dollar'],['business','briefcase'],
+      ['inbox','inbox'],
+      ['data entry','grid'],['spreadsheet','grid'],['database','grid'],['convert','grid'],['clean','grid'],
+      ['virtual assistant','headphones'],['assistant','headphones'],
+      ['ticket','lifebuoy'],['support','lifebuoy'],
+      ['transcribe','mic'],['notes','mic'],
+      ['travel','mapPin'],['booking','mapPin'],
+      ['document','file'],
+    ];
+    for (let i = 0; i < map.length; i++) { if (s.indexOf(map[i][0]) !== -1) return map[i][1]; }
+    return 'spark';
+  }
+
+  shapeEl(s, key) {
+    if (s.t === 'circle') return React.createElement('circle', { key: key, cx: s.cx, cy: s.cy, r: s.r });
+    if (s.t === 'rect') return React.createElement('rect', { key: key, x: s.x, y: s.y, width: s.w, height: s.h, rx: s.rx || 0 });
+    if (s.t === 'line') return React.createElement('line', { key: key, x1: s.x1, y1: s.y1, x2: s.x2, y2: s.y2 });
+    if (s.t === 'polyline') return React.createElement('polyline', { key: key, points: s.p });
+    if (s.t === 'polygon') return React.createElement('polygon', { key: key, points: s.p });
+    return React.createElement('path', { key: key, d: s.d });
+  }
+
+  iconEl(label, color) {
+    const shapes = this.iconDefs()[this.iconName(label)] || this.iconDefs().spark;
+    return React.createElement('svg', {
+      width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: color,
+      strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round',
+    }, shapes.map((sh, i) => this.shapeEl(sh, i)));
+  }
+
+  micSupported() {
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  }
+  ensureRecog() {
+    if (this._recog || this._recogFailed) return this._recog;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { this._recogFailed = true; return null; }
+    const r = new SR();
+    r.interimResults = true;
+    r.continuous = false;
+    r.onresult = (e) => {
+      let s = '';
+      for (let i = 0; i < e.results.length; i++) s += e.results[i][0].transcript;
+      const base = this._micBase ? this._micBase + ' ' : '';
+      this.setState({ text: base + s, touched: true });
+    };
+    r.onend = () => this.setState({ listening: false });
+    r.onerror = () => this.setState({ listening: false });
+    this._recog = r;
+    return r;
+  }
+  toggleMic() {
+    const r = this.ensureRecog();
+    if (!r) return;
+    if (this.state.listening) { try { r.stop(); } catch (e) {} return; }
+    this._micBase = (this.state.text || '').trim();
+    r.lang = this.lang() === 'nl' ? 'nl-NL' : 'en-US';
+    try { r.start(); this.setState({ listening: true, focused: true }); } catch (e) {}
+  }
+
+  renderVals() {
+    const text = this.state.text;
+    const trimmed = text.trim();
+    const max = 60;
+
+    const accent = this.props.accentColor || '#006BC6';
+    const accentShadow = this.hexToRgba(accent, 0.28);
+    const accentRing = this.hexToRgba(accent, 0.12);
+    const accentTint = this.hexToRgba(accent, 0.12);
+
+    const name = (this.props.userName || this.state.authName || '').trim();
+    const firstName = name ? name.split(/\s+/)[0] : this.timePersona();
+    const initials = (name.split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('') || 'T').toUpperCase();
+
+    const errors = [];
+    if (this.state.touched) {
+      if (trimmed.length < 3) errors.push(this.strings().errMin);
+    }
+    const valid = trimmed.length >= 3;
+    const hasError = errors.length > 0;
+
+    const borderColor = hasError ? '#D92D20' : (this.state.focused ? accent : 'var(--border,#E4E5EC)');
+    const boxShadow = hasError ? '0 0 0 4px rgba(217,45,32,0.10), 0 10px 30px -14px rgba(217,45,32,0.35)'
+      : (this.state.focused
+        ? '0 0 0 4px ' + accentRing + ', 0 14px 34px -14px ' + this.hexToRgba(accent, 0.34)
+        : '0 1px 2px rgba(20,36,49,0.04), 0 10px 26px -16px rgba(20,36,49,0.20)');
+
+    const catalog = {
+      'Design': [
+        { label: 'Logo Design' },
+        { label: 'Brand Identity' },
+        { label: 'UI/UX Design' },
+        { label: 'Web Design' },
+        { label: 'Illustration' },
+        { label: 'Figma Design' },
+        { label: 'Packaging Design' },
+        { label: 'Motion Graphics' },
+        { label: 'Infographic Design' },
+        { label: 'Photo Retouching' },
+        { label: 'Presentation Design' },
+        { label: 'Icon Design' },
+        { label: 'Newsletter Design' },
+        { label: 'Book Cover Design' },
+        { label: 'Social Media Graphics' },
+        { label: 'Design Systems' },
+        { label: 'Ad Banner Design' },
+        { label: 'Product Mockups' },
+      ],
+      'IT & Development': [
+        { label: 'Web Development' },
+        { label: 'Mobile App Development' },
+        { label: 'WordPress' },
+        { label: 'Shopify Development' },
+        { label: 'React Development' },
+        { label: 'Backend / API' },
+        { label: 'Python Development' },
+        { label: 'DevOps & CI/CD' },
+        { label: 'Cloud Infrastructure' },
+        { label: 'AI & Chatbots' },
+        { label: 'Database Management' },
+        { label: 'QA & Testing' },
+        { label: 'Chrome Extensions' },
+        { label: 'WordPress Plugins' },
+        { label: 'E-commerce Development' },
+        { label: 'Automation Scripts' },
+        { label: 'Performance Optimization' },
+        { label: 'Cybersecurity' },
+      ],
+      'Marketing': [
+        { label: 'SEO' },
+        { label: 'Social Media Marketing' },
+        { label: 'Google Ads' },
+        { label: 'Content Marketing' },
+        { label: 'Email Marketing' },
+        { label: 'Copywriting' },
+        { label: 'Influencer Marketing' },
+        { label: 'Public Relations' },
+        { label: 'Marketing Strategy' },
+        { label: 'Conversion Optimization' },
+        { label: 'TikTok Marketing' },
+        { label: 'YouTube Strategy' },
+        { label: 'Marketing Automation' },
+        { label: 'Brand Strategy' },
+        { label: 'Video Advertising' },
+        { label: 'Content Calendar' },
+        { label: 'Media Kit Design' },
+        { label: 'Growth Marketing' },
+      ],
+      'Sales': [
+        { label: 'Lead Generation' },
+        { label: 'Cold Outreach' },
+        { label: 'CRM Setup' },
+        { label: 'Appointment Setting' },
+        { label: 'Sales Strategy' },
+        { label: 'LinkedIn Outreach' },
+        { label: 'Telemarketing' },
+        { label: 'Sales Copywriting' },
+        { label: 'B2B Sales' },
+        { label: 'Pipeline Management' },
+        { label: 'Sales Deck Design' },
+        { label: 'Inbound Sales' },
+        { label: 'Data Enrichment' },
+        { label: 'Partnership Development' },
+        { label: 'Pricing Strategy' },
+        { label: 'Sales Training' },
+        { label: 'Cold Email' },
+        { label: 'Proposal Writing' },
+      ],
+      'Finance': [
+        { label: 'Bookkeeping' },
+        { label: 'Financial Modeling' },
+        { label: 'Tax Preparation' },
+        { label: 'Payroll' },
+        { label: 'Accounting' },
+        { label: 'Investor Reporting' },
+        { label: 'Budgeting' },
+        { label: 'Cash Flow Forecasting' },
+        { label: 'QuickBooks' },
+        { label: 'Business Valuation' },
+        { label: 'Auditing' },
+        { label: 'VAT & Sales Tax' },
+        { label: 'Expense Tracking' },
+        { label: 'Fundraising Decks' },
+        { label: 'P&L Statements' },
+        { label: 'Due Diligence' },
+        { label: 'KPI Dashboards' },
+        { label: 'Financial Planning' },
+      ],
+      'Legal': [
+        { label: 'Contract Drafting' },
+        { label: 'NDA Review' },
+        { label: 'Trademark Registration' },
+        { label: 'Privacy Policy' },
+        { label: 'GDPR Compliance' },
+        { label: 'Company Incorporation' },
+        { label: 'Patent Filing' },
+        { label: 'Copyright Registration' },
+        { label: 'Employment Law' },
+        { label: 'IP Protection' },
+        { label: 'Terms of Service' },
+        { label: 'Lease Agreements' },
+        { label: 'Founders Agreements' },
+        { label: 'Shareholder Agreements' },
+        { label: 'Business Licensing' },
+        { label: 'Demand Letters' },
+        { label: 'Immigration Paperwork' },
+        { label: 'Refund Policies' },
+      ],
+      'Admin': [
+        { label: 'Virtual Assistant' },
+        { label: 'Data Entry' },
+        { label: 'Transcription' },
+        { label: 'Customer Support' },
+        { label: 'Internet Research' },
+        { label: 'Calendar Management' },
+        { label: 'Notion Setup' },
+        { label: 'Live Chat Support' },
+        { label: 'Event Planning' },
+        { label: 'Proofreading' },
+        { label: 'Spreadsheet Dashboards' },
+        { label: 'Order Fulfillment' },
+        { label: 'Travel Coordination' },
+        { label: 'Invoicing' },
+        { label: 'File Conversion' },
+        { label: 'Community Moderation' },
+        { label: 'Document Formatting' },
+        { label: 'Email Management' },
+      ],
+    };
+    const category = this.props.jobCategory || 'All';
+    const pool = category === 'All'
+      ? Object.keys(catalog).reduce((acc, k) => acc.concat(catalog[k]), [])
+      : (catalog[category] || []);
+    const step = 15;
+    const shownCount = this.state.shownCount || step;
+    const visible = pool.slice(0, Math.min(shownCount, pool.length));
+    const remaining = pool.length - visible.length;
+    const canExpand = remaining > 0;
+    const nextReveal = Math.min(step, remaining);
+    const showExpandBtn = pool.length > step;
+    const t = this.strings();
+    const suggestions = visible.map((s) => {
+      const label = this.tLabel(s.label);
+      return {
+        label: label,
+        iconEl: this.iconEl(s.label, accent),
+        pick: () => {
+          this.setState({ text: label, focused: true, touched: true });
+          setTimeout(() => { if (this._searchInput && this._searchInput.focus) this._searchInput.focus(); }, 0);
+        },
+      };
+    });
+    const authenticated = this.state.authenticated === true;
+    const dashboardHref = this.state.authRole === 'client' ? 'Prolinker Brief.dc.html' : 'Prolinker Voor jou v2.dc.html';
+    const menuItems = [
+      { label: t.nav1, href: 'Prolinker Results.dc.html' },
+      { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' },
+      { label: t.nav4, href: 'Prolinker Homepage.dc.html' },
+      { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' },
+      { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }
+    ];
+    if (authenticated) menuItems.push({ label: this.lang() === 'nl' ? 'Mijn profiel' : 'My profile', href: 'Prolinker Profiel.dc.html' });
+
+    return {
+      text,
+      accent,
+      accentShadow,
+      accentTint,
+      firstName,
+      initials,
+      t,
+      listening: this.state.listening,
+      micShow: this.micSupported(),
+      micBg: this.state.listening ? accentTint : 'transparent',
+      micColor: this.state.listening ? accent : '#8A8D99',
+      micPulse: this.state.listening ? 'plk-pulse 1.3s infinite' : 'none',
+      onToggleMic: () => this.toggleMic(),
+      charsLeft: (max - text.length).toLocaleString(),
+      animPlaceholder: this.state.text ? '' : (this.state.focused ? t.egPh : this.state.anim + '▏'),
+      counterColor: text.length > max * 0.9 ? '#D92D20' : '#A2A5B2',
+      errors,
+      showErrors: hasError,
+      queryInvalid: hasError,
+      borderColor,
+      boxShadow,
+      suggestions,
+      isDark: this.state.theme === 'dark',
+      isLight: this.state.theme !== 'dark',
+      logoFilter: this.state.theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
+      nameColor: this.state.theme === 'dark' ? '#ffffff' : accent,
+      fontStack: ({
+        'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif",
+        'Geist': "'Geist', system-ui, sans-serif",
+        'General Sans': "'General Sans', system-ui, sans-serif",
+      })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
+      onToggleTheme: () => this.toggleTheme(),
+      menuOpen: this.state.menuOpen, onToggleMenu: () => this.toggleMenu(), onCloseMenu: () => this.closeMenu(),
+      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
+      themeSwitchBg: this.state.theme === 'dark' ? accent : 'var(--border,#E4E5EC)', themeKnobLeft: this.state.theme === 'dark' ? '18px' : '2px',
+      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#565B62' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
+      anonymous: !authenticated,
+      authenticated: authenticated,
+      dashboardLabel: this.state.authRole === 'client' ? t.dashboardClient : t.dashboardFreelancer,
+      onDashboard: () => { window.location.href = dashboardHref; },
+      onLogout: () => {
+        try {
+          [
+            'plk-auth-session',
+            'plk-auth-contact',
+            'plk-user-name',
+            'plk-user-role',
+            'plk-profile',
+            'plk-brief',
+            'plk-query',
+            'plk-feed-interested',
+            'plk-vj2-application-agent-v1',
+            'plk-vj2-hidden',
+            'plk-vj2-location',
+            'plk-vj2-promo',
+            'plk-vj2-review',
+            'plk-vj2-saved',
+            'plk-vj2-sent',
+            'plk-wall-accepted',
+            'plk-wall-follow',
+            'plk-wall-hidden',
+            'plk-wall-saved',
+            'plk-wall-sent',
+          ].forEach((key) => localStorage.removeItem(key));
+        } catch (e) {}
+        this.setState({ authenticated: false, authRole: null, authName: '' });
+      },
+      onLogin: () => { window.location.href = 'Prolinker Login.dc.html?mode=login'; },
+      onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
+      menuItems: menuItems,
+      showExpandBtn,
+      expandLabel: canExpand ? t.showMore(nextReveal) : t.showLess,
+      arrowTransform: canExpand ? 'rotate(0deg)' : 'rotate(180deg)',
+      onToggleExpand: () => this.setState((s) => {
+        const cur = s.shownCount || step;
+        return canExpand ? { shownCount: cur + step } : { shownCount: step };
+      }),
+      continueOpacity: valid ? 1 : 0.4,
+      continueDisabled: !valid,
+      continueCursor: valid ? 'pointer' : 'not-allowed',
+      goBg: valid ? accent : 'var(--hairline,#ECEDF2)',
+      goColor: valid ? '#fff' : 'var(--faint,#A2A5B2)',
+      goShadow: valid ? '0 4px 12px ' + accentShadow : 'none',
+      searchRef: (el) => { this._searchInput = el; },
+      onInput: (e) => this.setState({ text: e.target.value, touched: true }),
+      onKeyDown: (e) => { if (e.key === 'Enter') { e.preventDefault(); if (valid) this.goToResults(); else this.setState({ touched: true }); } },
+      onFocus: () => this.setState({ focused: true }),
+      onBlur: () => this.setState({ focused: false }),
+      onContinue: () => { if (valid) this.goToResults(); else this.setState({ touched: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  a:active { transform: scale(0.985); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>Verdiensten &amp; referrals | ProLinker</title>
+<meta name="robots" content="noindex, nofollow">
+</helmet>
+
+<div data-screen-label="Verdiensten" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
+    <a href="Prolinker Homepage.dc.html" style="display: inline-flex; align-items: center;"><img src="assets/prolinker-mark.png" alt="ProLinker" style="height: 26px; width: 26px; display: block; object-fit: contain; filter: {{ logoFilter }};"></a>
+    <a href="Prolinker Voor jou v2.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); font-size: 14px; font-weight: 600; color: var(--text,#152431); position: fixed; top: 16px; right: 28px; z-index: 30;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.backToFeed }}</a>
+  </header>
+
+  <main style="max-width: 820px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
+
+    <div style="animation: plk-rise 0.5s ease both;">
+      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.022em;">{{ t.title }}</h1>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 24px; animation: plk-rise 0.5s ease 0.05s both;">
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statPaid }}</span>
+        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 4.250</span>
+      </div>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statPending }}</span>
+        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 1.280</span>
+      </div>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.statReferral }}</span>
+        <span style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em;">&euro; 86</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 26px; animation: plk-rise 0.5s ease 0.1s both;">
+      <h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">{{ t.payouts }}</h2>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); overflow: hidden;">
+        <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 16px; padding: 15px 20px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+            <div style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">{{ p.mLetter }}</div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 14.5px; font-weight: 600;">{{ p.project }}</div>
+              <div style="margin-top: 2px; font-size: 13px; color: var(--faint,#9AA0A6);">{{ p.client }} &middot; {{ p.date }}</div>
+            </div>
+            <span style="flex-shrink: 0; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 650; background: {{ p.statusBg }}; color: {{ p.statusColor }};">{{ p.statusLabel }}</span>
+            <span style="flex-shrink: 0; width: 84px; text-align: right; font-size: 15px; font-weight: 700; letter-spacing: -0.01em;">{{ p.amount }}</span>
+          </div>
+        </sc-for>
+        <div style="display: flex; align-items: center; justify-content: flex-end; padding: 13px 20px; background: var(--panel,#F7F8FB);">
+          <span style="font-size: 13px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 26px; animation: plk-rise 0.5s ease 0.15s both;">
+      <h2 style="margin: 0 0 12px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;">{{ t.referrals }}</h2>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,36,49,0.04);">
+
+        <div style="padding: 18px 20px; border-bottom: 1px solid var(--hairline,#ECEDF2); display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+          <div style="flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0;">
+            <span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--muted,#565B62); background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 999px; padding: 8px 14px;">prolinker.com/r/rachid-7k2</span>
+            <button onClick="{{ onCopy }}" style="flex-shrink: 0; height: 36px; padding: 0 15px; border: 1px solid {{ copyBorder }}; border-radius: 999px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: {{ copyColor }};">{{ copyLabel }}</button>
+            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0 15px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="border-color: #25D366; background: rgba(37,211,102,0.08); color: var(--text,#152431);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.share }}</a>
+          </div>
+        </div>
+
+        <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="2">
+          <div style="display: flex; align-items: center; gap: 16px; padding: 15px 20px; border-bottom: {{ r.rowBorder }};">
+            <div style="flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: {{ r.mBg }}; color: {{ r.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ r.initials }}</div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 14.5px; font-weight: 600;">{{ r.name }}</div>
+              <div style="margin-top: 2px; font-size: 13px; color: var(--faint,#9AA0A6);">{{ r.meta }}</div>
+            </div>
+            <span style="flex-shrink: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em;">{{ r.earned }}</span>
+          </div>
+        </sc-for>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+class Component extends DCLogic {
+  state = { copied: false, theme: 'light' };
+
+  componentDidMount() {
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
+  }
+  componentWillUnmount() { clearTimeout(this._copyT); }
+
+  lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
+
+  strings() {
+    const en = {
+      backToFeed: 'To my feed', title: 'Earnings & referrals', subtitle: 'Paid out via ProLinker in 2026',
+      statPaid: 'Paid out 2026', statPending: 'Pending', statReferral: 'Referral earnings',
+      payouts: 'Payouts', payoutNote: 'Payouts follow within 5 working days after approval', total: 'Total',
+      paid: 'Paid', pending: 'Pending',
+      referrals: 'Referrals', refShareTitle: 'Invite freelancers, earn 2%', refShareSub: 'You receive 2% of every project they complete in year one',
+      copy: 'Copy link', copied: 'Copied', share: 'Share', shareWa: 'Share your link via WhatsApp',
+      yourShare: 'your 2%', refNote: 'Referral earnings are added to your monthly payout.',
+      joined: 'joined', projects: (n) => n + ' projects',
+    };
+    const nl = {
+      backToFeed: 'Naar mijn feed', title: 'Verdiensten & referrals', subtitle: 'Uitbetaald via ProLinker in 2026',
+      statPaid: 'Uitbetaald 2026', statPending: 'In behandeling', statReferral: 'Referral-inkomsten',
+      payouts: 'Uitbetalingen', payoutNote: 'Uitbetaling volgt binnen 5 werkdagen na goedkeuring', total: 'Totaal',
+      paid: 'Uitbetaald', pending: 'In behandeling',
+      referrals: 'Referrals', refShareTitle: 'Nodig freelancers uit, verdien 2%', refShareSub: 'Je ontvangt 2% van elke opdracht die zij het eerste jaar afronden',
+      copy: 'Kopieer link', copied: 'Gekopieerd', share: 'Delen', shareWa: 'Deel je link via WhatsApp',
+      yourShare: 'jouw 2%', refNote: 'Referral-inkomsten worden bij je maandelijkse uitbetaling opgeteld.',
+      joined: 'lid sinds', projects: (n) => n + ' opdrachten',
+    };
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  waIcon(color, size) {
+    return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: color }, React.createElement('path', { d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }));
+  }
+
+  copyLink() {
+    try { navigator.clipboard.writeText('https://prolinker.com/r/rachid-7k2'); } catch (e) {}
+    this.setState({ copied: true });
+    clearTimeout(this._copyT);
+    this._copyT = setTimeout(() => this.setState({ copied: false }), 2000);
+  }
+
+  renderVals() {
+    const t = this.strings();
+    const accent = this.props.accentColor || '#006BC6';
+    const isDark = this.state.theme === 'dark';
+    const nl = this.lang() === 'nl';
+
+    const dim = (bg, color) => isDark ? { mBg: 'rgba(255,255,255,0.10)', mColor: '#ffffff' } : { mBg: bg, mColor: color };
+    const paidStyle = { statusBg: 'rgba(31,138,91,0.12)', statusColor: '#1F8A5B', statusLabel: t.paid };
+    const pendStyle = { statusBg: 'rgba(180,89,10,0.12)', statusColor: '#B4590A', statusLabel: t.pending };
+
+    const payouts = [
+      Object.assign({ project: nl ? 'Webshop redesign' : 'Store redesign', client: 'De Lindeboom', date: nl ? '8 jul 2026' : 'Jul 8, 2026', amount: '\u20ac 1.280', mLetter: 'D' }, dim('#EEEBFB', '#5B4CC4'), pendStyle),
+      Object.assign({ project: nl ? 'Shopify-koppeling kassa' : 'Shopify POS integration', client: 'Bakkerij Vermeer', date: nl ? '12 jun 2026' : 'Jun 12, 2026', amount: '\u20ac 1.800', mLetter: 'B' }, dim('#E8F1FB', '#0B5CAB'), paidStyle),
+      Object.assign({ project: nl ? 'Klaviyo-flows' : 'Klaviyo flows', client: 'GroenGoed', date: nl ? '28 apr 2026' : 'Apr 28, 2026', amount: '\u20ac 1.450', mLetter: 'G' }, dim('#E7F5EE', '#1F8A5B'), paidStyle),
+      Object.assign({ project: nl ? 'Checkout-optimalisatie' : 'Checkout optimization', client: 'Studio Kade', date: nl ? '15 feb 2026' : 'Feb 15, 2026', amount: '\u20ac 1.000', mLetter: 'S' }, dim('#FBF0E7', '#B4590A'), paidStyle),
+    ];
+
+    const referrals = [
+      Object.assign({ name: 'Lisa de Wit', initials: 'LW', meta: t.projects(3), earned: '\u20ac 54', rowBorder: '1px solid var(--hairline,#ECEDF2)' }, dim('#FBEDEF', '#B42334')),
+      Object.assign({ name: 'Tom Jansen', initials: 'TJ', meta: t.projects(2), earned: '\u20ac 32', rowBorder: 'none' }, dim('#E6F4F6', '#0E7C8A')),
+    ];
+
+    const shareMsg = nl
+      ? 'Ik freelance via ProLinker. Maak gratis een account via mijn link: https://prolinker.com/r/rachid-7k2'
+      : 'I freelance via ProLinker. Create a free account with my link: https://prolinker.com/r/rachid-7k2';
+
+    return {
+      t: t, accent: accent,
+      logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
+      payouts: payouts, referrals: referrals,
+      onCopy: () => this.copyLink(),
+      copyLabel: this.state.copied ? t.copied : t.copy,
+      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#E4E5EC)',
+      copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',
+      copyColor: this.state.copied ? '#1F8A5B' : 'var(--text,#152431)',
+      waEl: this.waIcon('#25D366', 15),
+      waShareHref: 'https://wa.me/?text=' + encodeURIComponent(shareMsg),
+    };
+  }
+}
+</script>
+</body>
+</html>

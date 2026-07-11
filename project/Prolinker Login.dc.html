@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FFFFFF; --text:#152431; --muted:#6B6E7B; --faint:#A2A5B2; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --glow:rgba(0,107,198,0.055); }
+  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); --glow:rgba(0,107,198,0.12); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #006BC6; text-decoration: none; }
+  a:hover { color: #005093; }
+  input { font-family: inherit; }
+  input::placeholder { color: var(--faint,#A2A5B2); }
+  input:focus { outline: none; }
+  ::selection { background: #cfe6fb; }
+  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  button, a, input { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease; }
+  button { -webkit-tap-highlight-color: transparent; }
+  button:active { transform: scale(0.955) !important; }
+  a:active { transform: scale(0.985); }
+  button:disabled { cursor: not-allowed !important; opacity: 0.55; transform: none !important; box-shadow: none !important; }
+  .plk-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+  button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
+  .plk-auth-brand:hover { opacity: 0.78; }
+  .plk-auth-card { padding: 34px 36px; border: 1px solid var(--border,#E4E5EC); border-radius: 24px; background: var(--glass,rgba(255,255,255,0.88)); box-shadow: 0 28px 70px -46px rgba(20,36,49,0.55); backdrop-filter: blur(12px); }
+  .plk-auth-secondary:hover { border-color: #87ADD0 !important; color: #006BC6 !important; background: rgba(0,107,198,0.05) !important; }
+  .plk-auth-role:hover { border-color: #87ADD0 !important; background: rgba(0,107,198,0.06) !important; }
+  .plk-auth-input:hover { border-color: #B7C7D8 !important; }
+  .plk-auth-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 10px 24px -13px rgba(0,107,198,0.58) !important; }
+  .plk-auth-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .plk-code-grid { width: 100%; max-width: 352px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin-top: 28px; }
+  .plk-code-grid input { width: 100% !important; min-width: 0; }
+  @media (max-width: 520px) {
+    .plk-auth-header { padding: 12px 14px !important; }
+    .plk-auth-header img { width: 112px !important; height: auto !important; }
+    .plk-auth-switch { height: 38px !important; padding: 0 13px !important; font-size: 12.5px !important; }
+    .plk-auth-main { justify-content: flex-start !important; padding: 34px 14px 60px !important; }
+    .plk-auth-card { padding: 26px 18px; border-radius: 20px; }
+    .plk-auth-role-group { flex-direction: column; }
+    .plk-code-grid { gap: 6px; }
+    .plk-code-grid input { height: 52px !important; font-size: 21px !important; border-radius: 10px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
+<title>Inloggen | ProLinker</title>
+<meta name="description" content="Log in bij ProLinker of maak gratis een account.">
+<meta name="robots" content="noindex, nofollow">
+</helmet>
+
+<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+
+  <header class="plk-auth-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; position: relative; z-index: 5;">
+    <a class="plk-auth-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
+    <button class="plk-auth-secondary plk-auth-switch" type="button" onClick="{{ onSwitchMode }}" style="display: inline-flex; align-items: center; height: 40px; padding: 0 18px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap;">{{ altModeLabel }}</button>
+  </header>
+
+  <main class="plk-auth-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px 80px; width: 100%;">
+    <div class="plk-auth-card" style="width: 100%; max-width: 448px; display: flex; flex-direction: column; animation: plk-rise 0.5s ease both;">
+
+      <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+        <form data-screen-label="Auth form" onSubmit="{{ onSubmitFormEvent }}" novalidate="novalidate" style="display: flex; flex-direction: column; align-items: center;">
+          <img src="assets/prolinker-mark.png" alt="" style="width: 50px; height: 50px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
+          <h1 style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
+          <p style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
+
+          <div style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
+            <div role="radiogroup" aria-label="{{ t.roleLabel }}">
+              <div style="margin: 0 0 7px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
+              <div class="plk-auth-role-group" style="display: flex; gap: 10px;">
+                <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
+                <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleFreelancerActive }}" onClick="{{ onRoleFreelancer }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleFreelancerBorder }}; border-radius: 999px; background: {{ roleFreelancerBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleFreelancerColor }};">{{ t.roleFreelancer }}</button>
+              </div>
+            </div>
+            <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
+              <label for="plk-auth-name" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.nameLabel }}</label>
+              <input class="plk-auth-input" id="plk-auth-name" name="name" type="text" autocomplete="name" enterKeyHint="next" value="{{ nameVal }}" onInput="{{ onNameInput }}" ref="{{ nameRef }}" aria-invalid="{{ nameInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.namePh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
+            </sc-if>
+            <label for="plk-auth-contact" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.contactLabel }}</label>
+            <input class="plk-auth-input" id="plk-auth-contact" name="contact" type="text" inputMode="email" autocomplete="username" enterKeyHint="go" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
+          </div>
+
+          <div id="plk-auth-errors" role="alert" aria-live="polite" style="width: 100%; min-height: 22px; margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
+            <sc-if value="{{ showErrors }}" hint-placeholder-val="{{ false }}">
+              <sc-for list="{{ errors }}" as="err" hint-placeholder-count="0">
+                <div style="display: flex; align-items: center; gap: 8px; color: #D92D20; font-size: 13.5px;">
+                  <span style="width: 15px; height: 15px; border: 1.5px solid #D92D20; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0;">!</span>
+                  <span>{{ err }}</span>
+                </div>
+              </sc-for>
+            </sc-if>
+          </div>
+
+          <button class="plk-auth-primary" type="submit" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 50px; margin-top: 6px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ t.continueLabel }}</span><span style="font-size: 17px; line-height: 1;">→</span></button>
+          <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
+
+          <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
+            <p style="margin: 18px 0 0; text-align: center; font-size: 12.5px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 320px;">{{ t.termsA }}<a class="plk-auth-link" href="https://prolinker.com/terms">{{ t.termsTerms }}</a>{{ t.termsB }}<a class="plk-auth-link" href="https://prolinker.com/privacy">{{ t.termsPrivacy }}</a>.</p>
+          </sc-if>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ showCode }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Verify code" style="display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: {{ channelIconBg }}; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">{{ channelIconEl }}</div>
+          <h1 ref="{{ codeHeadingRef }}" tabindex="-1" style="margin: 0; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">{{ codeTitle }}</h1>
+          <p style="margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ codeSubA }}<b style="color: var(--text,#152431); font-weight: 600;">{{ contactShown }}</b></p>
+
+          <div class="plk-code-grid">
+            <sc-for list="{{ codeBoxes }}" as="c" hint-placeholder-count="6">
+              <input type="text" inputMode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxLength="1" value="{{ c.val }}" onInput="{{ c.onInput }}" onKeyDown="{{ c.onKey }}" onPaste="{{ c.onPaste }}" ref="{{ c.ref }}" aria-label="{{ c.aria }}" aria-invalid="{{ codeInvalid }}" style="width: 48px; height: 58px; text-align: center; font-size: 24px; font-weight: 700; border: 1.5px solid {{ codeBorder }}; border-radius: 12px; background: var(--surface,#fff); color: var(--text,#152431); padding: 0;">
+            </sc-for>
+          </div>
+
+          <div style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#6B6E7B);">{{ t.demoCode }}</div>
+          <sc-if value="{{ codeInvalid }}" hint-placeholder-val="false"><div role="alert" aria-live="assertive" style="margin-top: 12px; color: #D92D20; font-size: 13.5px; font-weight: 600;">{{ t.invalidCode }}</div></sc-if>
+
+          <div style="min-height: 24px; margin-top: 20px; display: flex; align-items: center; gap: 14px;">
+            <sc-if value="{{ verifying }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: {{ accent }};">{{ t.verifying }}</span>
+            </sc-if>
+            <sc-if value="{{ notVerifying }}" hint-placeholder-val="{{ true }}">
+              <sc-if value="{{ canResend }}" hint-placeholder-val="{{ false }}">
+                <button class="plk-auth-link" type="button" onClick="{{ onResend }}" style="min-height: 40px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: {{ accent }}; padding: 4px 6px;">{{ t.resend }}</button>
+              </sc-if>
+              <sc-if value="{{ waitResend }}" hint-placeholder-val="{{ true }}">
+                <span style="font-size: 13.5px; color: var(--faint,#A2A5B2);">{{ resendCountdown }}</span>
+              </sc-if>
+              <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--faint,#A2A5B2);"></span>
+              <button class="plk-auth-link" type="button" onClick="{{ onBackToForm }}" style="min-height: 40px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted,#6B6E7B); padding: 4px 6px;">{{ t.editContact }}</button>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showDone }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="Success" style="display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 76px; height: 76px; border-radius: 50%; background: {{ accentTint }}; display: flex; align-items: center; justify-content: center;">{{ bigCheckEl }}</div>
+          <h1 ref="{{ successHeadingRef }}" tabindex="-1" style="margin: 22px 0 0; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">{{ t.successTitle }}</h1>
+          <p style="margin: 8px 0 0; text-align: center; font-size: 15.5px; color: var(--muted,#6B6E7B);">{{ successSub }}</p>
+          <a class="plk-auth-primary" href="{{ successHref }}" style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 26px; margin-top: 28px; border-radius: 999px; background: {{ accent }}; color: #fff; font-size: 15px; font-weight: 600; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ successCta }}</span><span style="font-size: 17px; line-height: 1;">→</span></a>
+        </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+class Component extends DCLogic {
+  state = { mode: 'login', step: 'form', role: null, name: '', contact: '', touched: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '' };
+
+  componentDidMount() {
+    this._els = [];
+    try {
+      document.documentElement.setAttribute('lang', this.lang());
+      if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); }
+    } catch (e) {}
+    let mode = (this.props.startMode === 'Register') ? 'register' : 'login';
+    let role = null; let next = ''; let saved = ''; let savedName = '';
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const m = params.get('mode'); if (m === 'register' || m === 'login') mode = m;
+      const requestedRole = params.get('role');
+      const savedRole = localStorage.getItem('plk-user-role');
+      role = requestedRole === 'client' || requestedRole === 'freelancer' ? requestedRole : (savedRole === 'client' || savedRole === 'freelancer' ? savedRole : null);
+      next = this.safeNext(params.get('next') || '');
+      saved = localStorage.getItem('plk-auth-contact') || '';
+      savedName = localStorage.getItem('plk-user-name') || '';
+    } catch (e) {}
+    document.title = mode === 'register' ? (this.lang() === 'nl' ? 'Registreren | ProLinker' : 'Register | ProLinker') : (this.lang() === 'nl' ? 'Inloggen | ProLinker' : 'Log in | ProLinker');
+    this.setState({ mode: mode, role: role, contact: saved, name: savedName, next: next });
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.step === 'code' && !this.state.verifying) this.backToForm(); };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() { clearInterval(this._cd); clearTimeout(this._vt); if (this._onKey) window.removeEventListener('keydown', this._onKey); }
+
+  lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
+  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  safeNext(value) {
+    const candidate = String(value || '').replace(/^\.\//, '');
+    const allowed = ['Prolinker Homepage.dc.html', 'Prolinker Brief.dc.html', 'Prolinker Results.dc.html', 'Prolinker Voor jou v2.dc.html', 'Prolinker Profiel.dc.html', 'Prolinker Verdiensten.dc.html'];
+    return allowed.indexOf(candidate) !== -1 ? candidate : '';
+  }
+
+  strings() {
+    const en = {
+      loginTitle: 'Welcome back', registerTitle: 'Create your account',
+      loginSub: 'Log in with your email or phone number. No password needed.',
+      registerSub: 'Free to join. You only pay for work that gets done.',
+      switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
+      roleLabel: 'What do you want to do?', roleClient: 'I need freelancers', roleFreelancer: "I'm a freelancer",
+      nameLabel: 'Full name', contactLabel: 'Email or phone', namePh: 'Full name', contactPh: 'Email or phone number',
+      continueLabel: 'Continue', codeHint: 'Passwordless demo login with a local verification code',
+      errContact: 'Enter a valid email address or phone number', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker',
+      codeTitleWa: 'Verify your phone', codeTitleMail: 'Verify your email',
+      codeSentWa: 'Use the demo code below for ', codeSentMail: 'Use the demo code below for ',
+      verifying: 'Checking code...', resend: 'Resend code', resendIn: (s) => 'Resend in ' + s + 's', editContact: 'Use a different address',
+      invalidCode: 'That code is not correct. Try 123456.', demoCode: 'Demo code: 123456',
+      successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View opportunities',
+      termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
+      codeAria: (n) => 'Digit ' + n,
+    };
+    const nl = {
+      loginTitle: 'Welkom terug', registerTitle: 'Maak je account',
+      loginSub: 'Log in met je e-mail of telefoonnummer. Geen wachtwoord nodig.',
+      registerSub: 'Gratis account. Je betaalt alleen voor uitgevoerd werk.',
+      switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
+      roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
+      nameLabel: 'Volledige naam', contactLabel: 'E-mail of telefoon', namePh: 'Volledige naam', contactPh: 'E-mail of telefoonnummer',
+      continueLabel: 'Doorgaan', codeHint: 'Wachtwoordloze demo-login met een lokale verificatiecode',
+      errContact: 'Voer een geldig e-mailadres of telefoonnummer in', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken',
+      codeTitleWa: 'Verifieer je telefoon', codeTitleMail: 'Verifieer je e-mail',
+      codeSentWa: 'Gebruik onderstaande democode voor ', codeSentMail: 'Gebruik onderstaande democode voor ',
+      verifying: 'Code controleren...', resend: 'Code opnieuw sturen', resendIn: (s) => 'Opnieuw sturen in ' + s + 's', editContact: 'Ander adres gebruiken',
+      invalidCode: 'Die code klopt niet. Probeer 123456.', demoCode: 'Democode: 123456',
+      successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten',
+      termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
+      codeAria: (n) => 'Cijfer ' + n,
+    };
+    return this.lang() === 'nl' ? nl : en;
+  }
+
+  iconDefs() {
+    return {
+      check: [{ t: 'polyline', p: '20 6 9 17 4 12' }],
+      mail: [{ t: 'rect', x: 2, y: 4, w: 20, h: 16, rx: 2 }, { t: 'path', d: 'M22 6l-10 7L2 6' }],
+      shield: [{ t: 'path', d: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' }],
+      wa: [{ t: 'path', d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }],
+    };
+  }
+  shapeEl(s, key) {
+    if (s.t === 'circle') return React.createElement('circle', { key: key, cx: s.cx, cy: s.cy, r: s.r });
+    if (s.t === 'rect') return React.createElement('rect', { key: key, x: s.x, y: s.y, width: s.w, height: s.h, rx: s.rx || 0 });
+    if (s.t === 'line') return React.createElement('line', { key: key, x1: s.x1, y1: s.y1, x2: s.x2, y2: s.y2 });
+    if (s.t === 'polyline') return React.createElement('polyline', { key: key, points: s.p });
+    if (s.t === 'polygon') return React.createElement('polygon', { key: key, points: s.p });
+    return React.createElement('path', { key: key, d: s.d });
+  }
+  iconEl(name, color, size, filled) {
+    const shapes = this.iconDefs()[name] || this.iconDefs().check;
+    return React.createElement('svg', { width: size || 18, height: size || 18, viewBox: '0 0 24 24', fill: filled ? color : 'none', stroke: filled ? 'none' : color, strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, shapes.map((sh, i) => this.shapeEl(sh, i)));
+  }
+
+  isPhone(v) { const s = (v || '').trim(); return /^[+0-9][0-9 ()\-.]{5,}$/.test(s) && (s.replace(/[^0-9]/g, '').length >= 8); }
+  isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || '').trim()); }
+
+  startCountdown() {
+    clearInterval(this._cd);
+    this.setState({ resendIn: 30 });
+    this._cd = setInterval(() => {
+      this.setState((s) => {
+        if (s.resendIn <= 1) { clearInterval(this._cd); return { resendIn: 0 }; }
+        return { resendIn: s.resendIn - 1 };
+      });
+    }, 1000);
+  }
+  focusBox(i) {
+    const tryFocus = (n) => {
+      const el = this._els && this._els[i];
+      if (el && document.contains(el)) { el.focus(); return; }
+      if (n > 0) setTimeout(() => tryFocus(n - 1), 60);
+    };
+    setTimeout(() => tryFocus(8), 30);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.step !== 'code' && this.state.step === 'code') this.focusBox(0);
+    if (prevState.step !== 'done' && this.state.step === 'done') setTimeout(() => { if (this._successHeading && this._successHeading.focus) this._successHeading.focus(); }, 0);
+  }
+
+  submitForm() {
+    const contactOk = this.isPhone(this.state.contact) || this.isEmail(this.state.contact);
+    const nameOk = this.state.mode === 'login' || (this.state.name || '').trim().length >= 2;
+    const roleOk = this.state.mode === 'login' || this.state.role === 'client' || this.state.role === 'freelancer';
+    if (!contactOk || !nameOk || !roleOk) {
+      this.setState({ touched: true });
+      setTimeout(() => {
+        const target = !roleOk ? null : (!nameOk ? this._nameInput : this._contactInput);
+        if (target && target.focus) target.focus();
+      }, 0);
+      return;
+    }
+    clearInterval(this._cd); clearTimeout(this._vt);
+    this.setState({ step: 'code', code: ['', '', '', '', '', ''], codeError: false, verifying: false });
+    this.startCountdown();
+    this.focusBox(0);
+  }
+  backToForm() { clearInterval(this._cd); clearTimeout(this._vt); this.setState({ step: 'form', codeError: false, verifying: false }); setTimeout(() => { if (this._contactInput && this._contactInput.focus) this._contactInput.focus(); }, 0); }
+  resend() { this.setState({ code: ['', '', '', '', '', ''], codeError: false, verifying: false }); this.startCountdown(); this.focusBox(0); }
+  setDigit(i, ch) {
+    const code = this.state.code.slice();
+    code[i] = ch;
+    this.setState({ code: code, codeError: false });
+    if (ch && i < 5) this.focusBox(i + 1);
+    const candidate = code.join('');
+    if (candidate.length === 6) this.verify(candidate);
+  }
+  completeAuth() {
+    clearInterval(this._cd);
+    const role = this.state.role === 'freelancer' ? 'freelancer' : 'client';
+    const contact = (this.state.contact || '').trim();
+    let name = (this.state.name || '').trim();
+    try { if (!name) name = (localStorage.getItem('plk-user-name') || '').trim(); } catch (e) {}
+    if (!name && this.isEmail(contact)) name = contact.split('@')[0].replace(/[._-]+/g, ' ');
+    const session = { version: 1, authenticated: true, contact: contact, name: name, role: role, createdAt: Date.now() };
+    try {
+      localStorage.setItem('plk-auth-session', JSON.stringify(session));
+      localStorage.setItem('plk-auth-contact', contact);
+      if (name) localStorage.setItem('plk-user-name', name);
+      localStorage.setItem('plk-user-role', role);
+    } catch (e) {}
+    this.setState({ step: 'done', codeError: false, verifying: false, name: name, role: role });
+  }
+  verify(candidate) {
+    if (this.state.verifying) return;
+    const value = String(candidate || this.state.code.join(''));
+    if (value.length !== 6) return;
+    this.setState({ verifying: true, codeError: false });
+    clearTimeout(this._vt);
+    this._vt = setTimeout(() => {
+      if (value === '123456') this.completeAuth();
+      else { this.setState({ verifying: false, codeError: true, code: ['', '', '', '', '', ''] }); this.focusBox(0); }
+    }, 550);
+  }
+  switchMode() {
+    const nextMode = this.state.mode === 'login' ? 'register' : 'login';
+    clearInterval(this._cd); clearTimeout(this._vt);
+    const role = this.state.role;
+    const nextRoute = this.safeNext(this.state.next);
+    this.setState({ mode: nextMode, role: role, next: nextRoute, step: 'form', touched: false, codeError: false, verifying: false, code: ['', '', '', '', '', ''] });
+    try {
+      const query = ['mode=' + encodeURIComponent(nextMode)];
+      if (role) query.push('role=' + encodeURIComponent(role));
+      if (nextRoute) query.push('next=' + encodeURIComponent(nextRoute));
+      history.replaceState(null, '', '?' + query.join('&'));
+    } catch (e) {}
+  }
+
+  renderVals() {
+    const t = this.strings();
+    const accent = this.props.accentColor || '#006BC6';
+    const accentShadow = this.hexToRgba(accent, 0.28);
+    const accentRing = this.hexToRgba(accent, 0.12);
+    const accentTint = this.hexToRgba(accent, 0.12);
+    const isDark = this.state.theme === 'dark';
+    const mode = this.state.mode;
+    const isRegister = mode === 'register';
+
+    const contactOk = this.isPhone(this.state.contact) || this.isEmail(this.state.contact);
+    const nameOk = !isRegister || (this.state.name || '').trim().length >= 2;
+    const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
+    const valid = contactOk && nameOk && roleOk;
+    const errors = [];
+    if (this.state.touched) {
+      if (!nameOk) errors.push(t.errName);
+      if (!roleOk) errors.push(t.errRole);
+      if (!contactOk && (this.state.contact || '').trim().length > 0) errors.push(t.errContact);
+      else if (!contactOk) errors.push(t.errContact);
+    }
+
+    const viaWa = this.isPhone(this.state.contact);
+    const roleActive = (r) => this.state.role === r;
+
+    const codeBoxes = this.state.code.map((v, i) => ({
+      val: v,
+      aria: t.codeAria(i + 1),
+      ref: (el) => { if (!this._els) this._els = []; this._els[i] = el; },
+      onInput: (e) => { const ch = (e.target.value || '').replace(/[^0-9]/g, '').slice(-1); this.setDigit(i, ch); },
+      onKey: (e) => {
+        if (e.key === 'Backspace' && !this.state.code[i] && i > 0) this.focusBox(i - 1);
+        else if (e.key === 'ArrowLeft' && i > 0) this.focusBox(i - 1);
+        else if (e.key === 'ArrowRight' && i < 5) this.focusBox(i + 1);
+      },
+      onPaste: (e) => {
+        e.preventDefault();
+        const digits = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '').slice(0, 6).split('');
+        if (!digits.length) return;
+        const code = ['', '', '', '', '', ''];
+        digits.forEach((d, k) => { code[k] = d; });
+        this.setState({ code: code, codeError: false });
+        this.focusBox(Math.min(digits.length, 5));
+        if (digits.length === 6) this.verify(digits.join(''));
+      },
+    }));
+
+    return {
+      t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing, accentTint: accentTint,
+      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
+      logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
+      showForm: this.state.step === 'form', showCode: this.state.step === 'code', showDone: this.state.step === 'done',
+      isRegister: isRegister,
+      heading: isRegister ? t.registerTitle : t.loginTitle,
+      subheading: isRegister ? t.registerSub : t.loginSub,
+      altModeLabel: isRegister ? t.switchToLogin : t.switchToRegister,
+      onSwitchMode: () => this.switchMode(),
+      onRoleClient: () => this.setState({ role: 'client' }),
+      onRoleFreelancer: () => this.setState({ role: 'freelancer' }),
+      roleClientActive: roleActive('client'),
+      roleFreelancerActive: roleActive('freelancer'),
+      roleClientBorder: roleActive('client') ? accent : 'var(--border,#E4E5EC)',
+      roleClientBg: roleActive('client') ? accentTint : 'var(--surface,#fff)',
+      roleClientColor: roleActive('client') ? accent : 'var(--muted,#6B6E7B)',
+      roleFreelancerBorder: roleActive('freelancer') ? accent : 'var(--border,#E4E5EC)',
+      roleFreelancerBg: roleActive('freelancer') ? accentTint : 'var(--surface,#fff)',
+      roleFreelancerColor: roleActive('freelancer') ? accent : 'var(--muted,#6B6E7B)',
+      nameVal: this.state.name, onNameInput: (e) => this.setState({ name: e.target.value }),
+      contactVal: this.state.contact, onContactInput: (e) => this.setState({ contact: e.target.value }),
+      nameInvalid: this.state.touched && !nameOk,
+      contactInvalid: this.state.touched && !contactOk,
+      nameRef: (el) => { this._nameInput = el; },
+      contactRef: (el) => { this._contactInput = el; },
+      onFieldKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitForm(); } },
+      errors: errors, showErrors: errors.length > 0,
+      continueOpacity: valid ? 1 : 0.4, continueCursor: valid ? 'pointer' : 'not-allowed',
+      onSubmitForm: () => this.submitForm(),
+      onSubmitFormEvent: (e) => { if (e && e.preventDefault) e.preventDefault(); this.submitForm(); },
+      hintIconEl: this.iconEl('shield', isDark ? 'rgba(255,255,255,0.72)' : '#6B7480', 13),
+      codeTitle: viaWa ? t.codeTitleWa : t.codeTitleMail,
+      codeSubA: viaWa ? t.codeSentWa : t.codeSentMail,
+      contactShown: (this.state.contact || '').trim(),
+      channelIconBg: viaWa ? 'rgba(37,211,102,0.14)' : accentTint,
+      channelIconEl: viaWa ? this.iconEl('wa', '#25D366', 28, true) : this.iconEl('mail', accent, 26),
+      codeBoxes: codeBoxes,
+      codeInvalid: this.state.codeError,
+      codeBorder: this.state.codeError ? '#D92D20' : 'var(--border,#E4E5EC)',
+      codeHeadingRef: (el) => { this._codeHeading = el; },
+      verifying: this.state.verifying, notVerifying: !this.state.verifying,
+      canResend: this.state.resendIn === 0, waitResend: this.state.resendIn > 0,
+      resendCountdown: t.resendIn(this.state.resendIn),
+      onResend: () => this.resend(),
+      onBackToForm: () => this.backToForm(),
+      bigCheckEl: this.iconEl('check', accent, 34),
+      successSub: isRegister ? t.successRegisterSub : t.successLoginSub,
+      successCta: this.state.role === 'freelancer' ? t.successCtaFreelancer : t.successCtaClient,
+      successHref: this.state.next || (this.state.role === 'freelancer' ? (isRegister ? 'Prolinker Profiel.dc.html' : 'Prolinker Voor jou v2.dc.html') : (isRegister ? 'Prolinker Brief.dc.html' : 'Prolinker Homepage.dc.html')),
+      successHeadingRef: (el) => { this._successHeading = el; },
+    };
+  }
+}
+</script>
+</body>
+</html>
