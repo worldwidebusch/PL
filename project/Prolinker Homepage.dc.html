@@ -41,10 +41,10 @@
   .plk-glass-nav { border-radius: 5px !important; box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); }
   .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
   .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
-  .plk-auth-text { min-height: 38px; padding: 0 15px !important; border: 1px solid #b85c00 !important; border-radius: 3px !important; background: var(--surface,#fff) !important; color: #a34f00 !important; }
-  .plk-auth-text:hover { border-color: #934700 !important; background: #fff7ef !important; color: #873f00 !important; }
-  .plk-register-button { border: 1px solid #b85c00 !important; border-radius: 3px !important; background: #b85c00 !important; box-shadow: none !important; }
-  .plk-register-button:hover { border-color: #994a00 !important; background: #994a00 !important; }
+  .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #5992C2 !important; border-radius: 3px !important; background: #5992C2 !important; color: #fff !important; }
+  .plk-company-button:hover, .plk-auth-text:hover { border-color: #477EAD !important; background: #477EAD !important; color: #fff !important; }
+  .plk-register-button { border: 1px solid #E88300 !important; border-radius: 3px !important; background: #E88300 !important; box-shadow: none !important; }
+  .plk-register-button:hover { border-color: #CB7300 !important; background: #CB7300 !important; }
   .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(0,107,198,0.56) !important; }
   .plk-search-shell { border-radius: 5px !important; }
   .plk-search-shell:hover { border-color: #B7C7D8 !important; }
@@ -92,6 +92,7 @@
     .plk-home-header { padding: 12px 14px !important; }
     .plk-home-brand img { width: 112px !important; height: auto !important; }
     .plk-glass-nav { top: 12px !important; right: 14px !important; gap: 5px !important; padding: 5px 6px 5px 8px !important; }
+    .plk-company-button { display: none !important; }
     .plk-auth-text, .plk-register-button, .plk-dashboard-button { height: 36px !important; min-height: 36px !important; padding: 0 10px !important; font-size: 12px !important; }
     .plk-home-main { padding: 58px 16px 62px !important; }
     .plk-home-title { font-size: clamp(34px, 11vw, 44px) !important; }
@@ -153,8 +154,9 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <button class="plk-auth-text" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #b85c00; border-radius: 3px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #a34f00;">{{ t.login }}</button>
-        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #b85c00; border-radius: 3px; background: #b85c00; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
+        <a class="plk-company-button" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
+        <button class="plk-auth-text" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
+        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #E88300; border-radius: 3px; background: #E88300; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>
@@ -581,7 +583,7 @@ class Component extends DCLogic {
       errMin: 'Enter at least 3 characters (e.g. SEO)',
       errCaps: 'Avoid writing your whole brief in capital letters',
       speak: 'Speak your project', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer',
-      settings: 'Settings', darkMode: 'Dark mode', login: 'Log in', register: 'Register', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View opportunities', referrals: 'Earn 2% with referrals',
+      settings: 'Settings', darkMode: 'Dark mode', companies: 'For companies', login: 'Log in', register: 'Sign up', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View opportunities', referrals: 'Earn 2% with referrals',
       loginDialog: 'Log in', loginClose: 'Close login', loginRole: 'Account type', loginRoleClient: 'Client', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp number', loginRemember: 'Remember my WhatsApp number', loginHelp: 'Login help', loginSubmit: 'Log in', loginOr: 'or', facebookLogin: 'Log in with Facebook', linkedinLogin: 'Log in with LinkedIn', createAccount: 'Create account', loginCodeIntro: 'Enter the code sent to your WhatsApp number.', loginCode: 'Verification code', loginDemoCode: 'Demo code: 123456', loginVerify: 'Verify', loginEdit: 'Change number',
       footerTagline: 'The trusted network for businesses and independent professionals.', footerMarketplace: 'Marketplace', footerGetStarted: 'Get started', footerCompany: 'ProLinker',
       faq: 'Frequently asked questions', careers: 'Careers at ProLinker', contact: 'Contact', language: 'Language', rightsReserved: 'All rights reserved.', privacy: 'Privacy', terms: 'Terms and Conditions',
@@ -597,7 +599,7 @@ class Component extends DCLogic {
       errMin: 'Voer minstens 3 tekens in (bijv. SEO)',
       errCaps: 'Schrijf je briefing niet volledig in hoofdletters',
       speak: 'Spreek je project in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer',
-      settings: 'Instellingen', darkMode: 'Donkere modus', login: 'Inloggen', register: 'Registreren', logout: 'Uitloggen', searchLabel: 'Beschrijf de skill of opdracht die je nodig hebt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten', referrals: 'Verdien 2% met referrals',
+      settings: 'Instellingen', darkMode: 'Donkere modus', companies: 'Voor bedrijven', login: 'Inloggen', register: 'Aanmelden', logout: 'Uitloggen', searchLabel: 'Beschrijf de skill of opdracht die je nodig hebt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten', referrals: 'Verdien 2% met referrals',
       loginDialog: 'Inloggen', loginClose: 'Login sluiten', loginRole: 'Accounttype', loginRoleClient: 'Opdrachtgever', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp-nummer', loginRemember: 'Onthoud mijn WhatsApp-nummer', loginHelp: 'Hulp bij inloggen', loginSubmit: 'Inloggen', loginOr: 'of', facebookLogin: 'Inloggen met Facebook', linkedinLogin: 'Inloggen met LinkedIn', createAccount: 'Account aanmaken', loginCodeIntro: 'Vul de code in die naar je WhatsApp-nummer is gestuurd.', loginCode: 'Verificatiecode', loginDemoCode: 'Democode: 123456', loginVerify: 'Bevestigen', loginEdit: 'Nummer wijzigen',
       footerTagline: 'Het vertrouwde netwerk voor opdrachtgevers en zelfstandige professionals.', footerMarketplace: 'Marktplaats', footerGetStarted: 'Aan de slag', footerCompany: 'ProLinker',
       faq: 'Veelgestelde vragen', careers: 'Werken bij ProLinker', contact: 'Contact', language: 'Taal', rightsReserved: 'Alle rechten voorbehouden.', privacy: 'Privacy', terms: 'Algemene Voorwaarden',
@@ -1058,7 +1060,7 @@ class Component extends DCLogic {
         this.setState({ authenticated: false, authRole: null, authName: '' });
       },
       onLogin: () => this.openLogin(),
-      onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
+      onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=freelancer'; },
       loginOpen: this.state.loginOpen,
       loginFormVisible: this.state.loginStep === 'form',
       loginCodeVisible: this.state.loginStep === 'code',
