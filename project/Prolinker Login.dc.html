@@ -193,7 +193,7 @@
               <div role="radiogroup" aria-label="{{ t.roleLabel }}">
                 <div class="plk-auth-label plk-auth-role-label" style="font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
                 <div class="plk-auth-role-group" style="display: flex; gap: 10px;">
-                  <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
+                  <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" ref="{{ roleClientRef }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
                   <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleFreelancerActive }}" onClick="{{ onRoleFreelancer }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleFreelancerBorder }}; border-radius: 999px; background: {{ roleFreelancerBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleFreelancerColor }};">{{ t.roleFreelancer }}</button>
                 </div>
               </div>
@@ -267,7 +267,7 @@
           <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <div class="plk-auth-actions">
-            <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }};"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span><span>{{ continueLabel }}</span></button>
+            <button class="plk-auth-primary" type="submit" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span><span>{{ continueLabel }}</span></button>
             <div class="plk-auth-divider"><span>{{ t.orLabel }}</span></div>
             <div class="plk-auth-providers" aria-label="{{ t.socialLabel }}">
               <button class="plk-auth-provider plk-auth-provider-facebook" type="button" disabled="{{ socialBusy }}" onClick="{{ onFacebook }}"><span class="plk-auth-provider-mark" aria-hidden="true">f</span><span>{{ facebookLabel }}</span></button>
@@ -563,7 +563,7 @@ class Component extends DCLogic {
     if (!contactOk || !firstNameOk || !lastNameOk || !nameLengthOk || !categoryOk || !emailOk || !passwordOk || !passwordConfirmOk || !termsOk || !roleOk) {
       this.setState({ touched: true });
       setTimeout(() => {
-        const target = !roleOk ? null
+        const target = !roleOk ? this._roleClientButton
           : (!categoryOk ? this._categoryInput
           : (!firstNameOk || !nameLengthOk ? this._firstNameInput
           : (!lastNameOk ? this._lastNameInput
@@ -766,7 +766,6 @@ class Component extends DCLogic {
     const passwordConfirmOk = !isRegister || (passwordOk && this.state.passwordConfirm === this.state.password);
     const termsOk = !isRegister || this.state.termsAccepted === true;
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
-    const valid = contactOk && firstNameOk && lastNameOk && nameLengthOk && categoryOk && emailOk && passwordOk && passwordConfirmOk && termsOk && roleOk;
     const errors = [];
     if (this.state.oauthError) errors.push(this.state.oauthError);
     if (this.state.touched) {
@@ -830,6 +829,7 @@ class Component extends DCLogic {
       onLinkedin: () => this.startSocialAuth('linkedin'),
       onRoleClient: () => this.setState({ role: 'client' }),
       onRoleFreelancer: () => this.setState({ role: 'freelancer' }),
+      roleClientRef: (el) => { this._roleClientButton = el; },
       roleClientActive: roleActive('client'),
       roleFreelancerActive: roleActive('freelancer'),
       roleClientBorder: roleActive('client') ? accent : 'var(--border,#E4E5EC)',
@@ -866,7 +866,6 @@ class Component extends DCLogic {
       contactEnterKey: isRegister ? 'next' : 'go',
       onFieldKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitForm(); } },
       errors: errors, showErrors: errors.length > 0,
-      continueDisabled: !valid, continueOpacity: valid ? 1 : 0.4, continueCursor: valid ? 'pointer' : 'not-allowed',
       continueLabel: isRegister ? t.continueRegister : t.continueLogin,
       continueIconEl: this.iconEl('wa', '#ffffff', 18, true),
       onSubmitForm: () => this.submitForm(),
