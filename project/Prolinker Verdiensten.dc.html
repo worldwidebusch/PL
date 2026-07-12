@@ -66,6 +66,9 @@
     .plk-account-name { display: none; }
     .plk-account-menu { position: fixed; left: 10px; right: 10px; top: 60px; width: auto; max-height: calc(100vh - 72px); overflow: auto; }
   }
+  .plk-vtab { min-height: 44px; padding: 0 15px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted,#424444); cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 650; }
+  .plk-vtab:hover { color: var(--text,#152431); }
+  .plk-vtab[data-active="true"] { color: var(--blue-dark,#24476A); border-bottom-color: #2F5B85; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
 <link rel="stylesheet" href="prolinker-theme.css">
@@ -87,32 +90,37 @@
       <p style="margin: 8px 0 0; max-width: 650px; color: var(--muted,#424444); font-size: 15px; line-height: 1.55;">{{ pageSubtitle }}</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; margin-top: 24px; animation: plk-rise 0.5s ease 0.05s both;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 0; margin-top: 26px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); overflow: hidden; animation: plk-rise 0.5s ease 0.05s both;">
       <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPaid }}</span>
-          <span style="font-size: 23px; font-weight: 700;">{{ workPaid }}</span>
+          <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ workPaid }}</span>
         </div>
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
           <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPending }}</span>
-          <span style="font-size: 23px; font-weight: 700;">{{ workPending }}</span>
+          <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ workPending }}</span>
         </div>
       </sc-if>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
         <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPaid }}</span>
-        <span style="font-size: 23px; font-weight: 700; color: #087A55;">{{ referralPaid }}</span>
+        <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600; color: #087A55;">{{ referralPaid }}</span>
       </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+      <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
         <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPending }}</span>
-        <span style="font-size: 23px; font-weight: 700;">{{ referralPending }}</span>
+        <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ referralPending }}</span>
       </div>
     </div>
     <sc-if value="{{ earningsErrorVisible }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top: 10px; padding: 10px 12px; border: 1px solid #FF9D82; border-radius: 8px; background: #FFE9E2; color: #8B3227; font-size: 12.5px;">{{ earningsError }}</div></sc-if>
 
-    <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
-      <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.1s both;">
-        <h2 style="margin: 0 0 11px; font-size: 17px; font-weight: 700;">{{ t.payouts }}</h2>
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; overflow: hidden;">
+    <section style="margin-top: 20px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); overflow: hidden; animation: plk-rise 0.5s ease 0.1s both;">
+      <div style="display: flex; align-items: center; gap: 2px; padding: 8px 12px 0; border-bottom: 1px solid var(--hairline,#ECEEF0);">
+        <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}"><button type="button" role="tab" class="plk-vtab" data-active="{{ tabPayouts }}" onClick="{{ onTabPayouts }}">{{ t.payouts }}</button></sc-if>
+        <button type="button" role="tab" class="plk-vtab" data-active="{{ tabReferrals }}" onClick="{{ onTabReferrals }}">{{ t.referrals }}</button>
+        <button type="button" role="tab" class="plk-vtab" data-active="{{ tabShare }}" onClick="{{ onTabShare }}">Delen &amp; verdienen</button>
+        <span style="margin-left: auto; padding: 5px 9px; border: 1px solid rgba(47,91,133,0.2); border-radius: 7px; background: rgba(47,91,133,0.07); color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;">2% referral</span>
+      </div>
+      <sc-if value="{{ tabPayouts }}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel">
           <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
             <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
               <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 8px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ p.mLetter }}</div>
@@ -123,23 +131,9 @@
           </sc-for>
           <div style="display: flex; justify-content: flex-end; padding: 12px 18px; background: var(--panel,#F3F4F6);"><span style="font-size: 12.5px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span></div>
         </div>
-      </section>
-    </sc-if>
-
-    <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.15s both;">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 11px;">
-        <div><h2 style="margin: 0; font-size: 19px; font-weight: 750;">{{ t.referrals }}</h2><p style="margin: 5px 0 0; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.45;">{{ t.refExplanation }}</p></div>
-        <span style="flex-shrink: 0; padding: 6px 9px; border: 1px solid rgba(47,91,133,0.2); border-radius: 7px; background: rgba(47,91,133,0.07); color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">2%</span>
-      </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; overflow: hidden;">
-        <div class="plk-share-line" style="padding: 18px; border-bottom: 1px solid var(--hairline,#ECEEF0); display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
-          <div class="plk-share-actions" style="display: flex; gap: 8px;">
-            <button onClick="{{ onCopy }}" style="height: 38px; padding: 0 14px; border: 1px solid {{ copyBorder }}; border-radius: 8px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 650; color: {{ copyColor }};">{{ copyLabel }}</button>
-            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
-          </div>
-        </div>
-
+      </sc-if>
+      <sc-if value="{{ tabReferrals }}" hint-placeholder-val="{{ true }}">
+        <div role="tabpanel">
         <div class="plk-ledger-head" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; padding: 10px 18px; background: var(--panel,#F3F4F6); border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--faint,#8C8E8F); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;"><span></span><span>{{ t.freelancer }}</span><span>{{ t.grossValue }}</span><span>{{ t.status }}</span><span style="text-align:right;">{{ t.yourTwoPercent }}</span></div>
         <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="3">
           <div class="plk-ref-row" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
@@ -151,9 +145,23 @@
           </div>
         </sc-for>
         <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; padding: 13px 18px; background: var(--panel,#F3F4F6); font-size: 12.5px;"><span>{{ t.paid }}: <b>{{ referralPaid }}</b></span><span>{{ t.pending }}: <b>{{ referralPending }}</b></span></div>
-      </div>
-      <p style="margin: 10px 2px 0; color: var(--faint,#8C8E8F); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ tabShare }}" hint-placeholder-val="{{ false }}">
+        <div role="tabpanel" style="padding: 26px 22px 24px; text-align: center;">
+          <p style="max-width: 460px; margin: 0 auto; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.55;">{{ t.refExplanation }}</p>
+          <div class="plk-share-line" style="max-width: 560px; margin: 18px auto 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
+          <div class="plk-share-actions" style="display: flex; gap: 8px;">
+            <button onClick="{{ onCopy }}" style="height: 38px; padding: 0 14px; border: 1px solid {{ copyBorder }}; border-radius: 8px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 650; color: {{ copyColor }};">{{ copyLabel }}</button>
+            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
+          </div>
+          </div>
+        </div>
+      </sc-if>
     </section>
+    <p style="margin: 10px 2px 0; color: var(--faint,#8C8E8F); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
+
   </main>
 
   <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
@@ -162,7 +170,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false };
+  state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false, tab: '' };
 
   isValidWhatsappSession(session) {
     if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
@@ -368,6 +376,12 @@ class Component extends DCLogic {
       onLogout: () => { if (window.ProLinkerApp && window.ProLinkerApp.session) window.ProLinkerApp.session.logout(); },
       pageTitle: isFreelancer ? t.freelancerTitle : t.clientTitle,
       pageSubtitle: isFreelancer ? t.freelancerSubtitle : t.clientSubtitle,
+      tabPayouts: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'payouts',
+      tabReferrals: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'referrals',
+      tabShare: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'share',
+      onTabPayouts: () => this.setState({ tab: 'payouts' }),
+      onTabReferrals: () => this.setState({ tab: 'referrals' }),
+      onTabShare: () => this.setState({ tab: 'share' }),
       showFreelancerPayouts: isFreelancer,
       workPaid: formatMoney(Number(earnings.available || 4250)),
       workPending: formatMoney(Number(earnings.pending || 1280)),
