@@ -247,8 +247,6 @@
         '.theme-track[data-on="true"]{background:#006bc6}',
         '.theme-knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .2s ease}',
         '.theme-knob[data-on="true"]{left:18px}',
-        '.company{min-height:38px;display:inline-flex;align-items:center;justify-content:center;padding:0 15px;border:1px solid #5992c2;border-radius:3px;background:#5992c2;color:#fff;font-size:13px;font-weight:700;line-height:1;text-decoration:none;white-space:nowrap}',
-        '.company:hover,.company:focus-visible{border-color:#477ead;background:#477ead;color:#fff}',
         '.trigger{min-height:38px;padding:3px 7px 3px 3px;border:0;background:transparent;color:inherit;display:flex;align-items:center;gap:7px;cursor:pointer;border-radius:5px}',
         '.trigger:hover,.trigger:focus-visible{background:var(--panel,#f5f7f9)}',
         '.main-trigger:focus-visible,.trigger:focus-visible,.main-item:focus-visible,.theme-button:focus-visible,.item:focus-visible{outline:2px solid rgba(47,130,200,.32);outline-offset:2px}',
@@ -267,7 +265,6 @@
         '.label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px;font-weight:550}',
         '.badge{min-width:17px;height:15px;padding:0 4px;border-radius:999px;background:#f04444;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800}',
         '.logout{margin-top:1px}',
-        '@media(max-width:640px){.company{display:none}}',
         '@media(max-width:560px){.cluster{gap:5px}.name{display:none}.panel{right:0;width:190px}.trigger{padding-right:5px}.item{min-height:40px;padding-top:7px;padding-bottom:7px}.main-panel{position:fixed;left:10px;right:10px;top:62px;width:auto;max-width:none;max-height:calc(100vh - 74px);overflow:auto}}',
         '@media(prefers-reduced-motion:reduce){.chevron,.theme-track,.theme-knob{transition:none}}'
       ].join('');
@@ -321,9 +318,6 @@
       mainWrap.appendChild(mainTrigger);
       mainWrap.appendChild(mainPanel);
 
-      var company = element('a', 'company', lang === 'en' ? 'For companies' : 'Voor bedrijven');
-      company.href = 'Prolinker Brief.dc.html';
-
       var trigger = element('button', 'trigger');
       trigger.type = 'button';
       trigger.setAttribute('aria-haspopup', 'menu');
@@ -372,7 +366,6 @@
       accountWrap.appendChild(trigger);
       accountWrap.appendChild(panel);
       cluster.appendChild(mainWrap);
-      cluster.appendChild(company);
       cluster.appendChild(accountWrap);
 
       this.shadowRoot.replaceChildren(style, cluster);
