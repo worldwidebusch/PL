@@ -28,6 +28,7 @@
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-pulse { 0% { box-shadow: 0 0 0 0 rgba(0,107,198,0.30); } 100% { box-shadow: 0 0 0 12px rgba(0,107,198,0); } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <title>ProLinker: Hire trusted freelancers, instantly matched by AI</title>
 <meta name="description" content="Describe your project in plain words and ProLinker's AI instantly matches you with vetted freelancers across design, IT, marketing, sales, finance, legal and admin. Post free. Pay only for work done.">
@@ -45,34 +46,25 @@
 
 <div style="min-height: 100vh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; border-bottom: 1px solid var(--hairline,#ECEDF2); background: var(--glass,rgba(255,255,255,0.78)); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 10;">
-    <div style="display: flex; align-items: center; gap: 34px;">
-      <div style="display: flex; align-items: center; gap: 9px;">
-        <img src="assets/prolinker-mark.png" alt="ProLinker" style="height: 27px; width: 27px; object-fit: contain; display: block; filter: {{ logoFilter }};">
-      </div>
-      <nav style="display: flex; align-items: center; gap: 22px; white-space: nowrap; flex-shrink: 0;">
-        <a href="Prolinker Results.dc.html" style="font-size: 14.5px; font-weight: 500; color: var(--text,#152431);">{{ t.nav1 }}</a>
-        <a href="Prolinker Voor jou v2.dc.html" style="font-size: 14.5px; font-weight: 500; color: var(--muted,#6B6E7B);">{{ t.nav2 }}</a>
-        <a href="https://prolinker.com/nl/hoe-werkt-het" style="font-size: 14.5px; font-weight: 500; color: var(--muted,#6B6E7B);">{{ t.nav3 }}</a>
-        <a href="Prolinker Homepage.dc.html" style="font-size: 14.5px; font-weight: 500; color: var(--muted,#6B6E7B);">{{ t.nav4 }}</a>
-        <a href="https://prolinker.com/nl/blog?page=1" style="font-size: 14.5px; font-weight: 500; color: var(--muted,#6B6E7B);">{{ t.nav5 }}</a>
-      </nav>
-    </div>
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <div style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); width: 220px;">
-        <div style="width: 14px; height: 14px; border: 1.8px solid var(--faint,#A2A5B2); border-radius: 50%; position: relative;"><div style="position: absolute; width: 6px; height: 1.8px; background: var(--faint,#A2A5B2); transform: rotate(45deg); bottom: -3px; right: -3px; border-radius: 2px;"></div></div>
-        <span style="font-size: 14px; color: var(--faint,#A2A5B2);">{{ t.search }}</span>
-      </div>
-      <button onClick="{{ onToggleTheme }}" title="{{ t.theme }}" aria-label="{{ t.theme }}" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
-        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--muted,#6B6E7B)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"></line><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"></line><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"></line></svg>
-        </sc-if>
-        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--muted,#6B6E7B)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        </sc-if>
-      </button>
-      <div style="width: 34px; height: 34px; border-radius: 50%; background: {{ accentTint }}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: {{ accent }};">{{ initials }}</div>
-    </div>
+  <header class="plk-public-header">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+    <nav class="plk-public-nav" aria-label="Hoofdnavigatie">
+      <details class="plk-public-menu-wrap">
+        <summary class="plk-public-menu-trigger" aria-label="{{ t.menu }}" title="{{ t.menu }}">
+          <span class="plk-public-dot-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        </summary>
+        <div class="plk-public-menu-panel">
+          <a class="plk-public-menu-link" href="Prolinker Results.dc.html">{{ t.nav1 }}</a>
+          <a class="plk-public-menu-link" href="Prolinker Voor jou v2.dc.html">{{ t.nav2 }}</a>
+          <a class="plk-public-menu-link" href="https://prolinker.com/nl/hoe-werkt-het">{{ t.nav3 }}</a>
+          <a class="plk-public-menu-link" href="Prolinker Brief.dc.html">{{ t.nav4 }}</a>
+          <a class="plk-public-menu-link" href="https://prolinker.com/nl/blog?page=1">{{ t.nav5 }}</a>
+        </div>
+      </details>
+      <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.companies }}</a>
+      <a class="plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html?mode=login&amp;role=client">{{ t.login }}</a>
+      <a class="plk-public-action plk-public-action-orange" href="Prolinker Login.dc.html?mode=register&amp;role=freelancer">{{ t.register }}</a>
+    </nav>
   </header>
 
   <main style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 72px 24px 120px; width: 100%;">
@@ -228,7 +220,7 @@ class Component extends DCLogic {
 
   strings() {
     const en = {
-      nav1: 'Freelancers', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog',
+      menu: 'Menu', nav1: 'Freelancers', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog', companies: 'For companies', login: 'Log in', register: 'Sign up',
       search: 'Search', headA: 'What skill are you looking for, ', headB: '?',
       subtitle: "Search any skill and we'll match you with the best vetted professionals for it - in seconds.",
       tryLabel: 'Popular skills', startWithout: 'Start without AI', continueLabel: 'Continue',
@@ -238,7 +230,7 @@ class Component extends DCLogic {
       speak: 'Speak your project', theme: 'Toggle dark mode',
     };
     const nl = {
-      nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
+      menu: 'Menu', nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog', companies: 'Voor bedrijven', login: 'Inloggen', register: 'Aanmelden',
       search: 'Zoeken', headA: 'Welke skill zoek je, ', headB: '?',
       subtitle: 'Zoek een skill en wij koppelen je direct aan de beste geverifieerde professionals.',
       tryLabel: 'Populaire skills', startWithout: 'Zonder AI beginnen', continueLabel: 'Doorgaan',

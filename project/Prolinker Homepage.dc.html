@@ -38,8 +38,6 @@
   .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
   #plk-home-query:focus-visible { outline: none !important; outline-offset: 0; }
   .plk-brand:hover { opacity: 0.78; }
-  .plk-glass-nav { position: static !important; top: auto !important; right: auto !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
-  .plk-menu-shell { display: flex; align-items: center; padding: 6px; border: 1px solid var(--border,#E4E5EC); border-radius: 5px; background: var(--glass,rgba(255,255,255,0.82)); box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); backdrop-filter: blur(8px); }
   .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
   .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
   .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #5992C2 !important; border-radius: 3px !important; background: #5992C2 !important; color: #fff !important; }
@@ -92,8 +90,6 @@
   @media (max-width: 640px) {
     .plk-home-header { padding: 12px 14px !important; }
     .plk-home-brand img { width: 112px !important; height: auto !important; }
-    .plk-glass-nav { position: static !important; top: auto !important; right: auto !important; gap: 5px !important; padding: 0 !important; }
-    .plk-menu-shell { padding: 5px; }
     .plk-company-button { display: none !important; }
     .plk-auth-text, .plk-register-button, .plk-dashboard-button { height: 36px !important; min-height: 36px !important; padding: 0 10px !important; font-size: 12px !important; }
     .plk-home-main { padding: 58px 16px 62px !important; }
@@ -133,12 +129,12 @@
 
 <div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header class="plk-home-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-brand plk-home-brand plk-focusable" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
-    <div class="plk-glass-nav" style="display: flex; align-items: center; gap: 8px; padding: 0; background: transparent; border: 0; position: static; z-index: 30;">
+  <header class="plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
+    <a class="plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
+    <div class="plk-glass-nav plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <div class="plk-menu-shell" style="position: relative;">
-          <button class="plk-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
+        <div class="plk-public-menu-wrap" style="position: relative;">
+          <button class="plk-menu-trigger plk-public-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
           <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
             <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
             <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
@@ -156,9 +152,9 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <a class="plk-company-button" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
-        <button class="plk-auth-text" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
-        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #E88300; border-radius: 3px; background: #E88300; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
+        <a class="plk-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
+        <button class="plk-auth-text plk-public-action plk-public-action-blue" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
+        <button class="plk-primary plk-register-button plk-public-action plk-public-action-orange" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #E88300; border-radius: 3px; background: #E88300; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>

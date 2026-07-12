@@ -147,6 +147,7 @@
   }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <title>Opdrachten voor jou | ProLinker</title>
 <meta name="description" content="Een persoonlijke feed met freelance opdrachten en vacatures, gerangschikt op relevantie voor jouw profiel.">
@@ -155,11 +156,12 @@
 
 <div class="plk-page" data-screen-label="Voor jou" style="min-height: 100vh; background: #F3F5F8; color: #16233A; font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
 
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+  <header class="plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
+    <div class="plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; backdrop-filter: blur(8px); position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <div style="position: relative;">
-        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
+        <div class="plk-public-menu-wrap" style="position: relative;">
+        <button class="plk-public-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
           <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 292px; max-height: calc(100vh - 82px); overflow-y: auto; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 7px;">
@@ -189,8 +191,9 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <button onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;">Inloggen</button>
-        <button onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};">Registreren</button>
+        <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">Voor bedrijven</a>
+        <button class="plk-public-action plk-public-action-blue" onClick="{{ onLogin }}">Inloggen</button>
+        <button class="plk-public-action plk-public-action-orange" onClick="{{ onRegister }}">Aanmelden</button>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>

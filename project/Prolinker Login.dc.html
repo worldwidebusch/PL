@@ -43,7 +43,7 @@
   .plk-code-grid { width: 100%; max-width: 352px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin-top: 28px; }
   .plk-code-grid input { width: 100% !important; min-width: 0; }
   .plk-auth-page { background: var(--plk-surface,#fff) !important; color: var(--plk-text,#152431) !important; }
-  .plk-auth-header { min-height: 50px; display: flex !important; padding: 0 28px !important; border-bottom: 1px solid var(--plk-line,#dbe2e8); background: rgba(255,255,255,0.96); }
+  .plk-auth-header { min-height: 50px; display: flex !important; padding: 0 28px !important; border-bottom: 0; background: transparent; }
   .plk-auth-nav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .plk-auth-menu { position: relative; }
   .plk-auth-menu-trigger { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 50%; background: #fff; color: #6b7c8c; cursor: pointer; }
@@ -142,11 +142,11 @@
 
 <div class="plk-auth-page plk-theme-page {{ authModeClass }}" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header class="plk-auth-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; position: relative; z-index: 5;">
-    <a class="plk-auth-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
-    <nav class="plk-auth-nav" aria-label="Hoofdnavigatie">
-      <div class="plk-auth-menu">
-        <button class="plk-auth-menu-trigger" type="button" onClick="{{ onToggleMenu }}" aria-label="{{ t.navMenu }}" aria-haspopup="menu" aria-expanded="{{ menuOpen }}">
+  <header class="plk-auth-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; position: relative; z-index: 5;">
+    <a class="plk-auth-brand plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
+    <nav class="plk-auth-nav plk-public-nav" aria-label="Hoofdnavigatie">
+      <div class="plk-auth-menu plk-public-menu-wrap">
+        <button class="plk-auth-menu-trigger plk-public-menu-trigger" type="button" onClick="{{ onToggleMenu }}" aria-label="{{ t.navMenu }}" aria-haspopup="menu" aria-expanded="{{ menuOpen }}">
           <span class="plk-auth-dot-grid" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
         </button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="false">
@@ -160,9 +160,9 @@
           </div>
         </sc-if>
       </div>
-      <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-auth-company-button" href="Prolinker Brief.dc.html">{{ t.navCompanies }}</a>
-      <a class="plk-auth-nav-button plk-auth-nav-button-blue" href="Prolinker Login.dc.html?mode=login">{{ t.navLogin }}</a>
-      <a class="plk-auth-nav-button plk-auth-nav-button-orange" href="Prolinker Login.dc.html?mode=register&amp;role=freelancer">{{ t.navRegister }}</a>
+      <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-auth-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.navCompanies }}</a>
+      <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html?mode=login">{{ t.navLogin }}</a>
+      <a class="plk-auth-nav-button plk-auth-nav-button-orange plk-public-action plk-public-action-orange" href="Prolinker Login.dc.html?mode=register&amp;role=freelancer">{{ t.navRegister }}</a>
     </nav>
   </header>
 
