@@ -73,6 +73,7 @@
   .plk-auth-fields { gap: 10px !important; margin-top: 13px !important; }
   .plk-auth-field { width: 100%; display: flex; flex-direction: column; gap: 6px; }
   .plk-auth-field-row { width: 100%; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .plk-auth-field-row.is-client { grid-template-columns: minmax(0,1fr); }
   .plk-auth-label { margin: 0 !important; color: var(--plk-text,#152431) !important; font-size: 12px !important; font-weight: 700 !important; }
   .plk-auth-role-label { margin: 0 0 7px !important; }
   .plk-auth-role-group { display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px !important; }
@@ -82,19 +83,33 @@
   .plk-auth-input:focus { border-color: #7aadd6 !important; background: var(--plk-surface,#fff) !important; box-shadow: 0 0 0 3px rgba(0,107,198,0.12) !important; }
   .plk-auth-select { width: 100%; height: 44px; padding: 0 38px 0 13px; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 4px; background: var(--plk-panel,#eef2f5); color: var(--plk-text,#152431); font-size: 13.5px; cursor: pointer; }
   .plk-auth-select:focus { border-color: #7aadd6; background: var(--plk-surface,#fff); box-shadow: 0 0 0 3px rgba(0,107,198,0.12); }
+  .plk-auth-industry-row { width: 100%; display: grid; grid-template-columns: minmax(0,1fr); gap: 7px; }
+  .plk-auth-industry-row.has-add { grid-template-columns: minmax(0,1fr) 38px; }
+  .plk-auth-industry-add { width: 38px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid #65BD6A; border-radius: 2px; background: #65BD6A; color: #fff; font: inherit; font-size: 22px; line-height: 1; cursor: pointer; }
+  .plk-auth-industry-add:hover { border-color: #52A957; background: #52A957; }
+  .plk-auth-privacy-note { margin: -1px 0 0; color: var(--plk-muted,#667587); font-size: 10.5px; font-style: italic; line-height: 1.35; text-align: right; }
   .plk-auth-safety { width: 100%; margin-top: 13px; padding: 12px 13px; border-left: 3px solid #65bd6a; background: #f7fbf7; color: var(--plk-muted,#667587); font-size: 11px; line-height: 1.45; }
+  .plk-auth-safety.is-client { padding: 0; border-left: 0; background: transparent; }
   .plk-auth-safety strong { display: block; margin-bottom: 5px; color: var(--plk-text,#152431); font-size: 12px; }
   .plk-auth-safety-line { display: flex; align-items: flex-start; gap: 7px; }
   .plk-auth-safety-line + .plk-auth-safety-line { margin-top: 4px; }
   .plk-auth-safety-check { color: #55ad5b; font-weight: 800; }
   .plk-auth-consent { width: 100%; display: flex; align-items: flex-start; gap: 8px; margin-top: 11px; color: var(--plk-text,#152431); font-size: 11px; line-height: 1.45; cursor: pointer; }
   .plk-auth-consent input { width: 15px; height: 15px; margin: 1px 0 0; flex: 0 0 auto; accent-color: #5992C2; }
+  .plk-auth-human-check { width: 100%; max-width: 270px; min-height: 62px; display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 11px; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 2px; background: #f7f8fa; color: var(--plk-text,#152431); cursor: pointer; }
+  .plk-auth-human-check[aria-invalid="true"] { border-color: #D92D20; }
+  .plk-auth-human-check input { width: 20px; height: 20px; margin: 0; accent-color: #5992C2; }
+  .plk-auth-human-copy { display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.25; }
+  .plk-auth-human-copy small { color: var(--plk-muted,#667587); font-size: 9px; }
+  .plk-auth-human-badge { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 2px; background: #e8f5ea; color: #52A957; font-size: 19px; font-weight: 800; }
   .plk-auth-primary { min-height: 40px !important; border-radius: 3px !important; box-shadow: none !important; font-size: 12px !important; font-weight: 700 !important; }
   .plk-auth-referral { border-radius: 4px !important; text-align: left !important; }
   .plk-auth-hint { justify-content: flex-start !important; margin-top: 10px !important; }
   .plk-auth-actions { width: 100%; display: flex; flex-direction: column; align-items: stretch; gap: 7px; margin-top: 9px; }
-  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; border: 1px solid #25D366 !important; background: #25D366 !important; }
-  .plk-auth-actions .plk-auth-primary:hover:not(:disabled) { border-color: #1FB85A !important; background: #1FB85A !important; filter: none !important; }
+  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; border: 1px solid #5992C2 !important; background: #5992C2 !important; }
+  .plk-auth-actions .plk-auth-primary:hover:not(:disabled) { border-color: #477EAD !important; background: #477EAD !important; filter: none !important; }
+  .plk-auth-actions .plk-auth-primary.is-whatsapp { border-color: #25D366 !important; background: #25D366 !important; }
+  .plk-auth-actions .plk-auth-primary.is-whatsapp:hover:not(:disabled) { border-color: #1FB85A !important; background: #1FB85A !important; }
   .plk-auth-divider { width: 100%; min-height: 22px; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; color: var(--plk-faint,#8a97a6); font-size: 11px; text-transform: lowercase; }
   .plk-auth-divider::before,
   .plk-auth-divider::after { display: block; content: ""; height: 1px; flex: 1; background: var(--plk-line,#dbe2e8); }
@@ -200,15 +215,26 @@
             </sc-if>
             <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
               <div class="plk-auth-field">
-                <label class="plk-auth-label" for="plk-auth-category">{{ t.categoryLabel }} *</label>
-                <select class="plk-auth-select" id="plk-auth-category" name="disciplines[]" value="{{ categoryVal }}" onChange="{{ onCategoryInput }}" ref="{{ categoryRef }}" aria-invalid="{{ categoryInvalid }}" aria-describedby="plk-auth-errors">
-                  <option value="">{{ t.categoryPh }}</option>
-                  <sc-for list="{{ categories }}" as="category" hint-placeholder-count="8">
-                    <option value="{{ category.value }}">{{ category.label }}</option>
-                  </sc-for>
-                </select>
+                <label class="plk-auth-label" for="plk-auth-category">{{ categoryLabel }} *</label>
+                <div class="plk-auth-industry-row {{ industryRowClass }}">
+                  <select class="plk-auth-select" id="plk-auth-category" name="disciplines[]" value="{{ categoryVal }}" onChange="{{ onCategoryInput }}" ref="{{ categoryRef }}" aria-invalid="{{ categoryInvalid }}" aria-describedby="plk-auth-errors">
+                    <option value="">{{ t.categoryPh }}</option>
+                    <sc-for list="{{ categories }}" as="category" hint-placeholder-count="8">
+                      <option value="{{ category.value }}">{{ category.label }}</option>
+                    </sc-for>
+                  </select>
+                  <sc-if value="{{ showIndustryAdd }}" hint-placeholder-val="false">
+                    <button class="plk-auth-industry-add" type="button" onClick="{{ onOpenIndustry }}" aria-label="{{ t.addIndustryAria }}">+</button>
+                  </sc-if>
+                </div>
               </div>
-              <div class="plk-auth-field-row">
+              <sc-if value="{{ showCompanyField }}" hint-placeholder-val="false">
+                <div class="plk-auth-field">
+                  <label class="plk-auth-label" for="plk-auth-company">{{ t.companyLabel }} *</label>
+                  <input class="plk-auth-input" id="plk-auth-company" name="companyName" type="text" autocomplete="organization" enterKeyHint="next" value="{{ companyNameVal }}" onInput="{{ onCompanyNameInput }}" ref="{{ companyNameRef }}" aria-invalid="{{ companyNameInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.companyPh }}">
+                </div>
+              </sc-if>
+              <div class="plk-auth-field-row {{ registrationFieldRowClass }}">
                 <div class="plk-auth-field">
                   <label class="plk-auth-label" for="plk-auth-first-name">{{ t.firstNameLabel }} *</label>
                   <input class="plk-auth-input" id="plk-auth-first-name" name="firstName" type="text" autocomplete="given-name" enterKeyHint="next" value="{{ firstNameVal }}" onInput="{{ onFirstNameInput }}" ref="{{ firstNameRef }}" aria-invalid="{{ firstNameInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.firstNamePh }}">
@@ -226,9 +252,12 @@
             <div class="plk-auth-field">
               <label class="plk-auth-label" for="plk-auth-contact">{{ t.contactLabel }} *</label>
               <input class="plk-auth-input" id="plk-auth-contact" name="phoneNumber" type="tel" inputMode="tel" autocomplete="tel" enterKeyHint="{{ contactEnterKey }}" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}">
+              <sc-if value="{{ showPrivacyNote }}" hint-placeholder-val="false">
+                <p class="plk-auth-privacy-note">{{ t.privacyNote }}</p>
+              </sc-if>
             </div>
             <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
-              <div class="plk-auth-field-row">
+              <div class="plk-auth-field-row {{ registrationFieldRowClass }}">
                 <div class="plk-auth-field">
                   <label class="plk-auth-label" for="plk-auth-password">{{ t.passwordLabel }} *</label>
                   <input class="plk-auth-input" id="plk-auth-password" name="password" type="password" autocomplete="new-password" enterKeyHint="next" value="{{ passwordVal }}" onInput="{{ onPasswordInput }}" ref="{{ passwordRef }}" aria-invalid="{{ passwordInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.passwordPh }}">
@@ -242,15 +271,22 @@
           </div>
 
           <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
-            <div class="plk-auth-safety">
-              <strong>{{ t.safetyTitle }}</strong>
-              <div class="plk-auth-safety-line"><span class="plk-auth-safety-check">&#10003;</span><span>{{ t.safetyPayment }}</span></div>
-              <div class="plk-auth-safety-line"><span class="plk-auth-safety-check">&#10003;</span><span>{{ t.safetyPrivacy }}</span></div>
+            <div class="plk-auth-safety {{ safetyClass }}">
+              <strong>{{ safetyTitle }}</strong>
+              <div class="plk-auth-safety-line"><span class="plk-auth-safety-check">&#10003;</span><span>{{ safetyPayment }}</span></div>
+              <div class="plk-auth-safety-line"><span class="plk-auth-safety-check">&#10003;</span><span>{{ safetyPrivacy }}</span></div>
             </div>
             <label class="plk-auth-consent" for="plk-auth-terms">
               <input id="plk-auth-terms" name="confirmTerms" value="1" type="checkbox" checked="{{ termsChecked }}" onChange="{{ onTermsChange }}" ref="{{ termsRef }}" aria-invalid="{{ termsInvalid }}" aria-describedby="plk-auth-errors">
               <span>{{ t.termsCheckA }}<a class="plk-auth-link" href="https://prolinker.com/terms">{{ t.termsTerms }}</a>{{ t.termsCheckB }}<a class="plk-auth-link" href="https://prolinker.com/privacy">{{ t.termsPrivacy }}</a>.</span>
             </label>
+            <sc-if value="{{ showHumanCheck }}" hint-placeholder-val="false">
+              <label class="plk-auth-human-check" for="plk-auth-human" aria-invalid="{{ humanInvalid }}">
+                <input id="plk-auth-human" name="humanConfirmed" value="1" type="checkbox" checked="{{ humanChecked }}" onChange="{{ onHumanChange }}" ref="{{ humanRef }}" aria-invalid="{{ humanInvalid }}" aria-describedby="plk-auth-errors">
+                <span class="plk-auth-human-copy"><span>{{ t.humanLabel }}</span><small>{{ t.humanHelper }}</small></span>
+                <span class="plk-auth-human-badge" aria-hidden="true">&#10003;</span>
+              </label>
+            </sc-if>
           </sc-if>
 
           <div id="plk-auth-errors" role="alert" aria-live="polite" style="width: 100%; min-height: 22px; margin-top: 10px; display: flex; flex-direction: column; gap: 5px;">
@@ -267,7 +303,7 @@
           <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <div class="plk-auth-actions">
-            <button class="plk-auth-primary" type="submit" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span><span>{{ continueLabel }}</span></button>
+            <button class="plk-auth-primary {{ primaryButtonClass }}" type="submit" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><sc-if value="{{ showContinueIcon }}" hint-placeholder-val="true"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span></sc-if><span>{{ continueLabel }}</span></button>
             <div class="plk-auth-divider"><span>{{ t.orLabel }}</span></div>
             <div class="plk-auth-providers" aria-label="{{ t.socialLabel }}">
               <button class="plk-auth-provider plk-auth-provider-facebook" type="button" disabled="{{ socialBusy }}" onClick="{{ onFacebook }}"><span class="plk-auth-provider-mark" aria-hidden="true">f</span><span>{{ facebookLabel }}</span></button>
@@ -336,7 +372,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false };
+  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false };
 
   componentDidMount() {
     this._els = [];
@@ -413,6 +449,15 @@ class Component extends DCLogic {
     const candidate = String(value || '').trim().toLowerCase();
     return /^[a-z0-9-]{4,48}$/.test(candidate) ? candidate : '';
   }
+  setRole(role) {
+    if (role !== 'client' && role !== 'freelancer') return;
+    this.setState({ role: role, touched: false, socialAttempted: false, oauthError: '' });
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('role', role);
+      history.replaceState(null, '', url.href);
+    } catch (e) {}
+  }
 
   strings() {
     const en = {
@@ -421,12 +466,13 @@ class Component extends DCLogic {
       registerSub: 'Complete your basic details and verify your WhatsApp number.',
       navMenu: 'Menu', navFreelancers: 'Freelancers', navJobs: 'Jobs', navHow: 'How it works', navPost: 'Post a job', navBlog: 'Blog', navCompanies: 'For companies', navLogin: 'Log in', navRegister: 'Sign up',
       switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
-      roleLabel: 'What do you want to do?', roleClient: 'I need freelancers', roleFreelancer: "I'm a freelancer",
+      roleLabel: 'What do you want to do?', roleClient: "I'm looking for freelancers", roleFreelancer: "I'm a freelancer",
       nameLabel: 'Full name', contactLabel: 'WhatsApp number', namePh: 'Full name', contactPh: '+1 202 555 0123',
-      categoryLabel: 'Industry', categoryPh: 'Select an industry', firstNameLabel: 'First name', firstNamePh: 'First name', lastNameLabel: 'Last name', lastNamePh: 'Last name', emailLabel: 'Email', emailPh: 'Email address', passwordLabel: 'Password', passwordPh: 'At least 8 characters', passwordConfirmLabel: 'Repeat password', passwordConfirmPh: 'Repeat password',
-      continueLogin: 'Log in with WhatsApp', continueRegister: 'Create account', codeHint: 'Secure verification via WhatsApp',
-      errContact: 'Enter an international WhatsApp number beginning with + or 00', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker', errCategory: 'Select your industry', errFirstName: 'Enter your first name', errLastName: 'Enter your last name', errNameLong: 'Keep your full name within 40 characters', errEmail: 'Enter a valid email address', errPassword: 'Use at least 8 characters for your password', errPasswordConfirm: 'The passwords do not match', errTerms: 'Accept the terms and privacy policy to continue',
+      categoryLabel: 'Industry', industryLabel: 'Industry', categoryPh: 'Select an industry', addIndustryAria: 'Choose an industry', companyLabel: 'Company name', companyPh: 'Company name', firstNameLabel: 'First name', firstNamePh: 'First name', lastNameLabel: 'Last name', lastNamePh: 'Last name', emailLabel: 'Email', emailPh: 'Email address', passwordLabel: 'Password', passwordPh: 'At least 8 characters', passwordConfirmLabel: 'Repeat password', passwordConfirmPh: 'Repeat password', privacyNote: 'We never share your personal details with third parties', humanLabel: "I'm not a robot", humanHelper: 'Secure verification',
+      continueLogin: 'Log in with WhatsApp', continueRegister: 'Next', codeHint: 'Secure verification via WhatsApp',
+      errContact: 'Enter an international WhatsApp number beginning with + or 00', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker', errCategory: 'Select your industry', errCompany: 'Enter your company name', errFirstName: 'Enter your first name', errLastName: 'Enter your last name', errNameLong: 'Keep your full name within 40 characters', errEmail: 'Enter a valid email address', errPassword: 'Use at least 8 characters for your password', errPasswordConfirm: 'The passwords do not match', errTerms: 'Accept the terms and privacy policy to continue', errHuman: 'Confirm that you are not a robot',
       safetyTitle: 'Stay safe', safetyPayment: 'Only accept payments through ProLinker so your work remains protected.', safetyPrivacy: 'Your personal details are never shared with third parties without permission.',
+      clientSafetyTitle: 'Stay safe!', clientSafetyPayment: 'Only pay freelancers through ProLinker so payment protection is guaranteed.', clientSafetyPrivacy: 'Payments outside ProLinker violate your user agreement and may lead to legal action.',
       termsCheckA: 'I agree to the ', termsCheckB: ' and ',
       codeTitleWa: 'Verify your WhatsApp number',
       codeSentWa: 'Use the demo WhatsApp code below for ',
@@ -451,10 +497,11 @@ class Component extends DCLogic {
       switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
       roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
       nameLabel: 'Volledige naam', contactLabel: 'Mobiel nummer', namePh: 'Volledige naam', contactPh: '+31 6 12345678',
-      categoryLabel: 'Branche', categoryPh: 'Selecteer een categorie', firstNameLabel: 'Voornaam', firstNamePh: 'Voornaam', lastNameLabel: 'Achternaam', lastNamePh: 'Achternaam', emailLabel: 'E-mail', emailPh: 'E-mailadres', passwordLabel: 'Wachtwoord', passwordPh: 'Minimaal 8 tekens', passwordConfirmLabel: 'Wachtwoord herhalen', passwordConfirmPh: 'Wachtwoord herhalen',
-      continueLogin: 'Inloggen met WhatsApp', continueRegister: 'Account aanmaken', codeHint: 'Veilige verificatie via WhatsApp',
-      errContact: 'Vul een internationaal mobiel nummer in dat begint met + of 00', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken', errCategory: 'Selecteer je branche', errFirstName: 'Vul je voornaam in', errLastName: 'Vul je achternaam in', errNameLong: 'Gebruik maximaal 40 tekens voor je volledige naam', errEmail: 'Vul een geldig e-mailadres in', errPassword: 'Gebruik minimaal 8 tekens voor je wachtwoord', errPasswordConfirm: 'De wachtwoorden komen niet overeen', errTerms: 'Ga akkoord met de voorwaarden en het privacybeleid',
+      categoryLabel: 'Branche', industryLabel: 'Industrie', categoryPh: 'Selecteer een categorie', addIndustryAria: 'Industrie kiezen', companyLabel: 'Bedrijfsnaam', companyPh: 'Bedrijfsnaam', firstNameLabel: 'Voornaam', firstNamePh: 'Voornaam', lastNameLabel: 'Achternaam', lastNamePh: 'Achternaam', emailLabel: 'E-mail', emailPh: 'E-mailadres', passwordLabel: 'Wachtwoord', passwordPh: 'Minimaal 8 tekens', passwordConfirmLabel: 'Wachtwoord herhalen', passwordConfirmPh: 'Wachtwoord herhalen', privacyNote: 'Wij delen uw persoonlijke gegevens nooit met derden', humanLabel: 'Ik ben geen robot', humanHelper: 'Beveiligde controle',
+      continueLogin: 'Inloggen met WhatsApp', continueRegister: 'Volgende', codeHint: 'Veilige verificatie via WhatsApp',
+      errContact: 'Vul een internationaal mobiel nummer in dat begint met + of 00', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken', errCategory: 'Selecteer je branche', errCompany: 'Vul je bedrijfsnaam in', errFirstName: 'Vul je voornaam in', errLastName: 'Vul je achternaam in', errNameLong: 'Gebruik maximaal 40 tekens voor je volledige naam', errEmail: 'Vul een geldig e-mailadres in', errPassword: 'Gebruik minimaal 8 tekens voor je wachtwoord', errPasswordConfirm: 'De wachtwoorden komen niet overeen', errTerms: 'Ga akkoord met de voorwaarden en het privacybeleid', errHuman: 'Bevestig dat je geen robot bent',
       safetyTitle: 'Blijf veilig', safetyPayment: 'Ontvang betalingen alleen via ProLinker, zodat je veilig samenwerkt.', safetyPrivacy: 'Wij delen je persoonlijke gegevens nooit zonder toestemming met derden.',
+      clientSafetyTitle: 'Blijf veilig!', clientSafetyPayment: 'Betaal freelancers alleen via ProLinker, zodat betalingsbescherming gegarandeerd is.', clientSafetyPrivacy: 'Betalingen buiten ProLinker om schenden je gebruikersovereenkomst en kunnen leiden tot juridische stappen.',
       termsCheckA: 'Ik ga akkoord met de ', termsCheckB: ' en het ',
       codeTitleWa: 'Verifieer je WhatsApp-nummer',
       codeSentWa: 'Gebruik onderstaande WhatsApp-democode voor ',
@@ -547,9 +594,11 @@ class Component extends DCLogic {
   submitForm() {
     this.setState({ socialAttempted: false });
     const isRegister = this.state.mode === 'register';
+    const isClientRegister = isRegister && this.state.role === 'client';
     const contactOk = this.isPhone(this.state.contact);
     const firstName = String(this.state.firstName || '').trim();
     const lastName = String(this.state.lastName || '').trim();
+    const companyName = String(this.state.companyName || '').trim();
     const fullName = [firstName, lastName].filter(Boolean).join(' ');
     const firstNameOk = !isRegister || firstName.length >= 2;
     const lastNameOk = !isRegister || lastName.length >= 2;
@@ -559,19 +608,26 @@ class Component extends DCLogic {
     const passwordOk = !isRegister || String(this.state.password || '').length >= 8;
     const passwordConfirmOk = !isRegister || (passwordOk && this.state.passwordConfirm === this.state.password);
     const termsOk = !isRegister || this.state.termsAccepted === true;
+    const companyNameOk = !isClientRegister || (companyName.length >= 2 && companyName.length <= 100);
+    const humanOk = !isClientRegister || this.state.humanConfirmed === true;
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
-    if (!contactOk || !firstNameOk || !lastNameOk || !nameLengthOk || !categoryOk || !emailOk || !passwordOk || !passwordConfirmOk || !termsOk || !roleOk) {
+    if (!contactOk || !firstNameOk || !lastNameOk || !nameLengthOk || !categoryOk || !companyNameOk || !emailOk || !passwordOk || !passwordConfirmOk || !termsOk || !humanOk || !roleOk) {
       this.setState({ touched: true });
       setTimeout(() => {
-        const target = !roleOk ? this._roleClientButton
-          : (!categoryOk ? this._categoryInput
-          : (!firstNameOk || !nameLengthOk ? this._firstNameInput
-          : (!lastNameOk ? this._lastNameInput
-          : (!emailOk ? this._emailInput
-          : (!contactOk ? this._contactInput
-          : (!passwordOk ? this._passwordInput
-          : (!passwordConfirmOk ? this._passwordConfirmInput
-          : (!termsOk ? this._termsInput : null))))))));
+        const firstInvalid = [
+          [!roleOk, this._roleClientButton],
+          [!categoryOk, this._categoryInput],
+          [!companyNameOk, this._companyNameInput],
+          [!firstNameOk || !nameLengthOk, this._firstNameInput],
+          [!lastNameOk, this._lastNameInput],
+          [!emailOk, this._emailInput],
+          [!contactOk, this._contactInput],
+          [!passwordOk, this._passwordInput],
+          [!passwordConfirmOk, this._passwordConfirmInput],
+          [!termsOk, this._termsInput],
+          [!humanOk, this._humanInput]
+        ].find((entry) => entry[0]);
+        const target = firstInvalid ? firstInvalid[1] : null;
         if (target && target.focus) target.focus();
       }, 0);
       return;
@@ -608,6 +664,7 @@ class Component extends DCLogic {
       category: String(this.state.category || '').trim(),
       phoneNumber: contact,
     } : null;
+    if (safeProfile && role === 'client') safeProfile.companyName = String(this.state.companyName || '').trim();
     const session = { version: 2, authenticated: true, channel: 'whatsapp', authProvider: providerName, contact: contact, name: name, role: role, accountType: role === 'client' ? 'recruiter' : 'freelancer', profile: safeProfile, demo: providerName !== 'whatsapp', createdAt: Date.now() };
     try {
       localStorage.setItem('plk-auth-session', JSON.stringify(session));
@@ -666,12 +723,16 @@ class Component extends DCLogic {
     if (this.state.mode === 'register') {
       const firstName = String(this.state.firstName || '').trim();
       const lastName = String(this.state.lastName || '').trim();
+      const isClientRegister = this.state.role === 'client';
+      const companyName = String(this.state.companyName || '').trim();
       const profileReady = !!String(this.state.category || '').trim()
+        && (!isClientRegister || (companyName.length >= 2 && companyName.length <= 100))
         && firstName.length >= 2
         && lastName.length >= 2
         && (firstName + ' ' + lastName).length <= 40
         && this.isEmail(this.state.email)
-        && this.state.termsAccepted === true;
+        && this.state.termsAccepted === true
+        && (!isClientRegister || this.state.humanConfirmed === true);
       if (!profileReady) {
         this.setState({ touched: true, socialAttempted: true });
         return;
@@ -734,7 +795,7 @@ class Component extends DCLogic {
     const nextRoute = this.safeNext(this.state.next);
     const referralCode = this.safeReferralCode(this.state.referralCode);
     clearTimeout(this._socialTimer);
-    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, socialAttempted: false, codeError: false, verifying: false, socialBusy: '', oauthError: '', password: '', passwordConfirm: '', termsAccepted: false, code: ['', '', '', '', '', ''] });
+    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, socialAttempted: false, codeError: false, verifying: false, socialBusy: '', oauthError: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, code: ['', '', '', '', '', ''] });
     try {
       const query = ['mode=' + encodeURIComponent(nextMode)];
       if (role) query.push('role=' + encodeURIComponent(role));
@@ -753,10 +814,12 @@ class Component extends DCLogic {
     const isDark = this.state.theme === 'dark';
     const mode = this.state.mode;
     const isRegister = mode === 'register';
+    const isClientRegister = isRegister && this.state.role === 'client';
 
     const contactOk = this.isPhone(this.state.contact);
     const firstName = String(this.state.firstName || '').trim();
     const lastName = String(this.state.lastName || '').trim();
+    const companyName = String(this.state.companyName || '').trim();
     const firstNameOk = !isRegister || firstName.length >= 2;
     const lastNameOk = !isRegister || lastName.length >= 2;
     const nameLengthOk = !isRegister || [firstName, lastName].filter(Boolean).join(' ').length <= 40;
@@ -765,12 +828,15 @@ class Component extends DCLogic {
     const passwordOk = !isRegister || String(this.state.password || '').length >= 8;
     const passwordConfirmOk = !isRegister || (passwordOk && this.state.passwordConfirm === this.state.password);
     const termsOk = !isRegister || this.state.termsAccepted === true;
+    const companyNameOk = !isClientRegister || (companyName.length >= 2 && companyName.length <= 100);
+    const humanOk = !isClientRegister || this.state.humanConfirmed === true;
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
     const errors = [];
     if (this.state.oauthError) errors.push(this.state.oauthError);
     if (this.state.touched) {
       if (!roleOk) errors.push(t.errRole);
       if (isRegister && !categoryOk) errors.push(t.errCategory);
+      if (isClientRegister && !companyNameOk) errors.push(t.errCompany);
       if (isRegister && !firstNameOk) errors.push(t.errFirstName);
       if (isRegister && !lastNameOk) errors.push(t.errLastName);
       if (isRegister && !nameLengthOk) errors.push(t.errNameLong);
@@ -779,6 +845,7 @@ class Component extends DCLogic {
       if (isRegister && !this.state.socialAttempted && !passwordOk) errors.push(t.errPassword);
       if (isRegister && !this.state.socialAttempted && passwordOk && !passwordConfirmOk) errors.push(t.errPasswordConfirm);
       if (isRegister && !termsOk) errors.push(t.errTerms);
+      if (isClientRegister && !humanOk) errors.push(t.errHuman);
     }
 
     const roleActive = (r) => this.state.role === r;
@@ -814,7 +881,7 @@ class Component extends DCLogic {
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       showForm: this.state.step === 'form', showCode: this.state.step === 'code', showDone: this.state.step === 'done',
       authModeClass: isRegister ? 'is-register' : 'is-login',
-      isRegister: isRegister, isLogin: !isRegister, showRoleChoice: !isRegister || !roleOk,
+      isRegister: isRegister, isLogin: !isRegister, isClientRegister: isClientRegister, showRoleChoice: true,
       showReferralNotice: isRegister && this.state.role === 'freelancer' && !!this.safeReferralCode(this.state.referralCode),
       heading: isRegister ? (this.state.role === 'freelancer' ? t.registerTitleFreelancer : (this.state.role === 'client' ? t.registerTitleClient : t.registerTitle)) : t.loginTitle,
       subheading: isRegister ? t.registerSub : t.loginSub,
@@ -827,8 +894,8 @@ class Component extends DCLogic {
       linkedinLabel: isRegister ? t.linkedinRegister : t.linkedinLogin,
       onFacebook: () => this.startSocialAuth('facebook'),
       onLinkedin: () => this.startSocialAuth('linkedin'),
-      onRoleClient: () => this.setState({ role: 'client' }),
-      onRoleFreelancer: () => this.setState({ role: 'freelancer' }),
+      onRoleClient: () => this.setRole('client'),
+      onRoleFreelancer: () => this.setRole('freelancer'),
       roleClientRef: (el) => { this._roleClientButton = el; },
       roleClientActive: roleActive('client'),
       roleFreelancerActive: roleActive('freelancer'),
@@ -839,7 +906,19 @@ class Component extends DCLogic {
       roleFreelancerBg: roleActive('freelancer') ? accentTint : 'var(--surface,#fff)',
       roleFreelancerColor: roleActive('freelancer') ? accent : 'var(--muted,#6B6E7B)',
       categories: this.registrationCategories(),
+      categoryLabel: isClientRegister ? t.industryLabel : t.categoryLabel,
+      industryRowClass: isClientRegister ? 'has-add' : '',
+      showIndustryAdd: isClientRegister,
+      onOpenIndustry: () => {
+        const select = this._categoryInput;
+        if (!select) return;
+        try { if (typeof select.showPicker === 'function') select.showPicker(); else { select.focus(); select.click(); } }
+        catch (e) { if (select.focus) select.focus(); }
+      },
       categoryVal: this.state.category, onCategoryInput: (e) => this.setState({ category: e.target.value, oauthError: '' }),
+      showCompanyField: isClientRegister,
+      registrationFieldRowClass: isClientRegister ? 'is-client' : '',
+      companyNameVal: this.state.companyName, onCompanyNameInput: (e) => this.setState({ companyName: e.target.value, oauthError: '' }),
       firstNameVal: this.state.firstName, onFirstNameInput: (e) => this.setState({ firstName: e.target.value, name: [e.target.value, this.state.lastName].filter(Boolean).join(' ').trim(), oauthError: '' }),
       lastNameVal: this.state.lastName, onLastNameInput: (e) => this.setState({ lastName: e.target.value, name: [this.state.firstName, e.target.value].filter(Boolean).join(' ').trim(), oauthError: '' }),
       emailVal: this.state.email, onEmailInput: (e) => this.setState({ email: e.target.value, oauthError: '' }),
@@ -847,7 +926,15 @@ class Component extends DCLogic {
       passwordVal: this.state.password, onPasswordInput: (e) => this.setState({ password: e.target.value, oauthError: '' }),
       passwordConfirmVal: this.state.passwordConfirm, onPasswordConfirmInput: (e) => this.setState({ passwordConfirm: e.target.value, oauthError: '' }),
       termsChecked: this.state.termsAccepted, onTermsChange: (e) => this.setState({ termsAccepted: !!e.target.checked, oauthError: '' }),
+      showPrivacyNote: isClientRegister,
+      showHumanCheck: isClientRegister,
+      humanChecked: this.state.humanConfirmed, onHumanChange: (e) => this.setState({ humanConfirmed: !!e.target.checked, oauthError: '' }),
+      safetyClass: isClientRegister ? 'is-client' : '',
+      safetyTitle: isClientRegister ? t.clientSafetyTitle : t.safetyTitle,
+      safetyPayment: isClientRegister ? t.clientSafetyPayment : t.safetyPayment,
+      safetyPrivacy: isClientRegister ? t.clientSafetyPrivacy : t.safetyPrivacy,
       categoryInvalid: this.state.touched && !categoryOk,
+      companyNameInvalid: this.state.touched && !companyNameOk,
       firstNameInvalid: this.state.touched && (!firstNameOk || !nameLengthOk),
       lastNameInvalid: this.state.touched && !lastNameOk,
       emailInvalid: this.state.touched && !emailOk,
@@ -855,7 +942,9 @@ class Component extends DCLogic {
       passwordInvalid: this.state.touched && !this.state.socialAttempted && !passwordOk,
       passwordConfirmInvalid: this.state.touched && !this.state.socialAttempted && !passwordConfirmOk,
       termsInvalid: this.state.touched && !termsOk,
+      humanInvalid: this.state.touched && !humanOk,
       categoryRef: (el) => { this._categoryInput = el; },
+      companyNameRef: (el) => { this._companyNameInput = el; },
       firstNameRef: (el) => { this._firstNameInput = el; },
       lastNameRef: (el) => { this._lastNameInput = el; },
       emailRef: (el) => { this._emailInput = el; },
@@ -863,10 +952,13 @@ class Component extends DCLogic {
       passwordRef: (el) => { this._passwordInput = el; },
       passwordConfirmRef: (el) => { this._passwordConfirmInput = el; },
       termsRef: (el) => { this._termsInput = el; },
+      humanRef: (el) => { this._humanInput = el; },
       contactEnterKey: isRegister ? 'next' : 'go',
       onFieldKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitForm(); } },
       errors: errors, showErrors: errors.length > 0,
       continueLabel: isRegister ? t.continueRegister : t.continueLogin,
+      primaryButtonClass: isRegister ? 'is-register-next' : 'is-whatsapp',
+      showContinueIcon: !isRegister,
       continueIconEl: this.iconEl('wa', '#ffffff', 18, true),
       onSubmitForm: () => this.submitForm(),
       onSubmitFormEvent: (e) => { if (e && e.preventDefault) e.preventDefault(); this.submitForm(); },
