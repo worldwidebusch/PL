@@ -38,12 +38,19 @@
   .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
   #plk-home-query:focus-visible { outline: none !important; outline-offset: 0; }
   .plk-brand:hover { opacity: 0.78; }
-  .plk-glass-nav { box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); }
+  .plk-glass-nav { border-radius: 5px !important; box-shadow: 0 10px 28px -22px rgba(20,36,49,0.45); }
   .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
   .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
-  .plk-auth-text:hover { color: #006BC6 !important; }
+  .plk-auth-text { min-height: 38px; padding: 0 15px !important; border: 1px solid #b85c00 !important; border-radius: 3px !important; background: var(--surface,#fff) !important; color: #a34f00 !important; }
+  .plk-auth-text:hover { border-color: #934700 !important; background: #fff7ef !important; color: #873f00 !important; }
+  .plk-register-button { border: 1px solid #b85c00 !important; border-radius: 3px !important; background: #b85c00 !important; box-shadow: none !important; }
+  .plk-register-button:hover { border-color: #994a00 !important; background: #994a00 !important; }
   .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(0,107,198,0.56) !important; }
+  .plk-search-shell { border-radius: 5px !important; }
   .plk-search-shell:hover { border-color: #B7C7D8 !important; }
+  .plk-search-submit { border-radius: 3px !important; }
+  .plk-search-submit:not(:disabled) { background: #b85c00 !important; color: #fff !important; box-shadow: none !important; }
+  .plk-search-submit:hover:not(:disabled) { background: #994a00 !important; box-shadow: none !important; }
   .plk-mic:hover { background: rgba(0,107,198,0.10) !important; color: #006BC6 !important; }
   .plk-skill-chip:hover { border-color: #80AFD7 !important; color: #005DAA !important; box-shadow: 0 8px 22px -16px rgba(0,107,198,0.5) !important; transform: translateY(-1px); }
   .plk-secondary:hover { border-color: #AFC4D9 !important; color: var(--text,#152431) !important; background: var(--panel,#F7F8FB) !important; }
@@ -85,8 +92,7 @@
     .plk-home-header { padding: 12px 14px !important; }
     .plk-home-brand img { width: 112px !important; height: auto !important; }
     .plk-glass-nav { top: 12px !important; right: 14px !important; gap: 5px !important; padding: 5px 6px 5px 8px !important; }
-    .plk-auth-text { display: none !important; }
-    .plk-register-button, .plk-dashboard-button { height: 36px !important; padding: 0 13px !important; font-size: 13px !important; }
+    .plk-auth-text, .plk-register-button, .plk-dashboard-button { height: 36px !important; min-height: 36px !important; padding: 0 10px !important; font-size: 12px !important; }
     .plk-home-main { padding: 58px 16px 62px !important; }
     .plk-home-title { font-size: clamp(34px, 11vw, 44px) !important; }
     .plk-home-subtitle { font-size: 15.5px !important; }
@@ -126,7 +132,7 @@
 
   <header class="plk-home-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <a class="plk-brand plk-home-brand plk-focusable" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
-    <div class="plk-glass-nav" style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+    <div class="plk-glass-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <div style="position: relative;">
           <button class="plk-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
@@ -147,8 +153,8 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <button class="plk-auth-text" onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;">{{ t.login }}</button>
-        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};">{{ t.register }}</button>
+        <button class="plk-auth-text" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #b85c00; border-radius: 3px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #a34f00;">{{ t.login }}</button>
+        <button class="plk-primary plk-register-button" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #b85c00; border-radius: 3px; background: #b85c00; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>
@@ -170,7 +176,7 @@
 
       <div style="width: 100%; margin-top: 38px;">
         <label class="plk-visually-hidden" for="plk-home-query">{{ t.searchLabel }}</label>
-        <div class="plk-search-shell" style="display: flex; align-items: center; gap: 10px; border: 1.5px solid {{ borderColor }}; border-radius: 999px; background: var(--surface,#fff); box-shadow: {{ boxShadow }}; height: 62px; padding: 0 10px 0 24px; transition: border-color 0.15s, box-shadow 0.15s;">
+        <div class="plk-search-shell" style="display: flex; align-items: center; gap: 10px; border: 1.5px solid {{ borderColor }}; border-radius: 5px; background: var(--surface,#fff); box-shadow: {{ boxShadow }}; height: 58px; padding: 0 7px 0 18px; transition: border-color 0.15s, box-shadow 0.15s;">
           <input
             id="plk-home-query"
             name="project-query"
@@ -193,7 +199,7 @@
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ micColor }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
             </button>
           </sc-if>
-          <button class="plk-primary" type="button" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" aria-label="{{ t.continueLabel }}" title="{{ t.continueLabel }}" style="flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; padding: 0; cursor: {{ continueCursor }}; background: {{ goBg }}; color: {{ goColor }}; font-size: 18px; line-height: 1; box-shadow: {{ goShadow }};">→</button>
+          <button class="plk-primary plk-search-submit" type="button" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" aria-label="{{ t.continueLabel }}" title="{{ t.continueLabel }}" style="flex-shrink: 0; width: 46px; height: 42px; border-radius: 3px; border: none; display: flex; align-items: center; justify-content: center; padding: 0; cursor: {{ continueCursor }}; background: {{ goBg }}; color: {{ goColor }}; font-size: 18px; line-height: 1; box-shadow: {{ goShadow }};">→</button>
         </div>
 
         <div id="plk-home-query-help" role="status" aria-live="polite" style="min-height: 24px; margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
