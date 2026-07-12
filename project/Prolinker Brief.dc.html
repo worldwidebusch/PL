@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
+<script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -102,7 +103,7 @@
         </div>
         <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.companies }}</a>
         <button class="plk-public-action plk-public-action-blue" onClick="{{ onLogin }}">{{ t.login }}</button>
-        <button class="plk-public-action plk-public-action-orange" onClick="{{ onRegister }}">{{ t.register }}</button>
+        <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
+<script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -154,7 +155,7 @@
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <a class="plk-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
         <button class="plk-auth-text plk-public-action plk-public-action-blue" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
-        <button class="plk-primary plk-register-button plk-public-action plk-public-action-orange" onClick="{{ onRegister }}" style="height: 38px; padding: 0 17px; border: 1px solid #E88300; border-radius: 3px; background: #E88300; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ t.register }}</button>
+        <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
         <prolinker-account-menu></prolinker-account-menu>

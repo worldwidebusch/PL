@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v11-whatsapp-login-button";
+const CACHE_VERSION = "v12-signup-choice";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -15,6 +15,7 @@ const PRECACHE_URLS = [
   "./prolinker-theme.css",
   "./prolinker-app.js",
   "./prolinker-account-menu.js",
+  "./prolinker-signup-menu.js",
   "./support.js",
   "./manifest.webmanifest",
   "./assets/prolinker-mark.png",

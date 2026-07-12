@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -63,7 +64,7 @@
       </details>
       <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.companies }}</a>
       <a class="plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html?mode=login&amp;role=client">{{ t.login }}</a>
-      <a class="plk-public-action plk-public-action-orange" href="Prolinker Login.dc.html?mode=register&amp;role=freelancer">{{ t.register }}</a>
+      <prolinker-signup-menu></prolinker-signup-menu>
     </nav>
   </header>
 
