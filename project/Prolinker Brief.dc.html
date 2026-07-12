@@ -50,6 +50,20 @@
   .plk-brief-budget-toggle { display: inline-flex; padding: 3px; border: 1px solid var(--border,#E4E5EC); border-radius: 3px; background: var(--panel,#F7F8FB); }
   .plk-brief-budget-input { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 3px; background: var(--panel,#F7F8FB); }
   .plk-brief-work-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+  .plk-brief-location-wrap { position: relative; }
+  .plk-brief-location-field { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 12px 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 3px; background: var(--panel,#F7F8FB); }
+  .plk-brief-location-field:focus-within { border-color: #5992C2; box-shadow: 0 0 0 3px rgba(89,146,194,0.12); }
+  .plk-brief-location-field input { flex: 1; min-width: 0; height: 44px; padding: 0; border: 0; background: transparent; color: var(--text,#152431); font-size: 15px; }
+  .plk-brief-location-verified { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px; color: #237A45; font-size: 11px; font-weight: 800; white-space: nowrap; }
+  .plk-brief-location-menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 65; max-height: 310px; overflow-y: auto; overscroll-behavior: contain; padding: 6px; border: 1px solid var(--border,#E4E5EC); border-radius: 5px; background: var(--surface,#fff); box-shadow: 0 18px 44px -22px rgba(16,37,50,0.5); }
+  .plk-brief-location-option { width: 100%; min-height: 50px; display: grid; grid-template-columns: 32px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 7px 9px; border: 0; border-radius: 3px !important; background: transparent; color: var(--text,#152431); font-family: inherit; text-align: left; cursor: pointer; }
+  .plk-brief-location-option:hover, .plk-brief-location-option.is-active { background: var(--panel,#F7F8FB); }
+  .plk-brief-location-country { width: 30px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 3px; background: #E8F1FA; color: #316C9D; font-family: 'JetBrains Mono',monospace; font-size: 9px; font-weight: 800; }
+  .plk-brief-location-name { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 750; }
+  .plk-brief-location-meta { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--faint,#7A8494); font-size: 11px; }
+  .plk-brief-location-check { display: inline-flex; align-items: center; gap: 4px; color: #237A45; font-size: 10px; font-weight: 750; }
+  .plk-brief-location-empty { padding: 16px 12px; color: var(--muted,#565B62); font-size: 12.5px; line-height: 1.45; text-align: center; }
+  .plk-brief-location-source { padding: 7px 10px 3px; border-top: 1px solid var(--hairline,#ECEDF2); color: var(--faint,#9AA0A6); font-size: 10.5px; }
   .plk-brief-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--hairline,#ECEDF2); }
   .plk-brief-back { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 1px solid var(--border,#E4E5EC); border-radius: 3px; background: var(--surface,#fff); color: var(--muted,#565B62); font-size: 14px; font-weight: 700; }
   .plk-brief-back:hover { border-color: #5992C2; color: #477EAD; }
@@ -65,6 +79,7 @@
     .plk-brief-budget-input { min-width: 0; padding: 0 10px; }
     .plk-brief-budget-input input { width: 100% !important; min-width: 0; }
     .plk-brief-work-grid { grid-template-columns: 1fr; }
+    .plk-brief-location-verified span:last-child { display: none; }
     .plk-brief-actions { flex-direction: column-reverse; align-items: stretch; }
     .plk-brief-actions > div { width: 100%; flex-direction: column; align-items: stretch !important; }
     .plk-brief-actions > div > span { max-width: none !important; text-align: left !important; }
@@ -190,12 +205,30 @@
 
     <sc-if value="{{ showLocation }}" hint-placeholder-val="{{ false }}">
     <div data-reveal style="margin-top: 26px;">
-      <label style="display: block; font-size: 14px; font-weight: 700; color: var(--text,#152431); margin-bottom: 9px;">{{ t.whereLabel }}</label>
-      <div class="plk-brief-control" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC);">
-        <span style="display: inline-flex; flex-shrink: 0; color: var(--faint,#9AA0A6);">{{ pinEl }}</span>
-        <input type="text" value="{{ where }}" onInput="{{ onWhereInput }}" placeholder="{{ t.wherePh }}" style="flex: 1; min-width: 0; border: none; background: transparent; font-size: 15px; color: var(--text,#152431);">
+      <label for="plk-brief-location" style="display: block; font-size: 14px; font-weight: 700; color: var(--text,#152431); margin-bottom: 9px;">{{ t.whereLabel }}</label>
+      <div class="plk-brief-location-wrap">
+        <div class="plk-brief-location-field" style="border-color: {{ locationBorder }};">
+          <span style="display: inline-flex; flex-shrink: 0; color: var(--faint,#9AA0A6);">{{ pinEl }}</span>
+          <input id="plk-brief-location" type="text" value="{{ where }}" onInput="{{ onWhereInput }}" onFocus="{{ onWhereFocus }}" onBlur="{{ onWhereBlur }}" onKeyDown="{{ onWhereKeyDown }}" ref="{{ locationInputRef }}" placeholder="{{ t.wherePh }}" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="{{ locationMenuOpen }}" aria-controls="plk-brief-location-options" aria-activedescendant="{{ locationActiveDescendant }}" aria-invalid="{{ locationInvalid }}" aria-describedby="plk-brief-location-help">
+          <sc-if value="{{ locationVerified }}" hint-placeholder-val="{{ false }}"><span class="plk-brief-location-verified">{{ verifiedEl }}<span>{{ t.whereVerified }}</span></span></sc-if>
+        </div>
+        <sc-if value="{{ locationMenuOpen }}" hint-placeholder-val="{{ false }}">
+          <div id="plk-brief-location-options" class="plk-brief-location-menu" role="listbox" aria-label="{{ t.whereResultsLabel }}">
+            <sc-if value="{{ hasLocationOptions }}" hint-placeholder-val="{{ true }}">
+              <sc-for list="{{ locationOptions }}" as="lo" hint-placeholder-count="6">
+                <button id="{{ lo.optionId }}" type="button" class="{{ lo.className }}" role="option" aria-selected="{{ lo.active }}" onMouseDown="{{ lo.onMouseDown }}" onClick="{{ lo.onClick }}">
+                  <span class="plk-brief-location-country">{{ lo.countryCode }}</span>
+                  <span style="min-width: 0;"><span class="plk-brief-location-name">{{ lo.name }}</span><span class="plk-brief-location-meta">{{ lo.meta }}</span></span>
+                  <span class="plk-brief-location-check">{{ lo.checkEl }}<span>{{ t.whereVerifiedShort }}</span></span>
+                </button>
+              </sc-for>
+            </sc-if>
+            <sc-if value="{{ locationNoResults }}" hint-placeholder-val="{{ false }}"><div class="plk-brief-location-empty" role="status">{{ t.whereNoResults }}</div></sc-if>
+            <div class="plk-brief-location-source" role="presentation">{{ t.whereSource }}</div>
+          </div>
+        </sc-if>
       </div>
-      <div style="font-size: 12.5px; color: var(--faint,#9AA0A6); margin-top: 7px;">{{ whereHintLine }}</div>
+      <div id="plk-brief-location-help" aria-live="polite" style="font-size: 12.5px; color: {{ locationHintColor }}; margin-top: 7px;">{{ whereHintLine }}</div>
     </div>
     </sc-if>
 
@@ -213,7 +246,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1100},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand &amp; logo design&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { theme: 'light', query: '', desc: '', budgetMode: 'hourly', budgetMin: '', budgetMax: '', hours: 24, workMode: 'remote', location: '', aiLoading: false, listening: false, micNote: false, menuOpen: false, attempted: false, aiGate: false, hoursTouched: false, authenticated: false };
+  state = { theme: 'light', query: '', desc: '', budgetMode: 'hourly', budgetMin: '', budgetMax: '', hours: 24, workMode: 'remote', location: '', locationId: '', locationVerified: false, locationOpen: false, locationActiveIndex: 0, aiLoading: false, listening: false, micNote: false, menuOpen: false, attempted: false, aiGate: false, hoursTouched: false, authenticated: false };
 
   isValidWhatsappSession(session, requiredRole) {
     if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
@@ -237,7 +270,10 @@ class Component extends DCLogic {
     this.setState({ query: q, desc: q });
     try {
       const cached = JSON.parse(localStorage.getItem('plk-brief') || 'null');
-      if (cached && cached.query === q) { this.setState({ desc: cached.desc || q, budgetMode: cached.budgetMode || 'hourly', budgetMin: cached.budgetMin || '', budgetMax: cached.budgetMax || '', hours: cached.hours || 24, workMode: cached.workMode || 'remote', location: cached.location || '', hoursTouched: true }); }
+      if (cached && cached.query === q) {
+        const cachedPlace = this.resolveLocation(cached.locationId || cached.location || '');
+        this.setState({ desc: cached.desc || q, budgetMode: cached.budgetMode || 'hourly', budgetMin: cached.budgetMin || '', budgetMax: cached.budgetMax || '', hours: cached.hours || 24, workMode: cached.workMode || 'remote', location: cachedPlace ? this.locationLabel(cachedPlace) : (cached.location || ''), locationId: cachedPlace ? cachedPlace.id : '', locationVerified: !!cachedPlace, hoursTouched: true });
+      }
     } catch (e) {}
     if ('IntersectionObserver' in window) {
       this._io = new IntersectionObserver((entries) => {
@@ -246,7 +282,7 @@ class Component extends DCLogic {
       requestAnimationFrame(() => { document.querySelectorAll('[data-reveal]').forEach((el, i) => { el.style.animationDelay = (i * 0.05) + 's'; this._io.observe(el); }); });
     }
   }
-  componentWillUnmount() { if (this._io) this._io.disconnect(); if (this._recog) { try { this._recog.stop(); } catch (e) {} } }
+  componentWillUnmount() { if (this._io) this._io.disconnect(); if (this._recog) { try { this._recog.stop(); } catch (e) {} } clearTimeout(this._locationBlurTimer); }
 
   toggleMenu() { this.setState((s) => ({ menuOpen: !s.menuOpen })); }
   closeMenu() { this.setState({ menuOpen: false }); }
@@ -266,6 +302,174 @@ class Component extends DCLogic {
     const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
     return l.indexOf('nl') === 0 ? 'nl' : 'en';
   }
+
+  verifiedLocations() {
+    if (this._verifiedLocations) return this._verifiedLocations;
+    const rows = [
+      ['nl-amsterdam','Amsterdam','Noord-Holland','Nederland','NL','Stad','amsterdam'],
+      ['nl-rotterdam','Rotterdam','Zuid-Holland','Nederland','NL','Stad','rotterdam'],
+      ['nl-den-haag','Den Haag','Zuid-Holland','Nederland','NL','Stad','den haag|the hague'],
+      ['nl-utrecht','Utrecht','Utrecht','Nederland','NL','Stad','utrecht'],
+      ['nl-eindhoven','Eindhoven','Noord-Brabant','Nederland','NL','Stad','eindhoven'],
+      ['be-antwerpen','Antwerpen','Antwerpen','Belgi\u00eb','BE','Stad','antwerpen|antwerp'],
+      ['be-brussel','Brussel','Brussels Hoofdstedelijk Gewest','Belgi\u00eb','BE','Stad','brussel|brussels|bruxelles'],
+      ['be-gent','Gent','Oost-Vlaanderen','Belgi\u00eb','BE','Stad','gent|ghent'],
+      ['nl-groningen','Groningen','Groningen','Nederland','NL','Stad','groningen'],
+      ['nl-tilburg','Tilburg','Noord-Brabant','Nederland','NL','Stad','tilburg'],
+      ['nl-almere','Almere','Flevoland','Nederland','NL','Stad','almere'],
+      ['nl-breda','Breda','Noord-Brabant','Nederland','NL','Stad','breda'],
+      ['nl-nijmegen','Nijmegen','Gelderland','Nederland','NL','Stad','nijmegen'],
+      ['nl-apeldoorn','Apeldoorn','Gelderland','Nederland','NL','Stad','apeldoorn'],
+      ['nl-arnhem','Arnhem','Gelderland','Nederland','NL','Stad','arnhem'],
+      ['nl-haarlem','Haarlem','Noord-Holland','Nederland','NL','Stad','haarlem'],
+      ['nl-amersfoort','Amersfoort','Utrecht','Nederland','NL','Stad','amersfoort'],
+      ['nl-enschede','Enschede','Overijssel','Nederland','NL','Stad','enschede'],
+      ['nl-den-bosch','\'s-Hertogenbosch','Noord-Brabant','Nederland','NL','Stad','s hertogenbosch|den bosch|shertogenbosch'],
+      ['nl-maastricht','Maastricht','Limburg','Nederland','NL','Stad','maastricht'],
+      ['nl-leiden','Leiden','Zuid-Holland','Nederland','NL','Stad','leiden'],
+      ['nl-dordrecht','Dordrecht','Zuid-Holland','Nederland','NL','Stad','dordrecht'],
+      ['nl-zoetermeer','Zoetermeer','Zuid-Holland','Nederland','NL','Stad','zoetermeer'],
+      ['nl-zwolle','Zwolle','Overijssel','Nederland','NL','Stad','zwolle'],
+      ['nl-deventer','Deventer','Overijssel','Nederland','NL','Stad','deventer'],
+      ['nl-delft','Delft','Zuid-Holland','Nederland','NL','Stad','delft'],
+      ['nl-alkmaar','Alkmaar','Noord-Holland','Nederland','NL','Stad','alkmaar'],
+      ['nl-leeuwarden','Leeuwarden','Friesland','Nederland','NL','Stad','leeuwarden'],
+      ['nl-hilversum','Hilversum','Noord-Holland','Nederland','NL','Stad','hilversum'],
+      ['nl-hoofddorp','Hoofddorp','Noord-Holland','Nederland','NL','Stad','hoofddorp|haarlemmermeer'],
+      ['nl-purmerend','Purmerend','Noord-Holland','Nederland','NL','Stad','purmerend'],
+      ['nl-zaandam','Zaandam','Noord-Holland','Nederland','NL','Stad','zaandam|zaanstad'],
+      ['nl-schiphol','Schiphol','Noord-Holland','Nederland','NL','Gebied','schiphol|amsterdam airport'],
+      ['nl-amstelveen','Amstelveen','Noord-Holland','Nederland','NL','Stad','amstelveen'],
+      ['nl-gouda','Gouda','Zuid-Holland','Nederland','NL','Stad','gouda'],
+      ['nl-lelystad','Lelystad','Flevoland','Nederland','NL','Stad','lelystad'],
+      ['nl-nieuwegein','Nieuwegein','Utrecht','Nederland','NL','Stad','nieuwegein'],
+      ['nl-alphen','Alphen aan den Rijn','Zuid-Holland','Nederland','NL','Stad','alphen aan den rijn|alphen'],
+      ['nl-venlo','Venlo','Limburg','Nederland','NL','Stad','venlo'],
+      ['nl-roermond','Roermond','Limburg','Nederland','NL','Stad','roermond'],
+      ['nl-heerlen','Heerlen','Limburg','Nederland','NL','Stad','heerlen'],
+      ['nl-sittard-geleen','Sittard-Geleen','Limburg','Nederland','NL','Stad','sittard geleen|sittard|geleen'],
+      ['nl-helmond','Helmond','Noord-Brabant','Nederland','NL','Stad','helmond'],
+      ['nl-oss','Oss','Noord-Brabant','Nederland','NL','Stad','oss'],
+      ['nl-roosendaal','Roosendaal','Noord-Brabant','Nederland','NL','Stad','roosendaal'],
+      ['nl-ede','Ede','Gelderland','Nederland','NL','Stad','ede'],
+      ['nl-veenendaal','Veenendaal','Utrecht','Nederland','NL','Stad','veenendaal'],
+      ['nl-emmen','Emmen','Drenthe','Nederland','NL','Stad','emmen'],
+      ['nl-assen','Assen','Drenthe','Nederland','NL','Stad','assen'],
+      ['nl-middelburg','Middelburg','Zeeland','Nederland','NL','Stad','middelburg'],
+      ['be-charleroi','Charleroi','Henegouwen','Belgi\u00eb','BE','Stad','charleroi'],
+      ['be-luik','Luik','Luik','Belgi\u00eb','BE','Stad','luik|liege|li\u00e8ge'],
+      ['be-brugge','Brugge','West-Vlaanderen','Belgi\u00eb','BE','Stad','brugge|bruges'],
+      ['be-leuven','Leuven','Vlaams-Brabant','Belgi\u00eb','BE','Stad','leuven|louvain'],
+      ['be-mechelen','Mechelen','Antwerpen','Belgi\u00eb','BE','Stad','mechelen|malines'],
+      ['be-hasselt','Hasselt','Limburg','Belgi\u00eb','BE','Stad','hasselt'],
+      ['be-namen','Namen','Namen','Belgi\u00eb','BE','Stad','namen|namur'],
+      ['be-aalst','Aalst','Oost-Vlaanderen','Belgi\u00eb','BE','Stad','aalst'],
+      ['be-kortrijk','Kortrijk','West-Vlaanderen','Belgi\u00eb','BE','Stad','kortrijk|courtrai'],
+      ['be-genk','Genk','Limburg','Belgi\u00eb','BE','Stad','genk'],
+      ['be-sint-niklaas','Sint-Niklaas','Oost-Vlaanderen','Belgi\u00eb','BE','Stad','sint niklaas|sint-niklaas'],
+      ['be-oostende','Oostende','West-Vlaanderen','Belgi\u00eb','BE','Stad','oostende|ostend'],
+      ['be-turnhout','Turnhout','Antwerpen','Belgi\u00eb','BE','Stad','turnhout'],
+      ['be-roeselare','Roeselare','West-Vlaanderen','Belgi\u00eb','BE','Stad','roeselare|roulers'],
+      ['region-randstad','Randstad','Noord- en Zuid-Holland, Utrecht en Flevoland','Nederland','NL','Regio','randstad'],
+      ['region-noord-brabant','Noord-Brabant','Noord-Brabant','Nederland','NL','Regio','noord brabant|brabant'],
+      ['region-gelderland','Gelderland','Gelderland','Nederland','NL','Regio','gelderland'],
+      ['region-noord-holland','Noord-Holland','Noord-Holland','Nederland','NL','Regio','noord holland'],
+      ['region-zuid-holland','Zuid-Holland','Zuid-Holland','Nederland','NL','Regio','zuid holland'],
+      ['region-utrecht','Provincie Utrecht','Utrecht','Nederland','NL','Regio','provincie utrecht|utrecht provincie'],
+      ['region-flevoland','Flevoland','Flevoland','Nederland','NL','Regio','flevoland'],
+      ['region-overijssel','Overijssel','Overijssel','Nederland','NL','Regio','overijssel'],
+      ['region-friesland','Friesland','Friesland','Nederland','NL','Regio','friesland|fryslan|frysl\u00e2n'],
+      ['region-drenthe','Drenthe','Drenthe','Nederland','NL','Regio','drenthe'],
+      ['region-groningen','Provincie Groningen','Groningen','Nederland','NL','Regio','provincie groningen|groningen provincie'],
+      ['region-limburg-nl','Limburg','Limburg','Nederland','NL','Regio','limburg nederland|nederlands limburg'],
+      ['region-zeeland','Zeeland','Zeeland','Nederland','NL','Regio','zeeland'],
+      ['region-vlaanderen','Vlaanderen','Vlaams Gewest','Belgi\u00eb','BE','Regio','vlaanderen|flanders'],
+      ['region-wallonie','Walloni\u00eb','Waals Gewest','Belgi\u00eb','BE','Regio','wallonie|wallonia']
+    ];
+    this._verifiedLocations = rows.map((row) => ({ id: row[0], name: row[1], region: row[2], country: row[3], countryCode: row[4], type: row[5], aliases: row[6].split('|') }));
+    return this._verifiedLocations;
+  }
+
+  normalizeLocation(value) {
+    let text = String(value || '').toLowerCase();
+    try { text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) {}
+    return text.replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  locationCountry(place, lang) {
+    if ((lang || this.lang()) === 'nl') return place.country;
+    return place.countryCode === 'NL' ? 'Netherlands' : 'Belgium';
+  }
+
+  locationLabel(place) { return place.name + ', ' + this.locationCountry(place); }
+
+  resolveLocation(value) {
+    const needle = this.normalizeLocation(value);
+    if (!needle) return null;
+    return this.verifiedLocations().find((place) => {
+      if (place.id === value) return true;
+      const exact = [place.name, place.name + ', ' + place.country, place.name + ', ' + this.locationCountry(place, 'en')].concat(place.aliases || []).map((entry) => this.normalizeLocation(entry));
+      return exact.indexOf(needle) !== -1;
+    }) || null;
+  }
+
+  locationSuggestions(value) {
+    const needle = this.normalizeLocation(value);
+    const places = this.verifiedLocations();
+    if (!needle) return places.slice(0, 8);
+    return places.map((place, order) => {
+      const name = this.normalizeLocation(place.name);
+      const label = this.normalizeLocation(this.locationLabel(place));
+      const aliases = (place.aliases || []).map((entry) => this.normalizeLocation(entry));
+      const haystack = [name, label, this.normalizeLocation(place.region), this.normalizeLocation(place.country), this.normalizeLocation(this.locationCountry(place, 'en')), this.normalizeLocation(place.countryCode)].concat(aliases).join(' ');
+      let score = 99;
+      if (name === needle || aliases.indexOf(needle) !== -1) score = 0;
+      else if (name.indexOf(needle) === 0) score = 1;
+      else if (aliases.some((alias) => alias.indexOf(needle) === 0)) score = 2;
+      else if (label.indexOf(needle) === 0) score = 3;
+      else if (haystack.split(/\s+/).some((part) => part.indexOf(needle) === 0)) score = 4;
+      else if (haystack.indexOf(needle) !== -1) score = 5;
+      return { place: place, order: order, score: score };
+    }).filter((entry) => entry.score < 99).sort((a, b) => a.score - b.score || a.order - b.order).slice(0, 8).map((entry) => entry.place);
+  }
+
+  inputLocation(event) {
+    clearTimeout(this._locationBlurTimer);
+    this.setState({ location: event.target.value, locationId: '', locationVerified: false, locationOpen: true, locationActiveIndex: 0, aiGate: false });
+  }
+
+  focusLocation() {
+    clearTimeout(this._locationBlurTimer);
+    this.setState({ locationOpen: true, locationActiveIndex: 0 });
+  }
+
+  blurLocation() {
+    clearTimeout(this._locationBlurTimer);
+    this._locationBlurTimer = setTimeout(() => this.setState({ locationOpen: false, locationActiveIndex: 0 }), 120);
+  }
+
+  selectLocation(place) {
+    if (!place) return;
+    clearTimeout(this._locationBlurTimer);
+    this.setState({ location: this.locationLabel(place), locationId: place.id, locationVerified: true, locationOpen: false, locationActiveIndex: 0, aiGate: false });
+  }
+
+  keyLocation(event) {
+    const options = this.locationSuggestions(this.state.location);
+    if (event.key === 'Escape') { event.preventDefault(); this.setState({ locationOpen: false, locationActiveIndex: 0 }); return; }
+    if (!options.length) return;
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      this.setState({ locationOpen: true, locationActiveIndex: (Number(this.state.locationActiveIndex) + 1) % options.length });
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      this.setState({ locationOpen: true, locationActiveIndex: (Number(this.state.locationActiveIndex) - 1 + options.length) % options.length });
+    } else if (event.key === 'Enter' && this.state.locationOpen) {
+      event.preventDefault();
+      this.selectLocation(options[Math.max(0, Math.min(options.length - 1, Number(this.state.locationActiveIndex) || 0))]);
+    }
+  }
+
   hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
   iconDefs() {
@@ -332,8 +536,8 @@ class Component extends DCLogic {
       budgetLabel: 'Budget', hourly: 'Hourly rate', project: 'Project budget', perHour: '/hr', projectSuffix: 'total', budgetPh: 'e.g. 75', budgetTo: 'to', budgetMinPh: 'min', budgetMaxPh: 'max',
       hoursLabel: 'Hours per week', hoursUnit: 'h/week', hoursMax: '40+ h/week',
       workLabel: 'Where will they work?', remote: 'Remote', hybrid: 'Hybrid', onsite: 'On location',
-      whereLabel: 'Location', wherePh: 'City or region', whereHint: 'Enter the city or region for on-site work.',
-      back: 'Back', continue: 'Continue to matches',
+      whereLabel: 'Location', wherePh: 'City or region', whereHint: 'Type a city or region and select a verified location.', whereSelectedHint: 'Verified location selected.', whereVerified: 'Verified', whereVerifiedShort: 'Verified', whereResultsLabel: 'Verified locations', whereNoResults: 'No verified location found. Try another city or region.', whereSource: 'Verified locations in the Netherlands and Belgium',
+      back: 'Back', continue: 'Continue to matches', locationRequired: 'Select a verified location from the list.',
       micLabel: 'Dictate your description', aiGateMsg: 'Fill in budget, location and hours first to generate with AI.', micUnsupported: 'Voice input isn’t supported in this browser.',
       descRequired: 'Please add a project description (min. 20 characters).', budgetRequired: 'Enter a valid budget or choose “Open to discuss”.',
     };
@@ -349,8 +553,8 @@ class Component extends DCLogic {
       budgetLabel: 'Budget', hourly: 'Uurtarief', project: 'Projectbudget', perHour: '/uur', projectSuffix: 'totaal', budgetPh: 'bijv. 75', budgetTo: 'tot', budgetMinPh: 'min', budgetMaxPh: 'max',
       hoursLabel: 'Uren per week', hoursUnit: 'u/week', hoursMax: '40+ u/week',
       workLabel: 'Waar werkt de freelancer?', remote: 'Op afstand', hybrid: 'Hybride', onsite: 'Op locatie',
-      whereLabel: 'Locatie', wherePh: 'Stad of regio', whereHint: 'Voer de stad of regio in voor werk op locatie.',
-      back: 'Terug', continue: 'Ga verder naar matches',
+      whereLabel: 'Locatie', wherePh: 'Stad of regio', whereHint: 'Typ een stad of regio en kies een geverifieerde locatie.', whereSelectedHint: 'Geverifieerde locatie gekozen.', whereVerified: 'Geverifieerd', whereVerifiedShort: 'Geverifieerd', whereResultsLabel: 'Geverifieerde locaties', whereNoResults: 'Geen geverifieerde locatie gevonden. Probeer een andere stad of regio.', whereSource: 'Geverifieerde locaties in Nederland en Belgi\u00eb',
+      back: 'Terug', continue: 'Ga verder naar matches', locationRequired: 'Kies een geverifieerde locatie uit de lijst.',
       micLabel: 'Spreek je omschrijving in', aiGateMsg: 'Vul eerst budget, locatie en uren in om met AI te genereren.', micUnsupported: 'Spraakinvoer wordt niet ondersteund in deze browser.',
       descRequired: 'Voeg een projectomschrijving toe (min. 20 tekens).', budgetRequired: 'Vul een geldig budget in of kies “In overleg”.',
     };
@@ -393,9 +597,13 @@ class Component extends DCLogic {
     const _bmax = parseFloat(this.state.budgetMax);
     const _floor = this.state.budgetMode === 'hourly' ? 25 : 50;
     const _budgetOk = !isNaN(_bmin) && !isNaN(_bmax) && _bmin >= _floor && _bmax >= _bmin;
-    const _locOk = this.state.workMode === 'remote' || (this.state.location || '').trim().length > 0;
+    const _locOk = this.state.workMode === 'remote' || (this.state.locationVerified && !!this.state.locationId);
     const _hoursOk = !isNaN(this.state.hours) && this.state.hours >= 1;
-    if (!_budgetOk || !_locOk || !_hoursOk) { this.setState({ aiGate: true, attempted: true }); return; }
+    if (!_budgetOk || !_locOk || !_hoursOk) {
+      this.setState({ aiGate: true, attempted: true, locationOpen: !_locOk && this.state.workMode !== 'remote' });
+      if (!_locOk && this._locationInput) setTimeout(() => this._locationInput.focus(), 0);
+      return;
+    }
     this.setState({ aiGate: false, aiLoading: true });
     const nl = this.lang() === 'nl';
     const seed = (this.state.desc || '').trim() || this.state.query;
@@ -420,11 +628,16 @@ class Component extends DCLogic {
     const bmax = parseFloat(this.state.budgetMax);
     const floor = this.state.budgetMode === 'hourly' ? 25 : 50;
     const budgetOk = !isNaN(bmin) && !isNaN(bmax) && bmin >= floor && bmax >= bmin;
-    if (!descOk || !budgetOk) { this.setState({ attempted: true }); return; }
+    const locationOk = this.state.workMode === 'remote' || (this.state.locationVerified && !!this.state.locationId);
+    if (!descOk || !budgetOk || !locationOk) {
+      this.setState({ attempted: true, locationOpen: !locationOk && this.state.workMode !== 'remote' });
+      if (!locationOk && this._locationInput) setTimeout(() => this._locationInput.focus(), 0);
+      return;
+    }
     const q = this.state.query;
     try {
       localStorage.setItem('plk-query', q);
-      localStorage.setItem('plk-brief', JSON.stringify({ query: this.state.query, desc: this.state.desc, budgetMode: this.state.budgetMode, budgetMin: this.state.budgetMin, budgetMax: this.state.budgetMax, hours: this.state.hours, workMode: this.state.workMode, location: this.state.location }));
+      localStorage.setItem('plk-brief', JSON.stringify({ query: this.state.query, desc: this.state.desc, budgetMode: this.state.budgetMode, budgetMin: this.state.budgetMin, budgetMax: this.state.budgetMax, hours: this.state.hours, workMode: this.state.workMode, location: this.state.workMode === 'remote' ? '' : this.state.location, locationId: this.state.workMode === 'remote' ? '' : this.state.locationId, locationVerified: this.state.workMode === 'remote' ? false : this.state.locationVerified }));
     } catch (e) {}
     let clientAuthenticated = false;
     try {
@@ -458,7 +671,7 @@ class Component extends DCLogic {
     const wmDefs = [['remote', 'globe', t.remote], ['hybrid', 'shuffle', t.hybrid], ['onsite', 'building', t.onsite]];
     const workModes = wmDefs.map((d) => {
       const on = wm === d[0];
-      return { label: d[2], iconEl: this.iconEl(d[1], on ? '#ffffff' : mutedIcon, 17), on: () => this.setState({ workMode: d[0] }), bg: on ? selectionAccent : 'var(--surface,#fff)', color: on ? '#ffffff' : 'var(--text,#152431)', border: on ? selectionAccent : 'var(--border,#E4E5EC)' };
+      return { label: d[2], iconEl: this.iconEl(d[1], on ? '#ffffff' : mutedIcon, 17), on: () => this.setState({ workMode: d[0], locationOpen: false, locationActiveIndex: 0 }), bg: on ? selectionAccent : 'var(--surface,#fff)', color: on ? '#ffffff' : 'var(--text,#152431)', border: on ? selectionAccent : 'var(--border,#E4E5EC)' };
     });
 
     const hrs = this.state.hours;
@@ -471,12 +684,34 @@ class Component extends DCLogic {
     const bMax = parseFloat(this.state.budgetMax);
     const bFloor = this.state.budgetMode === 'hourly' ? 25 : 50;
     const budgetOk = !isNaN(bMin) && !isNaN(bMax) && bMin >= bFloor && bMax >= bMin;
-    const canContinue = descOk && budgetOk;
+    const locationOk = this.state.workMode === 'remote' || (this.state.locationVerified && !!this.state.locationId);
+    const canContinue = descOk && budgetOk && locationOk;
     const budgetErrMsg = nl ? ('Minimum ' + (bm === 'hourly' ? 'uurtarief' : 'projectbudget') + ' moet €' + bFloor + ' zijn of hoger.') : ('Minimum ' + (bm === 'hourly' ? 'hourly rate' : 'project budget') + ' must be €' + bFloor + ' or higher.');
-    const errorMsg = (attempted && !descOk) ? t.descRequired : ((attempted && !budgetOk) ? budgetErrMsg : '');
+    const errorMsg = (attempted && !descOk) ? t.descRequired : ((attempted && !budgetOk) ? budgetErrMsg : ((attempted && !locationOk) ? t.locationRequired : ''));
     const _bminN = parseFloat(this.state.budgetMin);
     const budgetTooLow = !isNaN(_bminN) && _bminN < bFloor;
     const aiGateMsg = budgetTooLow ? (nl ? ('Budget is te laag - minimum ' + (bm === 'hourly' ? 'uurtarief' : 'projectbudget') + ' is \u20ac' + bFloor + '.') : ('Budget is too low - minimum ' + (bm === 'hourly' ? 'hourly rate' : 'project budget') + ' is \u20ac' + bFloor + '.')) : t.aiGateMsg;
+    const suggestedPlaces = this.locationSuggestions(this.state.location);
+    const activeLocationIndex = suggestedPlaces.length ? Math.max(0, Math.min(suggestedPlaces.length - 1, Number(this.state.locationActiveIndex) || 0)) : 0;
+    const locationOptions = suggestedPlaces.map((place, index) => {
+      const keyboardActive = index === activeLocationIndex;
+      const selected = this.state.locationId === place.id;
+      const placeType = nl ? place.type : ({ Stad: 'City', Regio: 'Region', Gebied: 'Area' }[place.type] || place.type);
+      const placeCountry = nl ? place.country : (place.countryCode === 'NL' ? 'Netherlands' : 'Belgium');
+      return {
+        optionId: 'plk-brief-location-option-' + place.id,
+        className: 'plk-brief-location-option' + (keyboardActive || selected ? ' is-active' : ''),
+        active: selected,
+        countryCode: place.countryCode,
+        name: place.name,
+        meta: placeType + ' \u00b7 ' + place.region + ' \u00b7 ' + placeCountry,
+        checkEl: this.iconEl('check', '#237A45', 13),
+        onMouseDown: (event) => event.preventDefault(),
+        onClick: () => this.selectLocation(place)
+      };
+    });
+    const locationMenuOpen = this.state.workMode !== 'remote' && this.state.locationOpen;
+    const locationInvalid = attempted && !locationOk;
 
     return {
       t: t, accent: accent, formAccent: formAccent, selectionAccent: selectionAccent,
@@ -496,7 +731,7 @@ class Component extends DCLogic {
       desc: this.state.desc, onDescInput: (e) => this.setState({ desc: e.target.value }),
       descCount: (this.state.desc || '').length + ' / 1000', descCountColor: (this.state.desc || '').length > 900 ? '#D92D20' : 'var(--faint,#9AA0A6)',
       onGenerate: () => this.generate(),
-      aiGate: this.state.aiGate && !(budgetOk && (this.state.workMode === 'remote' || (this.state.location || '').trim().length > 0) && this.state.hours >= 1),
+      aiGate: this.state.aiGate && !(budgetOk && locationOk && this.state.hours >= 1),
       aiGateMsg: aiGateMsg,
       micShow: true, onToggleMic: () => this.toggleMic(),
       micBg: this.state.listening ? selectionAccentTint : 'var(--panel,#F7F8FB)', micBorder: this.state.listening ? selectionAccent : 'var(--border,#E4E5EC)',
@@ -517,9 +752,13 @@ class Component extends DCLogic {
       checkEl: this.iconEl('check', '#ffffff', 12),
       hours: hrs, onHoursInput: (e) => this.setState({ hours: parseInt(e.target.value, 10), hoursTouched: true }), hoursText: hoursText,
       workModes: workModes,
-      where: this.state.location, onWhereInput: (e) => this.setState({ location: e.target.value }),
+      where: this.state.location, onWhereInput: (e) => this.inputLocation(e), onWhereFocus: () => this.focusLocation(), onWhereBlur: () => this.blurLocation(), onWhereKeyDown: (e) => this.keyLocation(e), locationInputRef: (el) => { this._locationInput = el; },
       showLocation: this.state.workMode !== 'remote',
-      whereHintLine: t.whereHint,
+      locationMenuOpen: locationMenuOpen, locationOptions: locationOptions, hasLocationOptions: locationOptions.length > 0, locationNoResults: locationOptions.length === 0,
+      locationVerified: this.state.locationVerified, locationInvalid: locationInvalid, locationBorder: locationInvalid ? '#D92D20' : (this.state.locationVerified ? '#65BD6A' : 'var(--border,#E4E5EC)'),
+      locationActiveDescendant: locationMenuOpen && locationOptions.length ? locationOptions[activeLocationIndex].optionId : '',
+      whereHintLine: locationInvalid ? t.locationRequired : (this.state.locationVerified ? t.whereSelectedHint : t.whereHint), locationHintColor: locationInvalid ? '#D92D20' : (this.state.locationVerified ? '#237A45' : 'var(--faint,#9AA0A6)'),
+      verifiedEl: this.iconEl('check', '#237A45', 13),
       pinEl: this.iconEl('pin', mutedIcon, 17),
       arrowEl: this.iconEl('arrow', '#ffffff', 18),
       onContinue: () => this.continueToResults(),
