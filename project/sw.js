@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v17-centered-brief-title";
+const CACHE_VERSION = "v18-centered-registration";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
