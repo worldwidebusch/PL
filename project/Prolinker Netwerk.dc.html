@@ -73,12 +73,12 @@
   .plk-node-name { display:block; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; font-weight:700; }
   .plk-node-role { display:block; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9.5px; }
   .plk-node-pending .plk-node-role { color:#C94F2D; font-weight:700; }
-  .plk-corner { position:absolute; right:24px; bottom:24px; z-index:6; display:flex; flex-direction:column; align-items:flex-end; gap:9px; }
+  .plk-corner { position:absolute; right:24px; bottom:24px; z-index:550; display:flex; flex-direction:column; align-items:flex-end; gap:9px; }
   .plk-mini { width:42px; height:42px; border:1px solid var(--border); border-radius:10px; background:var(--surface); color:var(--muted); cursor:pointer; font-size:16px; display:inline-flex; align-items:center; justify-content:center; }
   .plk-mini:hover { border-color:var(--blue); color:var(--blue-dark); }
   .plk-fab { min-height:48px; padding:0 20px; border:1px solid var(--orange); border-radius:12px; background:var(--orange); color:#fff; cursor:pointer; font-size:14px; font-weight:750; display:inline-flex; align-items:center; gap:8px; box-shadow:0 14px 30px -14px rgba(230,95,57,.55); }
   .plk-fab:hover { background:#C94F2D; border-color:#C94F2D; }
-  .plk-pop { position:absolute; right:24px; bottom:84px; z-index:8; width:300px; max-width:calc(100vw - 40px); border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 24px 60px -20px rgba(11,17,25,.35); padding:16px; }
+  .plk-pop { position:absolute; right:24px; bottom:84px; z-index:600; width:300px; max-width:calc(100vw - 40px); border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 24px 60px -20px rgba(11,17,25,.35); padding:16px; }
   .plk-pop-title { margin:0 0 10px; font-size:14.5px; font-weight:700; }
   .plk-field label { display:block; margin-bottom:5px; color:var(--muted); font-size:10.5px; font-weight:650; }
   .plk-field { margin-bottom:10px; }
@@ -122,7 +122,7 @@
 </helmet>
 
 <div style="min-height:100vh; display:flex; flex-direction:column;">
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:900;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="network"></prolinker-account-menu></div>
   </header>

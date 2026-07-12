@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
+<script src="./prolinker-signup-menu.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#F3F4F6; --surface:#fff; --panel:#F8FAFC; --text:#152431; --muted:#424444; --faint:#8C8E8F; --border:#DCDFE2; --hair:#ECEEF0; --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; --green:#2FA35B; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --surface:#152431; --panel:#0F1A23; --text:#F3F4F6; --muted:#B4C1CC; --faint:#8C8E8F; --border:#2C3E4E; --hair:#1C2C3A; }
+  * { box-sizing:border-box; } html,body { margin:0; min-height:100%; }
+  body { background:var(--bg); color:var(--text); font-family:'Lato',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; text-decoration:none; } button,input,select { font:inherit; }
+  button { -webkit-tap-highlight-color:transparent; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
+  .plk-main { max-width:1120px; width:100%; margin:0 auto; padding:30px 24px 80px; }
+  .plk-crumbs { font-size:12px; color:var(--faint); }
+  .plk-crumbs a:hover { color:var(--blue-dark); }
+  .plk-title { margin:14px 0 0; font-size:32px; line-height:1.12; letter-spacing:-.01em; }
+  .plk-subtitle { margin:8px 0 0; max-width:720px; color:var(--muted); font-size:14.5px; line-height:1.55; }
+  .plk-filters { margin-top:24px; padding:20px; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 16px 36px -30px rgba(21,36,49,.55); }
+  .plk-filter-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px 20px; }
+  .plk-f label { display:block; margin-bottom:6px; font-size:12px; font-weight:700; color:var(--text); }
+  .plk-f input[type="text"], .plk-f select { width:100%; height:40px; padding:0 11px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--text); font-size:13px; }
+  .plk-f input[type="text"]::placeholder { color:var(--faint); }
+  .plk-f input[type="text"]:focus, .plk-f select:focus { border-color:var(--blue); background:var(--surface); outline:none; }
+  .plk-f input[type="range"] { width:100%; height:40px; accent-color:var(--blue); }
+  .plk-range-meta { display:flex; justify-content:space-between; margin-top:-6px; color:var(--faint); font-size:10.5px; font-family:'JetBrains Mono',monospace; }
+  .plk-search-btn { margin-top:18px; min-height:44px; padding:0 26px; border:1px solid var(--orange); border-radius:8px; background:var(--orange); color:#fff; cursor:pointer; font-size:14px; font-weight:750; }
+  .plk-search-btn:hover { background:#C94F2D; border-color:#C94F2D; }
+  .plk-board { margin-top:20px; border:1px solid var(--border); border-radius:14px; background:var(--surface); overflow:hidden; box-shadow:0 16px 36px -30px rgba(21,36,49,.55); }
+  .plk-thead { display:grid; grid-template-columns:92px minmax(220px,1.6fr) minmax(170px,1.2fr) 130px 140px 150px; gap:14px; padding:11px 18px; background:var(--panel); border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--faint); }
+  .plk-row { display:grid; grid-template-columns:92px minmax(220px,1.6fr) minmax(170px,1.2fr) 130px 140px 150px; gap:14px; align-items:center; padding:14px 18px; border-bottom:1px solid var(--hair); }
+  .plk-row:last-child { border-bottom:0; }
+  .plk-row:hover { background:var(--panel); }
+  .plk-when { font-size:13px; font-weight:750; }
+  .plk-when small { display:block; margin-top:3px; color:var(--faint); font-size:10.5px; font-weight:400; }
+  .plk-job { min-width:0; }
+  .plk-job a { display:block; font-size:13.5px; font-weight:700; color:var(--blue-dark); line-height:1.35; }
+  .plk-job a:hover { text-decoration:underline; text-underline-offset:3px; }
+  .plk-cat { min-width:0; font-size:12.5px; font-weight:650; line-height:1.35; }
+  .plk-cat small { display:block; margin-top:3px; color:var(--faint); font-size:11px; font-weight:400; }
+  .plk-budget { font-size:13px; font-weight:750; }
+  .plk-budget small { display:block; margin-top:3px; color:var(--faint); font-size:10.5px; font-weight:400; }
+  .plk-loc { font-size:12.5px; font-weight:650; }
+  .plk-loc small { display:block; margin-top:3px; color:var(--faint); font-size:10.5px; font-weight:400; }
+  .plk-status .plk-open { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:7px; background:#E9F6EE; color:#237A45; font-size:11px; font-weight:750; }
+  .plk-status .plk-open::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); }
+  .plk-status small { display:block; margin-top:5px; color:var(--faint); font-size:10.5px; }
+  .plk-empty { padding:40px 20px; text-align:center; color:var(--muted); font-size:13px; }
+  .plk-count-note { margin-top:10px; color:var(--faint); font-size:11.5px; text-align:right; }
+  .plk-footer { max-width:1120px; margin:0 auto; padding:0 24px 26px; color:var(--faint); font-size:11px; }
+  @media (max-width:960px) {
+    .plk-filter-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .plk-thead { display:none; }
+    .plk-row { grid-template-columns:minmax(0,1fr) auto; gap:8px 14px; }
+    .plk-when { grid-column:1 / -1; font-size:11px; }
+    .plk-cat, .plk-loc { display:none; }
+  }
+  @media (max-width:560px) {
+    .plk-main { padding:22px 14px 56px; }
+    .plk-title { font-size:26px; }
+    .plk-filters { padding:14px; }
+    .plk-filter-grid { grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style>
+<link rel="stylesheet" href="prolinker-theme.css">
+<link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
+<title>Freelance en ZZP-opdrachten | ProLinker</title>
+<meta name="description" content="Zoek actuele openstaande projecten voor freelancers, interim-professionals en ZZP'ers. Filter, reageer en begin vandaag nog.">
+</helmet>
+
+<div style="min-height:100vh; display:flex; flex-direction:column;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;">
+      <a class="plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html">Inloggen</a>
+      <prolinker-signup-menu></prolinker-signup-menu>
+    </div>
+  </header>
+
+  <main class="plk-main" style="flex:1;">
+    <nav class="plk-crumbs" aria-label="Kruimelpad"><a href="Prolinker Homepage.dc.html">Home</a> &rsaquo; Opdrachten</nav>
+    <h1 class="plk-title">Freelance en ZZP-opdrachten</h1>
+    <p class="plk-subtitle">Zoek <b>{{ totalLabel }}</b> actuele openstaande projecten voor freelancers, interim-professionals en ZZP'ers. Filter, reageer en begin vandaag nog.</p>
+
+    <form class="plk-filters" onSubmit="{{ onSearch }}">
+      <div class="plk-filter-grid">
+        <div class="plk-f"><label for="f-cat">Categorie</label>
+          <select id="f-cat" value="{{ fCat }}" onChange="{{ onCat }}">
+            <option value="">Selecteer een categorie</option>
+            <sc-for list="{{ catOpts }}" as="c" hint-placeholder-count="6"><option value="{{ c }}">{{ c }}</option></sc-for>
+          </select>
+        </div>
+        <div class="plk-f"><label for="f-q">Zoektermen</label><input id="f-q" type="text" value="{{ fQuery }}" onInput="{{ onQuery }}" placeholder="Bijv. gewenste skill(s)"></div>
+        <div class="plk-f"><label for="f-budget">Budget</label>
+          <select id="f-budget" value="{{ fBudget }}" onChange="{{ onBudget }}">
+            <option value="">Selecteer een budget</option>
+            <option value="uur">Per uur</option>
+            <option value="vast">Vaste prijs</option>
+            <option value="overleg">In overleg</option>
+          </select>
+        </div>
+        <div class="plk-f"><label for="f-range">Budgetbereik</label><input id="f-range" type="range" min="0" max="12000" step="250" value="{{ fMax }}" onInput="{{ onMax }}"><div class="plk-range-meta"><span>&euro;0</span><span>{{ maxLabel }}</span></div></div>
+        <div class="plk-f"><label for="f-loc">Locatie</label><input id="f-loc" type="text" value="{{ fLoc }}" onInput="{{ onLoc }}" placeholder="Alle opdrachten"></div>
+        <div class="plk-f"><label for="f-dist">Maximale afstand</label><input id="f-dist" type="range" min="1" max="250" value="{{ fDist }}" onInput="{{ onDist }}"><div class="plk-range-meta"><span>{{ distLabel }}</span><span>250 km</span></div></div>
+        <div class="plk-f"><label for="f-status">Status</label>
+          <select id="f-status" value="{{ fStatus }}" onChange="{{ onStatus }}">
+            <option value="">Alle opdrachten</option>
+            <option value="open">Open</option>
+            <option value="closing">Sluit binnenkort</option>
+          </select>
+        </div>
+        <div class="plk-f"><label for="f-react">Aantal reacties</label><input id="f-react" type="range" min="0" max="10" value="{{ fReact }}" onInput="{{ onReact }}"><div class="plk-range-meta"><span>0</span><span>{{ reactLabel }}</span></div></div>
+      </div>
+      <button class="plk-search-btn" type="submit">Opdrachten zoeken</button>
+    </form>
+
+    <div class="plk-board" aria-label="Opdrachten">
+      <div class="plk-thead"><span>Actief</span><span>Opdracht</span><span>Categorie</span><span>Budget</span><span>Locatie</span><span>Status</span></div>
+      <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+          <div class="plk-row">
+            <div class="plk-when">{{ r.time }}<small>{{ r.date }}</small></div>
+            <div class="plk-job"><a href="{{ r.href }}">{{ r.title }}</a></div>
+            <div class="plk-cat">{{ r.cat }}<small>{{ r.sub }}</small></div>
+            <div class="plk-budget">{{ r.budget }}<small>{{ r.budgetType }}</small></div>
+            <div class="plk-loc">{{ r.loc }}<small>{{ r.region }}</small></div>
+            <div class="plk-status"><span class="plk-open">Open</span><small>{{ r.interested }} ge&iuml;nteresseerd</small></div>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}"><div class="plk-empty">Geen opdrachten gevonden met deze filters. Probeer een bredere zoekopdracht.</div></sc-if>
+    </div>
+    <div class="plk-count-note">{{ shownLabel }}</div>
+  </main>
+  <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Hire someone great. Not just someone available.</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  state = { query: '', cat: '', budget: '', max: 12000, loc: '', dist: 250, status: '', react: 10, applied: {} };
+
+  componentDidMount() {
+    document.documentElement.setAttribute('lang', 'nl');
+    try { if (localStorage.getItem('plk-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}
+    this.setState({ applied: this.currentFilters() });
+  }
+
+  currentFilters() {
+    return { query: this.state.query, cat: this.state.cat, budget: this.state.budget, max: this.state.max, loc: this.state.loc, status: this.state.status, react: this.state.react };
+  }
+
+  jobs() {
+    return [
+      { time: '21:20', date: '11 juli 2026', title: 'Klantenservice medewerker (remote)', cat: 'Administratief en Ondersteuning', sub: 'Klantenservice', min: 150, budget: '€ 150+', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 6, skills: 'klantenservice support zendesk' },
+      { time: '16:40', date: '11 juli 2026', title: 'Freelance Meta Ads specialist als sparringpartner', cat: 'Marketing en Communicatie', sub: 'Social media marketing', min: 60, budget: '€ 60 - € 80', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 4, skills: 'meta ads facebook instagram performance' },
+      { time: '16:28', date: '11 juli 2026', title: 'Marketingstrateeg voor B2B-campagnes', cat: 'Marketing en Communicatie', sub: 'Marketingstrategie', min: 75, budget: '€ 75 - € 100', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 6, skills: 'strategie b2b campagnes' },
+      { time: '21:06', date: '9 juli 2026', title: 'Website betalingen integreren', cat: 'Website en Apps', sub: 'Development', min: 1000, budget: '€ 1.000 - € 2.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Purmerend', region: 'Noord-Holland, NL', interested: 2, skills: 'shopify psp mollie stripe webdevelopment' },
+      { time: '13:18', date: '9 juli 2026', title: 'Meta Ads specialist voor leadgeneratie', cat: 'Marketing en Communicatie', sub: 'Online campagnes opzetten', min: 1000, budget: '€ 1.000 - € 2.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Op afstand', region: '', interested: 1, skills: 'meta ads leadgeneratie' },
+      { time: '13:06', date: '9 juli 2026', title: 'AI Full Stack Developer', cat: 'Website en Apps', sub: 'AI en development', min: 0, budget: 'In overleg', budgetType: 'In overleg', type: 'overleg', loc: 'Op afstand', region: '', interested: 3, skills: 'react node python llm ai fullstack' },
+      { time: '12:56', date: '9 juli 2026', title: 'Website ontwerper gezocht', cat: 'Design en Creatie', sub: 'Webdesign', min: 40, budget: '€ 40 - € 60', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 5, skills: 'webdesign figma ui' },
+      { time: '11:32', date: '9 juli 2026', title: 'Interim financieel controller (3 dagen p/w)', cat: 'Finance en Control', sub: 'Interim finance', min: 85, budget: '€ 85 - € 110', budgetType: 'Per uur', type: 'uur', loc: 'Utrecht', region: 'Utrecht, NL', interested: 7, skills: 'controller finance exact powerbi' },
+      { time: '10:15', date: '8 juli 2026', title: 'Copywriter voor merkcampagne', cat: 'Marketing en Communicatie', sub: 'Copywriting', min: 500, budget: '€ 500 - € 900', budgetType: 'Vaste prijs', type: 'vast', loc: 'Amsterdam', region: 'Noord-Holland, NL', interested: 9, skills: 'copywriting branding tone of voice' },
+      { time: '09:48', date: '8 juli 2026', title: 'Data engineer voor datawarehouse-migratie', cat: 'Data en AI', sub: 'Data engineering', min: 90, budget: '€ 90 - € 115', budgetType: 'Per uur', type: 'uur', loc: 'Eindhoven', region: 'Noord-Brabant, NL', interested: 3, skills: 'python snowflake dbt sql' },
+      { time: '09:12', date: '8 juli 2026', title: 'UX researcher voor app-onboarding', cat: 'Design en Creatie', sub: 'UX research', min: 70, budget: '€ 70 - € 90', budgetType: 'Per uur', type: 'uur', loc: 'Rotterdam', region: 'Zuid-Holland, NL', interested: 4, skills: 'ux research interviews figma' },
+      { time: '17:41', date: '7 juli 2026', title: 'Logo en huisstijl voor scale-up', cat: 'Design en Creatie', sub: 'Brand design', min: 1500, budget: '€ 1.500 - € 3.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Op afstand', region: '', interested: 8, skills: 'logo branding identity' },
+      { time: '15:03', date: '7 juli 2026', title: 'HubSpot specialist voor salesautomatisering', cat: 'Marketing en Communicatie', sub: 'Marketing automation', min: 65, budget: '€ 65 - € 85', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 2, skills: 'hubspot automation crm' },
+      { time: '11:57', date: '7 juli 2026', title: 'Legal counsel voor contractenreview (interim)', cat: 'Legal', sub: 'Contractrecht', min: 95, budget: '€ 95 - € 120', budgetType: 'Per uur', type: 'uur', loc: 'Den Haag', region: 'Zuid-Holland, NL', interested: 1, skills: 'legal contracten review' }
+    ];
+  }
+
+  renderVals() {
+    const f = this.state.applied || {};
+    const all = this.jobs();
+    const q = String(f.query || '').toLowerCase().trim();
+    const loc = String(f.loc || '').toLowerCase().trim();
+    const rows = all.filter((job) => {
+      if (f.cat && job.cat !== f.cat) return false;
+      if (f.budget && job.type !== f.budget) return false;
+      if (typeof f.max === 'number' && f.max < 12000 && job.min > f.max) return false;
+      if (q && (job.title + ' ' + job.sub + ' ' + job.skills).toLowerCase().indexOf(q) === -1) return false;
+      if (loc && (job.loc + ' ' + job.region).toLowerCase().indexOf(loc) === -1) return false;
+      if (typeof f.react === 'number' && f.react < 10 && job.interested > f.react) return false;
+      return true;
+    }).map((job) => Object.assign({}, job, { href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }));
+    const cats = [];
+    all.forEach((job) => { if (cats.indexOf(job.cat) === -1) cats.push(job.cat); });
+    return {
+      totalLabel: '47.978',
+      catOpts: cats.sort(),
+      fQuery: this.state.query, onQuery: (e) => this.setState({ query: e.target.value }),
+      fCat: this.state.cat, onCat: (e) => this.setState({ cat: e.target.value }),
+      fBudget: this.state.budget, onBudget: (e) => this.setState({ budget: e.target.value }),
+      fMax: this.state.max, onMax: (e) => this.setState({ max: Number(e.target.value) }),
+      maxLabel: this.state.max >= 12000 ? '€ 12.000+' : '€ ' + this.state.max.toLocaleString('nl-NL'),
+      fLoc: this.state.loc, onLoc: (e) => this.setState({ loc: e.target.value }),
+      fDist: this.state.dist, onDist: (e) => this.setState({ dist: Number(e.target.value) }),
+      distLabel: this.state.dist + ' km',
+      fStatus: this.state.status, onStatus: (e) => this.setState({ status: e.target.value }),
+      fReact: this.state.react, onReact: (e) => this.setState({ react: Number(e.target.value) }),
+      reactLabel: this.state.react >= 10 ? 'Alle' : '≤ ' + this.state.react,
+      onSearch: (e) => { e.preventDefault(); this.setState({ applied: this.currentFilters() }); },
+      rows: rows, hasRows: rows.length > 0, noRows: rows.length === 0,
+      shownLabel: rows.length + ' van ' + all.length + ' recente opdrachten getoond'
+    };
+  }
+}
+</script>
+</body>
+</html>

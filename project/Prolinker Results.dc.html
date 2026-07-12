@@ -27,6 +27,10 @@
   ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-ping { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.6); opacity: 0; } }
+  @keyframes plk-rotate { to { transform: rotate(360deg); } }
+  @keyframes plk-rotate-rev { to { transform: rotate(-360deg); } }
+  @keyframes plk-shimmer { 0% { background-position: 0% 0; } 100% { background-position: 200% 0; } }
+  @keyframes plk-pop { from { opacity: 0; transform: scale(0.3); } to { opacity: 0.9; transform: scale(1); } }
   @keyframes plk-scan { 0% { width: 5%; } 100% { width: 100%; } }
   @keyframes plk-fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
@@ -53,26 +57,36 @@
   </header>
 
   <sc-if value="{{ scanning }}" hint-placeholder-val="{{ true }}">
-    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 72px 24px; text-align: center;">
-      <div style="position: relative; width: 132px; height: 132px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
-        <span style="position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 1.5px solid {{ accent }}; opacity: 0.5; animation: plk-ping 1.9s ease-out infinite;"></span>
-        <span style="position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 1.5px solid {{ accent }}; opacity: 0.5; animation: plk-ping 1.9s ease-out infinite; animation-delay: 0.95s;"></span>
-        <div style="width: 92px; height: 92px; border-radius: 50%; background: #ffffff; box-shadow: 0 12px 30px -12px rgba(47,91,133,0.5); display: inline-flex; align-items: center; justify-content: center; animation: plk-breathe 2.2s ease-in-out infinite;">
-          <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 58px; height: 58px; display: block;">
-        </div>
-      </div>
-      <h1 style="margin: 0; font-size: clamp(24px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431); text-wrap: balance;">{{ t.scanTitle }}</h1>
-      <p style="margin: 10px 0 0; font-size: 16px; color: var(--muted,#424444);">{{ scanSubtitle }}</p>
-      <div style="width: 100%; max-width: 420px; height: 6px; border-radius: 999px; background: var(--border,#DCDFE2); overflow: hidden; margin-top: 30px;">
-        <div style="height: 100%; border-radius: 999px; background: {{ accent }}; animation: plk-scan 2.1s ease-out forwards;"></div>
-      </div>
-      <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 13px; text-align: left;">
-        <sc-for list="{{ scanSteps }}" as="st" hint-placeholder-count="3">
-          <div style="display: flex; align-items: center; gap: 11px; opacity: 0; animation: plk-fadein 0.45s ease forwards; animation-delay: {{ st.delay }};">
-            <span style="width: 22px; height: 22px; border-radius: 50%; background: {{ accentTint }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">{{ checkEl }}</span>
-            <span style="font-size: 14.5px; color: var(--text,#152431);">{{ st.label }}</span>
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px;">
+      <div style="position: relative; overflow: hidden; width: 100%; max-width: 660px; border-radius: 20px; background: linear-gradient(118deg, #0F1A23 0%, #1C3A5E 56%, #2F5B85 100%); color: #ffffff; padding: 52px 34px 44px; text-align: center; box-shadow: 0 34px 80px -34px rgba(10,31,63,0.7); animation: plk-fadein 0.5s ease both;">
+        <img src="assets/prolinker-mark-white.png" alt="" style="position: absolute; right: -44px; bottom: -56px; width: 240px; height: 240px; opacity: 0.09; pointer-events: none;">
+        <span style="position: absolute; left: 12%; top: 22%; width: 8px; height: 8px; border-radius: 50%; background: #B0D8FE; opacity: 0; animation: plk-pop 0.5s ease forwards; animation-delay: 0.5s;"></span>
+        <span style="position: absolute; left: 20%; top: 66%; width: 6px; height: 6px; border-radius: 50%; background: #FE7852; opacity: 0; animation: plk-pop 0.5s ease forwards; animation-delay: 1.1s;"></span>
+        <span style="position: absolute; right: 16%; top: 30%; width: 7px; height: 7px; border-radius: 50%; background: #FE7852; opacity: 0; animation: plk-pop 0.5s ease forwards; animation-delay: 0.8s;"></span>
+        <span style="position: absolute; right: 24%; top: 72%; width: 9px; height: 9px; border-radius: 50%; background: #B0D8FE; opacity: 0; animation: plk-pop 0.5s ease forwards; animation-delay: 1.5s;"></span>
+        <div style="position: relative; width: 158px; height: 158px; margin: 0 auto 26px; display: flex; align-items: center; justify-content: center;">
+          <span style="position: absolute; width: 96px; height: 96px; border-radius: 50%; border: 1.5px solid rgba(176,216,254,0.7); opacity: 0.6; animation: plk-ping 1.9s ease-out infinite;"></span>
+          <span style="position: absolute; width: 96px; height: 96px; border-radius: 50%; border: 1.5px solid rgba(176,216,254,0.7); opacity: 0.6; animation: plk-ping 1.9s ease-out infinite; animation-delay: 0.95s;"></span>
+          <span style="position: absolute; width: 140px; height: 140px; border-radius: 50%; border: 1.5px dashed rgba(176,216,254,0.38); animation: plk-rotate 10s linear infinite;"></span>
+          <span style="position: absolute; width: 140px; height: 140px; animation: plk-rotate 5.5s linear infinite;"><span style="position: absolute; left: 50%; top: -5px; margin-left: -5px; width: 10px; height: 10px; border-radius: 50%; background: #FE7852; box-shadow: 0 0 10px rgba(254,120,82,0.9);"></span></span>
+          <span style="position: absolute; width: 116px; height: 116px; animation: plk-rotate-rev 8s linear infinite;"><span style="position: absolute; left: 50%; bottom: -4px; margin-left: -4px; width: 8px; height: 8px; border-radius: 50%; background: #B0D8FE; box-shadow: 0 0 9px rgba(176,216,254,0.9);"></span></span>
+          <div style="width: 96px; height: 96px; border-radius: 50%; background: #ffffff; box-shadow: 0 16px 40px -12px rgba(0,0,0,0.55); display: inline-flex; align-items: center; justify-content: center; animation: plk-breathe 2.2s ease-in-out infinite;">
+            <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 60px; height: 60px; display: block;">
           </div>
-        </sc-for>
+        </div>
+        <h1 style="margin: 0; font-size: clamp(25px, 3vw, 31px); letter-spacing: -0.01em; color: #ffffff; text-wrap: balance;">{{ t.scanTitle }}</h1>
+        <p style="margin: 10px 0 0; font-size: 15.5px; color: #C9D8E6;">{{ scanSubtitle }}</p>
+        <div style="width: 100%; max-width: 400px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.16); overflow: hidden; margin: 30px auto 0;">
+          <div style="height: 100%; border-radius: 999px; background: linear-gradient(90deg, #E65F39, #FE7852, #E65F39); background-size: 200% 100%; box-shadow: 0 0 14px rgba(230,95,57,0.65); animation: plk-scan 2.1s ease-out forwards, plk-shimmer 1.4s linear infinite;"></div>
+        </div>
+        <div style="margin: 28px auto 0; display: flex; flex-direction: column; gap: 13px; text-align: left; width: fit-content;">
+          <sc-for list="{{ scanSteps }}" as="st" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 11px; opacity: 0; animation: plk-fadein 0.45s ease forwards; animation-delay: {{ st.delay }};">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: #ffffff; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">{{ checkEl }}</span>
+              <span style="font-size: 14.5px; color: #E8F0F8;">{{ st.label }}</span>
+            </div>
+          </sc-for>
+        </div>
       </div>
     </div>
   </sc-if>
