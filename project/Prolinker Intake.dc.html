@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,10 +166,11 @@ class Component extends DCLogic {
         this.setState({ theme: 'dark' });
       }
       const rawSession = localStorage.getItem('plk-auth-session');
-      const session = rawSession ? JSON.parse(rawSession) : null;
-      const contact = session && typeof session.contact === 'string' ? session.contact.trim() : '';
-      const digits = (contact.match(/\d/g) || []).length;
-      const authenticated = !!(session && session.authenticated === true && session.channel === 'whatsapp' && (session.role === 'client' || session.role === 'freelancer') && /^\+?[\d\s().-]+$/.test(contact) && digits >= 8);
+      const cached = rawSession ? JSON.parse(rawSession) : null;
+      const session = window.ProLinkerApp && window.ProLinkerApp.session ? window.ProLinkerApp.session.get() : cached;
+      const authenticated = window.ProLinkerApp && window.ProLinkerApp.session
+        ? window.ProLinkerApp.session.isValid(session)
+        : !!(session && session.authenticated === true && (session.role === 'client' || session.role === 'freelancer'));
       this.setState({ authenticated: authenticated });
     } catch (e) {}
   }

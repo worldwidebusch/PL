@@ -19,7 +19,7 @@ export async function handler(event) {
     const target = sanitizeReferralTarget(share.target, event);
     if (!target) return redirect(INVALID_LINK_TARGET);
 
-    const session = readSession(event);
+    const session = await readSession(event);
     const currentUserId = session && session.user ? session.user.id : '';
     const selfAttributionIgnored = !!currentUserId && currentUserId === share.referrerUserId;
     const existingAttribution = readReferralAttribution(event);

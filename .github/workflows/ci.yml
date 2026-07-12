@@ -1,0 +1,31 @@
+name: Verify website
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify, test, and build
+        run: npm run ci
+      - name: Upload deployable site
+        uses: actions/upload-artifact@v4
+        with:
+          name: prolinker-dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 7

@@ -11,9 +11,9 @@ import {
 import {
   clearOAuthCookie,
   createSessionPayload,
+  issueSessionCookie,
   readOAuthTransaction,
-  readSession,
-  sessionCookie
+  readSession
 } from './_lib/session.mjs';
 import { randomSafeEqual } from './_lib/signed-token.mjs';
 import { clearAttributionCookie, readReferralAttribution } from './_lib/referrals.mjs';
@@ -76,23 +76,28 @@ export async function handler(event) {
   }
 
   try {
-    const tokens = await exchangeCode(code, event);
+    const tokens = await exchangeCode(code, event, transaction.codeVerifier);
     const idClaims = await validateIdToken(tokens.idToken, transaction.nonce);
     const userInfo = await fetchUserInfo(tokens.accessToken, idClaims.sub);
     const linkedinProfile = normalizeLinkedInProfile(idClaims, userInfo);
     if (!linkedinProfile.subject) throw Object.assign(new Error('Missing subject.'), { code: 'PROFILE_INVALID' });
 
-    const existingSession = transaction.intent === 'import' ? readSession(event) : null;
+    const existingSession = transaction.intent === 'import' ? await readSession(event) : null;
     if (transaction.intent === 'import') {
       if (!existingSession || existingSession.user.id !== transaction.existingUserId) {
         throw Object.assign(new Error('The account-link session changed.'), { code: 'ACCOUNT_LINK_SESSION_INVALID' });
       }
     }
+    if (transaction.intent === 'register' && (!transaction.registrationProfile || !transaction.registrationConsent)) {
+      throw Object.assign(new Error('The signed registration context is incomplete.'), { code: 'REGISTRATION_CONTEXT_INVALID' });
+    }
 
     const identityResult = await upsertLinkedInIdentity(linkedinProfile, {
       intent: transaction.intent,
       role: transaction.role,
-      referralCode: transaction.referralCode
+      referralCode: transaction.referralCode,
+      registrationProfile: transaction.registrationProfile || null,
+      registrationConsent: transaction.registrationConsent || null
     }, existingSession);
 
     if (existingSession && (
@@ -139,7 +144,7 @@ export async function handler(event) {
     });
     const next = sanitizeNextPath(transaction.next, session.user.role, transaction.intent);
     const result = redirect(appendStatus(next, 'success'));
-    return withCookies(result, [sessionCookie(session, event), clearTransaction, referralCookieToClear]);
+    return withCookies(result, [await issueSessionCookie(session, event), clearTransaction, referralCookieToClear]);
   } catch (error) {
     const codeName = safeErrorCode(error);
     console.error('[linkedin-callback] ' + codeName);

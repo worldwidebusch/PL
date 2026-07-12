@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v27-audience-brand-content";
+const CACHE_VERSION = "v29-backend-auth";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -10,8 +10,6 @@ const OFFLINE_URL = "./offline.html";
 const PRECACHE_URLS = [
   OFFLINE_URL,
   "./Prolinker Homepage.dc.html",
-  "./Prolinker Login.dc.html",
-  "./Prolinker Profiel.dc.html",
   "./prolinker-theme.css",
   "./prolinker-app.js",
   "./prolinker-account-menu.js",
@@ -19,28 +17,11 @@ const PRECACHE_URLS = [
   "./support.js",
   "./manifest.webmanifest",
   "./assets/prolinker-mark.png",
-  "./assets/prolinker-logo.png",
-  "./assets/brand-imagery/employer/people-reviewing-work.jpg",
-  "./assets/brand-imagery/employer/team-at-work.jpg",
-  "./assets/brand-imagery/freelancer/independent-creative.jpg",
-  "./assets/brand-imagery/freelancer/independent-home-work.jpg",
-  "./assets/brand-imagery/freelancer/own-terms-remote-work.jpg",
-  "./assets/social/facebook.svg",
-  "./assets/social/linkedin.svg",
-  "./assets/social/instagram.svg",
-  "./assets/icons/user-round.svg",
-  "./assets/icons/bell.svg",
-  "./assets/icons/shield-check.svg",
+  "./assets/prolinker-mark-white.png",
   "./assets/pwa/icon-192.png",
   "./assets/pwa/icon-512.png",
   "./assets/vendor/react-18.3.1.production.min.js",
-  "./assets/vendor/react-dom-18.3.1.production.min.js",
-  "./assets/vendor/babel-standalone-7.29.0.min.js",
-  "./assets/vendor/pdfjs-compat-5.4.624.mjs",
-  "./assets/vendor/pdfjs-5.4.624.mjs",
-  "./assets/vendor/pdfjs-worker-bootstrap-5.4.624.mjs",
-  "./assets/vendor/pdfjs-worker-5.4.624.mjs",
-  "./assets/vendor/mammoth-1.12.0.browser.min.js"
+  "./assets/vendor/react-dom-18.3.1.production.min.js"
 ];
 
 const SENSITIVE_PATH = /(?:^|\/)(?:account|accounts|api|auth|oauth|login|logout|session|sessions|token|tokens|graphql|webhooks?|socket|ws)(?:\/|$)/i;

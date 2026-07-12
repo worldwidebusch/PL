@@ -4,7 +4,7 @@ import { clearSessionCookie, publicSession, readSession } from './_lib/session.m
 export async function handler(event) {
   if (event.httpMethod !== 'GET') return methodNotAllowed(['GET']);
   try {
-    const session = readSession(event);
+    const session = await readSession(event);
     if (!session) {
       return withCookies(json(401, {
         authenticated: false,

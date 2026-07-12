@@ -1,4 +1,4 @@
-import { createPublicKey, verify as verifySignature } from 'node:crypto';
+import { createHash, createPublicKey, verify as verifySignature } from 'node:crypto';
 import {
   linkedinClientId,
   linkedinClientSecret,
@@ -47,17 +47,20 @@ export function linkedinAuthorizationUrl(transaction, event) {
   url.searchParams.set('redirect_uri', linkedinRedirectUri(event));
   url.searchParams.set('state', transaction.state);
   url.searchParams.set('nonce', transaction.nonce);
+  url.searchParams.set('code_challenge', createHash('sha256').update(transaction.codeVerifier).digest('base64url'));
+  url.searchParams.set('code_challenge_method', 'S256');
   url.searchParams.set('scope', 'openid profile email');
   return url.href;
 }
 
-export async function exchangeCode(code, event) {
+export async function exchangeCode(code, event, codeVerifier) {
   const body = new URLSearchParams({
     grant_type: 'authorization_code',
     code,
     client_id: linkedinClientId(),
     client_secret: linkedinClientSecret(),
-    redirect_uri: linkedinRedirectUri(event)
+    redirect_uri: linkedinRedirectUri(event),
+    code_verifier: String(codeVerifier || '')
   });
   const response = await fetchWithTimeout(TOKEN_ENDPOINT, {
     method: 'POST',
@@ -129,8 +132,10 @@ export async function validateIdToken(idToken, expectedNonce) {
   const now = Math.floor(Date.now() / 1000);
   if (payload.iss !== EXPECTED_ISSUER) throw oauthError('ID_TOKEN_ISSUER_INVALID', 'The LinkedIn ID token issuer is invalid.');
   if (!audienceMatches(payload.aud, linkedinClientId())) throw oauthError('ID_TOKEN_AUDIENCE_INVALID', 'The LinkedIn ID token audience is invalid.');
+  if (payload.azp && payload.azp !== linkedinClientId()) throw oauthError('ID_TOKEN_AUTHORIZED_PARTY_INVALID', 'The LinkedIn ID token authorized party is invalid.');
   if (!Number.isFinite(payload.exp) || payload.exp <= now - CLOCK_TOLERANCE_SECONDS) throw oauthError('ID_TOKEN_EXPIRED', 'The LinkedIn ID token is expired.');
   if (!Number.isFinite(payload.iat) || payload.iat > now + CLOCK_TOLERANCE_SECONDS) throw oauthError('ID_TOKEN_TIME_INVALID', 'The LinkedIn ID token time is invalid.');
+  if (payload.nbf !== undefined && (!Number.isFinite(payload.nbf) || payload.nbf > now + CLOCK_TOLERANCE_SECONDS)) throw oauthError('ID_TOKEN_NOT_ACTIVE', 'The LinkedIn ID token is not active yet.');
   if (!payload.sub || typeof payload.sub !== 'string') throw oauthError('ID_TOKEN_SUBJECT_INVALID', 'The LinkedIn ID token subject is missing.');
   if (requireNonce() && payload.nonce !== expectedNonce) throw oauthError('ID_TOKEN_NONCE_INVALID', 'The LinkedIn ID token nonce is invalid.');
   if (payload.nonce && payload.nonce !== expectedNonce) throw oauthError('ID_TOKEN_NONCE_INVALID', 'The LinkedIn ID token nonce is invalid.');

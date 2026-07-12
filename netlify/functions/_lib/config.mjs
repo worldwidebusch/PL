@@ -187,7 +187,7 @@ export function sanitizeReferralTarget(value, event) {
 }
 
 export function identityAdapterConfig() {
-  const rawUrl = String(process.env.PROLINKER_IDENTITY_ADAPTER_URL || '').trim();
+  const rawUrl = String(process.env.PROLINKER_IDENTITY_ADAPTER_URL || process.env.PROLINKER_BACKEND_ADAPTER_URL || '').trim();
   if (!rawUrl) return null;
   let url;
   try {
@@ -202,9 +202,86 @@ export function identityAdapterConfig() {
   if (url.protocol !== 'https:' && !(url.protocol === 'http:' && local)) {
     throw new Error('PROLINKER_IDENTITY_ADAPTER_URL must use HTTPS.');
   }
-  const token = String(process.env.PROLINKER_IDENTITY_ADAPTER_TOKEN || '').trim();
+  const token = String(process.env.PROLINKER_IDENTITY_ADAPTER_TOKEN || process.env.PROLINKER_BACKEND_ADAPTER_TOKEN || '').trim();
   if (!token) throw new Error('PROLINKER_IDENTITY_ADAPTER_TOKEN is required when the adapter URL is set.');
   return { url: url.href, token };
+}
+
+export function backendAdapterConfig() {
+  const rawUrl = String(process.env.PROLINKER_BACKEND_ADAPTER_URL || process.env.PROLINKER_IDENTITY_ADAPTER_URL || '').trim();
+  if (!rawUrl) return null;
+  let url;
+  try { url = new URL(rawUrl); }
+  catch (error) { throw new Error('PROLINKER_BACKEND_ADAPTER_URL is invalid.'); }
+  const local = /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(url.hostname);
+  if (url.username || url.password || url.hash) throw new Error('PROLINKER_BACKEND_ADAPTER_URL must not contain credentials or a fragment.');
+  if (url.protocol !== 'https:' && !(url.protocol === 'http:' && local)) throw new Error('PROLINKER_BACKEND_ADAPTER_URL must use HTTPS.');
+  const token = String(process.env.PROLINKER_BACKEND_ADAPTER_TOKEN || process.env.PROLINKER_IDENTITY_ADAPTER_TOKEN || '').trim();
+  if (!token) throw new Error('PROLINKER_BACKEND_ADAPTER_TOKEN is required when the adapter URL is set.');
+  return { url: url.href, token };
+}
+
+export function adapterTimeoutMs() {
+  return boundedInteger(process.env.PROLINKER_ADAPTER_TIMEOUT_MS, 10000, 1000, 30000);
+}
+
+export function allowPreviewAuth() {
+  const context = String(process.env.CONTEXT || process.env.NODE_ENV || '').trim().toLowerCase();
+  if (context === 'production') return false;
+  return String(process.env.PROLINKER_ALLOW_PREVIEW_AUTH || '').trim().toLowerCase() === 'true';
+}
+
+export function otpTtlSeconds() {
+  return boundedInteger(process.env.PROLINKER_OTP_TTL_SECONDS, 300, 120, 900);
+}
+
+export function otpResendSeconds() {
+  return boundedInteger(process.env.PROLINKER_OTP_RESEND_SECONDS, 60, 30, 600);
+}
+
+export function otpMaxAttempts() {
+  return boundedInteger(process.env.PROLINKER_OTP_MAX_ATTEMPTS, 5, 3, 10);
+}
+
+export function termsVersion() {
+  const value = String(process.env.PROLINKER_TERMS_VERSION || '2026-07-12').trim();
+  return /^\d{4}-\d{2}-\d{2}(?:\.[A-Za-z0-9_-]{1,24})?$/.test(value) ? value : '2026-07-12';
+}
+
+export function privacyVersion() {
+  const value = String(process.env.PROLINKER_PRIVACY_VERSION || '2026-07-12').trim();
+  return /^\d{4}-\d{2}-\d{2}(?:\.[A-Za-z0-9_-]{1,24})?$/.test(value) ? value : '2026-07-12';
+}
+
+export function facebookClientId() {
+  const value = String(process.env.FACEBOOK_CLIENT_ID || '').trim();
+  if (!value) throw new Error('FACEBOOK_CLIENT_ID is not configured.');
+  return value;
+}
+
+export function facebookClientSecret() {
+  const value = String(process.env.FACEBOOK_CLIENT_SECRET || '').trim();
+  if (!value) throw new Error('FACEBOOK_CLIENT_SECRET is not configured.');
+  return value;
+}
+
+export function facebookRedirectUri(event) {
+  const raw = String(process.env.FACEBOOK_REDIRECT_URI || '').trim();
+  if (!raw) return appOrigin(event) + '/api/v1/auth/facebook/callback';
+  try {
+    const url = new URL(raw);
+    const local = /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(url.hostname);
+    if (url.protocol !== 'https:' && !(url.protocol === 'http:' && local)) throw new Error('invalid protocol');
+    if (url.username || url.password || url.hash) throw new Error('invalid redirect URI');
+    return url.href;
+  } catch (error) {
+    throw new Error('FACEBOOK_REDIRECT_URI must be an absolute HTTPS URL.');
+  }
+}
+
+export function facebookGraphVersion() {
+  const value = String(process.env.FACEBOOK_GRAPH_VERSION || 'v23.0').trim();
+  return /^v\d{1,2}\.\d{1,2}$/.test(value) ? value : 'v23.0';
 }
 
 export function eventHeader(event, name) {

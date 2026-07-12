@@ -1,5 +1,6 @@
 import { createHmac } from 'node:crypto';
-import { identityAdapterConfig, signingSecrets } from './config.mjs';
+import { allowPreviewAuth, identityAdapterConfig, signingSecrets } from './config.mjs';
+import { callPrivateAdapter } from './private-adapter.mjs';
 import { normalizeUser } from './session.mjs';
 
 function adapterError(code, message) {
@@ -11,37 +12,20 @@ function adapterError(code, message) {
 async function callAdapter(operation, payload) {
   const config = identityAdapterConfig();
   if (!config) return null;
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
-  try {
-    const response = await fetch(config.url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + config.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ version: 1, operation, ...payload }),
-      signal: controller.signal
-    });
-    const text = await response.text();
-    let data = {};
-    try { data = text ? JSON.parse(text) : {}; } catch (error) {}
-    if (!response.ok || !data.user) throw adapterError('IDENTITY_ADAPTER_FAILED', 'The identity adapter rejected the request.');
-    return normalizeUser(data.user, payload.context && payload.context.role);
-  } finally {
-    clearTimeout(timeout);
-  }
+  const result = await callPrivateAdapter(operation, payload);
+  const data = result.data && typeof result.data === 'object' ? result.data : {};
+  if (!data.user) throw adapterError('IDENTITY_ADAPTER_FAILED', 'The identity adapter did not return a user.');
+  return normalizeUser(data.user, payload.context && payload.context.role);
 }
 
-function previewUserId(subject) {
+function previewUserId(provider, subject) {
   return 'usr_' + createHmac('sha256', signingSecrets()[0])
-    .update('linkedin:' + subject)
+    .update(provider + ':' + subject)
     .digest('base64url')
     .slice(0, 24);
 }
 
-function previewUser(profile, context, existingSession) {
+function previewUser(provider, profile, context, existingSession) {
   const existing = existingSession && existingSession.user ? existingSession.user : null;
   if (context.intent === 'import' && existing) {
     return normalizeUser({
@@ -55,23 +39,39 @@ function previewUser(profile, context, existingSession) {
       locale: existing.locale || profile.locale
     }, existing.role);
   }
+  const registration = context.intent === 'register' && context.registrationProfile && typeof context.registrationProfile === 'object'
+    ? context.registrationProfile
+    : {};
+  const providerEmailVerified = profile.emailVerified === true && !!profile.email;
   return normalizeUser({
-    id: previewUserId(profile.subject),
+    id: previewUserId(provider, profile.subject),
     role: context.role,
-    displayName: profile.displayName,
-    firstName: profile.firstName,
-    lastName: profile.lastName,
-    email: profile.email,
-    emailVerified: profile.emailVerified,
+    displayName: registration.displayName || profile.displayName,
+    firstName: registration.firstName || profile.firstName,
+    lastName: registration.lastName || profile.lastName,
+    email: providerEmailVerified ? profile.email : (registration.email || profile.email),
+    emailVerified: providerEmailVerified,
     avatarUrl: profile.avatarUrl,
-    locale: profile.locale
+    locale: registration.locale || profile.locale
   }, context.role);
 }
 
 export async function upsertLinkedInIdentity(profile, context, existingSession) {
-  const adapterUser = await callAdapter('upsertLinkedInIdentity', {
+  return upsertExternalIdentity('linkedin', profile, context, existingSession);
+}
+
+export async function upsertExternalIdentity(provider, profile, context, existingSession) {
+  if (provider !== 'linkedin' && provider !== 'facebook') throw adapterError('IDENTITY_PROVIDER_INVALID', 'The identity provider is not supported.');
+  const operation = provider === 'linkedin' ? 'upsertLinkedInIdentity' : 'upsertSocialIdentity';
+  const registration = context.intent === 'register'
+    ? {
+        registrationProfile: context.registrationProfile || null,
+        registrationConsent: context.registrationConsent || null
+      }
+    : {};
+  const adapterUser = await callAdapter(operation, {
     identity: {
-      provider: 'linkedin',
+      provider,
       providerSubject: profile.subject,
       profile: {
         firstName: profile.firstName,
@@ -88,11 +88,15 @@ export async function upsertLinkedInIdentity(profile, context, existingSession) 
       intent: context.intent,
       role: context.role,
       referralCode: context.referralCode || '',
-      existingUserId: existingSession && existingSession.user ? existingSession.user.id : ''
+      existingUserId: existingSession && existingSession.user ? existingSession.user.id : '',
+      ...registration
     }
   });
+  if (!adapterUser && !allowPreviewAuth()) {
+    throw adapterError('IDENTITY_ADAPTER_REQUIRED', 'A durable identity adapter is required.');
+  }
   return {
-    user: adapterUser || previewUser(profile, context, existingSession),
+    user: adapterUser || previewUser(provider, profile, context, existingSession),
     storageMode: adapterUser ? 'external-adapter' : 'signed-cookie-preview'
   };
 }
@@ -110,6 +114,7 @@ export async function applyLinkedInProfile(session, fields) {
     context: { role: session.user.role }
   });
   if (adapterUser) return { user: adapterUser, storageMode: 'external-adapter' };
+  if (!allowPreviewAuth()) throw adapterError('IDENTITY_ADAPTER_REQUIRED', 'A durable identity adapter is required.');
   const existing = session.user;
   return {
     user: normalizeUser({

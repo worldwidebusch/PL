@@ -26,7 +26,7 @@ export async function handler(event) {
   if (event.httpMethod !== 'POST') return methodNotAllowed(['POST']);
   try {
     assertSameOrigin(event);
-    const session = readSession(event);
+    const session = await readSession(event);
     if (!session) return json(401, { error: { code: 'AUTH_REQUIRED', message: 'Log in before recording a referral event.' } });
     const body = parseJsonBody(event);
     if (FORBIDDEN_REWARD_FIELDS.some((field) => Object.prototype.hasOwnProperty.call(body, field))) {

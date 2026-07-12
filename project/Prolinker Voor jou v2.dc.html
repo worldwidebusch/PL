@@ -790,8 +790,12 @@ class Component extends DCLogic {
   state = { menuOpen: false, theme: 'light', sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false, mobileFiltersOpen: false, refreshCount: 0, filter: 'alles', sort: 'aanbevolen', query: '', locationOpen: false, locationKey: 'remote', locationQuery: '', radiusKm: 75, includeRemote: false, currentLat: null, currentLng: null, locationLoading: false, opportunityType: 'freelance', relevanceFloor: 0, postedFilter: 'all', startFilter: 'all', hoursFilter: 'all', saved: {}, hidden: {}, sent: {}, review: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, promoHidden: false, cols: 3, name: '', authenticated: false, authRole: null, mapZoom: 0.32, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, listening: false, feedShown: 24, apiSyncStatus: 'idle', apiSyncMessage: '' };
 
   isValidWhatsappSession(session, requiredRole) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (window.ProLinkerApp && window.ProLinkerApp.session) return window.ProLinkerApp.session.isValid(session, requiredRole);
+    if (!session || session.authenticated !== true) return false;
     if (requiredRole && session.role !== requiredRole) return false;
+    if (session.channel === 'linkedin' || session.channel === 'facebook') return !!(session.id || session.providerSubject || session.email);
+    if (session.channel !== 'whatsapp') return false;
+    if (session.phoneVerified === true || (session.auth && session.auth.phoneVerified === true)) return true;
     const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
     if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
     return (contact.match(/\d/g) || []).length >= 8;

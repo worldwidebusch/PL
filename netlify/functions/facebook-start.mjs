@@ -1,10 +1,5 @@
-import {
-  eventHeader,
-  sanitizeIntent,
-  sanitizeNextPath,
-  sanitizeReferralCode,
-  sanitizeRole
-} from './_lib/config.mjs';
+import { eventHeader, sanitizeIntent, sanitizeNextPath, sanitizeReferralCode, sanitizeRole } from './_lib/config.mjs';
+import { facebookAuthorizationUrl } from './_lib/facebook-oauth.mjs';
 import {
   assertSameOrigin,
   json,
@@ -15,7 +10,6 @@ import {
   safeErrorCode,
   withCookies
 } from './_lib/http.mjs';
-import { linkedinAuthorizationUrl } from './_lib/linkedin-oidc.mjs';
 import { registrationConsent, registrationProfile } from './_lib/registration.mjs';
 import { createOAuthTransaction, readSession } from './_lib/session.mjs';
 
@@ -32,13 +26,8 @@ function startFailure(error) {
   if (code === 'REQUEST_TOO_LARGE' || code === 'INVALID_JSON' || error instanceof SyntaxError) {
     return json(400, { error: { code: code === 'REQUEST_FAILED' ? 'INVALID_JSON' : code, message: 'The registration request is invalid.' } });
   }
-  console.error('[linkedin-start] ' + code);
-  return json(503, {
-    error: {
-      code: 'AUTH_CONFIGURATION_ERROR',
-      message: 'LinkedIn login is not configured yet.'
-    }
-  });
+  console.error('[facebook-start] ' + code);
+  return json(503, { error: { code: 'AUTH_CONFIGURATION_ERROR', message: 'Facebook login is not configured yet.' } });
 }
 
 export async function handler(event) {
@@ -55,9 +44,7 @@ export async function handler(event) {
         return json(400, { error: { code: 'INTENT_INVALID', message: 'POST is only available for registration.' } });
       }
       const role = sanitizeRole(body.role);
-      if (!role) {
-        return json(400, { error: { code: 'ROLE_REQUIRED', message: 'Choose a client or freelancer account.' } });
-      }
+      if (!role) return json(400, { error: { code: 'ROLE_REQUIRED', message: 'Choose a client or freelancer account.' } });
       const profile = registrationProfile(body.registrationProfile || body.profile || body);
       if (!validRegistrationProfile(profile, role)) {
         return json(400, { error: { code: 'REGISTRATION_PROFILE_INVALID', message: 'Complete the required registration details.' } });
@@ -74,37 +61,32 @@ export async function handler(event) {
         existingUserId: '',
         registrationProfile: profile,
         registrationConsent: consent
-      }, event);
-      const authorizationUrl = linkedinAuthorizationUrl(created.transaction, event);
-      return withCookies(json(200, { authorizationUrl, provider: 'linkedin' }), created.cookie);
+      }, event, 'facebook');
+      const authorizationUrl = facebookAuthorizationUrl(created.transaction, event);
+      return withCookies(json(200, { authorizationUrl, provider: 'facebook' }), created.cookie);
     }
 
     const query = queryParameters(event);
     const intent = sanitizeIntent(query.get('intent') || query.get('mode')) || 'login';
     if (intent === 'register') {
-      return json(400, { error: { code: 'REGISTRATION_POST_REQUIRED', message: 'Submit registration details before continuing with LinkedIn.' } });
+      return json(400, { error: { code: 'REGISTRATION_POST_REQUIRED', message: 'Submit registration details before continuing with Facebook.' } });
     }
     const existingSession = intent === 'import' ? await readSession(event) : null;
     if (intent === 'import' && !existingSession) {
-      return json(401, { error: { code: 'AUTH_REQUIRED', message: 'Log in before importing a LinkedIn profile.' } });
+      return json(401, { error: { code: 'AUTH_REQUIRED', message: 'Log in before linking Facebook.' } });
     }
     const role = existingSession ? existingSession.user.role : sanitizeRole(query.get('role'));
-    if (!role) {
-      return json(400, { error: { code: 'ROLE_REQUIRED', message: 'Choose a client or freelancer account.' } });
-    }
+    if (!role) return json(400, { error: { code: 'ROLE_REQUIRED', message: 'Choose a client or freelancer account.' } });
     const next = sanitizeNextPath(query.get('next'), role, intent);
-    const referralCode = sanitizeReferralCode(query.get('ref'));
     const created = createOAuthTransaction({
       intent,
       role,
       next,
-      referralCode,
+      referralCode: sanitizeReferralCode(query.get('ref')),
       existingUserId: existingSession && existingSession.user ? existingSession.user.id : ''
-    }, event);
-    const location = linkedinAuthorizationUrl(created.transaction, event);
-    return withCookies(redirect(location), created.cookie);
+    }, event, 'facebook');
+    return withCookies(redirect(facebookAuthorizationUrl(created.transaction, event)), created.cookie);
   } catch (error) {
     return startFailure(error);
   }
 }
-

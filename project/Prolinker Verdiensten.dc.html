@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -173,8 +173,12 @@ class Component extends DCLogic {
   state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false, tab: '' };
 
   isValidWhatsappSession(session) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (window.ProLinkerApp && window.ProLinkerApp.session) return window.ProLinkerApp.session.isValid(session);
+    if (!session || session.authenticated !== true) return false;
     if (session.role !== 'client' && session.role !== 'freelancer') return false;
+    if (session.channel === 'linkedin' || session.channel === 'facebook') return !!(session.id || session.providerSubject || session.email);
+    if (session.channel !== 'whatsapp') return false;
+    if (session.phoneVerified === true || (session.auth && session.auth.phoneVerified === true)) return true;
     const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
     if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
     return (contact.match(/\d/g) || []).length >= 8;

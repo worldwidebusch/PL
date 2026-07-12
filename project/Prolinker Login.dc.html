@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
@@ -314,7 +315,7 @@
           <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#8C8E8F); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <div class="plk-auth-actions">
-            <button class="plk-auth-primary {{ primaryButtonClass }}" type="submit" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><sc-if value="{{ showContinueIcon }}" hint-placeholder-val="true"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span></sc-if><span>{{ continueLabel }}</span></button>
+            <button class="plk-auth-primary {{ primaryButtonClass }}" type="submit" disabled="{{ authBusy }}" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><sc-if value="{{ showContinueIcon }}" hint-placeholder-val="true"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span></sc-if><span>{{ continueLabel }}</span></button>
             <div class="plk-auth-divider"><span>{{ t.orLabel }}</span></div>
             <div class="plk-auth-providers" aria-label="{{ t.socialLabel }}">
               <button class="plk-auth-provider plk-auth-provider-facebook" type="button" disabled="{{ socialBusy }}" onClick="{{ onFacebook }}"><span class="plk-auth-provider-mark" aria-hidden="true">f</span><span>{{ facebookLabel }}</span></button>
@@ -344,7 +345,7 @@
             </sc-for>
           </div>
 
-          <div class="plk-auth-demo-code" style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--panel,#F3F4F6); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#424444);">{{ t.demoCode }}</div>
+          <div class="plk-auth-demo-code" style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--panel,#F3F4F6); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#424444);">{{ t.codeHelp }}</div>
           <sc-if value="{{ codeInvalid }}" hint-placeholder-val="false"><div role="alert" aria-live="assertive" style="margin-top: 12px; color: #D92D20; font-size: 13.5px; font-weight: 600;">{{ t.invalidCode }}</div></sc-if>
 
           <div style="min-height: 24px; margin-top: 20px; display: flex; align-items: center; gap: 14px;">
@@ -416,7 +417,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false, authenticated: false, syncProvider: '', syncBusy: false, syncReady: false, syncResolved: false, syncAdded: [] };
+  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', challengeId: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false, authenticated: false, syncProvider: '', syncBusy: false, syncReady: false, syncResolved: false, syncAdded: [] };
 
   componentDidMount() {
     this._els = [];
@@ -438,9 +439,8 @@ class Component extends DCLogic {
       saved = localStorage.getItem('plk-auth-contact') || '';
       if (!this.isPhone(saved)) saved = '';
       savedName = localStorage.getItem('plk-user-name') || '';
-      const rawSession = localStorage.getItem('plk-auth-session');
-      const session = rawSession ? JSON.parse(rawSession) : null;
-      authenticated = !!(session && session.authenticated === true && session.channel === 'whatsapp' && (session.role === 'client' || session.role === 'freelancer') && this.isPhone(session.contact));
+      const session = window.ProLinkerApp && window.ProLinkerApp.session ? window.ProLinkerApp.session.get() : null;
+      authenticated = !!session;
     } catch (e) {}
     if ((!firstName || !lastName) && savedName) {
       const parts = savedName.trim().split(/\s+/);
@@ -456,6 +456,26 @@ class Component extends DCLogic {
       else if (this.state.step === 'code' && !this.state.verifying) this.backToForm();
     };
     window.addEventListener('keydown', this._onKey);
+    this.hydrateOAuthReturn();
+  }
+  async hydrateOAuthReturn() {
+    let params;
+    try { params = new URLSearchParams(window.location.search); } catch (e) { return; }
+    if (params.get('oauth') !== 'linkedin' && params.get('oauth') !== 'facebook') return;
+    if (params.get('status') === 'error') {
+      this.setState({ oauthError: this.strings().oauthFailed });
+      return;
+    }
+    if (params.get('status') !== 'success') return;
+    if (!window.ProLinkerApp || !window.ProLinkerApp.auth) return;
+    try {
+      const session = await window.ProLinkerApp.auth.hydrate();
+      const next = this.safeNext(params.get('next') || this.state.next || '');
+      this.setState({ authenticated: true, role: session.role, name: session.name || '', step: next ? 'form' : 'done', oauthError: '' });
+      if (next) window.location.replace(next);
+    } catch (error) {
+      this.setState({ oauthError: this.strings().oauthFailed });
+    }
   }
   toggleTheme() {
     const next = this.state.theme === 'dark' ? 'light' : 'dark';
@@ -531,9 +551,9 @@ class Component extends DCLogic {
       clientSafetyTitle: 'Stay safe!', clientSafetyPayment: 'Only pay freelancers through ProLinker so payment protection is guaranteed.', clientSafetyPrivacy: 'Payments outside ProLinker violate your user agreement and may lead to legal action.',
       termsCheckA: 'I agree to the ', termsCheckB: ' and ',
       codeTitleWa: 'Verify your WhatsApp number',
-      codeSentWa: 'Use the demo WhatsApp code below for ',
+      codeSentWa: 'Enter the code we sent via WhatsApp to ',
       verifying: 'Checking code...', resend: 'Resend WhatsApp code', resendIn: (s) => 'Resend in ' + s + 's', editContact: 'Use a different WhatsApp number',
-      invalidCode: 'That code is not correct. Try 123456.', demoCode: 'Demo code: 123456',
+      invalidCode: 'That code is invalid or has expired.', codeHelp: 'The code is valid for a few minutes.',
       successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View projects', syncTitle: 'Find who you already know', syncSub: 'Connect Gmail, Outlook or LinkedIn and see which of your contacts are already on ProLinker.', syncBusyPrefix: 'Checking your contacts', syncFoundLabel: 'Already on ProLinker', syncInviteSuffix: ' contacts are not on ProLinker yet. Invite them anytime from My network.', syncAdd: 'Add', syncAdded: 'Added', syncDone: 'Done', syncSkip: 'Skip for now',
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
       codeAria: (n) => 'Digit ' + n,
@@ -543,7 +563,7 @@ class Component extends DCLogic {
       linkedinLogin: 'Log in with LinkedIn', linkedinRegister: 'Register with LinkedIn',
       facebookUser: 'Facebook user', linkedinUser: 'LinkedIn user',
       noAccount: 'No account yet?', createFreelancer: 'Create a freelancer account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
-      oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.',
+      oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.', oauthFailed: 'Login could not be completed. Please try again.', otpUnavailable: 'WhatsApp verification is temporarily unavailable. Please try again.',
     };
     const nl = {
       loginTitle: 'Inloggen', registerTitle: 'Account aanmaken', registerTitleFreelancer: 'Aanmelden als freelancer', registerTitleClient: 'Aanmelden als opdrachtgever',
@@ -560,9 +580,9 @@ class Component extends DCLogic {
       clientSafetyTitle: 'Blijf veilig!', clientSafetyPayment: 'Betaal freelancers alleen via ProLinker, zodat betalingsbescherming gegarandeerd is.', clientSafetyPrivacy: 'Betalingen buiten ProLinker om schenden je gebruikersovereenkomst en kunnen leiden tot juridische stappen.',
       termsCheckA: 'Ik ga akkoord met de ', termsCheckB: ' en het ',
       codeTitleWa: 'Verifieer je WhatsApp-nummer',
-      codeSentWa: 'Gebruik onderstaande WhatsApp-democode voor ',
+      codeSentWa: 'Vul de code in die we via WhatsApp stuurden naar ',
       verifying: 'Code controleren...', resend: 'WhatsApp-code opnieuw sturen', resendIn: (s) => 'Opnieuw sturen in ' + s + 's', editContact: 'Ander WhatsApp-nummer gebruiken',
-      invalidCode: 'Die code klopt niet. Probeer 123456.', demoCode: 'Democode: 123456',
+      invalidCode: 'Deze code is ongeldig of verlopen.', codeHelp: 'De code is enkele minuten geldig.',
       successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten', syncTitle: 'Vind wie je al kent', syncSub: 'Koppel Gmail, Outlook of LinkedIn en zie wie van jouw contacten al op ProLinker zit.', syncBusyPrefix: 'We bekijken je contacten', syncFoundLabel: 'Al op ProLinker', syncInviteSuffix: ' contacten staan nog niet op ProLinker. Nodig ze op elk moment uit via Mijn netwerk.', syncAdd: 'Voeg toe', syncAdded: 'Toegevoegd', syncDone: 'Klaar', syncSkip: 'Overslaan voor nu',
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
       codeAria: (n) => 'Cijfer ' + n,
@@ -572,7 +592,7 @@ class Component extends DCLogic {
       linkedinLogin: 'Inloggen met LinkedIn', linkedinRegister: 'Registreren met LinkedIn',
       facebookUser: 'Facebook-gebruiker', linkedinUser: 'LinkedIn-gebruiker',
       noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als freelancer', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
-      oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.',
+      oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.', oauthFailed: 'Inloggen is niet gelukt. Probeer het opnieuw.', otpUnavailable: 'WhatsApp-verificatie is tijdelijk niet beschikbaar. Probeer het opnieuw.',
     };
     return this.lang() === 'nl' ? nl : en;
   }
@@ -624,9 +644,9 @@ class Component extends DCLogic {
 
   isPhone(v) { const s = (v || '').trim(); return /^(?:\+|00)[0-9][0-9 ()\-.]{6,}$/.test(s) && (s.replace(/[^0-9]/g, '').length >= 8); }
   isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v || '').trim()); }
-  startCountdown() {
+  startCountdown(seconds) {
     clearInterval(this._cd);
-    this.setState({ resendIn: 30 });
+    this.setState({ resendIn: Math.max(1, Math.min(600, Number(seconds) || 60)) });
     this._cd = setInterval(() => {
       this.setState((s) => {
         if (s.resendIn <= 1) { clearInterval(this._cd); return { resendIn: 0 }; }
@@ -688,13 +708,50 @@ class Component extends DCLogic {
       }, 0);
       return;
     }
-    clearInterval(this._cd); clearTimeout(this._vt);
-    this.setState({ name: fullName || this.state.name, step: 'code', code: ['', '', '', '', '', ''], codeError: false, verifying: false });
-    this.startCountdown();
-    this.focusBox(0);
+    this.setState({ name: fullName || this.state.name, oauthError: '' });
+    this.requestWhatsappChallenge();
   }
-  backToForm() { clearInterval(this._cd); clearTimeout(this._vt); this.setState({ step: 'form', codeError: false, verifying: false }); setTimeout(() => { if (this._contactInput && this._contactInput.focus) this._contactInput.focus(); }, 0); }
-  resend() { this.setState({ code: ['', '', '', '', '', ''], codeError: false, verifying: false }); this.startCountdown(); this.focusBox(0); }
+  async requestWhatsappChallenge() {
+    if (this.state.socialBusy) return;
+    const api = window.ProLinkerApp && window.ProLinkerApp.auth && window.ProLinkerApp.auth.whatsapp;
+    if (!api || typeof api.start !== 'function') { this.setState({ oauthError: this.strings().otpUnavailable }); return; }
+    const role = this.state.role === 'freelancer' ? 'freelancer' : 'client';
+    const profile = {
+      firstName: String(this.state.firstName || '').trim(),
+      lastName: String(this.state.lastName || '').trim(),
+      displayName: [this.state.firstName, this.state.lastName].filter(Boolean).join(' ').trim(),
+      email: String(this.state.email || '').trim(),
+      companyName: role === 'client' ? String(this.state.companyName || '').trim() : '',
+      category: String(this.state.category || '').trim(),
+      password: this.state.mode === 'register' ? String(this.state.password || '') : ''
+    };
+    this.setState({ socialBusy: 'whatsapp', oauthError: '', codeError: false });
+    try {
+      const result = await api.start({
+        phone: this.state.contact,
+        role: role,
+        intent: this.state.mode === 'register' ? 'register' : 'login',
+        locale: this.lang() === 'nl' ? 'nl-NL' : 'en',
+        next: this.state.next,
+        ref: this.state.referralCode,
+        profile: profile,
+        consent: { accepted: this.state.mode !== 'register' || this.state.termsAccepted === true }
+      });
+      const challengeId = String(result && result.challengeId || '').trim();
+      if (!challengeId) throw new Error('CHALLENGE_MISSING');
+      this.setState({ challengeId: challengeId, step: 'code', code: ['', '', '', '', '', ''], codeError: false, verifying: false, socialBusy: '' });
+      this.startCountdown(result.resendAfter || 60);
+      this.focusBox(0);
+    } catch (error) {
+      this.setState({ socialBusy: '', oauthError: this.strings().otpUnavailable });
+    }
+  }
+  backToForm() { clearInterval(this._cd); clearTimeout(this._vt); this.setState({ step: 'form', challengeId: '', codeError: false, verifying: false }); setTimeout(() => { if (this._contactInput && this._contactInput.focus) this._contactInput.focus(); }, 0); }
+  resend() {
+    if (this.state.resendIn > 0 || this.state.verifying) return;
+    this.setState({ code: ['', '', '', '', '', ''], codeError: false, verifying: false });
+    this.requestWhatsappChallenge();
+  }
   setDigit(i, ch) {
     const code = this.state.code.slice();
     code[i] = ch;
@@ -770,7 +827,7 @@ class Component extends DCLogic {
       return url.href;
     } catch (e) { return ''; }
   }
-  startSocialAuth(provider) {
+  async startSocialAuth(provider) {
     if (this.state.socialBusy) return;
     const safeProvider = provider === 'facebook' ? 'facebook' : 'linkedin';
     if (this.state.role !== 'client' && this.state.role !== 'freelancer') {
@@ -795,11 +852,34 @@ class Component extends DCLogic {
         return;
       }
     }
-    this.setState({ oauthError: '' });
+    this.setState({ oauthError: '', socialBusy: safeProvider });
+    const registrationProfile = {
+      displayName: [this.state.firstName, this.state.lastName].filter(Boolean).join(' ').trim(),
+      firstName: String(this.state.firstName || '').trim(),
+      lastName: String(this.state.lastName || '').trim(),
+      email: String(this.state.email || '').trim(),
+      companyName: this.state.role === 'client' ? String(this.state.companyName || '').trim() : '',
+      category: String(this.state.category || '').trim(),
+      locale: this.lang() === 'nl' ? 'nl-NL' : 'en'
+    };
+    const appProvider = window.ProLinkerApp && window.ProLinkerApp.auth ? window.ProLinkerApp.auth[safeProvider] : null;
+    if (appProvider && typeof appProvider.start === 'function') {
+      try {
+        await appProvider.start({
+          mode: this.state.mode === 'register' ? 'register' : 'login',
+          role: this.state.role,
+          next: this.safeNext(this.state.next),
+          ref: this.safeReferralCode(this.state.referralCode),
+          profile: registrationProfile,
+          consent: { accepted: this.state.mode !== 'register' || this.state.termsAccepted === true }
+        });
+      } catch (error) { this.setState({ oauthError: this.strings().oauthUnavailable, socialBusy: '' }); }
+      return;
+    }
     const configuredRaw = this.oauthRaw(safeProvider);
     const endpoint = this.oauthEndpoint(safeProvider);
     if (configuredRaw && !endpoint) {
-      this.setState({ oauthError: this.strings().oauthConfigError });
+      this.setState({ oauthError: this.strings().oauthConfigError, socialBusy: '' });
       return;
     }
     if (endpoint) {
@@ -816,11 +896,11 @@ class Component extends DCLogic {
       return;
     }
     const rootConfig = window.PRO_LINKER_CONFIG && typeof window.PRO_LINKER_CONFIG === 'object' ? window.PRO_LINKER_CONFIG : {};
-    if (rootConfig.demoAuth === false) {
-      this.setState({ oauthError: this.strings().oauthUnavailable });
+    const previewHost = window.location.protocol === 'file:' || /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(window.location.hostname);
+    if (rootConfig.demoAuth !== true || !previewHost) {
+      this.setState({ oauthError: this.strings().oauthUnavailable, socialBusy: '' });
       return;
     }
-    this.setState({ socialBusy: safeProvider });
     clearTimeout(this._socialTimer);
     this._socialTimer = setTimeout(() => {
       let contact = (this.state.contact || '').trim();
@@ -834,16 +914,31 @@ class Component extends DCLogic {
       this.finishAuthenticatedSession(safeProvider, contact, name);
     }, 260);
   }
-  verify(candidate) {
+  async verify(candidate) {
     if (this.state.verifying) return;
     const value = String(candidate || this.state.code.join(''));
     if (value.length !== 6) return;
     this.setState({ verifying: true, codeError: false });
-    clearTimeout(this._vt);
-    this._vt = setTimeout(() => {
-      if (value === '123456') this.completeAuth();
-      else { this.setState({ verifying: false, codeError: true, code: ['', '', '', '', '', ''] }); this.focusBox(0); }
-    }, 550);
+    const api = window.ProLinkerApp && window.ProLinkerApp.auth && window.ProLinkerApp.auth.whatsapp;
+    try {
+      if (!api || typeof api.verify !== 'function') throw new Error('OTP_UNAVAILABLE');
+      const result = await api.verify(this.state.challengeId, value);
+      const session = result && result.session ? result.session : null;
+      clearInterval(this._cd);
+      this.setState({
+        step: 'done',
+        authenticated: true,
+        role: session && session.role ? session.role : this.state.role,
+        name: session && session.name ? session.name : this.state.name,
+        verifying: false,
+        codeError: false,
+        password: '',
+        passwordConfirm: ''
+      });
+    } catch (error) {
+      this.setState({ verifying: false, codeError: true, code: ['', '', '', '', '', ''] });
+      this.focusBox(0);
+    }
   }
   switchMode(roleOverride) {
     const nextMode = this.state.mode === 'login' ? 'register' : 'login';
@@ -852,7 +947,7 @@ class Component extends DCLogic {
     const nextRoute = this.safeNext(this.state.next);
     const referralCode = this.safeReferralCode(this.state.referralCode);
     clearTimeout(this._socialTimer);
-    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, socialAttempted: false, codeError: false, verifying: false, socialBusy: '', oauthError: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, code: ['', '', '', '', '', ''] });
+    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', challengeId: '', touched: false, socialAttempted: false, codeError: false, verifying: false, socialBusy: '', oauthError: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, code: ['', '', '', '', '', ''] });
     try {
       const query = ['mode=' + encodeURIComponent(nextMode)];
       if (role) query.push('role=' + encodeURIComponent(role));
@@ -992,6 +1087,7 @@ class Component extends DCLogic {
       onRegisterFreelancer: () => this.switchMode('freelancer'),
       onRegisterClient: () => this.switchMode('client'),
       socialBusy: !!this.state.socialBusy,
+      authBusy: !!this.state.socialBusy,
       facebookLabel: isRegister ? t.facebookRegister : t.facebookLogin,
       linkedinLabel: isRegister ? t.linkedinRegister : t.linkedinLogin,
       onFacebook: () => this.startSocialAuth('facebook'),

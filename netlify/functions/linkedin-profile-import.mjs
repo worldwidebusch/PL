@@ -9,9 +9,9 @@ import {
 } from './_lib/http.mjs';
 import {
   createSessionPayload,
+  issueSessionCookie,
   publicSession,
-  readSession,
-  sessionCookie
+  readSession
 } from './_lib/session.mjs';
 
 const ALLOWED_FIELDS = Object.freeze(['firstName', 'lastName', 'displayName', 'email', 'avatarUrl', 'locale']);
@@ -37,7 +37,7 @@ function importView(session) {
 export async function handler(event) {
   if (event.httpMethod !== 'GET' && event.httpMethod !== 'POST') return methodNotAllowed(['GET', 'POST']);
   try {
-    const session = readSession(event);
+    const session = await readSession(event);
     if (!session) return json(401, { error: { code: 'AUTH_REQUIRED', message: 'Log in before importing a profile.' } });
     const providers = session.auth && Array.isArray(session.auth.providers) ? session.auth.providers : [];
     if (!providers.includes('linkedin') || !session.linkedinProfile) {
@@ -71,7 +71,7 @@ export async function handler(event) {
       ok: true,
       importedFields: fields,
       session: publicSession(refreshed)
-    }, { Vary: 'Cookie' }), sessionCookie(refreshed, event));
+    }, { Vary: 'Cookie' }), await issueSessionCookie(refreshed, event));
   } catch (error) {
     const code = safeErrorCode(error);
     const status = code === 'ORIGIN_MISMATCH' ? 403

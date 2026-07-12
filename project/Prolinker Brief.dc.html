@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -138,7 +138,7 @@
 
     <div data-reveal style="margin-top: 0;">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px;">
-        <label style="font-size: 14px; font-weight: 700; color: var(--text,#152431);">{{ t.descLabel }}<span style="color: #D92D20; font-weight: 700;"> *</span></label>
+        <label for="plk-brief-description" style="font-size: 14px; font-weight: 700; color: var(--text,#152431);">{{ t.descLabel }}<span style="color: #D92D20; font-weight: 700;"> *</span></label>
         <div style="display: flex; align-items: center; gap: 8px;">
           <sc-if value="{{ micShow }}" hint-placeholder-val="{{ true }}">
             <button onClick="{{ onToggleMic }}" title="{{ t.micLabel }}" aria-label="{{ t.micLabel }}" style="width: 34px; height: 34px; border: 1px solid {{ micBorder }}; background: {{ micBg }}; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; animation: {{ micPulse }};">{{ micEl }}</button>
@@ -149,8 +149,8 @@
       <sc-if value="{{ aiGate }}" hint-placeholder-val="{{ false }}"><div style="font-size: 12.5px; color: #C94F2D; margin: 0 0 9px;">{{ aiGateMsg }}</div></sc-if>
       <sc-if value="{{ micNote }}" hint-placeholder-val="{{ false }}"><div style="font-size: 12.5px; color: #D92D20; margin: 0 0 9px;">{{ t.micUnsupported }}</div></sc-if>
       <div style="position: relative;">
-        <textarea class="plk-brief-control" value="{{ desc }}" onInput="{{ onDescInput }}" placeholder="{{ t.descPh }}" maxLength="1000" style="width: 100%; min-height: 168px; resize: vertical; padding: 16px 18px; border: 1px solid var(--border,#DCDFE2); font-size: 15px; line-height: 1.6; color: var(--text,#152431);"></textarea>
-        <div style="position: absolute; right: 16px; bottom: 10px; font-size: 11.5px; color: {{ descCountColor }}; pointer-events: none;">{{ descCount }}</div>
+        <textarea id="plk-brief-description" class="plk-brief-control" value="{{ desc }}" onInput="{{ onDescInput }}" placeholder="{{ t.descPh }}" maxLength="1000" aria-required="true" aria-describedby="plk-brief-description-count" style="width: 100%; min-height: 168px; resize: vertical; padding: 16px 18px; border: 1px solid var(--border,#DCDFE2); font-size: 15px; line-height: 1.6; color: var(--text,#152431);"></textarea>
+        <div id="plk-brief-description-count" aria-live="polite" style="position: absolute; right: 16px; bottom: 10px; font-size: 11.5px; color: {{ descCountColor }}; pointer-events: none;">{{ descCount }}</div>
         <sc-if value="{{ aiLoading }}" hint-placeholder-val="{{ false }}">
           <div style="position: absolute; inset: 0; border-radius: 3px; background: var(--surface,#fff); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
             <div style="width: 72%; max-width: 360px; display: flex; flex-direction: column; gap: 10px;">
@@ -167,19 +167,19 @@
     <div data-reveal style="margin-top: 26px;">
       <label style="display: block; font-size: 14px; font-weight: 700; color: var(--text,#152431); margin-bottom: 9px;">{{ t.budgetLabel }}<span style="color: #D92D20; font-weight: 700;"> *</span></label>
       <div class="plk-brief-budget-row">
-        <div class="plk-brief-budget-toggle">
+        <div class="plk-brief-budget-toggle" role="group" aria-label="{{ t.budgetTypeLabel }}">
           <sc-for list="{{ budgetModes }}" as="bm" hint-placeholder-count="2">
-            <button onClick="{{ bm.on }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 8px 16px; background: {{ bm.bg }}; color: {{ bm.color }};">{{ bm.label }}</button>
+            <button type="button" onClick="{{ bm.on }}" aria-pressed="{{ bm.active }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 8px 16px; background: {{ bm.bg }}; color: {{ bm.color }};">{{ bm.label }}</button>
           </sc-for>
         </div>
         <div class="plk-brief-budget-input">
           <span style="font-size: 15px; color: var(--muted,#424444);">&euro;</span>
-          <input type="number" value="{{ budgetMin }}" onInput="{{ onBudgetMinInput }}" placeholder="{{ t.budgetMinPh }}" min="{{ budgetFloor }}" style="width: 66px; border: none; background: transparent; font-size: 15px; color: var(--text,#152431);">
+          <input id="plk-brief-budget-min" type="number" value="{{ budgetMin }}" onInput="{{ onBudgetMinInput }}" placeholder="{{ t.budgetMinPh }}" min="{{ budgetFloor }}" aria-label="{{ t.budgetMinLabel }}" style="width: 66px; border: none; background: transparent; font-size: 15px; color: var(--text,#152431);">
         </div>
         <span style="font-size: 14px; color: var(--muted,#424444);">{{ t.budgetTo }}</span>
         <div class="plk-brief-budget-input">
           <span style="font-size: 15px; color: var(--muted,#424444);">&euro;</span>
-          <input type="number" value="{{ budgetMax }}" onInput="{{ onBudgetMaxInput }}" placeholder="{{ t.budgetMaxPh }}" min="{{ budgetFloor }}" style="width: 66px; border: none; background: transparent; font-size: 15px; color: var(--text,#152431);">
+          <input id="plk-brief-budget-max" type="number" value="{{ budgetMax }}" onInput="{{ onBudgetMaxInput }}" placeholder="{{ t.budgetMaxPh }}" min="{{ budgetFloor }}" aria-label="{{ t.budgetMaxLabel }}" style="width: 66px; border: none; background: transparent; font-size: 15px; color: var(--text,#152431);">
           <span style="font-size: 14px; color: var(--faint,#8C8E8F);">{{ budgetSuffix }}</span>
         </div>
       </div>
@@ -187,18 +187,18 @@
 
     <div data-reveal style="margin-top: 26px;">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
-        <label style="font-size: 14px; font-weight: 700; color: var(--text,#152431);">{{ t.hoursLabel }}</label>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: {{ selectionAccent }};">{{ hoursText }}</span>
+        <label for="plk-brief-hours" style="font-size: 14px; font-weight: 700; color: var(--text,#152431);">{{ t.hoursLabel }}</label>
+        <output id="plk-brief-hours-output" for="plk-brief-hours" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: {{ selectionAccent }};">{{ hoursText }}</output>
       </div>
-      <input type="range" min="1" max="40" step="1" value="{{ hours }}" onInput="{{ onHoursInput }}" style="width: 100%; accent-color: {{ selectionAccent }}; cursor: pointer;">
+      <input id="plk-brief-hours" type="range" min="1" max="40" step="1" value="{{ hours }}" onInput="{{ onHoursInput }}" aria-valuetext="{{ hoursText }}" aria-describedby="plk-brief-hours-output" style="width: 100%; accent-color: {{ selectionAccent }}; cursor: pointer;">
       <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F); margin-top: 4px;"><span>1</span><span>20</span><span>40+</span></div>
     </div>
 
     <div data-reveal style="margin-top: 26px;">
-      <label style="display: block; font-size: 14px; font-weight: 700; color: var(--text,#152431); margin-bottom: 9px;">{{ t.workLabel }}</label>
-      <div class="plk-brief-work-grid">
+      <div id="plk-brief-work-label" style="display: block; font-size: 14px; font-weight: 700; color: var(--text,#152431); margin-bottom: 9px;">{{ t.workLabel }}</div>
+      <div class="plk-brief-work-grid" role="group" aria-labelledby="plk-brief-work-label">
         <sc-for list="{{ workModes }}" as="wk" hint-placeholder-count="3">
-          <button onClick="{{ wk.on }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 0 14px; border: 1px solid {{ wk.border }}; background: {{ wk.bg }}; color: {{ wk.color }}; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;"><span style="display: inline-flex;">{{ wk.iconEl }}</span>{{ wk.label }}</button>
+          <button type="button" onClick="{{ wk.on }}" aria-pressed="{{ wk.active }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 0 14px; border: 1px solid {{ wk.border }}; background: {{ wk.bg }}; color: {{ wk.color }}; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;"><span style="display: inline-flex;">{{ wk.iconEl }}</span>{{ wk.label }}</button>
         </sc-for>
       </div>
     </div>
@@ -249,8 +249,12 @@ class Component extends DCLogic {
   state = { theme: 'light', query: '', desc: '', budgetMode: 'hourly', budgetMin: '', budgetMax: '', hours: 24, workMode: 'remote', location: '', locationId: '', locationVerified: false, locationOpen: false, locationActiveIndex: 0, aiLoading: false, listening: false, micNote: false, menuOpen: false, attempted: false, aiGate: false, hoursTouched: false, authenticated: false };
 
   isValidWhatsappSession(session, requiredRole) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (window.ProLinkerApp && window.ProLinkerApp.session) return window.ProLinkerApp.session.isValid(session, requiredRole);
+    if (!session || session.authenticated !== true) return false;
     if (requiredRole && session.role !== requiredRole) return false;
+    if (session.channel === 'linkedin' || session.channel === 'facebook') return !!(session.id || session.providerSubject || session.email);
+    if (session.channel !== 'whatsapp') return false;
+    if (session.phoneVerified === true || (session.auth && session.auth.phoneVerified === true)) return true;
     const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
     if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
     return (contact.match(/\d/g) || []).length >= 8;
@@ -533,7 +537,7 @@ class Component extends DCLogic {
       title: 'Tell us more about your project',
       descLabel: 'Project description', descPh: 'Describe what you need, your goals and any must-haves\u2026',
       aiGenerate: 'Generate with AI', aiImprove: 'Improve with AI', aiWriting: 'Writing\u2026', aiWorking: 'AI is writing your brief\u2026',
-      budgetLabel: 'Budget', hourly: 'Hourly rate', project: 'Project budget', perHour: '/hr', projectSuffix: 'total', budgetPh: 'e.g. 75', budgetTo: 'to', budgetMinPh: 'min', budgetMaxPh: 'max',
+      budgetLabel: 'Budget', budgetTypeLabel: 'Budget type', budgetMinLabel: 'Minimum budget', budgetMaxLabel: 'Maximum budget', hourly: 'Hourly rate', project: 'Project budget', perHour: '/hr', projectSuffix: 'total', budgetPh: 'e.g. 75', budgetTo: 'to', budgetMinPh: 'min', budgetMaxPh: 'max',
       hoursLabel: 'Hours per week', hoursUnit: 'h/week', hoursMax: '40+ h/week',
       workLabel: 'Where will they work?', remote: 'Remote', hybrid: 'Hybrid', onsite: 'On location',
       whereLabel: 'Location', wherePh: 'City or region', whereHint: 'Type a city or region and select a confirmed location.', whereSelectedHint: 'Confirmed location selected.', whereVerified: 'Confirmed', whereVerifiedShort: 'Confirmed', whereResultsLabel: 'Confirmed locations', whereNoResults: 'No confirmed location found. Try another city or region.', whereSource: 'Confirmed locations in the Netherlands and Belgium',
@@ -550,7 +554,7 @@ class Component extends DCLogic {
       title: 'Vertel meer over je opdracht',
       descLabel: 'Projectomschrijving', descPh: 'Beschrijf wat je nodig hebt, je doelen en eventuele must-haves\u2026',
       aiGenerate: 'Genereer met AI', aiImprove: 'Verbeter met AI', aiWriting: 'Schrijven\u2026', aiWorking: 'AI schrijft je omschrijving\u2026',
-      budgetLabel: 'Budget', hourly: 'Uurtarief', project: 'Projectbudget', perHour: '/uur', projectSuffix: 'totaal', budgetPh: 'bijv. 75', budgetTo: 'tot', budgetMinPh: 'min', budgetMaxPh: 'max',
+      budgetLabel: 'Budget', budgetTypeLabel: 'Type budget', budgetMinLabel: 'Minimumbudget', budgetMaxLabel: 'Maximumbudget', hourly: 'Uurtarief', project: 'Projectbudget', perHour: '/uur', projectSuffix: 'totaal', budgetPh: 'bijv. 75', budgetTo: 'tot', budgetMinPh: 'min', budgetMaxPh: 'max',
       hoursLabel: 'Uren per week', hoursUnit: 'u/week', hoursMax: '40+ u/week',
       workLabel: 'Waar werkt de freelancer?', remote: 'Op afstand', hybrid: 'Hybride', onsite: 'Op locatie',
       whereLabel: 'Locatie', wherePh: 'Stad of regio', whereHint: 'Typ een stad of regio en kies een bevestigde locatie.', whereSelectedHint: 'Bevestigde locatie gekozen.', whereVerified: 'Bevestigd', whereVerifiedShort: 'Bevestigd', whereResultsLabel: 'Bevestigde locaties', whereNoResults: 'Geen bevestigde locatie gevonden. Probeer een andere stad of regio.', whereSource: 'Bevestigde locaties in Nederland en Belgi\u00eb',
@@ -638,6 +642,16 @@ class Component extends DCLogic {
     try {
       localStorage.setItem('plk-query', q);
       localStorage.setItem('plk-brief', JSON.stringify({ query: this.state.query, desc: this.state.desc, budgetMode: this.state.budgetMode, budgetMin: this.state.budgetMin, budgetMax: this.state.budgetMax, hours: this.state.hours, workMode: this.state.workMode, location: this.state.workMode === 'remote' ? '' : this.state.location, locationId: this.state.workMode === 'remote' ? '' : this.state.locationId, locationVerified: this.state.workMode === 'remote' ? false : this.state.locationVerified }));
+      if (localStorage.getItem('plk-active-project')) {
+        localStorage.removeItem('plk-active-project');
+        localStorage.removeItem('plk-project-idempotency');
+      }
+      if (!localStorage.getItem('plk-project-idempotency')) {
+        const randomPart = window.crypto && typeof window.crypto.randomUUID === 'function'
+          ? window.crypto.randomUUID()
+          : Date.now().toString(36) + Math.random().toString(36).slice(2);
+        localStorage.setItem('plk-project-idempotency', 'project-' + randomPart);
+      }
     } catch (e) {}
     let clientAuthenticated = false;
     try {
@@ -664,14 +678,14 @@ class Component extends DCLogic {
     const bm = this.state.budgetMode;
     const budgetModes = [{ key: 'hourly', label: t.hourly }, { key: 'project', label: t.project }].map((o) => {
       const on = bm === o.key;
-      return { label: o.label, on: () => this.setState({ budgetMode: o.key }), bg: on ? selectionAccent : 'transparent', color: on ? '#ffffff' : 'var(--muted,#424444)' };
+      return { label: o.label, active: on, on: () => this.setState({ budgetMode: o.key }), bg: on ? selectionAccent : 'transparent', color: on ? '#ffffff' : 'var(--muted,#424444)' };
     });
 
     const wm = this.state.workMode;
     const wmDefs = [['remote', 'globe', t.remote], ['hybrid', 'shuffle', t.hybrid], ['onsite', 'building', t.onsite]];
     const workModes = wmDefs.map((d) => {
       const on = wm === d[0];
-      return { label: d[2], iconEl: this.iconEl(d[1], on ? '#ffffff' : mutedIcon, 17), on: () => this.setState({ workMode: d[0], locationOpen: false, locationActiveIndex: 0 }), bg: on ? selectionAccent : 'var(--surface,#fff)', color: on ? '#ffffff' : 'var(--text,#152431)', border: on ? selectionAccent : 'var(--border,#DCDFE2)' };
+      return { label: d[2], active: on, iconEl: this.iconEl(d[1], on ? '#ffffff' : mutedIcon, 17), on: () => this.setState({ workMode: d[0], locationOpen: false, locationActiveIndex: 0 }), bg: on ? selectionAccent : 'var(--surface,#fff)', color: on ? '#ffffff' : 'var(--text,#152431)', border: on ? selectionAccent : 'var(--border,#DCDFE2)' };
     });
 
     const hrs = this.state.hours;
@@ -723,7 +737,7 @@ class Component extends DCLogic {
       gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#424444' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
       onLogin: () => { window.location.href = 'Prolinker Login.dc.html?mode=login&role=client'; },
       onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
-      menuItems: [{ label: t.nav1, href: 'Prolinker Results.dc.html' }, { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' }, { label: t.nav4, href: 'Prolinker Homepage.dc.html' }, { label: t.nav5, href: 'https://prolinker.com/nl/blog?page=1' }, { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }, { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }],
+      menuItems: [{ label: t.nav1, href: 'Prolinker Results.dc.html' }, { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' }, { label: t.nav4, href: 'Prolinker Brief.dc.html' }, { label: t.nav5, href: 'https://prolinker.com/nl/blog?page=1' }, { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }, { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }],
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       fontStack: ({ 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif" })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       sparkEl: this.iconEl('spark', accent, 14, true),

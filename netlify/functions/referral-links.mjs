@@ -20,7 +20,7 @@ export async function handler(event) {
   if (event.httpMethod !== 'POST') return methodNotAllowed(['POST']);
   try {
     assertSameOrigin(event);
-    const session = readSession(event);
+    const session = await readSession(event);
     if (!session) return json(401, { error: { code: 'AUTH_REQUIRED', message: 'Log in before creating a referral link.' } });
     const body = parseJsonBody(event);
     const target = sanitizeReferralTarget(body.targetUrl || body.target, event);

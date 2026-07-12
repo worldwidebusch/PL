@@ -1,0 +1,16 @@
+{
+  "name": "prolinker-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Build, verification, and deployment contracts for the ProLinker website.",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "check": "node scripts/build-site.mjs --check && node scripts/check-runtime-syntax.mjs",
+    "test": "node --test",
+    "ci": "npm run check && npm test && npm run build"
+  }
+}

@@ -4,13 +4,21 @@ This repository contains the interactive ProLinker website prototype. It can be 
 
 ## Start the app
 
-Open `index.html`, or serve the repository with any static web server. The root entry point forwards visitors to the ProLinker homepage.
+Use Node.js 22 or newer. The repository has no runtime package dependencies.
+
+```bash
+npm run check
+npm test
+npm run build
+```
+
+The build creates a clean `dist/` directory containing only the root entry point and browser runtime files from `project/`. It deliberately excludes environment files, Git metadata, Netlify function source, tests, documentation, generated print pages and editor-only files. Serve `dist/` with a static server for interface work. Use Netlify Dev when local work must include the function redirects and secure cookies.
 
 The interface runtime, React, ReactDOM, Babel, PDF.js and Mammoth are pinned and self-hosted in `project/assets/vendor/`. The main app can therefore start without a third-party CDN. CV parsing only tries the matching pinned CDN files as a fallback when a local vendor file fails to load.
 
 ## App data adapter
 
-`project/prolinker-app.js` is the shared data boundary for authenticated app pages. Every account page loads it before `support.js`. Without configuration it uses deterministic, account-scoped mock records in `localStorage`, so refreshes and account actions work in the static prototype.
+`project/prolinker-app.js` is the shared data boundary for authenticated app pages. Every account page loads it before `support.js`. ProLinker and Netlify hosts automatically use the same-origin `/api/v1` backend. Other hosts can set `baseUrl` explicitly. File, localhost and GitHub Pages previews keep deterministic, account-scoped mock records unless a backend URL is configured.
 
 Set `window.PRO_LINKER_CONFIG` before loading `prolinker-app.js` to connect a backend:
 
@@ -75,24 +83,40 @@ The freelancer opportunity feed contains the canonical current feed design. Desk
 
 ### Account app
 
-The authenticated WhatsApp account menu links to the functional Dashboard, Network, My assignments, Messages, Profile, Earnings and Settings pages. They share one session guard and data adapter. Static mode stores account-scoped demo records locally; API mode uses the configured backend contracts.
+The authenticated account menu links to the functional Dashboard, Network, My assignments, Messages, Profile, Earnings and Settings pages. WhatsApp, LinkedIn and Facebook sessions use the same guard and data adapter. Static mode stores account-scoped demo records locally; API mode uses the configured backend contracts.
 
 ### Referral journey
 
 Authenticated clients and freelancers can open `project/Prolinker Verdiensten.dc.html`, create a personal referral link and share it through WhatsApp. A freelancer who registers through that link is attributed locally to the referring member. The dashboard demonstrates a 2% reward on work processed through ProLinker.
 
-## Demo authentication
+## Authentication modes
 
-Authentication is intentionally a local static demo, not production authentication.
+Production authentication uses the Netlify function routes documented in `netlify/README.md`. LinkedIn uses OpenID Connect with PKCE, Facebook uses a server-side OAuth callback, and WhatsApp challenge creation and verification are delegated to the private backend adapter. Browser code never receives provider secrets or the backend adapter token.
 
-- Login and registration accept a WhatsApp phone number only.
-- Use verification code `123456`.
-- The demo session, contact details, role, brief, profile, preferences and simulated application history are stored in `localStorage` in the current browser.
-- No WhatsApp message is actually sent.
-- Jobs, freelancers, relevance scores, matches and application activity are simulated mock data. No application is sent to an employer or external platform.
-- Referral attribution, gross platform values, the 2% calculation and the payout ledger are simulated locally. Cross-device tracking, fraud controls and real payouts require a secure backend and must not rely on `localStorage`.
-- Do not enter sensitive or confidential information. Demo data can persist after the browser closes. Logging out clears the active session and contact details; account-scoped mock records remain until the site's browser data is cleared.
-- Before production, replace this flow with a secure server-side authentication provider and protected application routes.
+Preview authentication is for local development only. It must be enabled explicitly with `PROLINKER_ALLOW_PREVIEW_AUTH=true`; production and deploy previews should leave `PROLINKER_ALLOW_PREVIEW_AUTH=false`. Insecure cookies are a separate localhost-only opt-in through `PROLINKER_ALLOW_INSECURE_COOKIES=true`. Never enable either setting on a public deployment.
+
+Local mock records may still be used to develop screens without a backend. They are device-local, not durable and not suitable for real accounts, referrals, payments, applications or confidential information.
+
+## Netlify deployment
+
+Netlify runs `npm run build`, publishes `dist/`, and bundles functions from `netlify/functions/`. Exact authentication and referral routes are evaluated before the final `/api/v1/*` backend gateway. Static responses receive the baseline browser security headers from `netlify.toml`; function responses add their own no-store security headers.
+
+Before deploying:
+
+1. Copy the variable names from `.env.example` into the Netlify environment and supply secrets there, never in Git.
+2. Set the exact production `PROLINKER_APP_ORIGIN` and both social callback URLs.
+3. Configure `PROLINKER_BACKEND_ADAPTER_URL` and its token. Production must not rely on signed-cookie preview storage.
+4. Pin `PROLINKER_TERMS_VERSION` and `PROLINKER_PRIVACY_VERSION` to the versions accepted by new accounts.
+5. Leave preview authentication and insecure cookies disabled.
+6. Run `npm run ci` and verify the deployed response headers and authentication callbacks.
+
+The old Laravel staging repositories remain a compatibility reference only. Their `.env` files, JWT keys, OAuth credentials and service tokens must not be copied into this repository or exposed to the browser. The private adapter is responsible for translating the normalized contracts to legacy services.
+
+The backend handoff lives in `backend/`: start with `backend/README.md`, apply
+`backend/postgres-schema.sql` to PostgreSQL 15, then implement the exact private
+operation envelopes in `backend/adapter-contract.md`. The schema includes legacy
+ID mappings so staging services can be migrated without exposing their internal
+identifiers to the frontend.
 
 ## Progressive Web App
 

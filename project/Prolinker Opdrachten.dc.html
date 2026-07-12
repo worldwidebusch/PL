@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -54,6 +55,8 @@
   .plk-loc small { display:block; margin-top:3px; color:var(--faint); font-size:10.5px; font-weight:400; }
   .plk-status .plk-open { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:7px; background:#E9F6EE; color:#237A45; font-size:11px; font-weight:750; }
   .plk-status .plk-open::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); }
+  .plk-status .plk-open.is-closing { background:#FFF2E8; color:#A44720; }
+  .plk-status .plk-open.is-closing::before { background:#E65F39; }
   .plk-status small { display:block; margin-top:5px; color:var(--faint); font-size:10.5px; }
   .plk-empty { padding:40px 20px; text-align:center; color:var(--muted); font-size:13px; }
   .plk-count-note { margin-top:10px; color:var(--faint); font-size:11.5px; text-align:right; }
@@ -83,8 +86,13 @@
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker"></a>
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;">
-      <a class="plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html">Inloggen</a>
-      <prolinker-signup-menu></prolinker-signup-menu>
+      <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
+        <a class="plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html">Inloggen</a>
+        <prolinker-signup-menu></prolinker-signup-menu>
+      </sc-if>
+      <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
+        <prolinker-account-menu></prolinker-account-menu>
+      </sc-if>
     </div>
   </header>
 
@@ -135,7 +143,7 @@
             <div class="plk-cat">{{ r.cat }}<small>{{ r.sub }}</small></div>
             <div class="plk-budget">{{ r.budget }}<small>{{ r.budgetType }}</small></div>
             <div class="plk-loc">{{ r.loc }}<small>{{ r.region }}</small></div>
-            <div class="plk-status"><span class="plk-open">Open</span><small>{{ r.interested }} ge&iuml;nteresseerd</small></div>
+            <div class="plk-status"><span class="{{ r.statusClass }}">{{ r.statusLabel }}</span><small>{{ r.interested }} ge&iuml;nteresseerd</small></div>
           </div>
         </sc-for>
       </sc-if>
@@ -148,16 +156,70 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1100}}">
 class Component extends DCLogic {
-  state = { query: '', cat: '', budget: '', max: 12000, loc: '', dist: 250, status: '', react: 10, applied: {} };
+  state = { query: '', cat: '', budget: '', max: 12000, loc: '', dist: 250, status: '', react: 10, applied: {}, authenticated: false };
 
   componentDidMount() {
     document.documentElement.setAttribute('lang', 'nl');
     try { if (localStorage.getItem('plk-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}
-    this.setState({ applied: this.currentFilters() });
+    let query = '';
+    try { query = String(new URLSearchParams(window.location.search || '').get('q') || '').trim().slice(0, 120); } catch (e) {}
+    this._syncSession = () => {
+      let session = null;
+      try { session = window.ProLinkerApp && window.ProLinkerApp.session ? window.ProLinkerApp.session.get() : JSON.parse(localStorage.getItem('plk-auth-session') || 'null'); } catch (e) {}
+      this.setState({ authenticated: !!session });
+    };
+    window.addEventListener('plk-session-change', this._syncSession);
+    this._syncSession();
+    this.setState({ query: query, applied: Object.assign({}, this.currentFilters(), { query: query }) });
+  }
+
+  componentWillUnmount() {
+    if (this._syncSession) window.removeEventListener('plk-session-change', this._syncSession);
   }
 
   currentFilters() {
-    return { query: this.state.query, cat: this.state.cat, budget: this.state.budget, max: this.state.max, loc: this.state.loc, status: this.state.status, react: this.state.react };
+    return { query: this.state.query, cat: this.state.cat, budget: this.state.budget, max: this.state.max, loc: this.state.loc, dist: this.state.dist, status: this.state.status, react: this.state.react };
+  }
+
+  normalizeSearch(value) {
+    let text = String(value || '').toLowerCase();
+    try { text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) {}
+    return text
+      .replace(/\bop afstand\b|\bremote\b/g, ' remote ')
+      .replace(/\bdevelopers?\b|\bdevelopment\b|\bontwikkeling\b|\bontwikkelaars?\b/g, ' develop ')
+      .replace(/\bdesigners?\b|\bontwerpers?\b|\bontwerp\b/g, ' design ')
+      .replace(/\bmarketers?\b|\bmarketeers?\b|\bmarketing\b/g, ' market ')
+      .replace(/\bklantenservice\b|\bcustomer\b/g, ' customer ')
+      .replace(/\bbookkeepers?\b|\bboekhouders?\b|\bboekhouding\b/g, ' boekhoud ')
+      .replace(/\badvisors?\b|\badviseurs?\b/g, ' adviser ')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  placeCoordinates(value) {
+    const key = String(value || '').toLowerCase().trim();
+    const places = {
+      amsterdam: [52.3676, 4.9041],
+      purmerend: [52.5050, 4.9597],
+      utrecht: [52.0907, 5.1214],
+      eindhoven: [51.4416, 5.4697],
+      rotterdam: [51.9244, 4.4777],
+      'den haag': [52.0705, 4.3007],
+      's-gravenhage': [52.0705, 4.3007]
+    };
+    const names = Object.keys(places);
+    for (let index = 0; index < names.length; index += 1) {
+      if (key.indexOf(names[index]) !== -1) return places[names[index]];
+    }
+    return null;
+  }
+
+  distanceKm(from, to) {
+    const radians = (degrees) => degrees * Math.PI / 180;
+    const lat = radians(to[0] - from[0]);
+    const lon = radians(to[1] - from[1]);
+    const a = Math.sin(lat / 2) * Math.sin(lat / 2) + Math.cos(radians(from[0])) * Math.cos(radians(to[0])) * Math.sin(lon / 2) * Math.sin(lon / 2);
+    return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
   jobs() {
@@ -166,7 +228,7 @@ class Component extends DCLogic {
       { time: '16:40', date: '11 juli 2026', title: 'Freelance Meta Ads specialist als sparringpartner', cat: 'Marketing en Communicatie', sub: 'Social media marketing', min: 60, budget: '€ 60 - € 80', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 4, skills: 'meta ads facebook instagram performance' },
       { time: '16:28', date: '11 juli 2026', title: 'Marketingstrateeg voor B2B-campagnes', cat: 'Marketing en Communicatie', sub: 'Marketingstrategie', min: 75, budget: '€ 75 - € 100', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 6, skills: 'strategie b2b campagnes' },
       { time: '21:06', date: '9 juli 2026', title: 'Website betalingen integreren', cat: 'Website en Apps', sub: 'Development', min: 1000, budget: '€ 1.000 - € 2.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Purmerend', region: 'Noord-Holland, NL', interested: 2, skills: 'shopify psp mollie stripe webdevelopment' },
-      { time: '13:18', date: '9 juli 2026', title: 'Meta Ads specialist voor leadgeneratie', cat: 'Marketing en Communicatie', sub: 'Online campagnes opzetten', min: 1000, budget: '€ 1.000 - € 2.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Op afstand', region: '', interested: 1, skills: 'meta ads leadgeneratie' },
+      { time: '13:18', date: '9 juli 2026', title: 'Meta Ads specialist voor leadgeneratie', cat: 'Marketing en Communicatie', sub: 'Online campagnes opzetten', min: 1000, budget: '€ 1.000 - € 2.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Op afstand', region: '', interested: 1, status: 'closing', skills: 'meta ads leadgeneratie' },
       { time: '13:06', date: '9 juli 2026', title: 'AI Full Stack Developer', cat: 'Website en Apps', sub: 'AI en development', min: 0, budget: 'In overleg', budgetType: 'In overleg', type: 'overleg', loc: 'Op afstand', region: '', interested: 3, skills: 'react node python llm ai fullstack' },
       { time: '12:56', date: '9 juli 2026', title: 'Website ontwerper gezocht', cat: 'Design en Creatie', sub: 'Webdesign', min: 40, budget: '€ 40 - € 60', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 5, skills: 'webdesign figma ui' },
       { time: '11:32', date: '9 juli 2026', title: 'Interim financieel controller (3 dagen p/w)', cat: 'Finance en Control', sub: 'Interim finance', min: 85, budget: '€ 85 - € 110', budgetType: 'Per uur', type: 'uur', loc: 'Utrecht', region: 'Utrecht, NL', interested: 7, skills: 'controller finance exact powerbi' },
@@ -175,27 +237,49 @@ class Component extends DCLogic {
       { time: '09:12', date: '8 juli 2026', title: 'UX researcher voor app-onboarding', cat: 'Design en Creatie', sub: 'UX research', min: 70, budget: '€ 70 - € 90', budgetType: 'Per uur', type: 'uur', loc: 'Rotterdam', region: 'Zuid-Holland, NL', interested: 4, skills: 'ux research interviews figma' },
       { time: '17:41', date: '7 juli 2026', title: 'Logo en huisstijl voor scale-up', cat: 'Design en Creatie', sub: 'Brand design', min: 1500, budget: '€ 1.500 - € 3.000', budgetType: 'Vaste prijs', type: 'vast', loc: 'Op afstand', region: '', interested: 8, skills: 'logo branding identity' },
       { time: '15:03', date: '7 juli 2026', title: 'HubSpot specialist voor salesautomatisering', cat: 'Marketing en Communicatie', sub: 'Marketing automation', min: 65, budget: '€ 65 - € 85', budgetType: 'Per uur', type: 'uur', loc: 'Op afstand', region: '', interested: 2, skills: 'hubspot automation crm' },
-      { time: '11:57', date: '7 juli 2026', title: 'Legal counsel voor contractenreview (interim)', cat: 'Legal', sub: 'Contractrecht', min: 95, budget: '€ 95 - € 120', budgetType: 'Per uur', type: 'uur', loc: 'Den Haag', region: 'Zuid-Holland, NL', interested: 1, skills: 'legal contracten review' }
+      { time: '11:57', date: '7 juli 2026', title: 'Legal counsel voor contractenreview (interim)', cat: 'Legal', sub: 'Contractrecht', min: 95, budget: '€ 95 - € 120', budgetType: 'Per uur', type: 'uur', loc: 'Den Haag', region: 'Zuid-Holland, NL', interested: 1, status: 'closing', skills: 'legal contracten review' }
     ];
   }
 
   renderVals() {
     const f = this.state.applied || {};
     const all = this.jobs();
-    const q = String(f.query || '').toLowerCase().trim();
+    const q = this.normalizeSearch(f.query || '');
+    const queryTokens = q.split(/\s+/).filter((token, index, list) => token.length > 1 && list.indexOf(token) === index);
     const loc = String(f.loc || '').toLowerCase().trim();
-    const rows = all.filter((job) => {
+    const remoteOnly = loc === 'remote' || loc === 'op afstand';
+    const origin = remoteOnly ? null : this.placeCoordinates(loc);
+    const rows = all.map((job) => {
+      const searchable = this.normalizeSearch([job.title, job.cat, job.sub, job.skills, job.loc, job.region].join(' '));
+      const searchScore = queryTokens.reduce((score, token) => score + (searchable.indexOf(token) !== -1 ? 1 : 0), 0);
+      return { job: job, searchScore: searchScore };
+    }).filter((entry) => {
+      const job = entry.job;
       if (f.cat && job.cat !== f.cat) return false;
       if (f.budget && job.type !== f.budget) return false;
       if (typeof f.max === 'number' && f.max < 12000 && job.min > f.max) return false;
-      if (q && (job.title + ' ' + job.sub + ' ' + job.skills).toLowerCase().indexOf(q) === -1) return false;
-      if (loc && (job.loc + ' ' + job.region).toLowerCase().indexOf(loc) === -1) return false;
+      if (queryTokens.length && entry.searchScore === 0) return false;
+      if (loc) {
+        const jobLocation = (job.loc + ' ' + job.region).toLowerCase();
+        if (remoteOnly && job.loc !== 'Op afstand') return false;
+        if (origin) {
+          const destination = this.placeCoordinates(job.loc);
+          if (!destination || this.distanceKm(origin, destination) > Number(f.dist || 250)) return false;
+        } else if (!remoteOnly && jobLocation.indexOf(loc) === -1) return false;
+      }
+      if (f.status && (job.status || 'open') !== f.status) return false;
       if (typeof f.react === 'number' && f.react < 10 && job.interested > f.react) return false;
       return true;
-    }).map((job) => Object.assign({}, job, { href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }));
+    }).sort((a, b) => b.searchScore - a.searchScore).map((entry) => Object.assign({}, entry.job, {
+      href: 'Prolinker Login.dc.html?mode=register&role=freelancer',
+      statusLabel: entry.job.status === 'closing' ? 'Sluit binnenkort' : 'Open',
+      statusClass: 'plk-open' + (entry.job.status === 'closing' ? ' is-closing' : '')
+    }));
     const cats = [];
     all.forEach((job) => { if (cats.indexOf(job.cat) === -1) cats.push(job.cat); });
     return {
+      authenticated: this.state.authenticated,
+      anonymous: !this.state.authenticated,
       totalLabel: '47.978',
       catOpts: cats.sort(),
       fQuery: this.state.query, onQuery: (e) => this.setState({ query: e.target.value }),
