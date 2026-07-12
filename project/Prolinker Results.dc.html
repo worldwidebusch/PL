@@ -12,19 +12,19 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
-  :root[data-theme="dark"] { --bg:#0b1119; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.5); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.74); }
+  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0b1119; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.5); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.74); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
   a { color: inherit; text-decoration: none; }
   a:hover { color: inherit; }
-  input::placeholder { color: var(--faint,#9AA0A6); }
+  input::placeholder { color: var(--faint,#8C8E8F); }
   input:focus { outline: none; }
-  ::selection { background: #cfe6fb; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-ping { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2.6); opacity: 0; } }
   @keyframes plk-scan { 0% { width: 5%; } 100% { width: 100%; } }
@@ -43,11 +43,11 @@
 <meta name="robots" content="index, follow">
 </helmet>
 
-<div data-screen-label="Results" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div data-screen-label="Results" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;">
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;">
       <prolinker-account-menu></prolinker-account-menu>
     </div>
   </header>
@@ -57,13 +57,13 @@
       <div style="position: relative; width: 132px; height: 132px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
         <span style="position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 1.5px solid {{ accent }}; opacity: 0.5; animation: plk-ping 1.9s ease-out infinite;"></span>
         <span style="position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 1.5px solid {{ accent }}; opacity: 0.5; animation: plk-ping 1.9s ease-out infinite; animation-delay: 0.95s;"></span>
-        <div style="width: 92px; height: 92px; border-radius: 50%; background: #ffffff; box-shadow: 0 12px 30px -12px rgba(0,107,198,0.5); display: inline-flex; align-items: center; justify-content: center; animation: plk-breathe 2.2s ease-in-out infinite;">
+        <div style="width: 92px; height: 92px; border-radius: 50%; background: #ffffff; box-shadow: 0 12px 30px -12px rgba(47,91,133,0.5); display: inline-flex; align-items: center; justify-content: center; animation: plk-breathe 2.2s ease-in-out infinite;">
           <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 58px; height: 58px; display: block;">
         </div>
       </div>
       <h1 style="margin: 0; font-size: clamp(24px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431); text-wrap: balance;">{{ t.scanTitle }}</h1>
-      <p style="margin: 10px 0 0; font-size: 16px; color: var(--muted,#565B62);">{{ scanSubtitle }}</p>
-      <div style="width: 100%; max-width: 420px; height: 6px; border-radius: 999px; background: var(--border,#E4E5EC); overflow: hidden; margin-top: 30px;">
+      <p style="margin: 10px 0 0; font-size: 16px; color: var(--muted,#424444);">{{ scanSubtitle }}</p>
+      <div style="width: 100%; max-width: 420px; height: 6px; border-radius: 999px; background: var(--border,#DCDFE2); overflow: hidden; margin-top: 30px;">
         <div style="height: 100%; border-radius: 999px; background: {{ accent }}; animation: plk-scan 2.1s ease-out forwards;"></div>
       </div>
       <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 13px; text-align: left;">
@@ -77,28 +77,28 @@
     </div>
   </sc-if>
   <sc-if value="{{ notScanning }}" hint-placeholder-val="{{ false }}">
-  <div style="border-bottom: 1px solid var(--hairline,#ECEDF2); background: var(--surface,#fff); padding: 16px 28px;">
+  <div style="border-bottom: 1px solid var(--hairline,#ECEEF0); background: var(--surface,#fff); padding: 16px 28px;">
     <div style="max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 14px;">
-      <div style="flex: 1; min-width: 0; font-size: 15px; color: var(--muted,#565B62);">{{ t.resultsFor }} <b style="color: var(--text,#152431); font-weight: 700;">"{{ query }}"</b></div>
-      <a href="Prolinker Brief.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap; cursor: pointer;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.editPost }}</a>
+      <div style="flex: 1; min-width: 0; font-size: 15px; color: var(--muted,#424444);">{{ t.resultsFor }} <b style="color: var(--text,#152431); font-weight: 700;">"{{ query }}"</b></div>
+      <a href="Prolinker Brief.dc.html" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap; cursor: pointer;" style-hover="border-color: {{ accent }}; color: {{ accent }};"><span style="font-size: 16px; line-height: 1;">&#8592;</span>{{ t.editPost }}</a>
     </div>
   </div>
 
   <div style="max-width: 1080px; width: 100%; margin: 0 auto; padding: 18px 44px 0;">
-    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#9AA0A6);">{{ metaLine }}</div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">{{ metaLine }}</div>
   </div>
 
   <div style="max-width: 1080px; width: 100%; margin: 0 auto; padding: 20px 44px 60px;">
 
     <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px;">
-      <button onClick="{{ onSelectAll }}" style="display: inline-flex; align-items: center; gap: 12px; background: none; border: none; cursor: pointer; font-family: inherit; padding: 4px 0; color: var(--muted,#565B62);">
+      <button onClick="{{ onSelectAll }}" style="display: inline-flex; align-items: center; gap: 12px; background: none; border: none; cursor: pointer; font-family: inherit; padding: 4px 0; color: var(--muted,#424444);">
         <span style="width: 19px; height: 19px; border-radius: 50%; border: 1.5px solid {{ selectAllBorder }}; background: {{ selectAllBg }}; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;"><sc-if value="{{ allSelected }}" hint-placeholder-val="{{ false }}">{{ checkEl }}</sc-if></span>
         <span style="font-size: 14px; font-weight: 600;">{{ t.selectAll }}</span>
       </button>
       <sc-if value="{{ showBulk }}" hint-placeholder-val="{{ false }}">
         <div style="display: flex; align-items: center; gap: 14px;">
-          <span style="font-size: 14px; color: var(--muted,#565B62);">{{ selectedLabel }}</span>
-          <button onClick="{{ onInvite }}" title="{{ t.waHint }}" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);"><span style="display: inline-flex; flex-shrink: 0;">{{ waElWhite }}</span>{{ t.invite }}</button>
+          <span style="font-size: 14px; color: var(--muted,#424444);">{{ selectedLabel }}</span>
+          <button onClick="{{ onInvite }}" title="{{ t.waHint }}" style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 18px; border: none; border-radius: 8px; background: #E65F39; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);"><span style="display: inline-flex; flex-shrink: 0;">{{ waElWhite }}</span>{{ t.invite }}</button>
         </div>
       </sc-if>
     </div>
@@ -108,7 +108,7 @@
         <div style="display: flex; align-items: center; gap: 16px;">
           <button onClick="{{ r.onToggleSelect }}" aria-label="select" style="flex-shrink: 0; width: 19px; height: 19px; border-radius: 50%; border: 1.5px solid {{ r.boxBorder }}; background: {{ r.boxBg }}; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;"><sc-if value="{{ r.selected }}" hint-placeholder-val="{{ false }}">{{ checkEl }}</sc-if></button>
 
-          <div data-reveal data-delay="{{ r.delay }}" style="flex: 1; min-width: 0; display: flex; gap: 20px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); position: relative; min-height: 200px; transition: box-shadow 0.18s ease, border-color 0.18s ease;" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42); border-color: {{ accentRing }};">
+          <div data-reveal data-delay="{{ r.delay }}" style="flex: 1; min-width: 0; display: flex; gap: 20px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); position: relative; min-height: 200px; transition: box-shadow 0.18s ease, border-color 0.18s ease;" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42); border-color: {{ accentRing }};">
 
             <div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 104px;">
               <div style="width: 104px; height: 104px; border-radius: 50%; background: {{ r.avatarBg }}; color: {{ r.avatarColor }}; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 700;">{{ r.initials }}</div>
@@ -117,19 +117,19 @@
 
             <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
               <div style="font-size: 18px; font-weight: 700; color: var(--text,#152431);">{{ r.name }}</div>
-              <div style="margin-top: 5px; font-size: 14px; line-height: 1.55; color: var(--muted,#565B62); {{ r.clampCss }}">{{ r.bio }}</div>
+              <div style="margin-top: 5px; font-size: 14px; line-height: 1.55; color: var(--muted,#424444); {{ r.clampCss }}">{{ r.bio }}</div>
               <sc-if value="{{ r.needsExpand }}" hint-placeholder-val="{{ false }}">
-                <button onClick="{{ r.onToggleExpand }}" aria-label="expand" style="align-self: center; margin-top: 6px; background: none; border: none; cursor: pointer; color: var(--faint,#9AA0A6); padding: 2px 10px;"><span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ r.chevronRotate }};">{{ chevronEl }}</span></button>
+                <button onClick="{{ r.onToggleExpand }}" aria-label="expand" style="align-self: center; margin-top: 6px; background: none; border: none; cursor: pointer; color: var(--faint,#8C8E8F); padding: 2px 10px;"><span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ r.chevronRotate }};">{{ chevronEl }}</span></button>
               </sc-if>
               <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 16px;">
-                <button onClick="{{ r.onViewProfile }}" style="display: inline-flex; align-items: center; justify-content: center; height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="filter: brightness(0.94);">{{ t.viewProfile }}</button>
-                <a href="https://prolinker.com" title="{{ t.waHint }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--border,#E4E5EC); background: transparent; color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600;" style-hover="border-color: #25D366; background: rgba(37,211,102,0.08);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.inviteCard }}</a>
+                <button onClick="{{ r.onViewProfile }}" style="display: inline-flex; align-items: center; justify-content: center; height: 38px; padding: 0 18px; border: none; border-radius: 8px; background: #E65F39; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="filter: brightness(0.94);">{{ t.viewProfile }}</button>
+                <a href="https://prolinker.com" title="{{ t.waHint }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 18px; border-radius: 8px; border: 1.5px solid var(--border,#DCDFE2); background: transparent; color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600;" style-hover="border-color: #25D366; background: rgba(37,211,102,0.08);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.inviteCard }}</a>
                 <div style="position: absolute; bottom: 16px; right: 20px;">
-                  <button onClick="{{ r.onToggleMenu }}" aria-label="More" style="width: 34px; height: 34px; border-radius: 50%; border: none; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--panel,#F7F8FB);">{{ kebabEl }}</button>
+                  <button onClick="{{ r.onToggleMenu }}" aria-label="More" style="width: 34px; height: 34px; border-radius: 8px; border: none; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--panel,#F3F4F6);">{{ kebabEl }}</button>
                   <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
                     <div onClick="{{ onCloseCardMenu }}" style="position: fixed; inset: 0; z-index: 15;"></div>
-                    <div style="position: absolute; right: 0; bottom: 40px; z-index: 16; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(11,17,25,0.4); padding: 6px; min-width: 150px;">
-                      <button onClick="{{ onCloseCardMenu }}" style="display: flex; align-items: center; gap: 9px; width: 100%; padding: 9px 12px; border: none; background: none; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB); color: #D92D20;"><span style="display: inline-flex; color: var(--faint,#9AA0A6);">{{ flagEl }}</span>{{ t.report }}</button>
+                    <div style="position: absolute; right: 0; bottom: 40px; z-index: 16; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(11,17,25,0.4); padding: 6px; min-width: 150px;">
+                      <button onClick="{{ onCloseCardMenu }}" style="display: flex; align-items: center; gap: 9px; width: 100%; padding: 9px 12px; border: none; background: none; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; color: var(--text,#152431);" style-hover="background: var(--panel,#F3F4F6); color: #D92D20;"><span style="display: inline-flex; color: var(--faint,#8C8E8F);">{{ flagEl }}</span>{{ t.report }}</button>
                     </div>
                   </sc-if>
                 </div>
@@ -137,7 +137,7 @@
             </div>
 
             <div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 7px; text-align: right; width: 152px;">
-              <span style="display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #fff; background: {{ r.availBg }};">{{ r.availLabel }}</span>
+              <span style="display: inline-block; padding: 6px 12px; border-radius: 7px; font-size: 13px; font-weight: 600; color: #fff; background: {{ r.availBg }};">{{ r.availLabel }}</span>
               <sc-if value="{{ r.showDate }}" hint-placeholder-val="{{ false }}">
                 <span style="font-size: 12.5px; font-weight: 600; color: var(--text,#152431);">{{ r.availDateLine }}</span>
               </sc-if>
@@ -153,10 +153,10 @@
       <div style="display: flex; align-items: center; justify-content: center; gap: 9px; padding: 24px; color: {{ accent }}; font-size: 14px; font-weight: 500;"><span style="display: inline-flex;">{{ matchSparkEl }}</span>{{ t.loadingMore }}</div>
     </sc-if>
     <div data-reveal style="padding: 28px 0 4px; margin-left: 35px;">
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 13px;">{{ t.related }}</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F); margin-bottom: 13px;">{{ t.related }}</div>
       <div style="display: flex; flex-wrap: wrap; gap: 9px;">
         <sc-for list="{{ related }}" as="rel" hint-placeholder-count="6">
-          <button onClick="{{ rel.on }}" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text,#152431); background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; padding: 9px 15px; cursor: pointer; font-family: inherit;" style-hover="border-color: {{ accent }};"><span style="color: {{ accent }}; display: inline-flex;">{{ searchMiniEl }}</span>{{ rel.label }}</button>
+          <button onClick="{{ rel.on }}" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text,#152431); background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 8px; padding: 9px 15px; cursor: pointer; font-family: inherit;" style-hover="border-color: {{ accent }};"><span style="color: {{ accent }}; display: inline-flex;">{{ searchMiniEl }}</span>{{ rel.label }}</button>
         </sc-for>
       </div>
     </div>
@@ -165,77 +165,77 @@
 
   </sc-if>
 
-  <footer style="border-top: 1px solid var(--hairline,#ECEDF2); padding: 26px 44px; background: var(--surface,#fff); margin-top: auto;">
-    <div style="max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#9AA0A6);">
+  <footer style="border-top: 1px solid var(--hairline,#ECEEF0); padding: 26px 44px; background: var(--surface,#fff); margin-top: auto;">
+    <div style="max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">
       <span>&copy; 2012&ndash;2026 ProLinker</span>
     </div>
   </footer>
 
   <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ onCloseProfile }}" style="position: fixed; inset: 0; z-index: 60; background: rgba(11,17,25,0.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: 44px 20px; overflow-y: auto;">
-      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" style="position: relative; width: 100%; max-width: 860px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 36px 38px;">
-        <button onClick="{{ onCloseProfile }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); color: var(--muted,#565B62); font-size: 18px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;" style-hover="background: var(--panel,#F7F8FB);">&#215;</button>
+      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" style="position: relative; width: 100%; max-width: 560px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 36px 38px;">
+        <button onClick="{{ onCloseProfile }}" aria-label="Close" style="position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); color: var(--muted,#424444); font-size: 18px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;" style-hover="background: var(--panel,#F3F4F6);">&#215;</button>
 
-        <div style="display: flex; gap: 24px; margin-top: 6px;">
-          <div style="flex-shrink: 0; width: 132px;">
-            <div style="width: 132px; height: 132px; border-radius: 50%; background: {{ p.avatarBg }}; color: {{ p.avatarColor }}; display: flex; align-items: center; justify-content: center; font-size: 42px; font-weight: 700;">{{ p.initials }}</div>
-            <div style="position: relative; margin-top: 12px;">
-              <button onClick="{{ onToggleContact }}" style="width: 100%; height: 44px; border: none; border-radius: 8px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px {{ accentShadow }};">{{ t.mContact }}<span style="display: inline-flex;">{{ contactChevronEl }}</span></button>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 6px; text-align: center;">
+          <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div style="width: 96px; height: 96px; border-radius: 50%; background: {{ p.avatarBg }}; color: {{ p.avatarColor }}; display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 700;">{{ p.initials }}</div>
+            <div style="position: relative; margin-top: 16px; width: 100%; max-width: 300px;">
+              <button onClick="{{ onToggleContact }}" style="width: 100%; height: 44px; border: none; border-radius: 8px; background: #E65F39; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px {{ accentShadow }};">{{ t.mContact }}<span style="display: inline-flex;">{{ contactChevronEl }}</span></button>
               <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
                 <div onClick="{{ onCloseContact }}" style="position: fixed; inset: 0; z-index: 1;"></div>
-                <div style="position: absolute; left: 0; right: 0; top: 50px; z-index: 2; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; box-shadow: 0 18px 40px -18px rgba(11,17,25,0.4); overflow: hidden;">
-                  <div style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F7F8FB);">{{ t.mMsg }}</div>
-                  <div title="{{ t.waHint }}" style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hairline,#ECEDF2); display: flex; align-items: center; gap: 9px;" style-hover="background: var(--panel,#F7F8FB);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.mInviteOne }}</div>
-                  <div style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hairline,#ECEDF2);" style-hover="background: var(--panel,#F7F8FB);">{{ t.mCopy }}</div>
+                <div style="position: absolute; left: 0; right: 0; top: 50px; z-index: 2; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; box-shadow: 0 18px 40px -18px rgba(11,17,25,0.4); overflow: hidden;">
+                  <div style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F3F4F6);">{{ t.mMsg }}</div>
+                  <div title="{{ t.waHint }}" style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hairline,#ECEEF0); display: flex; align-items: center; gap: 9px;" style-hover="background: var(--panel,#F3F4F6);"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>{{ t.mInviteOne }}</div>
+                  <div style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hairline,#ECEEF0);" style-hover="background: var(--panel,#F3F4F6);">{{ t.mCopy }}</div>
                 </div>
               </sc-if>
             </div>
           </div>
 
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;">
+          <div style="width: 100%; margin-top: 16px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 9px;">
               <div>
                 <h2 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">{{ p.name }}</h2>
                 <div style="margin-top: 8px; display: inline-flex; gap: 2px;">{{ p.starsEl }}</div>
               </div>
-              <span style="flex-shrink: 0; display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #fff; background: {{ p.availBg }};">{{ p.availLabel }}</span>
+              <span style="flex-shrink: 0; display: inline-block; padding: 6px 12px; border-radius: 7px; font-size: 13px; font-weight: 600; color: #fff; background: {{ p.availBg }};">{{ p.availLabel }}</span>
             </div>
-            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 11px;">
-              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#565B62);">{{ t.mBranche }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.branche }}</span></div>
-              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#565B62);">{{ t.mLocation }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.location }}</span></div>
-              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#565B62);">{{ t.mAvail }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.hours }}</span></div>
-              <div style="display: flex; gap: 16px; align-items: flex-start;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#565B62);">{{ t.mSkills }}</span><span style="display: flex; flex-wrap: wrap; gap: 7px;"><sc-for list="{{ p.skills }}" as="sk" hint-placeholder-count="3"><span style="font-size: 12.5px; color: var(--muted,#565B62); background: var(--panel,#F7F8FB); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; padding: 3px 10px; white-space: nowrap;">{{ sk }}</span></sc-for></span></div>
+            <div style="margin: 20px auto 0; max-width: 400px; display: flex; flex-direction: column; gap: 11px; text-align: left;">
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">{{ t.mBranche }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.branche }}</span></div>
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">{{ t.mLocation }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.location }}</span></div>
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">{{ t.mAvail }}</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ p.hours }}</span></div>
+              <div style="display: flex; gap: 16px; align-items: flex-start;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">{{ t.mSkills }}</span><span style="display: flex; flex-wrap: wrap; gap: 7px;"><sc-for list="{{ p.skills }}" as="sk" hint-placeholder-count="3"><span style="font-size: 12.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--border,#DCDFE2); border-radius: 6px; padding: 3px 9px; white-space: nowrap;">{{ sk }}</span></sc-for></span></div>
             </div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 4px; margin-top: 26px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+        <div style="display: flex; gap: 2px; margin-top: 26px; border-bottom: 1px solid var(--hairline,#ECEEF0); justify-content: center; flex-wrap: wrap;">
           <sc-for list="{{ profileTabs }}" as="tb" hint-placeholder-count="5">
-            <button onClick="{{ tb.on }}" style="background: {{ tb.bg }}; border: 1px solid {{ tb.border }}; border-bottom: none; border-radius: 8px 8px 0 0; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: {{ tb.weight }}; color: {{ tb.color }}; padding: 10px 18px; margin-bottom: -1px;">{{ tb.label }}</button>
+            <button onClick="{{ tb.on }}" style="background: none; border: none; border-bottom: {{ tb.bar }}; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: {{ tb.weight }}; color: {{ tb.color }}; padding: 10px 14px; margin-bottom: -1px;">{{ tb.label }}</button>
           </sc-for>
         </div>
 
-        <div style="display: flex; gap: 30px; margin-top: 22px;">
+        <div style="margin-top: 20px;">
           <div style="flex: 1; min-width: 0;">
             <sc-if value="{{ p.descActive }}" hint-placeholder-val="{{ true }}">
               <div style="display: flex; flex-direction: column; gap: 14px;">
                 <sc-for list="{{ p.paras }}" as="para" hint-placeholder-count="3">
-                  <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--muted,#565B62);">{{ para }}</p>
+                  <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--muted,#424444);">{{ para }}</p>
                 </sc-for>
               </div>
             </sc-if>
             <sc-if value="{{ p.otherActive }}" hint-placeholder-val="{{ false }}">
-              <div style="padding: 44px 20px; text-align: center; color: var(--faint,#9AA0A6); font-size: 14.5px;">{{ t.mEmpty }}</div>
+              <div style="padding: 44px 20px; text-align: center; color: var(--faint,#8C8E8F); font-size: 14.5px;">{{ t.mEmpty }}</div>
             </sc-if>
           </div>
 
-          <div style="flex-shrink: 0; width: 260px;">
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 10px;">{{ t.mRatings }}</div>
-            <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); margin-bottom: 14px;">
-              <button onClick="{{ onSideClient }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: {{ clientBg }}; color: {{ clientColor }};">{{ t.mClient }}</button>
-              <button onClick="{{ onSideFreelancer }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 999px; background: {{ freelancerBg }}; color: {{ freelancerColor }};">{{ t.mFreelancer }}</button>
+          <sc-if value="{{ p.ratingsActive }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#DCDFE2); border-radius: 10px; background: var(--panel,#F3F4F6); margin-bottom: 16px;">
+              <button onClick="{{ onSideClient }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 7px; background: {{ clientBg }}; color: {{ clientColor }};">{{ t.mClient }}</button>
+              <button onClick="{{ onSideFreelancer }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 7px; background: {{ freelancerBg }}; color: {{ freelancerColor }};">{{ t.mFreelancer }}</button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 360px;">
               <sc-for list="{{ catRows }}" as="cr" hint-placeholder-count="4">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
                   <span style="font-size: 14px; color: var(--text,#152431);">{{ cr.label }}</span>
@@ -244,6 +244,7 @@
               </sc-for>
             </div>
           </div>
+          </sc-if>
         </div>
 
       </div>
@@ -252,7 +253,7 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1500},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand &amp; logo design&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1500},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand &amp; logo design&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
   state = { theme: 'light', query: '', text: '', filter: 'best', selected: {}, expanded: {}, scanning: true, profileName: null, profileTab: 'desc', ratingSide: 'freelancer', contactOpen: false, menuOpen: false, matchReasons: null, matchLoading: false, cardMenu: null, shown: 8 };
 
@@ -364,7 +365,7 @@ class Component extends DCLogic {
     const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
     return l.indexOf('nl') === 0 ? 'nl' : 'en';
   }
-  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  hexToRgba(hex, a) { let h = (hex || '#2F5B85').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
   fmtNum(n) { try { return Number(n).toLocaleString(this.lang() === 'nl' ? 'nl-NL' : 'en-US'); } catch (e) { return '' + n; } }
 
   iconDefs() {
@@ -504,14 +505,14 @@ class Component extends DCLogic {
   renderVals() {
     const t = this.content();
     const nl = this.lang() === 'nl';
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const accentShadow = this.hexToRgba(accent, 0.28);
     const accentRing = this.hexToRgba(accent, 0.35);
     const isDark = this.state.theme === 'dark';
     const q = this.state.query || '';
 
     const palette = [
-      { bg: '#E7F0FB', fg: '#1E63B0' }, { bg: '#E9F6EF', fg: '#2F9E5B' }, { bg: '#FBEFE7', fg: '#C2691C' },
+      { bg: '#E9EFF5', fg: '#1E63B0' }, { bg: '#E9F6EF', fg: '#2F9E5B' }, { bg: '#FFE0D6', fg: '#C2691C' },
       { bg: '#F0EBFB', fg: '#6D4BC7' }, { bg: '#FBE9EF', fg: '#C23C6B' }, { bg: '#E7F6FB', fg: '#1B8AA8' },
     ];
 
@@ -534,9 +535,9 @@ class Component extends DCLogic {
         onToggleExpand: () => this.toggleExpand(f.name),
         selected: selected, onToggleSelect: () => this.toggleSelect(f.name),
         onViewProfile: () => this.openProfile(f.name),
-        boxBg: selected ? accent : 'transparent', boxBorder: selected ? accent : 'var(--border,#E4E5EC)',
+        boxBg: selected ? accent : 'transparent', boxBorder: selected ? accent : 'var(--border,#DCDFE2)',
         availLabel: f.available ? t.available : t.notAvailable,
-        availBg: f.available ? '#2FA35B' : '#E8930C',
+        availBg: f.available ? '#2FA35B' : '#E65F39',
         showDate: !f.available, availDateLine: t.availableFrom + ' ' + (nl ? f.availableDate.nl : f.availableDate.en),
         relevanceStr: f.relevance + '/100',
         matchReason: (this.state.matchReasons && this.state.matchReasons[f.rk]) || '', matchPending: !this.state.matchReasons,
@@ -551,7 +552,7 @@ class Component extends DCLogic {
     const filterBase = [{ key: 'best', label: t.fBest }, { key: 'rated', label: t.fRated }, { key: 'avail', label: t.fAvail }];
     const filters = filterBase.map((x) => {
       const active = this.state.filter === x.key;
-      return { label: x.label, on: () => this.setState({ filter: x.key }), tabBorder: active ? accent : 'transparent', tabColor: active ? 'var(--text,#152431)' : 'var(--muted,#565B62)', tabWeight: active ? 600 : 500 };
+      return { label: x.label, on: () => this.setState({ filter: x.key }), tabBorder: active ? accent : 'transparent', tabColor: active ? 'var(--text,#152431)' : 'var(--muted,#424444)', tabWeight: active ? 600 : 500 };
     });
 
     const relatedLabels = nl
@@ -575,17 +576,17 @@ class Component extends DCLogic {
         initials: f.name.trim().charAt(0).toUpperCase(),
         avatarBg: pal.bg, avatarColor: pal.fg,
         starsEl: this.starsEl(Math.round(f.rating), isDark),
-        availLabel: f.available ? t.available : t.notAvailable, availBg: f.available ? '#2FA35B' : '#E8930C',
+        availLabel: f.available ? t.available : t.notAvailable, availBg: f.available ? '#2FA35B' : '#E65F39',
         branche: nl ? pr.branche.nl : pr.branche.en, location: pr.location,
         hours: pr.hours + ' ' + t.mHours, views: '' + pr.views,
         skills: pr.skills, specialties: pr.specialties,
         paras: [nl ? f.bio.nl : f.bio.en, nl ? pr.more.nl : pr.more.en, nl ? pr.focus.nl : pr.focus.en],
-        descActive: this.state.profileTab === 'desc', otherActive: this.state.profileTab !== 'desc',
+        descActive: this.state.profileTab === 'desc', ratingsActive: this.state.profileTab === 'ratings', otherActive: this.state.profileTab !== 'desc' && this.state.profileTab !== 'ratings',
       };
-      const tabDefs = [['desc', t.tabDesc], ['refs', t.tabRefs], ['cv', t.tabCv], ['portfolio', t.tabPortfolio]];
+      const tabDefs = [['desc', t.tabDesc], ['ratings', t.mRatings], ['refs', t.tabRefs], ['cv', t.tabCv], ['portfolio', t.tabPortfolio]];
       profileTabs = tabDefs.map((td) => {
         const on = this.state.profileTab === td[0];
-        return { label: td[1], on: () => this.setProfileTab(td[0]), color: on ? 'var(--text,#152431)' : 'var(--muted,#565B62)', bg: on ? 'var(--surface,#fff)' : 'transparent', weight: on ? 700 : 500, border: on ? 'var(--border,#E4E5EC)' : 'transparent' };
+        return { label: td[1], on: () => this.setProfileTab(td[0]), color: on ? 'var(--blue-dark,#24476A)' : 'var(--muted,#424444)', bg: 'transparent', weight: on ? 700 : 500, border: 'transparent', bar: on ? '2px solid #2F5B85' : '2px solid transparent' };
       });
       const catLabels = [t.mQuality, t.mComm, t.mTerm, t.mProf];
       const catVals = this.state.ratingSide === 'client' ? pr.cat.map((v) => Math.max(3, v - 1)) : pr.cat;
@@ -597,27 +598,27 @@ class Component extends DCLogic {
       t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing,
       isDark: isDark, isLight: !isDark, onToggleTheme: () => this.toggleTheme(),
       menuOpen: this.state.menuOpen, onToggleMenu: () => this.toggleMenu(), onCloseMenu: () => this.closeMenu(),
-      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
-      themeSwitchBg: this.state.theme === 'dark' ? accent : 'var(--border,#E4E5EC)', themeKnobLeft: this.state.theme === 'dark' ? '18px' : '2px',
-      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#565B62' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
+      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#424444', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
+      themeSwitchBg: this.state.theme === 'dark' ? accent : 'var(--border,#DCDFE2)', themeKnobLeft: this.state.theme === 'dark' ? '18px' : '2px',
+      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#424444' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
       onLogin: () => { window.location.href = 'Prolinker Login.dc.html?mode=login&role=client'; },
       onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
       menuItems: [{ label: t.nav1, href: 'Prolinker Results.dc.html' }, { label: t.nav2, href: 'Prolinker Voor jou v2.dc.html' }, { label: t.nav4, href: 'Prolinker Homepage.dc.html' }, { label: t.nav5, href: 'https://prolinker.com/nl/blog?page=1' }, { label: t.referrals, href: 'Prolinker Verdiensten.dc.html' }, { label: t.becomeFreelancer, href: 'Prolinker Login.dc.html?mode=register&role=freelancer' }, { label: t.becomeRecruiter, href: 'Prolinker Login.dc.html?mode=register&role=client' }],
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
-      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
+      fontStack: ({ 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif" })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       searchShadow: isDark ? '0 1px 2px rgba(0,0,0,0.3)' : '0 1px 2px rgba(20,36,49,0.05), 0 8px 22px -16px rgba(20,36,49,0.22)',
       text: this.state.text, onSearchInput: (e) => this.setState({ text: e.target.value }),
       query: this.state.query,
       onSearchKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitSearch(); } },
       onSubmit: () => this.submitSearch(),
-      searchIconEl: this.iconEl('search', isDark ? 'rgba(255,255,255,0.5)' : '#9AA0A6', 19),
+      searchIconEl: this.iconEl('search', isDark ? 'rgba(255,255,255,0.5)' : '#8C8E8F', 19),
       submitIconEl: this.iconEl('arrow', '#ffffff', 18), searchMiniEl: this.iconEl('search', accent, 14),
       checkEl: this.iconEl('check', '#ffffff', 13),
       waEl: this.iconEl('wa', '#25D366', 15, true), waElWhite: this.iconEl('wa', '#ffffff', 15, true),
       matchSparkEl: this.iconEl('spark', accent, 14, true),
-      kebabEl: React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: isDark ? 'rgba(255,255,255,0.6)' : '#9AA0A6' }, [5, 12, 19].map((cy, i) => React.createElement('circle', { key: i, cx: 12, cy: cy, r: 1.7 }))),
-      onCloseCardMenu: () => this.setState({ cardMenu: null }), chevronEl: this.iconEl('chevron', isDark ? 'rgba(255,255,255,0.5)' : '#9AA0A6', 18),
-      clipboardEl: this.iconEl('clipboard', isDark ? 'rgba(255,255,255,0.5)' : '#9AA0A6', 16), flagEl: this.iconEl('flag', isDark ? 'rgba(255,255,255,0.5)' : '#9AA0A6', 16),
+      kebabEl: React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: isDark ? 'rgba(255,255,255,0.6)' : '#8C8E8F' }, [5, 12, 19].map((cy, i) => React.createElement('circle', { key: i, cx: 12, cy: cy, r: 1.7 }))),
+      onCloseCardMenu: () => this.setState({ cardMenu: null }), chevronEl: this.iconEl('chevron', isDark ? 'rgba(255,255,255,0.5)' : '#8C8E8F', 18),
+      clipboardEl: this.iconEl('clipboard', isDark ? 'rgba(255,255,255,0.5)' : '#8C8E8F', 16), flagEl: this.iconEl('flag', isDark ? 'rgba(255,255,255,0.5)' : '#8C8E8F', 16),
       metaLine: nl
         ? 'Ongeveer 691.706 freelancers \u00b7 ' + rawAll.length + ' beste matches (0,38 seconden)'
         : 'About 691,706 freelancers \u00b7 ' + rawAll.length + ' best matches (0.38 seconds)',
@@ -625,18 +626,18 @@ class Component extends DCLogic {
       accentTint: this.hexToRgba(accent, 0.12),
       scanning: this.state.scanning, notScanning: !this.state.scanning,
       scanSparkEl: this.iconEl('spark', accent, 26, true),
-      scanSubtitle: (nl ? 'Geverifieerde freelancers matchen met \u201c' : 'Matching vetted freelancers to \u201c') + q + '\u201d',
+      scanSubtitle: (nl ? 'Gescreende freelancers matchen met \u201c' : 'Matching vetted freelancers to \u201c') + q + '\u201d',
       scanSteps: [{ delay: '0.15s', label: t.scanStep1 }, { delay: '0.8s', label: t.scanStep2 }, { delay: '1.45s', label: t.scanStep3 }],
       onSelectAll: () => this.selectAll(names, allSelected), allSelected: allSelected,
-      selectAllBg: allSelected ? accent : 'transparent', selectAllBorder: allSelected ? accent : 'var(--border,#E4E5EC)',
+      selectAllBg: allSelected ? accent : 'transparent', selectAllBorder: allSelected ? accent : 'var(--border,#DCDFE2)',
       showBulk: selCount > 0, selectedLabel: selCount + ' ' + (nl ? 'geselecteerd' : 'selected'),
       onInvite: () => this.setState({ selected: {} }),
       profileOpen: profileOpen, p: profileVals, profileTabs: profileTabs, catRows: catRows,
       onCloseProfile: () => this.closeProfile(), stopProp: (e) => e.stopPropagation(),
       contactOpen: this.state.contactOpen, onToggleContact: () => this.toggleContact(), onCloseContact: () => this.setState({ contactOpen: false }), contactChevronEl: this.iconEl('chevron', '#ffffff', 16),
       onSideClient: () => this.setRatingSide('client'), onSideFreelancer: () => this.setRatingSide('freelancer'),
-      clientBg: this.state.ratingSide === 'client' ? accent : 'transparent', clientColor: this.state.ratingSide === 'client' ? '#ffffff' : 'var(--muted,#565B62)',
-      freelancerBg: this.state.ratingSide !== 'client' ? accent : 'transparent', freelancerColor: this.state.ratingSide !== 'client' ? '#ffffff' : 'var(--muted,#565B62)',
+      clientBg: this.state.ratingSide === 'client' ? accent : 'transparent', clientColor: this.state.ratingSide === 'client' ? '#ffffff' : 'var(--muted,#424444)',
+      freelancerBg: this.state.ratingSide !== 'client' ? accent : 'transparent', freelancerColor: this.state.ratingSide !== 'client' ? '#ffffff' : 'var(--muted,#424444)',
     };
   }
 }

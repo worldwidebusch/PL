@@ -12,41 +12,41 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
   input, textarea { font-family: inherit; color: var(--text); }
-  input::placeholder, textarea::placeholder { color: var(--faint,#A2A5B2); }
+  input::placeholder, textarea::placeholder { color: var(--faint,#8C8E8F); }
   input:focus, textarea:focus { outline: none; }
-  ::selection { background: #cfe6fb; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease; }
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
-  button:focus-visible, a:focus-visible { outline: 3px solid rgba(47,130,200,0.23); outline-offset: 2px; }
-  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#E4E5EC); position: relative; z-index: 50; }
+  button:focus-visible, a:focus-visible { outline: 3px solid rgba(47,91,133,0.23); outline-offset: 2px; }
+  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#DCDFE2); position: relative; z-index: 50; }
   .plk-shell-inner { max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 24px; }
   .plk-logo { width: 112px; height: auto; display: block; }
   .plk-header-links { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 13px; font-weight: 550; }
   .plk-header-link { color: var(--text,#152431); }
-  .plk-header-link:hover { color: var(--blue,#2F82C8); }
+  .plk-header-link:hover { color: var(--blue,#2F5B85); }
   .plk-account-wrap { position: relative; margin-left: auto; }
   .plk-account-btn { min-height: 38px; border: 0; background: transparent; padding: 4px 6px; display: flex; align-items: center; gap: 9px; color: var(--text,#152431); cursor: pointer; }
-  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E6F1FB; color: var(--blue-dark,#1767AA); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
-  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
-  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--text,#152431); }
-  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431); }
-  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #EDF4FA; color: var(--blue-dark,#1767AA); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E9EFF5; color: var(--blue-dark,#24476A); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
+  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--text,#152431); }
+  .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431); }
+  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #E9EFF5; color: var(--blue-dark,#24476A); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
   .plk-menu-label { display: block; font-size: 13px; font-weight: 650; line-height: 1.2; }
-  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px; line-height: 1.25; }
-  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#565B62); cursor: pointer; font-size: 11px; font-weight: 650; }
-  .plk-menu-action:hover { background: var(--panel,#F7F8FB); }
+  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#8C8E8F); font-size: 10.5px; line-height: 1.25; }
+  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#424444); cursor: pointer; font-size: 11px; font-weight: 650; }
+  .plk-menu-action:hover { background: var(--panel,#F3F4F6); }
   .plk-menu-scrim:active { transform: none !important; }
   @media (max-width: 850px) { .plk-header-links { display: none; } }
   @media (max-width: 600px) {
@@ -73,62 +73,62 @@
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div data-screen-label="Mijn profiel" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
+<div data-screen-label="Mijn profiel" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: 'Lato', system-ui, sans-serif; display: flex; flex-direction: column;">
 
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="profile"></prolinker-account-menu></div>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="profile"></prolinker-account-menu></div>
   </header>
 
   <main style="max-width: 720px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
 
     <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; animation: plk-rise 0.5s ease both;">
-      <h1 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.022em;">{{ t.title }}</h1>
+      <h1 style="margin: 0; font-size: 32px; letter-spacing: -0.01em;">{{ t.title }}</h1>
       <span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span>
     </div>
 
-    <div style="margin-top: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.05s both;">
+    <div style="margin-top: 22px; padding: 0 2px; animation: plk-rise 0.5s ease 0.05s both;">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.completeness }}</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.completeness }}</span>
         <span style="font-size: 14px; font-weight: 700;">{{ pct }}%</span>
       </div>
-      <div style="margin-top: 9px; height: 6px; border-radius: 999px; background: var(--hairline,#ECEDF2); overflow: hidden;"><div style="width: {{ pctW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.4s ease;"></div></div>
+      <div style="margin-top: 9px; height: 6px; border-radius: 999px; background: var(--hairline,#ECEEF0); overflow: hidden;"><div style="width: {{ pctW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.4s ease;"></div></div>
       <sc-if value="{{ hasMissing }}" hint-placeholder-val="{{ false }}">
         <div style="margin-top: 11px; display: flex; flex-wrap: wrap; gap: 6px;">
           <sc-for list="{{ missing }}" as="m" hint-placeholder-count="1">
-            <span style="padding: 3px 11px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 600;">{{ m }}</span>
+            <span style="padding: 4px 11px; border-radius: 7px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 600;">{{ m }}</span>
           </sc-for>
         </div>
       </sc-if>
     </div>
 
-    <section class="plk-cv-card" aria-labelledby="cv-upload-title" style="position: relative; margin-top: 14px; background: var(--surface,#fff); border: 1px solid {{ cvBorder }}; border-radius: 10px; padding: 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.08s both; transition: border-color 0.18s ease, background-color 0.18s ease;" onDragEnter="{{ onCvDragEnter }}" onDragOver="{{ onCvDragOver }}" onDragLeave="{{ onCvDragLeave }}" onDrop="{{ onCvDrop }}">
+    <section class="plk-cv-card" aria-labelledby="cv-upload-title" style="position: relative; margin-top: 14px; background: var(--surface,#fff); border: 1px solid {{ cvBorder }}; border-radius: 14px; padding: 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.08s both; transition: border-color 0.18s ease, background-color 0.18s ease;" onDragEnter="{{ onCvDragEnter }}" onDragOver="{{ onCvDragOver }}" onDragLeave="{{ onCvDragLeave }}" onDrop="{{ onCvDrop }}">
       <input id="plk-cv-file" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onChange="{{ onCvInput }}" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;">
       <div class="plk-cv-layout" style="display: flex; align-items: flex-start; gap: 16px;">
-        <div class="plk-cv-icon" aria-hidden="true" style="flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{ cvIconBg }}; color: {{ accent }}; font-size: 19px; font-weight: 800;">&#8593;</div>
+        <div class="plk-cv-icon" aria-hidden="true" style="flex: 0 0 46px; width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: {{ cvIconBg }}; color: {{ accent }}; font-size: 19px; font-weight: 800;">&#8593;</div>
         <div style="flex: 1; min-width: 0;">
           <div class="plk-cv-heading" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
             <div class="plk-cv-title-block" style="min-width: 220px; flex: 1;">
               <h2 id="cv-upload-title" style="margin: 0; font-size: 17px; line-height: 1.3; letter-spacing: -0.01em;">{{ t.cvTitle }}</h2>
-              <p style="margin: 5px 0 0; color: var(--muted,#565B62); font-size: 13.5px; line-height: 1.5;">{{ t.cvIntro }}</p>
+              <p style="margin: 5px 0 0; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.5;">{{ t.cvIntro }}</p>
             </div>
             <button type="button" onClick="{{ onCvBrowse }}" disabled="{{ cvBusy }}" style="height: 40px; padding: 0 17px; border: 1px solid {{ cvButtonBorder }}; border-radius: 8px; background: {{ cvButtonBg }}; color: {{ cvButtonColor }}; font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: {{ cvButtonCursor }}; white-space: nowrap; opacity: {{ cvButtonOpacity }};" style-hover="box-shadow: 0 4px 14px {{ accentRing }};">{{ cvButtonLabel }}</button>
           </div>
 
           <div aria-live="polite" style="margin-top: 13px; min-height: 20px;">
             <sc-if value="{{ cvIsIdle }}" hint-placeholder-val="{{ true }}">
-              <span style="font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ t.cvDropHint }}</span>
+              <span style="font-size: 12.5px; color: var(--faint,#8C8E8F);">{{ t.cvDropHint }}</span>
             </sc-if>
             <sc-if value="{{ cvIsBusy }}" hint-placeholder-val="{{ false }}">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--muted,#565B62);"><span>{{ cvStatusLabel }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">{{ cvProgress }}%</span></div>
-              <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ cvProgress }}" style="margin-top: 8px; height: 5px; border-radius: 999px; background: var(--hairline,#ECEDF2); overflow: hidden;"><div style="width: {{ cvProgressW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.25s ease;"></div></div>
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--muted,#424444);"><span>{{ cvStatusLabel }}</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px;">{{ cvProgress }}%</span></div>
+              <div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ cvProgress }}" style="margin-top: 8px; height: 5px; border-radius: 999px; background: var(--hairline,#ECEEF0); overflow: hidden;"><div style="width: {{ cvProgressW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.25s ease;"></div></div>
             </sc-if>
             <sc-if value="{{ cvIsSuccess }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; align-items: center; gap: 7px; color: #137A50; font-size: 13px; font-weight: 650;"><span style="display: inline-flex;">{{ savedCheckEl }}</span><span>{{ cvStatusLabel }}</span></div>
               <div style="margin-top: 9px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px;">
-                <span style="font-size: 12px; color: var(--faint,#9AA0A6);">{{ t.cvFilled }}</span>
+                <span style="font-size: 12px; color: var(--faint,#8C8E8F);">{{ t.cvFilled }}</span>
                 <sc-for list="{{ cvFilledFields }}" as="field" hint-placeholder-count="4">
-                  <span style="padding: 4px 9px; border-radius: 999px; background: #E9F7F0; color: #137A50; font-size: 12px; font-weight: 650;">{{ field }}</span>
+                  <span style="padding: 4px 9px; border-radius: 7px; background: #E9F7F0; color: #137A50; font-size: 12px; font-weight: 650;">{{ field }}</span>
                 </sc-for>
               </div>
             </sc-if>
@@ -137,63 +137,63 @@
             </sc-if>
           </div>
 
-          <p style="margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--hairline,#ECEDF2); color: var(--faint,#9AA0A6); font-size: 11.5px; line-height: 1.5;">{{ t.cvPrivacy }}</p>
+          <p style="margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--hairline,#ECEEF0); color: var(--faint,#8C8E8F); font-size: 11.5px; line-height: 1.5;">{{ t.cvPrivacy }}</p>
         </div>
       </div>
     </section>
 
-    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.1s both;">
+    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); animation: plk-rise 0.5s ease 0.1s both;">
 
-      <div style="padding: 22px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+      <div style="padding: 22px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--hairline,#ECEEF0);">
         <div style="flex-shrink: 0; width: 86px; height: 86px; border-radius: 50%; overflow: hidden;">
           <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-avatar" shape="circle" placeholder="{{ t.avatarPh }}" hint-size="86px,86px"></x-import>
         </div>
         <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px;">
-          <input type="text" value="{{ pName }}" onInput="{{ onName }}" placeholder="{{ t.namePh }}" aria-label="{{ t.namePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 7px 10px; margin-left: -10px; font-size: 19px; font-weight: 700; letter-spacing: -0.01em;" style-hover="background: var(--panel,#F7F8FB);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
-          <input type="text" value="{{ pHeadline }}" onInput="{{ onHeadline }}" placeholder="{{ t.headlinePh }}" aria-label="{{ t.headlinePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 6px 10px; margin-left: -10px; font-size: 14.5px; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
+          <input type="text" value="{{ pName }}" onInput="{{ onName }}" placeholder="{{ t.namePh }}" aria-label="{{ t.namePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 7px 10px; margin-left: -10px; font-size: 19px; font-weight: 700; letter-spacing: -0.01em;" style-hover="background: var(--panel,#F3F4F6);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
+          <input type="text" value="{{ pHeadline }}" onInput="{{ onHeadline }}" placeholder="{{ t.headlinePh }}" aria-label="{{ t.headlinePh }}" style="width: 100%; border: 1px solid transparent; border-radius: 9px; background: transparent; padding: 6px 10px; margin-left: -10px; font-size: 14.5px; color: var(--muted,#424444);" style-hover="background: var(--panel,#F3F4F6);" style-focus="border-color: {{ accent }}; background: var(--surface,#fff);">
         </div>
       </div>
 
-      <div style="padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 26px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+      <div style="padding: 20px 22px; display: flex; flex-wrap: wrap; gap: 26px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
         <div style="flex: 0 0 170px; display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.rate }}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.rate }}</span>
           <div style="display: flex; align-items: center; gap: 7px;">
-            <span style="font-size: 15px; font-weight: 600; color: var(--muted,#565B62);">&euro;</span>
-            <input type="text" inputMode="numeric" value="{{ pRate }}" onInput="{{ onRate }}" placeholder="75" aria-label="{{ t.rate }}" style="width: 64px; border: 1px solid var(--border,#E4E5EC); border-radius: 9px; background: var(--surface,#fff); padding: 8px 10px; font-size: 15px; font-weight: 600;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};">
-            <span style="font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ t.perHour }}</span>
+            <span style="font-size: 15px; font-weight: 600; color: var(--muted,#424444);">&euro;</span>
+            <input type="text" inputMode="numeric" value="{{ pRate }}" onInput="{{ onRate }}" placeholder="75" aria-label="{{ t.rate }}" style="width: 64px; border: 1px solid var(--border,#DCDFE2); border-radius: 9px; background: var(--surface,#fff); padding: 8px 10px; font-size: 15px; font-weight: 600;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};">
+            <span style="font-size: 13.5px; color: var(--faint,#8C8E8F);">{{ t.perHour }}</span>
           </div>
         </div>
         <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 8px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.availability }}</span>
-          <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); align-self: flex-start;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.availability }}</span>
+          <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#DCDFE2); border-radius: 10px; background: var(--panel,#F3F4F6); align-self: flex-start;">
             <sc-for list="{{ availOpts }}" as="o" hint-placeholder-count="3">
-              <button onClick="{{ o.onClick }}" style="height: 32px; padding: 0 15px; border: none; border-radius: 999px; background: {{ o.bg }}; color: {{ o.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">{{ o.label }}</button>
+              <button onClick="{{ o.onClick }}" style="height: 32px; padding: 0 15px; border: none; border-radius: 7px; background: {{ o.bg }}; color: {{ o.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">{{ o.label }}</button>
             </sc-for>
           </div>
         </div>
       </div>
 
-      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.skills }}</span>
+      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.skills }}</span>
         <div style="margin-top: 11px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center;">
           <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="5">
-            <span style="display: inline-flex; align-items: center; gap: 7px; padding: 5px 8px 5px 13px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 13px; font-weight: 550;">{{ sk.label }}<button onClick="{{ sk.onRemove }}" aria-label="{{ sk.removeAria }}" style="width: 18px; height: 18px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--faint,#9AA0A6); font-size: 13px; line-height: 1;" style-hover="background: var(--hairline,#ECEDF2); color: var(--text,#152431);">&times;</button></span>
+            <span style="display: inline-flex; align-items: center; gap: 7px; padding: 5px 8px 5px 13px; border-radius: 8px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 13px; font-weight: 550;">{{ sk.label }}<button onClick="{{ sk.onRemove }}" aria-label="{{ sk.removeAria }}" style="width: 18px; height: 18px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--faint,#8C8E8F); font-size: 13px; line-height: 1;" style-hover="background: var(--hairline,#ECEEF0); color: var(--text,#152431);">&times;</button></span>
           </sc-for>
-          <input type="text" value="{{ skillInput }}" onInput="{{ onSkillInput }}" onKeyDown="{{ onSkillKey }}" placeholder="{{ t.skillPh }}" aria-label="{{ t.skillPh }}" style="flex: 1; min-width: 150px; border: 1px dashed var(--border,#E4E5EC); border-radius: 999px; background: transparent; padding: 7px 14px; font-size: 13px;" style-focus="border-color: {{ accent }}; border-style: solid;">
+          <input type="text" value="{{ skillInput }}" onInput="{{ onSkillInput }}" onKeyDown="{{ onSkillKey }}" placeholder="{{ t.skillPh }}" aria-label="{{ t.skillPh }}" style="flex: 1; min-width: 150px; border: 1px dashed var(--border,#DCDFE2); border-radius: 8px; background: transparent; padding: 7px 14px; font-size: 13px;" style-focus="border-color: {{ accent }}; border-style: solid;">
         </div>
       </div>
 
-      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+      <div style="padding: 20px 22px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.bio }}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.bio }}</span>
           <span style="font-size: 12px; color: {{ bioCountColor }};">{{ bioCount }}</span>
         </div>
-        <textarea value="{{ pBio }}" onInput="{{ onBio }}" placeholder="{{ t.bioPh }}" aria-label="{{ t.bio }}" rows="4" style="margin-top: 10px; width: 100%; border: 1px solid var(--border,#E4E5EC); border-radius: 11px; background: var(--surface,#fff); padding: 12px 14px; font-size: 14.5px; line-height: 1.55; resize: vertical; min-height: 96px;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};"></textarea>
+        <textarea value="{{ pBio }}" onInput="{{ onBio }}" placeholder="{{ t.bioPh }}" aria-label="{{ t.bio }}" rows="4" style="margin-top: 10px; width: 100%; border: 1px solid var(--border,#DCDFE2); border-radius: 11px; background: var(--surface,#fff); padding: 12px 14px; font-size: 14.5px; line-height: 1.55; resize: vertical; min-height: 96px;" style-focus="border-color: {{ accent }}; box-shadow: 0 0 0 3px {{ accentRing }};"></textarea>
       </div>
 
       <div style="padding: 20px 22px;">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.portfolio }}</span>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.portfolio }}</span>
         </div>
         <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
           <div style="aspect-ratio: 4 / 3; border-radius: 11px; overflow: hidden;"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="plk-port-1" shape="rounded" radius="11" placeholder="{{ t.portPh }}" hint-size="100%,100%"></x-import></div>
@@ -206,11 +206,11 @@
 
   </main>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1080},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1080},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
   state = {
     profile: null,
@@ -400,7 +400,7 @@ class Component extends DCLogic {
     const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
     return l.indexOf('nl') === 0 ? 'nl' : 'en';
   }
-  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  hexToRgba(hex, a) { let h = (hex || '#2F5B85').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
   static cleanCvText(text) {
     return String(text || '')
@@ -882,7 +882,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const t = this.strings();
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const accentRing = this.hexToRgba(accent, 0.12);
     const accentTint = this.hexToRgba(accent, 0.12);
     const isDark = this.state.theme === 'dark';
@@ -894,7 +894,7 @@ class Component extends DCLogic {
     const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
       ? window.ProLinkerApp.routes.accountMenu(role).map((item) => {
         const active = item.key === 'profile';
-        return Object.assign({}, item, { bg: active ? 'var(--panel,#F7F8FB)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F82C8)' : 'none', current: active ? 'page' : 'false' });
+        return Object.assign({}, item, { bg: active ? 'var(--panel,#F3F4F6)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F5B85)' : 'none', current: active ? 'page' : 'false' });
       })
       : [];
     const comp = Component.completeness(p, t);
@@ -903,7 +903,7 @@ class Component extends DCLogic {
       label: o[1],
       onClick: () => this.save({ availability: o[0] }),
       bg: p.availability === o[0] ? accent : 'transparent',
-      color: p.availability === o[0] ? '#fff' : 'var(--muted,#565B62)',
+      color: p.availability === o[0] ? '#fff' : 'var(--muted,#424444)',
     }));
 
     const skills = (p.skills || []).map((s) => ({
@@ -937,7 +937,7 @@ class Component extends DCLogic {
       missing: comp.missing, hasMissing: comp.missing.length > 0,
       savedVisible: this.state.saved && !this.state.syncError,
       savedLabel: !this.state.profileReady ? t.loadingProfile : (this.state.syncError || (this.state.saved ? t.saved : '')),
-      savedColor: this.state.syncError ? '#A33A2B' : (this.state.saved ? '#1F8A5B' : 'var(--faint,#9AA0A6)'),
+      savedColor: this.state.syncError ? '#A33A2B' : (this.state.saved ? '#1F8A5B' : 'var(--faint,#8C8E8F)'),
       savedCheckEl: this.iconEl('check', '#1F8A5B', 13),
       cvBusy: cvBusy,
       cvIsIdle: cvStatus === 'idle',
@@ -948,12 +948,12 @@ class Component extends DCLogic {
       cvProgress: this.state.cvProgress || 0,
       cvProgressW: (this.state.cvProgress || 0) + '%',
       cvFilledFields: cvFilledFields,
-      cvBorder: this.state.cvDragActive ? accent : (cvStatus === 'error' ? '#E3A89F' : 'var(--border,#E4E5EC)'),
-      cvIconBg: this.state.cvDragActive ? accentTint : 'var(--panel,#F7F8FB)',
+      cvBorder: this.state.cvDragActive ? accent : (cvStatus === 'error' ? '#E3A89F' : 'var(--border,#DCDFE2)'),
+      cvIconBg: this.state.cvDragActive ? accentTint : 'var(--panel,#F3F4F6)',
       cvButtonLabel: cvBusy ? t.cvReading : (cvStatus === 'success' ? t.cvReplace : (cvStatus === 'error' ? t.cvRetry : t.cvUpload)),
-      cvButtonBg: cvBusy ? 'var(--panel,#F7F8FB)' : accent,
-      cvButtonBorder: cvBusy ? 'var(--border,#E4E5EC)' : accent,
-      cvButtonColor: cvBusy ? 'var(--faint,#9AA0A6)' : '#fff',
+      cvButtonBg: cvBusy ? 'var(--panel,#F3F4F6)' : accent,
+      cvButtonBorder: cvBusy ? 'var(--border,#DCDFE2)' : accent,
+      cvButtonColor: cvBusy ? 'var(--faint,#8C8E8F)' : '#fff',
       cvButtonCursor: cvBusy ? 'wait' : 'pointer',
       cvButtonOpacity: cvBusy ? '0.72' : '1',
       onCvBrowse: () => { if (!cvBusy) this.chooseCv(); },
@@ -972,7 +972,7 @@ class Component extends DCLogic {
       onSkillKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.addSkill(); } },
       pBio: p.bio, onBio: (e) => this.save({ bio: e.target.value }),
       bioCount: t.bioCount(bioLen),
-      bioCountColor: bioLen >= 60 ? '#1F8A5B' : 'var(--faint,#9AA0A6)',
+      bioCountColor: bioLen >= 60 ? '#1F8A5B' : 'var(--faint,#8C8E8F)',
     };
   }
 }

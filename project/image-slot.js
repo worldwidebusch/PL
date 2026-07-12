@@ -306,14 +306,14 @@
     '  pointer-events:none;-webkit-user-drag:none;user-select:none;' +
     '  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.2)}' +
     '.spill .handle{position:absolute;width:12px;height:12px;border-radius:50%;' +
-    '  background:#fff;box-shadow:0 0 0 1.5px #c96442,0 1px 3px rgba(0,0,0,.3);' +
+    '  background:#fff;box-shadow:0 0 0 1.5px #E65F39,0 1px 3px rgba(0,0,0,.3);' +
     '  transform:translate(-50%,-50%)}' +
     '.spill .handle[data-c=nw]{left:0;top:0;cursor:nwse-resize}' +
     '.spill .handle[data-c=ne]{left:100%;top:0;cursor:nesw-resize}' +
     '.spill .handle[data-c=sw]{left:0;top:100%;cursor:nesw-resize}' +
     '.spill .handle[data-c=se]{left:100%;top:100%;cursor:nwse-resize}' +
     ':host([data-reframe]){z-index:10}' +
-    ':host([data-reframe]) .frame{box-shadow:0 0 0 2px #c96442}' +
+    ':host([data-reframe]) .frame{box-shadow:0 0 0 2px #E65F39}' +
     '.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;' +
     '  justify-content:center;gap:6px;text-align:center;padding:12px;box-sizing:border-box;' +
     '  cursor:pointer;user-select:none}' +
@@ -322,11 +322,11 @@
     '.empty .sub{font-size:11px}' +
     '.empty .sub u{text-underline-offset:2px;text-decoration-color:rgba(0,0,0,.25)}' +
     '.empty:hover .sub u{color:rgba(0,0,0,.75);text-decoration-color:currentColor}' +
-    ':host([data-over]) .frame{outline:2px solid #c96442;outline-offset:-2px;' +
+    ':host([data-over]) .frame{outline:2px solid #E65F39;outline-offset:-2px;' +
     '  background:rgba(201,100,66,.10)}' +
     '.ring{position:absolute;inset:0;pointer-events:none;border:1.5px dashed rgba(0,0,0,.25);' +
     '  transition:border-color .12s}' +
-    ':host([data-over]) .ring{border-color:#c96442}' +
+    ':host([data-over]) .ring{border-color:#E65F39}' +
     ':host([data-filled]) .ring{display:none}' +
     // Controls overlay INSIDE the frame, pinned to the top-right corner, so
     // a full-bleed slot in an overflow:hidden container still shows them

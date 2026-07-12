@@ -12,18 +12,18 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F5F7F9; --surface:#fff; --panel:#F8FAFC; --text:#10273A; --muted:#617286; --faint:#91A0B0; --border:#DCE4EB; --hair:#E9EEF3; --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; --green:#2FA95B; --danger:#A2463B; }
-  :root[data-theme="dark"] { --bg:#101820; --surface:#17232D; --panel:#121D26; --text:#F5F8FA; --muted:#B4C1CC; --faint:#81909D; --border:#31414E; --hair:#263541; }
+  :root { --bg:#F3F4F6; --surface:#fff; --panel:#F8FAFC; --text:#152431; --muted:#424444; --faint:#8C8E8F; --border:#DCDFE2; --hair:#ECEEF0; --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; --green:#2FA95B; --danger:#A2463B; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --surface:#152431; --panel:#0F1A23; --text:#F3F4F6; --muted:#B4C1CC; --faint:#8C8E8F; --border:#2C3E4E; --hair:#1C2C3A; }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   html,body { margin:0; min-height:100%; }
-  body { background:var(--bg); color:var(--text); font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body { background:var(--bg); color:var(--text); font-family:'Lato',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
   button,input,select { font:inherit; }
   button { -webkit-tap-highlight-color:transparent; }
-  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,130,200,.23); outline-offset:2px; }
+  button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
   .plk-main { max-width:1060px; width:100%; margin:0 auto; padding:38px 24px 80px; }
   .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; }
   .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-dark); }
@@ -35,7 +35,7 @@
   .plk-side { position:sticky; top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); padding:7px; }
   .plk-side-link { display:flex; align-items:center; gap:9px; min-height:40px; padding:8px 10px; border-radius:6px; color:var(--muted); font-size:12.5px; font-weight:650; }
   .plk-side-link:hover { background:var(--panel); color:var(--text); }
-  .plk-side-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#EDF4FA; }
+  .plk-side-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#E9EFF5; }
   .plk-side-icon img { display:block; width:15px; height:15px; }
   .plk-settings-form { min-width:0; display:flex; flex-direction:column; gap:14px; }
   .plk-section { scroll-margin-top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); overflow:hidden; }
@@ -71,12 +71,12 @@
   .plk-action-status strong { color:var(--text); }
   .plk-actions { display:flex; align-items:center; gap:8px; }
   .plk-btn { min-height:38px; padding:0 14px; border:1px solid var(--border); border-radius:7px; background:var(--surface); color:var(--text); cursor:pointer; font-size:12.5px; font-weight:650; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
-  .plk-btn:hover { border-color:#9CBAD3; color:var(--blue-dark); }
+  .plk-btn:hover { border-color:#B0D8FE; color:var(--blue-dark); }
   .plk-btn-primary { min-width:112px; border-color:var(--blue); background:var(--blue); color:#fff; }
   .plk-btn-primary:hover { background:var(--blue-dark); color:#fff; }
   .plk-btn:disabled { cursor:not-allowed; opacity:.55; }
   .plk-loading { padding:44px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--muted); text-align:center; font-size:13px; }
-  .plk-error { padding:14px 16px; border:1px solid #E7B4A9; border-radius:8px; background:#FFF7F5; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:12.5px; }
+  .plk-error { padding:14px 16px; border:1px solid #FF9D82; border-radius:8px; background:#FFE9E2; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:12.5px; }
   :root[data-theme="dark"] .plk-error { background:#2B2020; color:#F0B7AE; border-color:#6E3B35; }
   .plk-success { color:#237A45; font-weight:650; }
   .plk-save-error { color:var(--danger); font-weight:650; }
@@ -101,7 +101,7 @@
 <div style="min-height:100vh; display:flex; flex-direction:column;">
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="settings"></prolinker-account-menu></div>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="settings"></prolinker-account-menu></div>
   </header>
 
   <main class="plk-main" style="flex:1;">
@@ -126,7 +126,7 @@
             <div class="plk-section-body">
               <div class="plk-identity-grid">
                 <div class="plk-readonly"><span class="plk-field-label">Naam</span><div class="plk-readonly-value">{{ userName }}</div></div>
-                <div class="plk-readonly"><span class="plk-field-label">WhatsApp-contact</span><div class="plk-readonly-value" dir="ltr">{{ whatsappContact }}</div><sc-if value="{{ whatsappVerified }}" hint-placeholder-val="false"><span class="plk-verified"><span class="plk-verified-dot"></span>Geverifieerd</span></sc-if></div>
+                <div class="plk-readonly"><span class="plk-field-label">WhatsApp-contact</span><div class="plk-readonly-value" dir="ltr">{{ whatsappContact }}</div><sc-if value="{{ whatsappVerified }}" hint-placeholder-val="false"><span class="plk-verified"><span class="plk-verified-dot"></span>Bevestigd</span></sc-if></div>
               </div>
               <div class="plk-field-grid">
                 <label class="plk-field"><span class="plk-field-label">Taal</span><select class="plk-select" value="{{ language }}" onChange="{{ onLanguage }}" disabled="{{ saving }}"><option value="nl">Nederlands</option><option value="en">English</option></select><span class="plk-help">Voor navigatie, meldingen en systeemteksten.</span></label>

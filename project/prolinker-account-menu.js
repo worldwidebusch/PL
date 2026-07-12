@@ -268,36 +268,36 @@
         'button,a{font:inherit}',
         '.cluster{display:flex;align-items:center;gap:7px}',
         '.main-wrap{position:relative;display:flex;align-items:center}',
-        '.main-trigger{width:36px;height:36px;min-width:36px;padding:0;border:1px solid var(--border,#e4e5ec);border-radius:50%;background:var(--surface,#fff);color:var(--muted,#667587);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}',
-        '.main-trigger:hover,.main-trigger:focus-visible{border-color:#afc8df;background:var(--panel,#f7f8fb)}',
+        '.main-trigger{width:36px;height:36px;min-width:36px;padding:0;border:1px solid var(--border,#DCDFE2);border-radius:8px;background:var(--surface,#fff);color:var(--muted,#424444);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}',
+        '.main-trigger:hover,.main-trigger:focus-visible{border-color:#afc8df;background:var(--panel,#F3F4F6)}',
         '.dot-grid{width:16px;height:16px;display:grid;grid-template-columns:repeat(3,3px);grid-auto-rows:3px;gap:3px}',
         '.dot-grid span{width:3px;height:3px;border-radius:50%;background:currentColor}',
-        '.identity{min-width:0;min-height:38px;padding:3px 6px 3px 3px;border-radius:5px;color:var(--text,#152431);display:inline-flex;align-items:center;gap:7px;text-decoration:none}',
-        '.identity:hover,.identity:focus-visible{background:var(--panel,#f7f8fb);color:var(--text,#152431)}',
-        '.identity-avatar{width:30px;height:30px;flex:0 0 30px;overflow:hidden;border:1px solid #cbdbe8;border-radius:50%;background:linear-gradient(145deg,#dfeefa,#edf5fb);color:#1767aa;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;letter-spacing:.02em}',
+        '.identity{min-width:0;min-height:38px;padding:3px 6px 3px 3px;border-radius:10px;color:var(--text,#152431);display:inline-flex;align-items:center;gap:7px;text-decoration:none}',
+        '.identity:hover,.identity:focus-visible{background:var(--panel,#F3F4F6);color:var(--text,#152431)}',
+        '.identity-avatar{width:30px;height:30px;flex:0 0 30px;overflow:hidden;border:1px solid #cbdbe8;border-radius:50%;background:linear-gradient(145deg,#dfeefa,#edf5fb);color:#24476A;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;letter-spacing:.02em}',
         '.identity-avatar img{width:100%;height:100%;display:block;object-fit:cover}',
         '.identity-name{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:650}',
-        '.main-panel{position:absolute;right:0;top:46px;z-index:125;width:268px;max-width:calc(100vw - 20px);max-height:calc(100vh - 82px);padding:8px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--border,#e4e5ec);border-radius:14px;background:var(--surface,#fff);box-shadow:0 24px 60px -20px rgba(11,17,25,.4)}',
+        '.main-panel{position:absolute;right:0;top:46px;z-index:125;width:268px;max-width:calc(100vw - 20px);max-height:calc(100vh - 82px);padding:8px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--border,#DCDFE2);border-radius:14px;background:var(--surface,#fff);box-shadow:0 24px 60px -20px rgba(11,17,25,.4)}',
         '.main-panel[hidden]{display:none}',
         '.main-item{display:flex;align-items:center;gap:11px;min-height:40px;padding:10px 12px;border-radius:9px;color:var(--text,#152431);font-size:14px;font-weight:500;text-decoration:none;cursor:pointer}',
-        '.main-item:hover,.main-item:focus-visible{background:var(--panel,#f7f8fb);color:var(--text,#152431)}',
-        '.main-dot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#006bc6}',
-        '.main-divider{height:1px;margin:7px 4px;background:var(--hairline,#ecedf2)}',
-        '.main-caption{padding:4px 12px 3px;color:var(--faint,#9aa0a6);font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase}',
+        '.main-item:hover,.main-item:focus-visible{background:var(--panel,#F3F4F6);color:var(--text,#152431)}',
+        '.main-dot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#2F5B85}',
+        '.main-divider{height:1px;margin:7px 4px;background:var(--hairline,#ECEEF0)}',
+        '.main-caption{padding:4px 12px 3px;color:var(--faint,#8C8E8F);font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase}',
         '.account-main-item{width:100%;min-height:40px;padding:10px 12px;border:0;border-radius:9px;background:transparent;color:var(--text,#152431);display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;font-size:14px;font-weight:500;text-align:left;text-decoration:none;cursor:pointer}',
-        '.account-main-item:hover,.account-main-item:focus-visible{background:var(--panel,#f7f8fb);color:var(--text,#152431)}',
-        '.account-main-item[aria-current="page"]{background:var(--panel,#f2f6f9);color:#196399;font-weight:700}',
+        '.account-main-item:hover,.account-main-item:focus-visible{background:var(--panel,#F3F4F6);color:var(--text,#152431)}',
+        '.account-main-item[aria-current="page"]{background:var(--panel,#f2f6f9);color:#24476A;font-weight:700}',
         '.account-main-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
         '.account-main-badge{min-width:18px;height:17px;padding:0 5px;border-radius:999px;background:#f04444;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800}',
         '.logout{margin-top:1px}',
         '.theme-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:11px;padding:10px 12px;border:0;border-radius:9px;background:transparent;color:var(--text,#152431);font-size:14px;font-weight:500;cursor:pointer}',
-        '.theme-button:hover,.theme-button:focus-visible{background:var(--panel,#f7f8fb)}',
+        '.theme-button:hover,.theme-button:focus-visible{background:var(--panel,#F3F4F6)}',
         '.theme-label{display:flex;align-items:center;gap:11px}',
-        '.theme-track{position:relative;width:38px;height:22px;flex:0 0 38px;border-radius:999px;background:var(--border,#e4e5ec);transition:background .2s ease}',
-        '.theme-track[data-on="true"]{background:#006bc6}',
+        '.theme-track{position:relative;width:38px;height:22px;flex:0 0 38px;border-radius:999px;background:var(--border,#DCDFE2);transition:background .2s ease}',
+        '.theme-track[data-on="true"]{background:#2F5B85}',
         '.theme-knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .2s ease}',
         '.theme-knob[data-on="true"]{left:18px}',
-        '.main-trigger:focus-visible,.identity:focus-visible,.main-item:focus-visible,.account-main-item:focus-visible,.theme-button:focus-visible{outline:2px solid rgba(47,130,200,.32);outline-offset:2px}',
+        '.main-trigger:focus-visible,.identity:focus-visible,.main-item:focus-visible,.account-main-item:focus-visible,.theme-button:focus-visible{outline:2px solid rgba(47,91,133,.32);outline-offset:2px}',
         '@media(max-width:560px){.identity-name{max-width:76px;font-size:11px}.main-panel{position:fixed;left:10px;right:10px;top:62px;width:auto;max-width:none;max-height:calc(100vh - 74px)}}',
         '@media(prefers-reduced-motion:reduce){.theme-track,.theme-knob{transition:none}}'
       ].join('');
@@ -320,15 +320,6 @@
       mainPanel.hidden = true;
       mainPanel.setAttribute('role', 'menu');
       mainPanel.setAttribute('aria-label', lang === 'en' ? 'Main navigation' : 'Hoofdnavigatie');
-      mainNavigationItems(lang).forEach(function (entry) {
-        var mainLink = element('a', 'main-item');
-        mainLink.href = entry[1];
-        mainLink.setAttribute('role', 'menuitem');
-        mainLink.appendChild(element('span', 'main-dot'));
-        mainLink.appendChild(element('span', '', entry[0]));
-        mainPanel.appendChild(mainLink);
-      });
-      mainPanel.appendChild(element('div', 'main-divider'));
       mainPanel.appendChild(element('div', 'main-caption', lang === 'en' ? 'My account' : 'Mijn account'));
       items.forEach(function (item) {
         var accountLink = element('a', 'account-main-item');

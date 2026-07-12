@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  var VERSION = '1.1.0';
+  var VERSION = '1.2.0';
   var STORAGE_PREFIX = 'plk-app-data-v1:';
   var memoryStore = {};
   var applicationRequestCache = {};
@@ -33,7 +33,13 @@
     applicationsList: '/api/v1/applications',
     freelancerSearch: '/api/v1/freelancers',
     projectCreate: '/api/v1/projects',
-    referralSummary: '/api/v1/referrals/summary'
+    authSession: '/api/v1/auth/session',
+    authLogout: '/api/v1/auth/logout',
+    linkedinStart: '/api/v1/auth/linkedin/start',
+    linkedinProfileImport: '/api/v1/profile/imports/linkedin',
+    referralSummary: '/api/v1/referrals/summary',
+    referralLink: '/api/v1/referrals/links',
+    referralEvent: '/api/v1/referrals/events'
   };
 
   var DEFAULT_METHODS = {
@@ -46,7 +52,13 @@
     applicationsList: 'GET',
     freelancerSearch: 'GET',
     projectCreate: 'POST',
-    referralSummary: 'GET'
+    authSession: 'GET',
+    authLogout: 'POST',
+    linkedinStart: 'GET',
+    linkedinProfileImport: 'GET',
+    referralSummary: 'GET',
+    referralLink: 'POST',
+    referralEvent: 'POST'
   };
 
   var MARKETPLACE_CONFIG_MAP = {
@@ -54,7 +66,8 @@
     applications: { create: 'applicationsCreate', list: 'applicationsList' },
     freelancers: { search: 'freelancerSearch' },
     projects: { create: 'projectCreate' },
-    referrals: { getSummary: 'referralSummary' }
+    referrals: { getSummary: 'referralSummary', createLink: 'referralLink', track: 'referralEvent' },
+    auth: { session: 'authSession', logout: 'authLogout', linkedinStart: 'linkedinStart', linkedinProfileImport: 'linkedinProfileImport' }
   };
 
   var ROUTES = {
@@ -164,17 +177,84 @@
     return '+' + digits;
   }
 
-  function isValidWhatsappSession(session, requiredRole) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+  function normalizeSession(input) {
+    input = normalizePayload(input);
+    if (isPlainObject(input) && isPlainObject(input.session)) input = input.session;
+    if (!isPlainObject(input)) return null;
+    var user = isPlainObject(input.user) ? input.user : {};
+    var auth = isPlainObject(input.auth) ? input.auth : {};
+    var importFields = isPlainObject(input.profileImport) && isPlainObject(input.profileImport.fields) ? input.profileImport.fields : {};
+    var profile = Object.assign({}, importFields, isPlainObject(user.profile) ? user.profile : {}, isPlainObject(input.profile) ? input.profile : {});
+    var provider = String(auth.provider || input.authProvider || input.channel || '').trim().toLowerCase();
+    var role = String(user.role || input.role || input.accountType || '').trim().toLowerCase();
+    var firstName = String(user.firstName || profile.firstName || input.firstName || '').trim();
+    var lastName = String(user.lastName || profile.lastName || input.lastName || '').trim();
+    var name = String(user.displayName || user.name || input.name || profile.name || (firstName + ' ' + lastName)).trim();
+    var contact = normalizeWhatsapp(auth.phone || user.phone || input.contact || input.phone);
+    var providerSubject = String(auth.providerSubject || auth.subject || input.providerSubject || '').trim();
+    var id = String(user.id || input.userId || input.accountId || input.id || '').trim();
+    var email = String(user.email || profile.email || input.email || '').trim();
+    var pictureUrl = safeHref(user.avatarUrl || user.pictureUrl || profile.pictureUrl || profile.avatarUrl || input.avatarUrl || '', '');
+    profile = Object.assign({}, profile, {
+      firstName: firstName || profile.firstName || '',
+      lastName: lastName || profile.lastName || '',
+      name: name || profile.name || '',
+      email: email || profile.email || '',
+      pictureUrl: pictureUrl || profile.pictureUrl || '',
+      source: String(profile.source || (provider === 'linkedin' ? 'linkedin' : '')).trim()
+    });
+    return Object.assign({}, input, {
+      authenticated: input.authenticated === true,
+      id: id,
+      userId: id,
+      role: role,
+      accountType: role,
+      channel: provider || input.channel || '',
+      authProvider: provider || input.authProvider || '',
+      providerSubject: providerSubject,
+      contact: contact,
+      name: name,
+      email: email,
+      avatarUrl: pictureUrl,
+      profile: profile
+    });
+  }
+
+  function isValidSession(input, requiredRole) {
+    var session = normalizeSession(input);
+    if (!session || session.authenticated !== true) return false;
     if (session.role !== 'client' && session.role !== 'freelancer') return false;
     if (requiredRole && session.role !== requiredRole) return false;
-    return !!normalizeWhatsapp(session.contact);
+    if (session.channel === 'whatsapp') return !!normalizeWhatsapp(session.contact);
+    if (session.channel === 'linkedin' || session.channel === 'facebook') {
+      return !!(session.providerSubject || session.id || session.email);
+    }
+    return !!(session.id || session.contact);
+  }
+
+  function cacheSession(input) {
+    var session = normalizeSession(input);
+    if (!isValidSession(session)) return null;
+    try {
+      global.localStorage.setItem('plk-auth-session', JSON.stringify(session));
+      global.localStorage.setItem('plk-user-role', session.role);
+      if (session.name) global.localStorage.setItem('plk-user-name', session.name);
+    } catch (error) {}
+    return session;
+  }
+
+  function clearCachedSession() {
+    try {
+      global.localStorage.removeItem('plk-auth-session');
+      global.localStorage.removeItem('plk-user-name');
+      global.localStorage.removeItem('plk-user-role');
+    } catch (error) {}
   }
 
   function getSession() {
     try {
-      var session = JSON.parse(global.localStorage.getItem('plk-auth-session') || 'null');
-      return isValidWhatsappSession(session) ? session : null;
+      var session = normalizeSession(JSON.parse(global.localStorage.getItem('plk-auth-session') || 'null'));
+      return isValidSession(session) ? session : null;
     } catch (error) {
       return null;
     }
@@ -208,10 +288,17 @@
 
   function logout(options) {
     options = options || {};
+    clearCachedSession();
     try {
-      global.localStorage.removeItem('plk-auth-session');
-      global.localStorage.removeItem('plk-user-name');
-      global.localStorage.removeItem('plk-user-role');
+      var fetchFn = configured.fetch || global.fetch;
+      if (typeof fetchFn === 'function' && global.location && /^https?:$/.test(global.location.protocol)) {
+        fetchFn(endpointUrl('authLogout'), {
+          method: 'POST',
+          credentials: configured.credentials,
+          headers: Object.assign({ Accept: 'application/json' }, configured.headers),
+          keepalive: true
+        }).catch(function () {});
+      }
     } catch (error) {}
     if (options.redirect !== false && global.location) global.location.href = ROUTES.login + '?mode=login';
   }
@@ -227,13 +314,16 @@
   }
 
   function accountId(session) {
-    return 'acct-' + hashString(normalizeWhatsapp(session && session.contact) || 'guest');
+    session = normalizeSession(session) || {};
+    var canonical = String(session.id || session.userId || session.providerSubject || session.email || normalizeWhatsapp(session.contact) || 'guest');
+    return session.id ? session.id : 'acct-' + hashString((session.channel || 'account') + '|' + canonical);
   }
 
   function displayName(session) {
     var stored = '';
     try { stored = global.localStorage.getItem('plk-user-name') || ''; } catch (error) {}
-    return String((session && session.name) || stored || (session && session.role === 'freelancer' ? 'ProLinker professional' : 'ProLinker opdrachtgever')).trim();
+    var profile = session && isPlainObject(session.profile) ? session.profile : {};
+    return String((session && session.name) || profile.name || stored || (session && session.role === 'freelancer' ? 'ProLinker professional' : 'ProLinker opdrachtgever')).trim();
   }
 
   function initials(name) {
@@ -257,10 +347,10 @@
     var name = displayName(session);
     var id = accountId(session);
     var members = [
-      { id: 'pro-amelie', name: 'Amelie de Jong', headline: 'UX designer en researcher', location: 'Utrecht', availability: 'Beschikbaar', mutual: 12, skills: ['UX research', 'Figma'], color: '#EAF2FB' },
+      { id: 'pro-amelie', name: 'Amelie de Jong', headline: 'UX designer en researcher', location: 'Utrecht', availability: 'Beschikbaar', mutual: 12, skills: ['UX research', 'Figma'], color: '#E9EFF5' },
       { id: 'pro-youssef', name: 'Youssef El Amrani', headline: 'Full-stack developer', location: 'Rotterdam', availability: 'Vanaf augustus', mutual: 8, skills: ['React', 'Node.js'], color: '#E8F5EF' },
       { id: 'pro-noor', name: 'Noor van Dijk', headline: 'Interim finance consultant', location: 'Amsterdam', availability: 'Beschikbaar', mutual: 6, skills: ['Finance', 'Power BI'], color: '#F5EFFB' },
-      { id: 'pro-bram', name: 'Bram Vermeer', headline: 'B2B growth marketeer', location: 'Antwerpen', availability: '16 u per week', mutual: 4, skills: ['Demand gen', 'HubSpot'], color: '#FFF2E8' },
+      { id: 'pro-bram', name: 'Bram Vermeer', headline: 'B2B growth marketeer', location: 'Antwerpen', availability: '16 u per week', mutual: 4, skills: ['Demand gen', 'HubSpot'], color: '#FFE0D6' },
       { id: 'pro-sofia', name: 'Sofia Peeters', headline: 'Operations specialist', location: 'Remote', availability: 'Beschikbaar', mutual: 10, skills: ['Automation', 'Notion'], color: '#EAF5F6' },
       { id: 'pro-lars', name: 'Lars Smit', headline: 'Data engineer', location: 'Eindhoven', availability: 'Vanaf september', mutual: 3, skills: ['Python', 'Snowflake'], color: '#F3F0E8' }
     ].map(function (item) {
@@ -284,7 +374,14 @@
 
     return {
       version: 1,
-      account: { id: id, role: role, name: name, initials: initials(name), contact: normalizeWhatsapp(session.contact) },
+      account: Object.assign({ id: id, role: role, name: name, initials: initials(name), contact: normalizeWhatsapp(session.contact) }, isPlainObject(session.profile) ? {
+        firstName: session.profile.firstName || '',
+        lastName: session.profile.lastName || '',
+        email: session.profile.email || session.email || '',
+        avatarUrl: session.profile.pictureUrl || session.avatarUrl || '',
+        pictureUrl: session.profile.pictureUrl || session.avatarUrl || '',
+        profileSource: session.profile.source || ''
+      } : {}),
       dashboard: {
         client: {
           metrics: [
@@ -334,7 +431,8 @@
   }
 
   function storageKey(session) {
-    return STORAGE_PREFIX + hashString(normalizeWhatsapp(session.contact) + '|' + session.role);
+    session = normalizeSession(session) || {};
+    return STORAGE_PREFIX + hashString(accountId(session) + '|' + session.role);
   }
 
   function readRepository(session) {
@@ -350,7 +448,14 @@
     if (!isPlainObject(data.opportunityPreferences)) data.opportunityPreferences = { saved: {}, hidden: {} };
     if (!isPlainObject(data.opportunityPreferences.saved)) data.opportunityPreferences.saved = {};
     if (!isPlainObject(data.opportunityPreferences.hidden)) data.opportunityPreferences.hidden = {};
-    data.account = Object.assign({}, data.account || {}, {
+    data.account = Object.assign({}, data.account || {}, isPlainObject(session.profile) ? {
+      firstName: session.profile.firstName || '',
+      lastName: session.profile.lastName || '',
+      email: session.profile.email || session.email || '',
+      avatarUrl: session.profile.pictureUrl || session.avatarUrl || '',
+      pictureUrl: session.profile.pictureUrl || session.avatarUrl || '',
+      profileSource: session.profile.source || ''
+    } : {}, {
       id: accountId(session), role: session.role, name: displayName(session), initials: initials(displayName(session)), contact: normalizeWhatsapp(session.contact)
     });
     writeRepository(session, data);
@@ -443,9 +548,125 @@
     }
   }
 
+  function hasHttpOrigin() {
+    return !!(global.location && /^https?:$/.test(global.location.protocol));
+  }
+
+  async function platformRequest(key, options) {
+    options = options || {};
+    if (configured.baseUrl) return request(key, options);
+    if (!hasHttpOrigin()) throw new ProLinkerError('Deze functie is beschikbaar via de beveiligde webomgeving.', { code: 'SERVER_REQUIRED' });
+    var fetchFn = configured.fetch || global.fetch;
+    if (typeof fetchFn !== 'function') throw new ProLinkerError('Fetch is niet beschikbaar.', { code: 'FETCH_UNAVAILABLE' });
+    var headers = Object.assign({ Accept: 'application/json' }, configured.headers, isPlainObject(options.headers) ? options.headers : {});
+    var body = options.body;
+    if (body !== undefined && body !== null && !(typeof global.FormData === 'function' && body instanceof global.FormData)) {
+      headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+      if (headers['Content-Type'].indexOf('application/json') >= 0 && typeof body !== 'string') body = JSON.stringify(body);
+    }
+    var response;
+    try {
+      response = await fetchFn(appendQuery(endpointUrl(key, options.params), options.query), {
+        method: normalizeMethod(options.method) || configured.methods[key] || 'GET',
+        credentials: configured.credentials,
+        headers: headers,
+        body: body,
+        signal: options.signal
+      });
+    } catch (error) {
+      throw new ProLinkerError(error && error.message ? error.message : 'Netwerkfout.', { code: 'NETWORK_ERROR', retryable: true });
+    }
+    var text = await response.text();
+    var payload = null;
+    if (text) {
+      try { payload = JSON.parse(text); } catch (error) { payload = { message: text }; }
+    }
+    if (!response.ok) {
+      var message = payload && (payload.message || payload.error) ? String(payload.message || payload.error) : 'Request mislukt met status ' + response.status + '.';
+      throw new ProLinkerError(message, { code: response.status === 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR', status: response.status, details: payload, retryable: response.status >= 500 || response.status === 429 });
+    }
+    return normalizePayload(payload);
+  }
+
+  async function hydrateSession(options) {
+    options = options || {};
+    try {
+      var payload = await platformRequest('authSession', { signal: options.signal });
+      var session = cacheSession(payload);
+      if (!session) throw new ProLinkerError('De ontvangen sessie is ongeldig.', { code: 'INVALID_SESSION' });
+      return session;
+    } catch (error) {
+      if (error && error.status === 401) clearCachedSession();
+      if (options.fallbackToCache === true) return getSession();
+      throw error;
+    }
+  }
+
+  function safeReferralCode(value) {
+    var code = String(value || '').trim().toLowerCase();
+    return /^[a-z0-9-]{4,48}$/.test(code) ? code : '';
+  }
+
+  function linkedinAuthUrl(options) {
+    options = options || {};
+    var mode = ['login', 'register', 'link'].indexOf(options.mode) >= 0 ? options.mode : 'login';
+    var current = getSession();
+    var role = options.role === 'client' || options.role === 'freelancer' ? options.role : (current && current.role) || 'freelancer';
+    var desiredNext = safeNext(options.next || (role === 'client' ? ROUTES.dashboard : ROUTES.freelancerProfile));
+    var callbackNext = desiredNext;
+    if (mode !== 'link') {
+      callbackNext = ROUTES.login + '?mode=' + encodeURIComponent(mode) + '&role=' + encodeURIComponent(role) + '&next=' + encodeURIComponent(desiredNext);
+    }
+    var query = {
+      mode: mode,
+      role: role,
+      next: callbackNext,
+      ref: safeReferralCode(options.ref)
+    };
+    return appendQuery(endpointUrl('linkedinStart'), query);
+  }
+
+  function startLinkedInAuth(options) {
+    options = options || {};
+    if (!hasHttpOrigin()) throw new ProLinkerError('LinkedIn-login werkt na publicatie via HTTPS.', { code: 'SERVER_REQUIRED' });
+    var url = linkedinAuthUrl(options);
+    if (options.redirect === false) return url;
+    global.location.assign(url);
+    return url;
+  }
+
+  async function importLinkedInProfile(options) {
+    options = options || {};
+    var result = await platformRequest('linkedinProfileImport', { signal: options.signal });
+    result = isPlainObject(result) ? result : {};
+    var profile = isPlainObject(result.profile) ? result.profile : result;
+    var available = Array.isArray(result.availableFields) ? result.availableFields.slice(0, 12) : [];
+    var imported = [];
+    if (options.apply !== false && available.length) {
+      var requested = Array.isArray(options.fields) && options.fields.length
+        ? options.fields.filter(function (field) { return available.indexOf(field) >= 0; })
+        : available;
+      if (requested.length) {
+        var applied = await platformRequest('linkedinProfileImport', { method: 'POST', body: { fields: requested }, signal: options.signal });
+        if (isPlainObject(applied) && isPlainObject(applied.session)) cacheSession(applied.session);
+        imported = isPlainObject(applied) && Array.isArray(applied.importedFields) ? applied.importedFields.slice(0, 12) : requested;
+      }
+    }
+    return {
+      source: 'linkedin',
+      firstName: String(profile.firstName || '').trim(),
+      lastName: String(profile.lastName || '').trim(),
+      name: String(profile.name || profile.displayName || ((profile.firstName || '') + ' ' + (profile.lastName || ''))).trim(),
+      email: String(profile.email || '').trim(),
+      pictureUrl: safeHref(profile.pictureUrl || profile.avatarUrl, ''),
+      locale: String(profile.locale || '').trim(),
+      importedFields: imported.length ? imported : available
+    };
+  }
+
   function activeSession(requiredRole) {
     var session = getSession();
-    if (!session) throw new ProLinkerError('Een geldige WhatsApp-sessie is vereist.', { code: 'AUTH_REQUIRED', status: 401 });
+    if (!session) throw new ProLinkerError('Log in om door te gaan.', { code: 'AUTH_REQUIRED', status: 401 });
     if (requiredRole && session.role !== requiredRole) throw new ProLinkerError('Deze actie is niet beschikbaar voor dit accounttype.', { code: 'FORBIDDEN', status: 403 });
     return session;
   }
@@ -481,7 +702,7 @@
       id: String(item.id || 'member-' + hashString(name)), name: name, initials: item.initials || initials(name),
       headline: String(item.headline || item.discipline || 'Professional'), location: String(item.location || 'Remote'),
       availability: String(item.availability || 'Beschikbaar'), mutual: Math.max(0, Number(item.mutual || item.sharedConnections) || 0),
-      skills: Array.isArray(item.skills) ? item.skills.slice(0, 4) : [], status: item.status || 'connected', color: item.color || '#EAF2FB'
+      skills: Array.isArray(item.skills) ? item.skills.slice(0, 4) : [], status: item.status || 'connected', color: item.color || '#E9EFF5'
     };
     member.profileHref = safeHref(item.profileHref, profileLinkFor(member, session.role));
     return member;
@@ -1131,6 +1352,107 @@
     return normalizeReferralSummary(readRepository(session).earnings);
   }
 
+  function normalizeReferralEntityType(value) {
+    var type = String(value || '').trim().toLowerCase();
+    return ['project', 'opportunity', 'profile', 'general'].indexOf(type) >= 0 ? type : 'general';
+  }
+
+  function referralTargetUrl(value) {
+    var fallback = '';
+    try { fallback = new URL(global.location.href).href; } catch (error) {}
+    var target = safeHref(value, fallback);
+    try {
+      var parsed = new URL(target, fallback || undefined);
+      if (!/^https?:$/.test(parsed.protocol) && parsed.protocol !== 'file:') return fallback;
+      ['ref', 'via', 'share'].forEach(function (key) { parsed.searchParams.delete(key); });
+      return parsed.href;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function localReferralLink(input, session) {
+    var target = referralTargetUrl(input.targetUrl);
+    var code = safeReferralCode(session.referralCode) || accountId(session).replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64);
+    try {
+      var parsed = new URL(target, global.location.href);
+      parsed.searchParams.set('ref', code);
+      parsed.searchParams.set('via', normalizeReferralEntityType(input.entityType));
+      if (input.entityId) parsed.searchParams.set('share', String(input.entityId).slice(0, 120));
+      return { url: parsed.href, shareId: 'preview-' + hashString(code + '|' + parsed.href), preview: true };
+    } catch (error) {
+      return { url: target, shareId: '', preview: true };
+    }
+  }
+
+  async function createReferralLink(input, options) {
+    options = options || {};
+    input = isPlainObject(input) ? Object.assign({}, input) : {};
+    var session = activeSession();
+    var payload = {
+      entityType: normalizeReferralEntityType(input.entityType),
+      entityId: String(input.entityId || '').trim().slice(0, 160),
+      targetUrl: referralTargetUrl(input.targetUrl),
+      channel: String(input.channel || 'share-sheet').trim().toLowerCase().slice(0, 40),
+      campaign: String(input.campaign || 'member-share').trim().slice(0, 80)
+    };
+    if (hasHttpOrigin()) {
+      var remote = await platformRequest('referralLink', { method: 'POST', body: payload, signal: options.signal });
+      remote = isPlainObject(remote) ? remote : {};
+      var url = safeHref(remote.url || remote.shareUrl || remote.link, '');
+      if (!url) throw new ProLinkerError('De deel-link kon niet worden aangemaakt.', { code: 'INVALID_RESPONSE' });
+      return Object.assign({}, remote, payload, { url: url, preview: false });
+    }
+    return Object.assign(localReferralLink(payload, session), payload);
+  }
+
+  async function trackReferralEvent(input, options) {
+    options = options || {};
+    activeSession();
+    input = isPlainObject(input) ? Object.assign({}, input) : {};
+    var event = String(input.event || '').trim().toLowerCase();
+    if (['share_opened', 'share_selected', 'link_copied'].indexOf(event) < 0) throw new ProLinkerError('Ongeldig referral-event.', { code: 'VALIDATION_ERROR' });
+    if (!hasHttpOrigin()) return { ok: true, tracked: false, preview: true };
+    return platformRequest('referralEvent', {
+      method: 'POST',
+      body: {
+        event: event,
+        shareId: String(input.shareId || '').trim().slice(0, 160),
+        channel: String(input.channel || '').trim().toLowerCase().slice(0, 40)
+      },
+      signal: options.signal
+    });
+  }
+
+  function referralShareUrls(link, title) {
+    var url = safeHref(link, '');
+    var text = String(title || 'Ken je iemand die hier goed bij past?').trim();
+    return {
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url),
+      whatsapp: 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + url),
+      email: 'mailto:?subject=' + encodeURIComponent(text) + '&body=' + encodeURIComponent(url)
+    };
+  }
+
+  async function copyReferralLink(value) {
+    var url = safeHref(value, '');
+    if (!url) throw new ProLinkerError('Er is geen geldige deel-link.', { code: 'VALIDATION_ERROR' });
+    if (global.navigator && global.navigator.clipboard && global.navigator.clipboard.writeText) {
+      await global.navigator.clipboard.writeText(url);
+      return true;
+    }
+    var input = global.document.createElement('textarea');
+    input.value = url;
+    input.setAttribute('readonly', '');
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    global.document.body.appendChild(input);
+    input.select();
+    var copied = global.document.execCommand('copy');
+    input.remove();
+    return copied;
+  }
+
   function accountMenu(role) {
     var safeRole = role === 'client' ? 'client' : 'freelancer';
     var unreadMessages = 0;
@@ -1161,7 +1483,8 @@
   }
 
   var contracts = Object.freeze({
-    session: '{ authenticated:true, channel:"whatsapp", role:"client|freelancer", contact:string, name?:string, phoneVerifiedAt?:ISODateTime }',
+    session: '{ authenticated:true, channel:"whatsapp|linkedin|facebook", role:"client|freelancer", id?:string, contact?:string, providerSubject?:string, name?:string, email?:string, avatarUrl?:string, profile?:object }',
+    linkedinProfileImport: '{ source:"linkedin", firstName, lastName, name, email?, pictureUrl?, locale?, importedFields[] }',
     dashboard: '{ role, user, metrics[], activity[], updatedAt }',
     network: '{ currentUser, members[], invitations[], outbound[], totals, updatedAt }',
     member: '{ id, name, initials, headline, location, availability, mutual, skills[], status, profileHref }',
@@ -1174,7 +1497,8 @@
     applicationList: '{ items:application[], total, nextCursor }',
     application: '{ id, opportunityId, status, createdAt }',
     freelancerList: '{ items:member[], total, nextCursor }',
-    referralSummary: '{ currency, rewardRate, availableAmount, pendingAmount, paidAmount, totalEarned, referredCount, convertedCount, shareUrl, referrals[] }'
+    referralSummary: '{ currency, rewardRate, availableAmount, pendingAmount, paidAmount, totalEarned, referredCount, convertedCount, shareUrl, referrals[] }',
+    referralLink: '{ url, shareId, entityType:"project|opportunity|profile|general", entityId?, channel, campaign }'
   });
 
   global.ProLinkerApp = Object.freeze({
@@ -1185,7 +1509,8 @@
     Error: ProLinkerError,
     contracts: contracts,
     routes: Object.freeze(Object.assign({}, ROUTES, { accountMenu: accountMenu })),
-    session: Object.freeze({ get: getSession, require: requireSession, isValid: isValidWhatsappSession, normalizeWhatsapp: normalizeWhatsapp, logout: logout }),
+    session: Object.freeze({ get: getSession, require: requireSession, isValid: isValidSession, normalize: normalizeSession, cache: cacheSession, hydrate: hydrateSession, normalizeWhatsapp: normalizeWhatsapp, logout: logout }),
+    auth: Object.freeze({ linkedin: Object.freeze({ url: linkedinAuthUrl, start: startLinkedInAuth, importProfile: importLinkedInProfile }), hydrate: hydrateSession, logout: logout }),
     dashboard: Object.freeze({ get: getDashboard, refresh: function (options) { return getDashboard(Object.assign({}, options || {}, { refresh: true })); } }),
     network: Object.freeze({ list: listNetwork, refresh: function (options) { return listNetwork(Object.assign({}, options || {}, { refresh: true })); }, accept: acceptInvitation, reject: rejectInvitation, remove: removeConnection, invite: inviteNetwork, whatsappLink: whatsappInviteLink }),
     profiles: Object.freeze({ get: getProfile, update: updateProfile }),
@@ -1197,6 +1522,6 @@
     applications: Object.freeze({ create: createApplication, list: listApplications }),
     freelancers: Object.freeze({ search: searchFreelancers }),
     projects: Object.freeze({ create: createProject }),
-    referrals: Object.freeze({ getSummary: getReferralSummary })
+    referrals: Object.freeze({ getSummary: getReferralSummary, createLink: createReferralLink, track: trackReferralEvent, shareUrls: referralShareUrls, copy: copyReferralLink })
   });
 })(window);

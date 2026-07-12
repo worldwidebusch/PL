@@ -10,18 +10,19 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="prolinker-theme.css">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
-  ::selection { background: #cfe6fb; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-toast { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
   @keyframes plk-pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -36,30 +37,30 @@
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div data-screen-label="Voor jou" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div data-screen-label="Voor jou" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
-    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
       <div style="position: relative;">
-        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F7F8FB);">
-          <span style="width: 36px; height: 36px; border-radius: 50%; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
+        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F3F4F6);">
+          <span style="width: 36px; height: 36px; border-radius: 8px; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
           <span style="font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap;">{{ firstName }}</span>
           <span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ menuChevronRotate }};">{{ chevronEl }}</span>
         </button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
             <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="3">
-              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F7F8FB);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F3F4F6);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
             </sc-for>
-            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
-            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB);">
+            <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F3F4F6);">
               <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
               <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
             </button>
-            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
+            <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#424444);" style-hover="background: var(--panel,#F3F4F6); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
           </div>
         </sc-if>
       </div>
@@ -75,15 +76,15 @@
     <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin: 0 0 18px; animation: plk-rise 0.5s ease both;">
       <div style="display: flex; flex-direction: column; gap: 6px;">
         <h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: var(--text,#152431);">Voor jou</h1>
-        <div style="font-size: 14.5px; color: var(--muted,#565B62);">{{ subGreeting }}</div>
+        <div style="font-size: 14.5px; color: var(--muted,#424444);">{{ subGreeting }}</div>
       </div>
       <div style="position: relative; flex-shrink: 0;">
-        <button onClick="{{ onToggleSort }}" style="display: inline-flex; align-items: center; gap: 9px; height: 38px; padding: 0 16px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;" style-hover="border-color: {{ accentRing }};"><span style="color: var(--faint,#9AA0A6); font-weight: 500;">Sorteren</span>{{ sortLabel }}</button>
+        <button onClick="{{ onToggleSort }}" style="display: inline-flex; align-items: center; gap: 9px; height: 38px; padding: 0 16px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;" style-hover="border-color: {{ accentRing }};"><span style="color: var(--faint,#8C8E8F); font-weight: 500;">Sorteren</span>{{ sortLabel }}</button>
         <sc-if value="{{ sortOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseSort }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-          <div role="menu" style="position: absolute; right: 0; top: 44px; z-index: 40; width: 198px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 6px; animation: plk-pop 0.18s ease both;">
+          <div role="menu" style="position: absolute; right: 0; top: 44px; z-index: 40; width: 198px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 6px; animation: plk-pop 0.18s ease both;">
             <sc-for list="{{ sortOptions }}" as="so" hint-placeholder-count="4">
-              <button role="menuitem" onClick="{{ so.onClick }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: {{ so.weight }}; color: {{ so.color }}; text-align: left;" style-hover="background: var(--panel,#F7F8FB);">{{ so.label }}</button>
+              <button role="menuitem" onClick="{{ so.onClick }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: {{ so.weight }}; color: {{ so.color }}; text-align: left;" style-hover="background: var(--panel,#F3F4F6);">{{ so.label }}</button>
             </sc-for>
           </div>
         </sc-if>
@@ -105,18 +106,18 @@
               <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 11px; background: {{ it.tileBg }}; color: {{ it.tileColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ it.tileContent }}</div>
               <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
                 <div style="font-size: 14px; font-weight: 650; letter-spacing: -0.005em; color: var(--text,#152431); text-wrap: pretty;">{{ it.title }}</div>
-                <div style="font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ it.sub }}</div>
+                <div style="font-size: 12.5px; color: var(--faint,#8C8E8F);">{{ it.sub }}</div>
               </div>
               <sc-if value="{{ it.statusText }}" hint-placeholder-val="{{ false }}">
                 <span style="flex-shrink: 0; padding: 4px 10px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 11.5px; font-weight: 700; white-space: nowrap;">{{ it.statusText }}</span>
               </sc-if>
               <sc-if value="{{ it.ctaSmall }}" hint-placeholder-val="{{ false }}">
-                <button onClick="{{ it.onCta }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaSmall }}</button>
+                <button onClick="{{ it.onCta }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaSmall }}</button>
               </sc-if>
               <sc-if value="{{ it.ctaHref }}" hint-placeholder-val="{{ false }}">
-                <a href="{{ it.ctaHref }}" style="flex-shrink: 0; display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-size: 12.5px; font-weight: 600; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaHrefLabel }}</a>
+                <a href="{{ it.ctaHref }}" style="flex-shrink: 0; display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--surface,#fff); color: var(--text,#152431); font-size: 12.5px; font-weight: 600; white-space: nowrap;" style-hover="border-color: {{ accent }}; color: {{ accent }};">{{ it.ctaHrefLabel }}</a>
               </sc-if>
-              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 30px; height: 30px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEDF2);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#565B62);">&#8943;</span></button>
+              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 30px; height: 30px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEEF0);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#424444);">&#8943;</span></button>
             </div>
           </sc-if>
 
@@ -127,9 +128,9 @@
                 <div style="display: flex; align-items: center; gap: 6px; min-width: 0;">
                   <span style="font-size: 13.5px; font-weight: 650; color: var(--text,#152431); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.co }}</span>
                 </div>
-                <div style="font-size: 12.5px; color: var(--faint,#9AA0A6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.metaLine }}</div>
+                <div style="font-size: 12.5px; color: var(--faint,#8C8E8F); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.metaLine }}</div>
               </div>
-              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 32px; height: 32px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEDF2);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#565B62);">&#8943;</span></button>
+              <button onClick="{{ it.onMenu }}" aria-label="Meer opties" title="Meer opties" style="flex-shrink: 0; width: 32px; height: 32px; border: none; border-radius: 50%; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0;" style-hover="background: var(--hairline,#ECEEF0);"><span style="font-size: 16px; line-height: 1; color: var(--muted,#424444);">&#8943;</span></button>
             </div>
 
             <sc-if value="{{ it.hasLabels }}" hint-placeholder-val="{{ false }}">
@@ -143,14 +144,14 @@
             <div onClick="{{ it.onOpen }}" style="margin-top: 10px; font-size: {{ it.titleSize }}; font-weight: 700; letter-spacing: -0.015em; line-height: 1.22; color: var(--text,#152431); cursor: {{ it.titleCursor }}; text-wrap: pretty;">{{ it.title }}</div>
 
             <sc-if value="{{ it.showDesc }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--muted,#565B62); display: -webkit-box; -webkit-line-clamp: {{ it.descClamp }}; -webkit-box-orient: vertical; overflow: hidden; text-wrap: pretty;">{{ it.desc }}</p>
+              <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--muted,#424444); display: -webkit-box; -webkit-line-clamp: {{ it.descClamp }}; -webkit-box-orient: vertical; overflow: hidden; text-wrap: pretty;">{{ it.desc }}</p>
             </sc-if>
 
             <sc-if value="{{ it.rate }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 12px;">
-                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ it.rate }}</span>
+                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ it.rate }}</span>
                 <sc-for list="{{ it.chips }}" as="c" hint-placeholder-count="3">
-                  <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12px; font-weight: 500; color: var(--muted,#565B62); white-space: nowrap;">{{ c }}</span>
+                  <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12px; font-weight: 500; color: var(--muted,#424444); white-space: nowrap;">{{ c }}</span>
                 </sc-for>
               </div>
             </sc-if>
@@ -168,16 +169,16 @@
               <div style="margin-top: 14px; font-size: 12.5px; font-weight: 550; color: {{ accent }}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ it.reason }}</div>
             </sc-if>
 
-            <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline,#ECEDF2);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--hairline,#ECEEF0);">
               <sc-if value="{{ it.matchLabel }}" hint-placeholder-val="{{ false }}">
                 <span style="padding: 4px 11px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 700; white-space: nowrap;">{{ it.matchLabel }}</span>
               </sc-if>
               <sc-if value="{{ it.hasWhy }}" hint-placeholder-val="{{ false }}">
-                <button onClick="{{ it.onWhy }}" style="border: none; background: none; padding: 4px 2px; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--faint,#9AA0A6); cursor: pointer; white-space: nowrap;" style-hover="color: var(--text,#152431);">Waarom zie ik dit?</button>
+                <button onClick="{{ it.onWhy }}" style="border: none; background: none; padding: 4px 2px; font-family: inherit; font-size: 12px; font-weight: 500; color: var(--faint,#8C8E8F); cursor: pointer; white-space: nowrap;" style-hover="color: var(--text,#152431);">Waarom zie ik dit?</button>
               </sc-if>
               <div style="flex: 1;"></div>
               <sc-if value="{{ it.secondaryLabel }}" hint-placeholder-val="{{ false }}">
-                <button onClick="{{ it.onSecondary }}" style="height: {{ it.pHeight }}; padding: 0 16px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: transparent; color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accentRing }};">{{ it.secondaryLabel }}</button>
+                <button onClick="{{ it.onSecondary }}" style="height: {{ it.pHeight }}; padding: 0 16px; border: 1.5px solid var(--border,#DCDFE2); border-radius: 999px; background: transparent; color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: {{ accentRing }};">{{ it.secondaryLabel }}</button>
               </sc-if>
               <sc-if value="{{ it.primaryLabel }}" hint-placeholder-val="{{ false }}">
                 <button onClick="{{ it.onPrimary }}" style="display: inline-flex; align-items: center; gap: 7px; height: {{ it.pHeight }}; padding: 0 17px; border: {{ it.pBorder }}; border-radius: 999px; background: {{ it.pBg }}; color: {{ it.pColor }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: {{ it.pShadow }};" style-hover="transform: translateY(-1px);">{{ it.primaryLabel }}</button>
@@ -187,22 +188,22 @@
 
           <sc-if value="{{ it.whyOpen }}" hint-placeholder-val="{{ false }}">
             <div onClick="{{ onCloseOverlays }}" style="position: fixed; inset: 0; z-index: 45;"></div>
-            <div role="dialog" aria-label="Waarom zie je dit" style="position: absolute; left: 14px; right: 14px; bottom: 58px; z-index: 46; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 14px 16px; animation: plk-pop 0.18s ease both;">
-              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 9px;">Waarom zie je dit</div>
+            <div role="dialog" aria-label="Waarom zie je dit" style="position: absolute; left: 14px; right: 14px; bottom: 58px; z-index: 46; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 14px 16px; animation: plk-pop 0.18s ease both;">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); margin-bottom: 9px;">Waarom zie je dit</div>
               <div style="display: flex; flex-direction: column; gap: 7px;">
                 <sc-for list="{{ it.whyReasons }}" as="wr" hint-placeholder-count="3">
                   <div style="font-size: 13px; color: var(--text,#152431); line-height: 1.4;">{{ wr }}</div>
                 </sc-for>
               </div>
-              <div style="margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--hairline,#ECEDF2); font-size: 11.5px; line-height: 1.45; color: var(--faint,#9AA0A6);">Gebaseerd op je profiel, voorkeuren en activiteit. Niet goed? Kies "Niet relevant" via het menu.</div>
+              <div style="margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--hairline,#ECEEF0); font-size: 11.5px; line-height: 1.45; color: var(--faint,#8C8E8F);">Gebaseerd op je profiel, voorkeuren en activiteit. Niet goed? Kies "Niet relevant" via het menu.</div>
             </div>
           </sc-if>
 
           <sc-if value="{{ it.cardMenuOpen }}" hint-placeholder-val="{{ false }}">
             <div onClick="{{ onCloseOverlays }}" style="position: fixed; inset: 0; z-index: 45;"></div>
-            <div role="menu" style="position: absolute; right: 12px; top: 48px; z-index: 46; width: 210px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 6px; animation: plk-pop 0.18s ease both;">
+            <div role="menu" style="position: absolute; right: 12px; top: 48px; z-index: 46; width: 210px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.45); padding: 6px; animation: plk-pop 0.18s ease both;">
               <sc-for list="{{ it.menuActions }}" as="ma" hint-placeholder-count="4">
-                <button role="menuitem" onClick="{{ ma.onClick }}" style="width: 100%; display: block; text-align: left; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 500; color: {{ ma.color }};" style-hover="background: var(--panel,#F7F8FB);">{{ ma.label }}</button>
+                <button role="menuitem" onClick="{{ ma.onClick }}" style="width: 100%; display: block; text-align: left; padding: 9px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 500; color: {{ ma.color }};" style-hover="background: var(--panel,#F3F4F6);">{{ ma.label }}</button>
               </sc-for>
             </div>
           </sc-if>
@@ -212,21 +213,21 @@
     </div>
 
     <sc-if value="{{ emptyFilter }}" hint-placeholder-val="{{ false }}">
-      <div style="padding: 48px 20px; text-align: center; color: var(--faint,#9AA0A6); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#E4E5EC); border-radius: 16px; margin-top: 4px;">{{ emptyText }}</div>
+      <div style="padding: 48px 20px; text-align: center; color: var(--faint,#8C8E8F); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#DCDFE2); border-radius: 16px; margin-top: 4px;">{{ emptyText }}</div>
     </sc-if>
 
   </main>
 
   <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ onCloseModal }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(11,17,25,0.45); backdrop-filter: blur(3px);"></div>
-    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(580px, calc(100vw - 40px)); max-height: min(86vh, 720px); overflow: auto; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
+    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(580px, calc(100vw - 40px)); max-height: min(86vh, 720px); overflow: auto; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
       <div style="display: flex; align-items: flex-start; gap: 16px;">
         <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ modalItem.tileBg }}; color: {{ modalItem.tileColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700;">{{ modalItem.tileContent }}</div>
         <div style="flex: 1; min-width: 0;">
           <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.015em; color: var(--text,#152431); text-wrap: pretty;">{{ modalItem.title }}</div>
-          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ modalItem.co }} &middot; {{ modalItem.metaLine }}</div>
+          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#8C8E8F);">{{ modalItem.co }} &middot; {{ modalItem.metaLine }}</div>
         </div>
-        <button onClick="{{ onCloseModal }}" aria-label="Sluiten" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F7F8FB); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#565B62); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEDF2);">&times;</button>
+        <button onClick="{{ onCloseModal }}" aria-label="Sluiten" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F3F4F6); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#424444); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEEF0);">&times;</button>
       </div>
       <sc-if value="{{ modalItem.hasLabels }}" hint-placeholder-val="{{ false }}">
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 16px;">
@@ -235,18 +236,18 @@
           </sc-for>
         </div>
       </sc-if>
-      <p style="margin: 16px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#565B62); text-wrap: pretty;">{{ modalItem.desc }}</p>
+      <p style="margin: 16px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#424444); text-wrap: pretty;">{{ modalItem.desc }}</p>
       <sc-if value="{{ modalItem.rate }}" hint-placeholder-val="{{ false }}">
         <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 16px;">
-          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650; color: var(--text,#152431);">{{ modalItem.rate }}</span>
+          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 650; color: var(--text,#152431);">{{ modalItem.rate }}</span>
           <sc-for list="{{ modalItem.chips }}" as="c" hint-placeholder-count="3">
-            <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62);">{{ c }}</span>
+            <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 500; color: var(--muted,#424444);">{{ c }}</span>
           </sc-for>
         </div>
       </sc-if>
       <sc-if value="{{ modalItem.hasWhy }}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top: 18px; padding: 14px 16px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 12px;">
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); margin-bottom: 9px;">Waarom dit bij je past</div>
+        <div style="margin-top: 18px; padding: 14px 16px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); border-radius: 12px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); margin-bottom: 9px;">Waarom dit bij je past</div>
           <div style="display: flex; flex-direction: column; gap: 7px;">
             <sc-for list="{{ modalItem.whyReasons }}" as="wr" hint-placeholder-count="3">
               <div style="font-size: 13px; color: var(--text,#152431); line-height: 1.4;">{{ wr }}</div>
@@ -254,7 +255,7 @@
           </div>
         </div>
       </sc-if>
-      <div style="display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEDF2);">
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEEF0);">
         <sc-if value="{{ modalItem.matchLabel }}" hint-placeholder-val="{{ false }}">
           <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700;">{{ modalItem.matchLabel }}</span>
         </sc-if>
@@ -267,19 +268,19 @@
   </sc-if>
 
   <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
-    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 80; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 14px 10px 16px; animation: plk-toast 0.3s ease both; max-width: calc(100vw - 40px);">
+    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 80; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 14px 10px 16px; animation: plk-toast 0.3s ease both; max-width: calc(100vw - 40px);">
       <span style="font-size: 14px; color: var(--text,#152431); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ toastMsg }}</span>
       <sc-if value="{{ toastUndoable }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ onToastUndo }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F7F8FB); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEDF2);">Ongedaan maken</button>
+        <button onClick="{{ onToastUndo }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F3F4F6); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEEF0);">Ongedaan maken</button>
       </sc-if>
     </div>
   </sc-if>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Aanbevolen&quot;,&quot;Meest recent&quot;,&quot;Beste match&quot;,&quot;Sluit binnenkort&quot;],&quot;default&quot;:&quot;Aanbevolen&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Gedrag&quot;},&quot;showNewIndicator&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Gedrag&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Aanbevolen&quot;,&quot;Meest recent&quot;,&quot;Beste match&quot;,&quot;Sluit binnenkort&quot;],&quot;default&quot;:&quot;Aanbevolen&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Gedrag&quot;},&quot;showNewIndicator&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Gedrag&quot;}}">
 class Component extends DCLogic {
   state = { theme: 'light', menuOpen: false, filter: 'alles', sort: null, sortOpen: false, saved: {}, hidden: {}, sent: {}, accepted: {}, followed: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, newReady: false, inserted: false, cols: 4, name: '' };
 
@@ -304,7 +305,7 @@ class Component extends DCLogic {
   colsFor() { const w = window.innerWidth; return w >= 1060 ? 4 : (w >= 700 ? 2 : 1); }
   getLS(k) { try { const v = JSON.parse(localStorage.getItem(k) || '{}'); return v && typeof v === 'object' && v !== null ? v : {}; } catch (e) { return {}; } }
   setLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  hexToRgba(hex, a) { let h = (hex || '#2F5B85').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
   itemsData() {
     return [
@@ -314,13 +315,13 @@ class Component extends DCLogic {
         desc: 'VersBox nodigde je persoonlijk uit op basis van je Shopify Plus-werk. Je bouwt de nieuwe headless storefront met abonnementen-checkout en koppelt de bezorg-API. Het designsysteem staat klaar; je werkt nauw samen met hun interne team.',
         match: 96, reasons: ['Deze klant heeft je uitgenodigd', 'Next.js en Shopify Plus staan in jouw skills', 'Past bij jouw uurtarief', 'Je rondde 3 vergelijkbare opdrachten af'],
         labels: ['uitnodiging', 'intern'], sig: { rel: 0.97, q: 0.9, u: 0.85, rs: 1, e: 0.6, x: 0.05 } },
-      { id: 'a1', type: 'assignment', source: 'internal', variant: 'standard', co: 'Fleur & Zo', letter: 'F', icon: 'cart', tbg: '#E8F1FB', tc: '#0B5CAB', verified: true, isNew: true,
+      { id: 'a1', type: 'assignment', source: 'internal', variant: 'standard', co: 'Fleur & Zo', letter: 'F', icon: 'cart', tbg: '#E9EFF5', tc: '#2F5B85', verified: true, isNew: true,
         title: 'Shopify-webshop migreren en optimaliseren', place: 'Amsterdam \u00b7 Hybride', age: '2 u geleden', h: 2, dl: 14,
         rate: '\u20ac 70\u201385 /u', chips: ['24\u201332 u/wk', '3 mnd', 'Shopify', 'CRO'],
         desc: 'Bloemenwebshop met 1.200 producten verhuist van WooCommerce naar Shopify. Je verzorgt de datamigratie, bouwt een thema op maat en optimaliseert de laadtijd. Samenwerking met hun vaste fotograaf en marketeer.',
-        match: 94, reason: 'Past bij jouw vaardigheden', reasons: ['Past bij jouw vaardigheden: Shopify, Liquid en CRO', '94% overlap met je profiel en tarief', 'Geverifieerde opdrachtgever met complete briefing'],
+        match: 94, reason: 'Past bij jouw vaardigheden', reasons: ['Past bij jouw vaardigheden: Shopify, Liquid en CRO', '94% overlap met je profiel en tarief', 'Gescreende opdrachtgever met complete briefing'],
         labels: ['intern', 'nieuw'], sig: { rel: 0.94, q: 0.85, u: 0.45, rs: 0.3, e: 0.5, x: 0.05 } },
-      { id: 'u1', type: 'application_update', source: 'internal', variant: 'compact', co: 'Studio Mier', letter: 'S', icon: 'eye', tbg: '#FBF0E7', tc: '#B4590A',
+      { id: 'u1', type: 'application_update', source: 'internal', variant: 'compact', co: 'Studio Mier', letter: 'S', icon: 'eye', tbg: '#FFE0D6', tc: '#C94F2D',
         title: 'Studio Mier heeft je reactie bekeken', sub: 'Klaviyo e-mailflows \u00b7 gisteren gereageerd', status: 'Bekeken', h: 18,
         sig: { rel: 0.8, q: 0.6, u: 0.7, rs: 0.8, e: 0.9, x: 0 } },
       { id: 'a2', type: 'assignment', source: 'external', variant: 'standard', co: 'Retail Republiek', letter: 'R', icon: 'monitor', tbg: '#EEEBFB', tc: '#5B4CC4', isNew: true,
@@ -335,7 +336,7 @@ class Component extends DCLogic {
         desc: 'Outdoorretailer met fysieke winkel en webshop stapt over van Lightspeed naar Shopify. POS-koppeling en realtime voorraadsync tussen winkel en webshop zijn kritisch.',
         match: 87, reason: '3 Lightspeed-migraties in jouw portfolio', reasons: ['Sluit over 2 dagen', '3 Lightspeed-migraties in jouw portfolio', 'Vergelijkbaar met eerdere opdrachten'],
         labels: ['intern'], sig: { rel: 0.87, q: 0.8, u: 0.95, rs: 0.3, e: 0.5, x: 0.05 } },
-      { id: 'ref1', type: 'referral', source: 'internal', variant: 'compact', co: 'TechWorks', letter: 'T', icon: 'users', tbg: '#E8F1FB', tc: '#0B5CAB',
+      { id: 'ref1', type: 'referral', source: 'internal', variant: 'compact', co: 'TechWorks', letter: 'T', icon: 'users', tbg: '#E9EFF5', tc: '#2F5B85',
         title: 'Ken jij een senior PHP-developer?', sub: 'TechWorks \u00b7 beloning \u00b1 \u20ac 480 (2%)', cta: 'Refereer', ctaClick: 'refer', h: 30,
         sig: { rel: 0.5, q: 0.7, u: 0.3, rs: 0.6, e: 0.5, x: 0.2 } },
       { id: 'c1', type: 'company', source: 'internal', variant: 'standard', co: 'Brouwerij Noorderlicht', letter: 'B', icon: 'building', tbg: '#FBEDEF', tc: '#B42334', verified: true,
@@ -360,16 +361,16 @@ class Component extends DCLogic {
         title: 'Shopify-app voor abonnementen', place: 'Groningen \u00b7 Remote', age: '2 dagen geleden', h: 50, dl: 9,
         rate: '\u20ac 75\u201390 /u', chips: ['24 u/wk', '3 mnd', 'App-development'],
         desc: 'Speciaalbierbrouwerij wil een eigen abonnementsapp: maandelijkse proefpakketten, pauzeren en smaken wisselen. Je bouwt de app en de koppeling met hun fulfilmentpartner.',
-        match: 84, reason: 'Past bij jouw tarief', reasons: ['Past bij jouw uurtarief', 'Abonnementscases in je portfolio', 'Geverifieerde opdrachtgever'],
+        match: 84, reason: 'Past bij jouw tarief', reasons: ['Past bij jouw uurtarief', 'Abonnementscases in je portfolio', 'Gescreende opdrachtgever'],
         labels: ['intern'], sig: { rel: 0.84, q: 0.75, u: 0.4, rs: 0.3, e: 0.4, x: 0.1 } },
-      { id: 'n1', type: 'network_update', source: 'internal', variant: 'compact', co: 'Kade 12', letter: 'K', icon: 'bell', tbg: '#E8F1FB', tc: '#0B5CAB',
+      { id: 'n1', type: 'network_update', source: 'internal', variant: 'compact', co: 'Kade 12', letter: 'K', icon: 'bell', tbg: '#E9EFF5', tc: '#2F5B85',
         title: 'Kade 12 plaatste 3 nieuwe opdrachten', sub: 'Je volgt dit bedrijf \u00b7 vandaag', status: '3 nieuw', h: 6, isNew: true,
         sig: { rel: 0.6, q: 0.55, u: 0.3, rs: 0.7, e: 0.5, x: 0.1 } },
-      { id: 'a6', type: 'assignment', source: 'external', variant: 'standard', co: 'Huis & Haard', letter: 'H', icon: 'tag', tbg: '#FBF0E7', tc: '#B4590A',
+      { id: 'a6', type: 'assignment', source: 'external', variant: 'standard', co: 'Huis & Haard', letter: 'H', icon: 'tag', tbg: '#FFE0D6', tc: '#C94F2D',
         title: 'Google Shopping-feed optimaliseren', place: 'Remote', age: '3 dagen geleden', h: 70, dl: 21,
         rate: '\u20ac 60\u201375 /u', chips: ['8\u201316 u/wk', 'Doorlopend', 'Feeds', 'SEA'],
         desc: 'Woonwinkel wil de productfeed voor Google Shopping en Meta professionaliseren. Je richt feeds in, structureert campagnes en rapporteert maandelijks aan de marketingmanager.',
-        match: 81, reason: 'Past bij jouw remote-voorkeur', reasons: ['Past bij jouw remote-voorkeur', 'Raakvlak met je CRO- en datawerk', 'Extern, via een geverifieerde partner'],
+        match: 81, reason: 'Past bij jouw remote-voorkeur', reasons: ['Past bij jouw remote-voorkeur', 'Raakvlak met je CRO- en datawerk', 'Extern, via een gescreende partner'],
         labels: ['extern'], sig: { rel: 0.81, q: 0.65, u: 0.35, rs: 0.1, e: 0.35, x: 0.3 } },
       { id: 's1', type: 'saved_search', source: 'platform', variant: 'compact', co: 'ProLinker', icon: 'search', isNew: true,
         title: '4 nieuwe resultaten voor "Shopify \u00b7 remote"', sub: 'Opgeslagen zoekopdracht \u00b7 vandaag', cta: 'Bekijk', ctaClick: 'nieuw', h: 4,
@@ -438,11 +439,11 @@ class Component extends DCLogic {
     const purple = isDark ? '#B9AEF5' : '#5B4CC4';
     const defs = {
       intern: { text: 'Intern', bg: c.accentTint, color: c.accent, bd: 'transparent' },
-      extern: { text: 'Extern', bg: 'transparent', color: 'var(--muted,#565B62)', bd: 'var(--border,#E4E5EC)' },
+      extern: { text: 'Extern', bg: 'transparent', color: 'var(--muted,#424444)', bd: 'var(--border,#DCDFE2)' },
       uitnodiging: { text: 'Uitnodiging', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
       nieuw: { text: 'Nieuw', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
-      platform: { text: 'Platform', bg: 'var(--panel,#F7F8FB)', color: 'var(--muted,#565B62)', bd: 'var(--hairline,#ECEDF2)' },
-      bedrijf: { text: 'Aanbevolen bedrijf', bg: 'var(--panel,#F7F8FB)', color: 'var(--muted,#565B62)', bd: 'var(--hairline,#ECEDF2)' },
+      platform: { text: 'Platform', bg: 'var(--panel,#F3F4F6)', color: 'var(--muted,#424444)', bd: 'var(--hairline,#ECEEF0)' },
+      bedrijf: { text: 'Aanbevolen bedrijf', bg: 'var(--panel,#F3F4F6)', color: 'var(--muted,#424444)', bd: 'var(--hairline,#ECEEF0)' },
       ontdek: { text: 'Nieuw voor jou', bg: 'rgba(91,76,196,0.14)', color: purple, bd: 'transparent' },
     };
     return defs[k];
@@ -583,7 +584,7 @@ class Component extends DCLogic {
     const sent = !!this.state.sent[x.id];
     const accepted = !!this.state.accepted[x.id];
     const followed = !!this.state.followed[x.co];
-    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#424444';
 
     const labels = [];
     if (x.urgent) labels.push({ text: x.urgent, bg: 'rgba(217,45,32,0.12)', color: isDark ? '#FF8A80' : '#D92D20', bd: 'transparent' });
@@ -605,8 +606,8 @@ class Component extends DCLogic {
       colSpan: units === 2 ? 'span 2' : 'auto',
       rowSpan: featured && cols >= 3 ? 'span 2' : 'auto',
       pad: featured ? '26px 28px' : (compact ? '14px 16px' : '20px 22px'),
-      cardBg: compact ? 'var(--panel,#F7F8FB)' : 'var(--surface,#ffffff)',
-      cardBorder: featured ? c.accentRing : 'var(--border,#E4E5EC)',
+      cardBg: compact ? 'var(--panel,#F3F4F6)' : 'var(--surface,#ffffff)',
+      cardBorder: featured ? c.accentRing : 'var(--border,#DCDFE2)',
       delay: Math.min(i * 0.04, 0.5) + 's',
       tileBg: tile.bg, tileColor: tile.color,
       tileContent: this.iconEl(x.icon || 'briefcase', tile.color, compact ? 17 : 20),
@@ -631,9 +632,9 @@ class Component extends DCLogic {
       cardMenuOpen: this.state.cardMenuId === x.id,
       menuActions: this.menuFor(x, saved, followed),
       primaryLabel: primaryLabel, onPrimary: onPrimary, pDone: pDone,
-      pBg: pDone ? 'var(--panel,#F7F8FB)' : (ghost ? 'transparent' : c.accent),
+      pBg: pDone ? 'var(--panel,#F3F4F6)' : (ghost ? 'transparent' : c.accent),
       pColor: pDone || ghost ? 'var(--text,#152431)' : '#ffffff',
-      pBorder: pDone || ghost ? '1.5px solid var(--border,#E4E5EC)' : '1.5px solid transparent',
+      pBorder: pDone || ghost ? '1.5px solid var(--border,#DCDFE2)' : '1.5px solid transparent',
       pShadow: pDone || ghost ? 'none' : '0 4px 14px ' + c.accentShadow,
       pHeight: featured ? '42px' : '36px',
       secondaryLabel: secondaryLabel, onSecondary: onSecondary,
@@ -653,10 +654,10 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const c = { accent: accent, accentShadow: this.hexToRgba(accent, 0.28), accentRing: this.hexToRgba(accent, 0.18), accentTint: this.hexToRgba(accent, 0.12) };
     const isDark = this.state.theme === 'dark';
-    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#424444';
     const name = (this.state.name || 'Rachid Benali').trim();
     const firstName = name.split(' ')[0];
     const initials = name.split(' ').filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('');
@@ -697,14 +698,14 @@ class Component extends DCLogic {
       let label = d[1];
       if (d[0] === 'nieuw' && newCount > 0) label = label + ' (' + newCount + ')';
       if (d[0] === 'opgeslagen' && savedCount > 0) label = label + ' (' + savedCount + ')';
-      return { label: label, onClick: () => this.setState({ filter: d[0] }), bg: active ? accent : 'var(--surface,#fff)', color: active ? '#ffffff' : 'var(--muted,#565B62)', bd: active ? accent : 'var(--border,#E4E5EC)' };
+      return { label: label, onClick: () => this.setState({ filter: d[0] }), bg: active ? accent : 'var(--surface,#fff)', color: active ? '#ffffff' : 'var(--muted,#424444)', bd: active ? accent : 'var(--border,#DCDFE2)' };
     });
 
     const sortLabels = { aanbevolen: 'Aanbevolen', recent: 'Meest recent', match: 'Beste match', deadline: 'Sluit binnenkort' };
     const sortOptions = Object.keys(sortLabels).map((k) => ({
       label: sortLabels[k], active: k === sortKey,
       weight: k === sortKey ? 650 : 500,
-      color: k === sortKey ? 'var(--text,#152431)' : 'var(--muted,#565B62)',
+      color: k === sortKey ? 'var(--text,#152431)' : 'var(--muted,#424444)',
       onClick: () => this.setState({ sort: k, sortOpen: false }),
     }));
 
@@ -715,7 +716,7 @@ class Component extends DCLogic {
     return {
       t: { settings: 'Instellingen', darkMode: 'Donkere modus', logout: 'Uitloggen' },
       accent: accent, accentShadow: c.accentShadow, accentRing: c.accentRing, accentTint: c.accentTint,
-      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Geist', system-ui, sans-serif",
+      fontStack: ({ 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif" })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       firstName: firstName, initials: initials, avatarBg: c.accentTint,
       menuOpen: this.state.menuOpen,
       menuChevronRotate: this.state.menuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -729,7 +730,7 @@ class Component extends DCLogic {
       ],
       onToggleTheme: () => this.toggleTheme(),
       themeIconEl: this.iconEl(isDark ? 'sun' : 'moon', mutedIcon, 16),
-      themeSwitchBg: isDark ? accent : 'var(--border,#E4E5EC)',
+      themeSwitchBg: isDark ? accent : 'var(--border,#DCDFE2)',
       themeKnobLeft: isDark ? '18px' : '2px',
       logoutEl: this.iconEl('logout', mutedIcon, 15),
       chevronEl: this.iconEl('chevron', mutedIcon, 14),

@@ -12,21 +12,21 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#FFFFFF; --text:#152431; --muted:#6B6E7B; --faint:#A2A5B2; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --glow:rgba(0,107,198,0.055); }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); --glow:rgba(0,107,198,0.12); }
+  :root { --bg:#FFFFFF; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); --glow:rgba(47,91,133,0.055); }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); --glow:rgba(47,91,133,0.12); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
   input, select { font-family: inherit; }
-  input::placeholder { color: var(--faint,#A2A5B2); }
+  input::placeholder { color: var(--faint,#8C8E8F); }
   input:focus, select:focus { outline: none; }
-  ::selection { background: #cfe6fb; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   button, a, input { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease; }
   button { -webkit-tap-highlight-color: transparent; }
@@ -34,13 +34,13 @@
   a:active { transform: scale(0.985); }
   button:disabled { cursor: not-allowed !important; opacity: 0.55; transform: none !important; box-shadow: none !important; }
   .plk-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
-  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(47,91,133,0.28) !important; outline-offset: 3px; }
   .plk-auth-brand:hover { opacity: 0.78; }
-  .plk-auth-card { padding: 34px 36px; border: 1px solid var(--border,#E4E5EC); border-radius: 24px; background: var(--glass,rgba(255,255,255,0.88)); box-shadow: 0 28px 70px -46px rgba(20,36,49,0.55); backdrop-filter: blur(12px); }
-  .plk-auth-secondary:hover { border-color: #87ADD0 !important; color: #006BC6 !important; background: rgba(0,107,198,0.05) !important; }
-  .plk-auth-role:hover { border-color: #87ADD0 !important; background: rgba(0,107,198,0.06) !important; }
+  .plk-auth-card { padding: 34px 36px; border: 1px solid var(--border,#DCDFE2); border-radius: 24px; background: var(--glass,rgba(255,255,255,0.88)); box-shadow: 0 28px 70px -46px rgba(20,36,49,0.55); backdrop-filter: blur(12px); }
+  .plk-auth-secondary:hover { border-color: #87ADD0 !important; color: #2F5B85 !important; background: rgba(47,91,133,0.05) !important; }
+  .plk-auth-role:hover { border-color: #87ADD0 !important; background: rgba(47,91,133,0.06) !important; }
   .plk-auth-input:hover { border-color: #B7C7D8 !important; }
-  .plk-auth-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 10px 24px -13px rgba(0,107,198,0.58) !important; }
+  .plk-auth-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 10px 24px -13px rgba(47,91,133,0.58) !important; }
   .plk-auth-link:hover { text-decoration: underline; text-underline-offset: 3px; }
   .plk-code-grid { width: 100%; max-width: 352px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin-top: 28px; }
   .plk-code-grid input { width: 100% !important; min-width: 0; }
@@ -48,19 +48,19 @@
   .plk-auth-header { min-height: 66px; display: flex !important; padding: 16px 28px !important; border-bottom: 0; background: transparent; }
   .plk-auth-nav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .plk-auth-menu { position: relative; }
-  .plk-auth-menu-trigger { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 50%; background: #fff; color: #6b7c8c; cursor: pointer; }
-  .plk-auth-menu-trigger:hover { border-color: #a8bfd2; background: #f6f8fa; }
+  .plk-auth-menu-trigger { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--plk-line,#DCDFE2); border-radius: 8px; background: #fff; color: #6b7c8c; cursor: pointer; }
+  .plk-auth-menu-trigger:hover { border-color: #a8bfd2; background: #F3F4F6; }
   .plk-auth-dot-grid { width: 16px; height: 16px; display: grid; grid-template-columns: repeat(3,3px); grid-auto-rows: 3px; gap: 3px; }
   .plk-auth-dot-grid span { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
-  .plk-auth-menu-panel { position: absolute; top: 44px; right: 0; z-index: 45; width: 220px; padding: 6px; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 5px; background: #fff; box-shadow: 0 18px 45px -20px rgba(16,37,50,0.45); }
+  .plk-auth-menu-panel { position: absolute; top: 44px; right: 0; z-index: 45; width: 220px; padding: 6px; border: 1px solid var(--plk-line,#DCDFE2); border-radius: 5px; background: #fff; box-shadow: 0 18px 45px -20px rgba(16,37,50,0.45); }
   .plk-auth-menu-link { display: flex; align-items: center; min-height: 36px; padding: 0 11px; border-radius: 3px; color: var(--plk-text,#152431); font-size: 12px; font-weight: 600; }
-  .plk-auth-menu-link:hover { background: #f0f4f7; color: #196399; }
-  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
+  .plk-auth-menu-link:hover { background: #f0f4f7; color: #24476A; }
+  .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431) !important; }
   .plk-auth-nav-button { min-width: 102px; min-height: 34px; display: inline-flex; align-items: center; justify-content: center; padding: 0 14px; border: 1px solid transparent; border-radius: 2px; color: #fff !important; font-size: 11px; font-weight: 700; white-space: nowrap; }
-  .plk-auth-nav-button-blue { background: #5992C2; border-color: #5992C2; }
-  .plk-auth-nav-button-blue:hover { background: #477EAD; border-color: #477EAD; }
-  .plk-auth-nav-button-orange { background: #E88300; border-color: #E88300; }
-  .plk-auth-nav-button-orange:hover { background: #CB7300; border-color: #CB7300; }
+  .plk-auth-nav-button-blue { background: #2F5B85; border-color: #2F5B85; }
+  .plk-auth-nav-button-blue:hover { background: #24476A; border-color: #24476A; }
+  .plk-auth-nav-button-orange { background: #E65F39; border-color: #E65F39; }
+  .plk-auth-nav-button-orange:hover { background: #C94F2D; border-color: #C94F2D; }
   .plk-auth-main { justify-content: flex-start !important; padding: 34px 20px 68px !important; }
   .plk-auth-page.is-register .plk-auth-main { align-items: center !important; padding: 34px 20px 68px !important; }
   .plk-auth-card { max-width: 414px !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
@@ -69,8 +69,8 @@
   .plk-auth-code,
   .plk-auth-done { align-items: stretch !important; }
   .plk-auth-mark { display: none !important; }
-  .plk-auth-title { margin: 0 !important; color: var(--plk-ink,#102532) !important; font-family: inherit !important; font-size: 28px !important; line-height: 1.15 !important; font-weight: 700 !important; letter-spacing: -0.02em !important; text-align: left !important; }
-  .plk-auth-copy { max-width: none !important; margin: 7px 0 0 !important; color: var(--plk-muted,#667587) !important; font-size: 13.5px !important; line-height: 1.5 !important; text-align: left !important; }
+  .plk-auth-title { margin: 0 !important; color: var(--plk-ink,#152431) !important; font-family: inherit !important; font-size: 28px !important; line-height: 1.15 !important; font-weight: 700 !important; letter-spacing: -0.02em !important; text-align: left !important; }
+  .plk-auth-copy { max-width: none !important; margin: 7px 0 0 !important; color: var(--plk-muted,#424444) !important; font-size: 13.5px !important; line-height: 1.5 !important; text-align: left !important; }
   .plk-auth-page.is-register .plk-auth-title,
   .plk-auth-page.is-register .plk-auth-copy { text-align: center !important; }
   .plk-auth-form > .plk-auth-copy { display: none !important; }
@@ -81,42 +81,42 @@
   .plk-auth-label { margin: 0 !important; color: var(--plk-text,#152431) !important; font-size: 12px !important; font-weight: 700 !important; }
   .plk-auth-role-label { margin: 0 0 7px !important; }
   .plk-auth-role-group { display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px !important; }
-  .plk-auth-role { width: 100%; min-width: 0; min-height: 42px !important; height: auto !important; padding: 8px 10px !important; border-width: 1px !important; border-radius: 4px !important; font-size: 12.5px !important; line-height: 1.2 !important; white-space: normal; overflow-wrap: anywhere; text-align: center; box-shadow: none !important; }
-  .plk-auth-role[aria-checked="true"] { box-shadow: inset 3px 0 0 #006bc6 !important; }
-  .plk-auth-input { height: 44px !important; padding: 0 13px !important; border-width: 1px !important; border-radius: 4px !important; background: var(--plk-panel,#eef2f5) !important; color: var(--plk-text,#152431) !important; font-size: 13.5px !important; }
-  .plk-auth-input:focus { border-color: #7aadd6 !important; background: var(--plk-surface,#fff) !important; box-shadow: 0 0 0 3px rgba(0,107,198,0.12) !important; }
-  .plk-auth-select { width: 100%; height: 44px; padding: 0 38px 0 13px; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 4px; background: var(--plk-panel,#eef2f5); color: var(--plk-text,#152431); font-size: 13.5px; cursor: pointer; }
-  .plk-auth-select:focus { border-color: #7aadd6; background: var(--plk-surface,#fff); box-shadow: 0 0 0 3px rgba(0,107,198,0.12); }
+  .plk-auth-role { width: 100%; min-width: 0; min-height: 42px !important; height: auto !important; padding: 8px 10px !important; border-width: 1px !important; border-radius: 8px !important; font-size: 12.5px !important; line-height: 1.2 !important; white-space: normal; overflow-wrap: anywhere; text-align: center; box-shadow: none !important; }
+  .plk-auth-role[aria-checked="true"] { box-shadow: inset 3px 0 0 #2F5B85 !important; }
+  .plk-auth-input { height: 44px !important; padding: 0 13px !important; border-width: 1px !important; border-radius: 8px !important; background: var(--plk-panel,#ECEEF0) !important; color: var(--plk-text,#152431) !important; font-size: 13.5px !important; }
+  .plk-auth-input:focus { border-color: #7aadd6 !important; background: var(--plk-surface,#fff) !important; box-shadow: 0 0 0 3px rgba(47,91,133,0.12) !important; }
+  .plk-auth-select { width: 100%; height: 44px; padding: 0 38px 0 13px; border: 1px solid var(--plk-line,#DCDFE2); border-radius: 8px; background: var(--plk-panel,#ECEEF0); color: var(--plk-text,#152431); font-size: 13.5px; cursor: pointer; }
+  .plk-auth-select:focus { border-color: #7aadd6; background: var(--plk-surface,#fff); box-shadow: 0 0 0 3px rgba(47,91,133,0.12); }
   .plk-auth-industry-row { width: 100%; display: grid; grid-template-columns: minmax(0,1fr); gap: 7px; }
   .plk-auth-industry-row.has-add { grid-template-columns: minmax(0,1fr) 38px; }
   .plk-auth-industry-add { width: 38px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid #65BD6A; border-radius: 2px; background: #65BD6A; color: #fff; font: inherit; font-size: 22px; line-height: 1; cursor: pointer; }
   .plk-auth-industry-add:hover { border-color: #52A957; background: #52A957; }
-  .plk-auth-privacy-note { margin: -1px 0 0; color: var(--plk-muted,#667587); font-size: 10.5px; font-style: italic; line-height: 1.35; text-align: right; }
-  .plk-auth-safety { width: 100%; margin-top: 13px; padding: 12px 13px; border-left: 3px solid #65bd6a; background: #f7fbf7; color: var(--plk-muted,#667587); font-size: 11px; line-height: 1.45; }
+  .plk-auth-privacy-note { margin: -1px 0 0; color: var(--plk-muted,#424444); font-size: 10.5px; font-style: italic; line-height: 1.35; text-align: right; }
+  .plk-auth-safety { width: 100%; margin-top: 13px; padding: 12px 13px; border-left: 3px solid #65bd6a; background: #f7fbf7; color: var(--plk-muted,#424444); font-size: 11px; line-height: 1.45; }
   .plk-auth-safety.is-client { padding: 0; border-left: 0; background: transparent; }
   .plk-auth-safety strong { display: block; margin-bottom: 5px; color: var(--plk-text,#152431); font-size: 12px; }
   .plk-auth-safety-line { display: flex; align-items: flex-start; gap: 7px; }
   .plk-auth-safety-line + .plk-auth-safety-line { margin-top: 4px; }
   .plk-auth-safety-check { color: #55ad5b; font-weight: 800; }
   .plk-auth-consent { width: 100%; display: flex; align-items: flex-start; gap: 8px; margin-top: 11px; color: var(--plk-text,#152431); font-size: 11px; line-height: 1.45; cursor: pointer; }
-  .plk-auth-consent input { width: 15px; height: 15px; margin: 1px 0 0; flex: 0 0 auto; accent-color: #5992C2; }
-  .plk-auth-human-check { width: 100%; max-width: 270px; min-height: 62px; display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 11px; border: 1px solid var(--plk-line,#dbe2e8); border-radius: 2px; background: #f7f8fa; color: var(--plk-text,#152431); cursor: pointer; }
+  .plk-auth-consent input { width: 15px; height: 15px; margin: 1px 0 0; flex: 0 0 auto; accent-color: #2F5B85; }
+  .plk-auth-human-check { width: 100%; max-width: 270px; min-height: 62px; display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 11px; border: 1px solid var(--plk-line,#DCDFE2); border-radius: 2px; background: #f7f8fa; color: var(--plk-text,#152431); cursor: pointer; }
   .plk-auth-human-check[aria-invalid="true"] { border-color: #D92D20; }
-  .plk-auth-human-check input { width: 20px; height: 20px; margin: 0; accent-color: #5992C2; }
+  .plk-auth-human-check input { width: 20px; height: 20px; margin: 0; accent-color: #2F5B85; }
   .plk-auth-human-copy { display: flex; flex-direction: column; gap: 2px; font-size: 12px; line-height: 1.25; }
-  .plk-auth-human-copy small { color: var(--plk-muted,#667587); font-size: 9px; }
+  .plk-auth-human-copy small { color: var(--plk-muted,#424444); font-size: 9px; }
   .plk-auth-human-badge { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; border-radius: 2px; background: #e8f5ea; color: #52A957; font-size: 19px; font-weight: 800; }
-  .plk-auth-primary { min-height: 40px !important; border-radius: 3px !important; box-shadow: none !important; font-size: 12px !important; font-weight: 700 !important; }
-  .plk-auth-referral { border-radius: 4px !important; text-align: left !important; }
+  .plk-auth-primary { min-height: 40px !important; border-radius: 8px !important; box-shadow: none !important; font-size: 12px !important; font-weight: 700 !important; }
+  .plk-auth-referral { border-radius: 8px !important; text-align: left !important; }
   .plk-auth-hint { justify-content: flex-start !important; margin-top: 10px !important; }
   .plk-auth-actions { width: 100%; display: flex; flex-direction: column; align-items: stretch; gap: 7px; margin-top: 9px; }
-  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; border: 1px solid #5992C2 !important; background: #5992C2 !important; }
-  .plk-auth-actions .plk-auth-primary:hover:not(:disabled) { border-color: #477EAD !important; background: #477EAD !important; filter: none !important; }
+  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; border: 1px solid #2F5B85 !important; background: #2F5B85 !important; }
+  .plk-auth-actions .plk-auth-primary:hover:not(:disabled) { border-color: #24476A !important; background: #24476A !important; filter: none !important; }
   .plk-auth-actions .plk-auth-primary.is-whatsapp { border-color: #25D366 !important; background: #25D366 !important; }
   .plk-auth-actions .plk-auth-primary.is-whatsapp:hover:not(:disabled) { border-color: #1FB85A !important; background: #1FB85A !important; }
-  .plk-auth-divider { width: 100%; min-height: 22px; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; color: var(--plk-faint,#8a97a6); font-size: 11px; text-transform: lowercase; }
+  .plk-auth-divider { width: 100%; min-height: 22px; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; color: var(--plk-faint,#8C8E8F); font-size: 11px; text-transform: lowercase; }
   .plk-auth-divider::before,
-  .plk-auth-divider::after { display: block; content: ""; height: 1px; flex: 1; background: var(--plk-line,#dbe2e8); }
+  .plk-auth-divider::after { display: block; content: ""; height: 1px; flex: 1; background: var(--plk-line,#DCDFE2); }
   .plk-auth-providers { width: 100%; display: grid; gap: 7px; }
   .plk-auth-provider { width: 100%; height: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 12px; border: 0; border-radius: 3px; color: #fff; font: inherit; font-size: 12px; font-weight: 700; line-height: 1.2; cursor: pointer; }
   .plk-auth-provider > span:last-child,
@@ -127,15 +127,15 @@
   .plk-auth-provider-linkedin:hover { background: #066b95; }
   .plk-auth-provider-mark { width: 20px; font-size: 19px; font-weight: 800; line-height: 1; text-align: center; }
   .plk-auth-whatsapp-mark { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
-  .plk-auth-mode-links { width: 100%; margin: 17px 0 0; color: var(--plk-muted,#667587); font-size: 10.5px; line-height: 1.55; text-align: center; }
-  .plk-auth-mode-link { min-height: 28px; padding: 2px 1px; border: 0; background: transparent; color: #4e8fc5; font: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .plk-auth-mode-links { width: 100%; margin: 17px 0 0; color: var(--plk-muted,#424444); font-size: 10.5px; line-height: 1.55; text-align: center; }
+  .plk-auth-mode-link { min-height: 28px; padding: 2px 1px; border: 0; background: transparent; color: #2F5B85; font: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
   .plk-auth-terms { max-width: none !important; text-align: left !important; }
   .plk-auth-code .plk-auth-channel { margin: 0 0 16px !important; }
   .plk-auth-code .plk-auth-title,
   .plk-auth-done .plk-auth-title { text-align: left !important; }
   .plk-code-grid { max-width: none; gap: 6px; margin-top: 24px; }
-  .plk-code-grid input { height: 52px !important; border-width: 1px !important; border-radius: 4px !important; background: var(--plk-panel,#eef2f5) !important; font-size: 21px !important; }
-  .plk-auth-demo-code { align-self: flex-start; border-radius: 4px !important; }
+  .plk-code-grid input { height: 52px !important; border-width: 1px !important; border-radius: 8px !important; background: var(--plk-panel,#ECEEF0) !important; font-size: 21px !important; }
+  .plk-auth-demo-code { align-self: flex-start; border-radius: 8px !important; }
   .plk-auth-done .plk-auth-success-icon { margin-bottom: 18px; }
   .plk-auth-done .plk-auth-primary { align-self: flex-start; margin-top: 24px !important; }
   .plk-auth-footer { display: none !important; }
@@ -154,7 +154,7 @@
     .plk-auth-divider::after { display: block; }
     .plk-auth-provider { height: 40px; min-height: 40px; font-size: 12px; }
     .plk-code-grid { gap: 6px; }
-    .plk-code-grid input { height: 48px !important; font-size: 20px !important; border-radius: 4px !important; }
+    .plk-code-grid input { height: 48px !important; font-size: 20px !important; border-radius: 8px !important; }
   }
   @media (max-width: 360px) {
     .plk-auth-role-group { grid-template-columns: minmax(0,1fr); }
@@ -168,22 +168,22 @@
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div class="plk-auth-page plk-theme-page {{ authModeClass }}" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div class="plk-auth-page plk-theme-page {{ authModeClass }}" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-auth-header plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <a class="plk-auth-brand plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
-    <nav class="plk-auth-nav plk-glass-nav plk-public-nav" aria-label="Hoofdnavigatie" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; position: static; z-index: 30;">
+    <nav class="plk-auth-nav plk-glass-nav plk-public-nav" aria-label="Hoofdnavigatie" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
       <div class="plk-auth-menu plk-public-menu-wrap" style="position: relative;">
-        <button class="plk-auth-menu-trigger plk-menu-trigger plk-public-menu-trigger" type="button" onClick="{{ onToggleMenu }}" aria-label="{{ t.navMenu }}" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="{{ t.navMenu }}" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
+        <button class="plk-auth-menu-trigger plk-menu-trigger plk-public-menu-trigger" type="button" onClick="{{ onToggleMenu }}" aria-label="{{ t.navMenu }}" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="{{ t.navMenu }}" style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="false">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-          <div role="menu" aria-label="{{ t.navMenu }}" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+          <div role="menu" aria-label="{{ t.navMenu }}" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
             <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
               <a class="plk-menu-link plk-public-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
             </sc-for>
-            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
             <button class="plk-menu-link" type="button" role="switch" aria-checked="{{ isDark }}" onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);">
               <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
               <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
@@ -208,16 +208,16 @@
         <form class="plk-auth-form" data-screen-label="Auth form" onSubmit="{{ onSubmitFormEvent }}" novalidate="novalidate" style="display: flex; flex-direction: column; align-items: center;">
           <img class="plk-auth-mark" src="assets/prolinker-mark.png" alt="" style="width: 50px; height: 50px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
           <h1 class="plk-auth-title" style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
-          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
+          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#424444); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
 
           <sc-if value="{{ showReferralNotice }}" hint-placeholder-val="{{ false }}">
-            <div class="plk-auth-referral" style="width: 100%; margin-top: 18px; padding: 12px 15px; border: 1px solid rgba(0,107,198,0.18); border-radius: 10px; background: rgba(0,107,198,0.06); color: var(--text,#152431); font-size: 13.5px; line-height: 1.45; text-align: center;">{{ t.referralNotice }}</div>
+            <div class="plk-auth-referral" style="width: 100%; margin-top: 18px; padding: 12px 15px; border: 1px solid rgba(47,91,133,0.18); border-radius: 10px; background: rgba(47,91,133,0.06); color: var(--text,#152431); font-size: 13.5px; line-height: 1.45; text-align: center;">{{ t.referralNotice }}</div>
           </sc-if>
 
           <div class="plk-auth-fields" style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
             <sc-if value="{{ showRoleChoice }}" hint-placeholder-val="false">
               <div role="radiogroup" aria-label="{{ t.roleLabel }}">
-                <div class="plk-auth-label plk-auth-role-label" style="font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
+                <div class="plk-auth-label plk-auth-role-label" style="font-size: 12.5px; font-weight: 650; color: var(--muted,#424444);">{{ t.roleLabel }}</div>
                 <div class="plk-auth-role-group" style="display: flex; gap: 10px;">
                   <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" ref="{{ roleClientRef }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
                   <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleFreelancerActive }}" onClick="{{ onRoleFreelancer }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleFreelancerBorder }}; border-radius: 999px; background: {{ roleFreelancerBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleFreelancerColor }};">{{ t.roleFreelancer }}</button>
@@ -311,7 +311,7 @@
             </sc-if>
           </div>
 
-          <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
+          <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#8C8E8F); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <div class="plk-auth-actions">
             <button class="plk-auth-primary {{ primaryButtonClass }}" type="submit" aria-describedby="plk-auth-errors" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: pointer;"><sc-if value="{{ showContinueIcon }}" hint-placeholder-val="true"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span></sc-if><span>{{ continueLabel }}</span></button>
@@ -336,7 +336,7 @@
         <div class="plk-auth-code" data-screen-label="Verify code" style="display: flex; flex-direction: column; align-items: center;">
           <div class="plk-auth-channel" style="width: 64px; height: 64px; border-radius: 50%; background: {{ channelIconBg }}; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">{{ channelIconEl }}</div>
           <h1 class="plk-auth-title" ref="{{ codeHeadingRef }}" tabindex="-1" style="margin: 0; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">{{ codeTitle }}</h1>
-          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ codeSubA }}<b style="color: var(--text,#152431); font-weight: 600;">{{ contactShown }}</b></p>
+          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.55; color: var(--muted,#424444); max-width: 340px; text-wrap: pretty;">{{ codeSubA }}<b style="color: var(--text,#152431); font-weight: 600;">{{ contactShown }}</b></p>
 
           <div class="plk-code-grid">
             <sc-for list="{{ codeBoxes }}" as="c" hint-placeholder-count="6">
@@ -344,7 +344,7 @@
             </sc-for>
           </div>
 
-          <div class="plk-auth-demo-code" style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#6B6E7B);">{{ t.demoCode }}</div>
+          <div class="plk-auth-demo-code" style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--panel,#F3F4F6); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#424444);">{{ t.demoCode }}</div>
           <sc-if value="{{ codeInvalid }}" hint-placeholder-val="false"><div role="alert" aria-live="assertive" style="margin-top: 12px; color: #D92D20; font-size: 13.5px; font-weight: 600;">{{ t.invalidCode }}</div></sc-if>
 
           <div style="min-height: 24px; margin-top: 20px; display: flex; align-items: center; gap: 14px;">
@@ -356,10 +356,10 @@
                 <button class="plk-auth-link" type="button" onClick="{{ onResend }}" style="min-height: 40px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: {{ accent }}; padding: 4px 6px;">{{ t.resend }}</button>
               </sc-if>
               <sc-if value="{{ waitResend }}" hint-placeholder-val="{{ true }}">
-                <span style="font-size: 13.5px; color: var(--faint,#A2A5B2);">{{ resendCountdown }}</span>
+                <span style="font-size: 13.5px; color: var(--faint,#8C8E8F);">{{ resendCountdown }}</span>
               </sc-if>
-              <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--faint,#A2A5B2);"></span>
-              <button class="plk-auth-link" type="button" onClick="{{ onBackToForm }}" style="min-height: 40px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted,#6B6E7B); padding: 4px 6px;">{{ t.editContact }}</button>
+              <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--faint,#8C8E8F);"></span>
+              <button class="plk-auth-link" type="button" onClick="{{ onBackToForm }}" style="min-height: 40px; background: none; border: none; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--muted,#424444); padding: 4px 6px;">{{ t.editContact }}</button>
             </sc-if>
           </div>
         </div>
@@ -369,21 +369,54 @@
         <div class="plk-auth-done" data-screen-label="Success" style="display: flex; flex-direction: column; align-items: center;">
           <div class="plk-auth-success-icon" style="width: 76px; height: 76px; border-radius: 50%; background: {{ accentTint }}; display: flex; align-items: center; justify-content: center;">{{ bigCheckEl }}</div>
           <h1 class="plk-auth-title" ref="{{ successHeadingRef }}" tabindex="-1" style="margin: 22px 0 0; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">{{ t.successTitle }}</h1>
-          <p class="plk-auth-copy" style="margin: 8px 0 0; text-align: center; font-size: 15.5px; color: var(--muted,#6B6E7B);">{{ successSub }}</p>
+          <p class="plk-auth-copy" style="margin: 8px 0 0; text-align: center; font-size: 15.5px; color: var(--muted,#424444);">{{ successSub }}</p>
+          <sc-if value="{{ showContactSync }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 26px; width: 100%; max-width: 400px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); padding: 18px;">
+              <div style="text-align: center; font-size: 14.5px; font-weight: 700;">{{ t.syncTitle }}</div>
+              <div style="margin-top: 4px; text-align: center; color: var(--muted,#424444); font-size: 12.5px; line-height: 1.5;">{{ t.syncSub }}</div>
+              <sc-if value="{{ syncIdle }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top: 14px; display: grid; gap: 8px;">
+                  <button type="button" onClick="{{ onSyncGmail }}" style="height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 650; cursor: pointer;"><span style="width: 10px; height: 10px; border-radius: 3px; background: #EA4335; flex-shrink: 0;"></span>Gmail-contacten koppelen</button>
+                  <button type="button" onClick="{{ onSyncOutlook }}" style="height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 650; cursor: pointer;"><span style="width: 10px; height: 10px; border-radius: 3px; background: #0F6CBD; flex-shrink: 0;"></span>Outlook-contacten koppelen</button>
+                  <button type="button" onClick="{{ onSyncLinkedin }}" style="height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 650; cursor: pointer;"><span style="width: 10px; height: 10px; border-radius: 3px; background: #0A66C2; flex-shrink: 0;"></span>LinkedIn-connecties koppelen</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ syncBusy }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 18px; text-align: center; color: var(--muted,#424444); font-size: 12.5px;">{{ syncBusyLabel }}</div>
+              </sc-if>
+              <sc-if value="{{ syncReady }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-dark,#24476A);">{{ t.syncFoundLabel }}</div>
+                <sc-for list="{{ syncFound }}" as="c" hint-placeholder-count="3">
+                  <div style="display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--hairline,#ECEEF0);">
+                    <span style="width: 34px; height: 34px; border-radius: 50%; background: #E9EFF5; color: #24476A; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0;">{{ c.initials }}</span>
+                    <span style="flex: 1; min-width: 0;"><span style="display: block; font-size: 13px; font-weight: 700;">{{ c.name }}</span><span style="display: block; color: var(--faint,#8C8E8F); font-size: 11px;">{{ c.headline }}</span></span>
+                    <button type="button" onClick="{{ c.onAdd }}" disabled="{{ c.added }}" style="height: 32px; padding: 0 12px; border: 1px solid {{ c.btnBorder }}; border-radius: 8px; background: {{ c.btnBg }}; color: {{ c.btnColor }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ c.btnLabel }}</button>
+                  </div>
+                </sc-for>
+                <div style="margin-top: 10px; color: var(--muted,#424444); font-size: 11.5px; line-height: 1.5;">{{ syncInviteLabel }}</div>
+              </sc-if>
+              <div style="margin-top: 14px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                <sc-if value="{{ syncReady }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ onSyncDone }}" style="height: 40px; padding: 0 24px; border: none; border-radius: 8px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;">{{ t.syncDone }}</button></sc-if>
+                <button type="button" onClick="{{ onSyncSkip }}" style="height: 40px; padding: 0 12px; border: none; background: none; color: var(--faint,#8C8E8F); font-family: inherit; font-size: 12.5px; font-weight: 650; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;">{{ t.syncSkip }}</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showSuccessCta }}" hint-placeholder-val="{{ true }}">
           <a class="plk-auth-primary" href="{{ successHref }}" style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 26px; margin-top: 28px; border-radius: 999px; background: {{ accent }}; color: #fff; font-size: 15px; font-weight: 600; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ successCta }}</span><span style="font-size: 17px; line-height: 1;">→</span></a>
+          </sc-if>
         </div>
       </sc-if>
 
     </div>
   </main>
 
-  <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false, authenticated: false };
+  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false, authenticated: false, syncProvider: '', syncBusy: false, syncReady: false, syncResolved: false, syncAdded: [] };
 
   componentDidMount() {
     this._els = [];
@@ -446,7 +479,7 @@ class Component extends DCLogic {
     const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
     return l.indexOf('nl') === 0 ? 'nl' : 'en';
   }
-  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  hexToRgba(hex, a) { let h = (hex || '#2F5B85').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
   safeNext(value) {
     const candidate = String(value || '').trim().replace(/^\.\//, '');
     if (!candidate || candidate.indexOf('..') >= 0 || /^(?:[a-z]+:)?\/\//i.test(candidate) || /[\r\n]/.test(candidate)) return '';
@@ -501,7 +534,7 @@ class Component extends DCLogic {
       codeSentWa: 'Use the demo WhatsApp code below for ',
       verifying: 'Checking code...', resend: 'Resend WhatsApp code', resendIn: (s) => 'Resend in ' + s + 's', editContact: 'Use a different WhatsApp number',
       invalidCode: 'That code is not correct. Try 123456.', demoCode: 'Demo code: 123456',
-      successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View opportunities',
+      successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View projects', syncTitle: 'Find who you already know', syncSub: 'Connect Gmail, Outlook or LinkedIn and see which of your contacts are already on ProLinker.', syncBusyPrefix: 'Checking your contacts', syncFoundLabel: 'Already on ProLinker', syncInviteSuffix: ' contacts are not on ProLinker yet. Invite them anytime from My network.', syncAdd: 'Add', syncAdded: 'Added', syncDone: 'Done', syncSkip: 'Skip for now',
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
       codeAria: (n) => 'Digit ' + n,
       referralNotice: 'You were invited by a ProLinker member. Your referral will be linked after freelancer registration.',
@@ -530,7 +563,7 @@ class Component extends DCLogic {
       codeSentWa: 'Gebruik onderstaande WhatsApp-democode voor ',
       verifying: 'Code controleren...', resend: 'WhatsApp-code opnieuw sturen', resendIn: (s) => 'Opnieuw sturen in ' + s + 's', editContact: 'Ander WhatsApp-nummer gebruiken',
       invalidCode: 'Die code klopt niet. Probeer 123456.', demoCode: 'Democode: 123456',
-      successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten',
+      successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten', syncTitle: 'Vind wie je al kent', syncSub: 'Koppel Gmail, Outlook of LinkedIn en zie wie van jouw contacten al op ProLinker zit.', syncBusyPrefix: 'We bekijken je contacten', syncFoundLabel: 'Al op ProLinker', syncInviteSuffix: ' contacten staan nog niet op ProLinker. Nodig ze op elk moment uit via Mijn netwerk.', syncAdd: 'Voeg toe', syncAdded: 'Toegevoegd', syncDone: 'Klaar', syncSkip: 'Overslaan voor nu',
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
       codeAria: (n) => 'Cijfer ' + n,
       referralNotice: 'Je bent uitgenodigd door een ProLinker-lid. Je referral wordt gekoppeld na je freelancerregistratie.',
@@ -829,9 +862,24 @@ class Component extends DCLogic {
     } catch (e) {}
   }
 
+  syncContacts(provider) {
+    clearTimeout(this._syncTimer);
+    this.setState({ syncProvider: provider, syncBusy: true, syncReady: false });
+    this._syncTimer = setTimeout(() => this.setState({ syncBusy: false, syncReady: true }), 900);
+  }
+
+  syncMock(provider) {
+    const lists = {
+      gmail: { invitable: 24, found: [ { id: 'g1', name: 'Sanne de Wit', headline: 'UX designer' }, { id: 'g2', name: 'Jeroen Bakker', headline: 'Data engineer' }, { id: 'g3', name: 'Fatima El Idrissi', headline: 'Growth marketeer' } ] },
+      outlook: { invitable: 17, found: [ { id: 'o1', name: 'Peter van Dam', headline: 'Financieel adviseur' }, { id: 'o2', name: 'Lisa Vermeulen', headline: 'Copywriter' } ] },
+      linkedin: { invitable: 41, found: [ { id: 'l1', name: 'Mark Janssen', headline: 'Interim salesmanager' }, { id: 'l2', name: 'Aisha Osman', headline: 'AI consultant' }, { id: 'l3', name: 'Tom de Groot', headline: 'Webdeveloper' } ] }
+    };
+    return lists[provider] || lists.gmail;
+  }
+
   renderVals() {
     const t = this.strings();
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const accentShadow = this.hexToRgba(accent, 0.28);
     const accentRing = this.hexToRgba(accent, 0.12);
     const accentTint = this.hexToRgba(accent, 0.12);
@@ -915,13 +963,25 @@ class Component extends DCLogic {
       menuItems: menuItems,
       isDark: isDark,
       onToggleTheme: () => this.toggleTheme(),
-      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: isDark ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
-      themeSwitchBg: isDark ? accent : 'var(--border,#E4E5EC)',
+      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: isDark ? 'rgba(255,255,255,0.72)' : '#424444', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
+      themeSwitchBg: isDark ? accent : 'var(--border,#DCDFE2)',
       themeKnobLeft: isDark ? '18px' : '2px',
-      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#565B62' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(isDark),
-      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
+      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#424444' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(isDark),
+      fontStack: ({ 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif" })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       showForm: this.state.step === 'form', showCode: this.state.step === 'code', showDone: this.state.step === 'done',
+      showContactSync: this.state.step === 'done' && isRegister && !this.state.syncResolved,
+      showSuccessCta: this.state.step === 'done' && (!isRegister || this.state.syncResolved),
+      successSub: isRegister ? t.successRegisterSub : t.successLoginSub,
+      successCta: this.state.role === 'client' ? t.successCtaClient : t.successCtaFreelancer,
+      successHref: this.state.next || (this.state.role === 'client' ? 'Prolinker Brief.dc.html' : 'Prolinker Voor jou v2.dc.html'),
+      syncIdle: !this.state.syncBusy && !this.state.syncReady,
+      syncBusy: this.state.syncBusy, syncReady: this.state.syncReady,
+      syncBusyLabel: t.syncBusyPrefix + '...',
+      syncInviteLabel: this.syncMock(this.state.syncProvider).invitable + t.syncInviteSuffix,
+      syncFound: this.syncMock(this.state.syncProvider).found.map((c) => { const added = this.state.syncAdded.indexOf(c.id) !== -1; return Object.assign({}, c, { initials: c.name.split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase(), added: added, btnLabel: added ? t.syncAdded : t.syncAdd, btnBg: added ? '#E9F6EE' : 'var(--surface,#fff)', btnColor: added ? '#237A45' : 'var(--blue-dark,#24476A)', btnBorder: added ? '#BFE5CC' : 'var(--border,#DCDFE2)', onAdd: () => this.setState({ syncAdded: this.state.syncAdded.concat(c.id) }) }); }),
+      onSyncGmail: () => this.syncContacts('gmail'), onSyncOutlook: () => this.syncContacts('outlook'), onSyncLinkedin: () => this.syncContacts('linkedin'),
+      onSyncDone: () => this.setState({ syncResolved: true }), onSyncSkip: () => this.setState({ syncResolved: true }),
       authModeClass: isRegister ? 'is-register' : 'is-login',
       isRegister: isRegister, isLogin: !isRegister, isClientRegister: isClientRegister, showRoleChoice: true,
       showReferralNotice: isRegister && this.state.role === 'freelancer' && !!this.safeReferralCode(this.state.referralCode),
@@ -941,12 +1001,12 @@ class Component extends DCLogic {
       roleClientRef: (el) => { this._roleClientButton = el; },
       roleClientActive: roleActive('client'),
       roleFreelancerActive: roleActive('freelancer'),
-      roleClientBorder: roleActive('client') ? accent : 'var(--border,#E4E5EC)',
+      roleClientBorder: roleActive('client') ? accent : 'var(--border,#DCDFE2)',
       roleClientBg: roleActive('client') ? accentTint : 'var(--surface,#fff)',
-      roleClientColor: roleActive('client') ? accent : 'var(--muted,#6B6E7B)',
-      roleFreelancerBorder: roleActive('freelancer') ? accent : 'var(--border,#E4E5EC)',
+      roleClientColor: roleActive('client') ? accent : 'var(--muted,#424444)',
+      roleFreelancerBorder: roleActive('freelancer') ? accent : 'var(--border,#DCDFE2)',
       roleFreelancerBg: roleActive('freelancer') ? accentTint : 'var(--surface,#fff)',
-      roleFreelancerColor: roleActive('freelancer') ? accent : 'var(--muted,#6B6E7B)',
+      roleFreelancerColor: roleActive('freelancer') ? accent : 'var(--muted,#424444)',
       categories: this.registrationCategories(),
       categoryLabel: isClientRegister ? t.industryLabel : t.categoryLabel,
       industryRowClass: isClientRegister ? 'has-add' : '',
@@ -1012,7 +1072,7 @@ class Component extends DCLogic {
       channelIconEl: this.iconEl('wa', '#25D366', 28, true),
       codeBoxes: codeBoxes,
       codeInvalid: this.state.codeError,
-      codeBorder: this.state.codeError ? '#D92D20' : 'var(--border,#E4E5EC)',
+      codeBorder: this.state.codeError ? '#D92D20' : 'var(--border,#DCDFE2)',
       codeHeadingRef: (el) => { this._codeHeading = el; },
       verifying: this.state.verifying, notVerifying: !this.state.verifying,
       canResend: this.state.resendIn === 0, waitResend: this.state.resendIn > 0,

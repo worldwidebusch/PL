@@ -12,39 +12,39 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
-  ::selection { background: #cfe6fb; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease; }
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
   a:active { transform: scale(0.985); }
-  button:focus-visible, a:focus-visible { outline: 3px solid rgba(0,107,198,0.22); outline-offset: 2px; }
-  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#E4E5EC); position: relative; z-index: 50; }
+  button:focus-visible, a:focus-visible { outline: 3px solid rgba(47,91,133,0.22); outline-offset: 2px; }
+  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#DCDFE2); position: relative; z-index: 50; }
   .plk-shell-inner { max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 24px; }
   .plk-logo { width: 112px; height: auto; display: block; }
   .plk-header-links { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 13px; font-weight: 550; }
   .plk-header-link { color: var(--text,#152431); }
-  .plk-header-link:hover { color: var(--blue,#2F82C8); }
+  .plk-header-link:hover { color: var(--blue,#2F5B85); }
   .plk-account-wrap { position: relative; margin-left: auto; }
   .plk-account-btn { min-height: 38px; border: 0; background: transparent; padding: 4px 6px; display: flex; align-items: center; gap: 9px; color: var(--text,#152431); cursor: pointer; }
-  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E6F1FB; color: var(--blue-dark,#1767AA); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
-  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
-  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--text,#152431); }
-  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431); }
-  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #EDF4FA; color: var(--blue-dark,#1767AA); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E9EFF5; color: var(--blue-dark,#24476A); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
+  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--text,#152431); }
+  .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431); }
+  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #E9EFF5; color: var(--blue-dark,#24476A); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
   .plk-menu-label { display: block; font-size: 13px; font-weight: 650; line-height: 1.2; }
-  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px; line-height: 1.25; }
-  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#565B62); cursor: pointer; font-size: 11px; font-weight: 650; }
-  .plk-menu-action:hover { background: var(--panel,#F7F8FB); }
+  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#8C8E8F); font-size: 10.5px; line-height: 1.25; }
+  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#424444); cursor: pointer; font-size: 11px; font-weight: 650; }
+  .plk-menu-action:hover { background: var(--panel,#F3F4F6); }
   .plk-menu-scrim:active { transform: none !important; }
   .plk-ref-row:last-child { border-bottom: none !important; }
   @media (max-width: 850px) { .plk-header-links { display: none; } }
@@ -74,93 +74,93 @@
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div data-screen-label="Verdiensten" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column;">
+<div data-screen-label="Verdiensten" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: 'Lato', system-ui, sans-serif; display: flex; flex-direction: column;">
 
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="earnings"></prolinker-account-menu></div>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="earnings"></prolinker-account-menu></div>
   </header>
 
   <main class="plk-earnings-main" style="max-width: 920px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
     <div style="animation: plk-rise 0.5s ease both;">
       <h1 style="margin: 0; font-size: 30px; font-weight: 750; letter-spacing: -0.025em;">{{ pageTitle }}</h1>
-      <p style="margin: 8px 0 0; max-width: 650px; color: var(--muted,#565B62); font-size: 15px; line-height: 1.55;">{{ pageSubtitle }}</p>
+      <p style="margin: 8px 0 0; max-width: 650px; color: var(--muted,#424444); font-size: 15px; line-height: 1.55;">{{ pageSubtitle }}</p>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; margin-top: 24px; animation: plk-rise 0.5s ease 0.05s both;">
       <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.workPaid }}</span>
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPaid }}</span>
           <span style="font-size: 23px; font-weight: 700;">{{ workPaid }}</span>
         </div>
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.workPending }}</span>
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPending }}</span>
           <span style="font-size: 23px; font-weight: 700;">{{ workPending }}</span>
         </div>
       </sc-if>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.refPaid }}</span>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPaid }}</span>
         <span style="font-size: 23px; font-weight: 700; color: #087A55;">{{ referralPaid }}</span>
       </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#9AA0A6);">{{ t.refPending }}</span>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; padding: 17px 18px; display: flex; flex-direction: column; gap: 5px;">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPending }}</span>
         <span style="font-size: 23px; font-weight: 700;">{{ referralPending }}</span>
       </div>
     </div>
-    <sc-if value="{{ earningsErrorVisible }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top: 10px; padding: 10px 12px; border: 1px solid #E7B4A9; border-radius: 8px; background: #FFF7F5; color: #8B3227; font-size: 12.5px;">{{ earningsError }}</div></sc-if>
+    <sc-if value="{{ earningsErrorVisible }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top: 10px; padding: 10px 12px; border: 1px solid #FF9D82; border-radius: 8px; background: #FFE9E2; color: #8B3227; font-size: 12.5px;">{{ earningsError }}</div></sc-if>
 
     <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
       <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.1s both;">
         <h2 style="margin: 0 0 11px; font-size: 17px; font-weight: 700;">{{ t.payouts }}</h2>
-        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; overflow: hidden;">
+        <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; overflow: hidden;">
           <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
-            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
               <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 8px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ p.mLetter }}</div>
-              <div style="flex: 1; min-width: 0;"><div style="font-size: 14px; font-weight: 650;">{{ p.project }}</div><div style="margin-top: 2px; font-size: 12.5px; color: var(--faint,#9AA0A6);">{{ p.client }} &middot; {{ p.date }}</div></div>
+              <div style="flex: 1; min-width: 0;"><div style="font-size: 14px; font-weight: 650;">{{ p.project }}</div><div style="margin-top: 2px; font-size: 12.5px; color: var(--faint,#8C8E8F);">{{ p.client }} &middot; {{ p.date }}</div></div>
               <span style="flex-shrink: 0; padding: 4px 9px; border-radius: 7px; font-size: 11.5px; font-weight: 650; background: {{ p.statusBg }}; color: {{ p.statusColor }};">{{ p.statusLabel }}</span>
               <span style="flex-shrink: 0; width: 82px; text-align: right; font-size: 14.5px; font-weight: 700;">{{ p.amount }}</span>
             </div>
           </sc-for>
-          <div style="display: flex; justify-content: flex-end; padding: 12px 18px; background: var(--panel,#F7F8FB);"><span style="font-size: 12.5px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span></div>
+          <div style="display: flex; justify-content: flex-end; padding: 12px 18px; background: var(--panel,#F3F4F6);"><span style="font-size: 12.5px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span></div>
         </div>
       </section>
     </sc-if>
 
     <section style="margin-top: 28px; animation: plk-rise 0.5s ease 0.15s both;">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 11px;">
-        <div><h2 style="margin: 0; font-size: 19px; font-weight: 750;">{{ t.referrals }}</h2><p style="margin: 5px 0 0; color: var(--muted,#565B62); font-size: 13.5px; line-height: 1.45;">{{ t.refExplanation }}</p></div>
-        <span style="flex-shrink: 0; padding: 6px 9px; border: 1px solid rgba(0,107,198,0.2); border-radius: 7px; background: rgba(0,107,198,0.07); color: #006BC6; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">2%</span>
+        <div><h2 style="margin: 0; font-size: 19px; font-weight: 750;">{{ t.referrals }}</h2><p style="margin: 5px 0 0; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.45;">{{ t.refExplanation }}</p></div>
+        <span style="flex-shrink: 0; padding: 6px 9px; border: 1px solid rgba(47,91,133,0.2); border-radius: 7px; background: rgba(47,91,133,0.07); color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">2%</span>
       </div>
-      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 10px; overflow: hidden;">
-        <div class="plk-share-line" style="padding: 18px; border-bottom: 1px solid var(--hairline,#ECEDF2); display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#565B62); background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
+      <div style="background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; overflow: hidden;">
+        <div class="plk-share-line" style="padding: 18px; border-bottom: 1px solid var(--hairline,#ECEEF0); display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
           <div class="plk-share-actions" style="display: flex; gap: 8px;">
             <button onClick="{{ onCopy }}" style="height: 38px; padding: 0 14px; border: 1px solid {{ copyBorder }}; border-radius: 8px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 650; color: {{ copyColor }};">{{ copyLabel }}</button>
-            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#E4E5EC); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
+            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
           </div>
         </div>
 
-        <div class="plk-ledger-head" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; padding: 10px 18px; background: var(--panel,#F7F8FB); border-bottom: 1px solid var(--hairline,#ECEDF2); color: var(--faint,#9AA0A6); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;"><span></span><span>{{ t.freelancer }}</span><span>{{ t.grossValue }}</span><span>{{ t.status }}</span><span style="text-align:right;">{{ t.yourTwoPercent }}</span></div>
+        <div class="plk-ledger-head" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; padding: 10px 18px; background: var(--panel,#F3F4F6); border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--faint,#8C8E8F); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;"><span></span><span>{{ t.freelancer }}</span><span>{{ t.grossValue }}</span><span>{{ t.status }}</span><span style="text-align:right;">{{ t.yourTwoPercent }}</span></div>
         <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="3">
-          <div class="plk-ref-row" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEDF2);">
+          <div class="plk-ref-row" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
             <div style="width: 38px; height: 38px; border-radius: 8px; background: {{ r.mBg }}; color: {{ r.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">{{ r.initials }}</div>
-            <div><div style="font-size: 14px; font-weight: 650;">{{ r.name }}</div><div style="margin-top: 2px; font-size: 12px; color: var(--faint,#9AA0A6);">{{ r.meta }}</div></div>
-            <div class="plk-ref-gross" style="font-size: 13px; color: var(--muted,#565B62);">{{ r.grossLabel }}</div>
+            <div><div style="font-size: 14px; font-weight: 650;">{{ r.name }}</div><div style="margin-top: 2px; font-size: 12px; color: var(--faint,#8C8E8F);">{{ r.meta }}</div></div>
+            <div class="plk-ref-gross" style="font-size: 13px; color: var(--muted,#424444);">{{ r.grossLabel }}</div>
             <span class="plk-ref-status" style="justify-self: start; padding: 4px 8px; border-radius: 7px; font-size: 11px; font-weight: 650; background: {{ r.statusBg }}; color: {{ r.statusColor }};">{{ r.statusLabel }}</span>
             <span class="plk-ref-earned" style="text-align: right; font-size: 14.5px; font-weight: 750;">{{ r.earnedLabel }}</span>
           </div>
         </sc-for>
-        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; padding: 13px 18px; background: var(--panel,#F7F8FB); font-size: 12.5px;"><span>{{ t.paid }}: <b>{{ referralPaid }}</b></span><span>{{ t.pending }}: <b>{{ referralPending }}</b></span></div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; padding: 13px 18px; background: var(--panel,#F3F4F6); font-size: 12.5px;"><span>{{ t.paid }}: <b>{{ referralPaid }}</b></span><span>{{ t.pending }}: <b>{{ referralPending }}</b></span></div>
       </div>
-      <p style="margin: 10px 2px 0; color: var(--faint,#9AA0A6); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
+      <p style="margin: 10px 2px 0; color: var(--faint,#8C8E8F); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
     </section>
   </main>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
   state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false };
 
@@ -305,7 +305,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const t = this.strings();
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const isDark = this.state.theme === 'dark';
     const nl = this.lang() === 'nl';
     const session = this.state.session || { role: 'client', name: 'Member', contact: '+31000000000' };
@@ -316,7 +316,7 @@ class Component extends DCLogic {
     const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
       ? window.ProLinkerApp.routes.accountMenu(role).map((item) => {
         const active = item.key === 'earnings';
-        return Object.assign({}, item, { bg: active ? 'var(--panel,#F7F8FB)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F82C8)' : 'none', current: active ? 'page' : 'false' });
+        return Object.assign({}, item, { bg: active ? 'var(--panel,#F3F4F6)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F5B85)' : 'none', current: active ? 'page' : 'false' });
       })
       : [];
     const referralLink = this.referralLink(session);
@@ -324,13 +324,13 @@ class Component extends DCLogic {
 
     const dim = (bg, color) => isDark ? { mBg: 'rgba(255,255,255,0.10)', mColor: '#ffffff' } : { mBg: bg, mColor: color };
     const paidStyle = { statusBg: 'rgba(31,138,91,0.12)', statusColor: '#1F8A5B', statusLabel: t.paid };
-    const pendStyle = { statusBg: 'rgba(180,89,10,0.12)', statusColor: '#B4590A', statusLabel: t.pending };
+    const pendStyle = { statusBg: 'rgba(180,89,10,0.12)', statusColor: '#C94F2D', statusLabel: t.pending };
 
     const payouts = [
       Object.assign({ project: nl ? 'Webshop redesign' : 'Store redesign', client: 'De Lindeboom', date: nl ? '8 jul 2026' : 'Jul 8, 2026', amount: '\u20ac 1.280', mLetter: 'D' }, dim('#EEEBFB', '#5B4CC4'), pendStyle),
-      Object.assign({ project: nl ? 'Shopify-koppeling kassa' : 'Shopify POS integration', client: 'Bakkerij Vermeer', date: nl ? '12 jun 2026' : 'Jun 12, 2026', amount: '\u20ac 1.800', mLetter: 'B' }, dim('#E8F1FB', '#0B5CAB'), paidStyle),
+      Object.assign({ project: nl ? 'Shopify-koppeling kassa' : 'Shopify POS integration', client: 'Bakkerij Vermeer', date: nl ? '12 jun 2026' : 'Jun 12, 2026', amount: '\u20ac 1.800', mLetter: 'B' }, dim('#E9EFF5', '#2F5B85'), paidStyle),
       Object.assign({ project: nl ? 'Klaviyo-flows' : 'Klaviyo flows', client: 'GroenGoed', date: nl ? '28 apr 2026' : 'Apr 28, 2026', amount: '\u20ac 1.450', mLetter: 'G' }, dim('#E7F5EE', '#1F8A5B'), paidStyle),
-      Object.assign({ project: nl ? 'Checkout-optimalisatie' : 'Checkout optimization', client: 'Studio Kade', date: nl ? '15 feb 2026' : 'Feb 15, 2026', amount: '\u20ac 1.000', mLetter: 'S' }, dim('#FBF0E7', '#B4590A'), paidStyle),
+      Object.assign({ project: nl ? 'Checkout-optimalisatie' : 'Checkout optimization', client: 'Studio Kade', date: nl ? '15 feb 2026' : 'Feb 15, 2026', amount: '\u20ac 1.000', mLetter: 'S' }, dim('#FFE0D6', '#C94F2D'), paidStyle),
     ];
 
     const formatMoney = (value) => new Intl.NumberFormat(nl ? 'nl-NL' : 'en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
@@ -340,7 +340,7 @@ class Component extends DCLogic {
       { name: 'Nora Bakker', initials: 'NB', projects: 4, gross: 4550, status: 'paid' },
     ].map((entry, index) => {
       const style = entry.status === 'paid' ? paidStyle : pendStyle;
-      const colors = [dim('#FBEDEF', '#B42334'), dim('#E6F4F6', '#0E7C8A'), dim('#E8F1FB', '#0B5CAB')][index];
+      const colors = [dim('#FBEDEF', '#B42334'), dim('#E6F4F6', '#0E7C8A'), dim('#E9EFF5', '#2F5B85')][index];
       return Object.assign({}, entry, colors, style, {
         meta: t.projects(entry.projects),
         grossLabel: formatMoney(entry.gross) + ' ' + t.processed,
@@ -380,7 +380,7 @@ class Component extends DCLogic {
       referralLink: referralLink,
       onCopy: () => this.copyLink(referralLink),
       copyLabel: this.state.copied ? t.copied : t.copy,
-      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#E4E5EC)',
+      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#DCDFE2)',
       copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',
       copyColor: this.state.copied ? '#1F8A5B' : 'var(--text,#152431)',
       waEl: this.waIcon('#25D366', 15),

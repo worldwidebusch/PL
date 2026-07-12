@@ -13,75 +13,75 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#FFFFFF; --text:#152431; --muted:#626B77; --faint:#89919D; --surface:#ffffff; --panel:#F7F8FB; --border:#E1E5EB; --hairline:#ECEEF2; --glass:rgba(255,255,255,0.84); --glow:rgba(0,107,198,0.055); --footer:#102532; --footer-line:#2b4251; --footer-text:#c5d2db; }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); --glow:rgba(0,107,198,0.12); }
+  :root { --bg:#FFFFFF; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#E1E5EB; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.84); --glow:rgba(47,91,133,0.055); --footer:#152431; --footer-line:#2C3E4E; --footer-text:#DCDFE2; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); --glow:rgba(47,91,133,0.12); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
   textarea, input { font-family: inherit; }
-  textarea::placeholder, input::placeholder { color: var(--faint,var(--faint,#A2A5B2)); }
+  textarea::placeholder, input::placeholder { color: var(--faint,var(--faint,#8C8E8F)); }
   textarea:focus, input:focus { outline: none; }
-  ::selection { background: #cfe6fb; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes plk-pulse { 0% { box-shadow: 0 0 0 0 rgba(0,107,198,0.30); } 100% { box-shadow: 0 0 0 12px rgba(0,107,198,0); } }
+  @keyframes plk-pulse { 0% { box-shadow: 0 0 0 0 rgba(47,91,133,0.30); } 100% { box-shadow: 0 0 0 12px rgba(47,91,133,0); } }
   button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.18s ease; }
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
   a:active { transform: scale(0.985); }
   button:disabled { cursor: not-allowed !important; transform: none !important; box-shadow: none !important; }
   .plk-visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
-  .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(0,107,198,0.28) !important; outline-offset: 3px; }
+  .plk-focusable:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(47,91,133,0.28) !important; outline-offset: 3px; }
   #plk-home-query:focus-visible { outline: none !important; outline-offset: 0; }
   .plk-brand:hover { opacity: 0.78; }
-  .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F7F8FB) !important; }
-  .plk-menu-link:hover { background: var(--panel,#F7F8FB) !important; color: var(--text,#152431) !important; }
-  .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #5992C2 !important; border-radius: 3px !important; background: #5992C2 !important; color: #fff !important; }
-  .plk-company-button:hover, .plk-auth-text:hover { border-color: #477EAD !important; background: #477EAD !important; color: #fff !important; }
-  .plk-register-button { border: 1px solid #E88300 !important; border-radius: 3px !important; background: #E88300 !important; box-shadow: none !important; }
-  .plk-register-button:hover { border-color: #CB7300 !important; background: #CB7300 !important; }
-  .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(0,107,198,0.56) !important; }
+  .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F3F4F6) !important; }
+  .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431) !important; }
+  .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #2F5B85 !important; border-radius: 3px !important; background: #2F5B85 !important; color: #fff !important; }
+  .plk-company-button:hover, .plk-auth-text:hover { border-color: #24476A !important; background: #24476A !important; color: #fff !important; }
+  .plk-register-button { border: 1px solid #E65F39 !important; border-radius: 3px !important; background: #E65F39 !important; box-shadow: none !important; }
+  .plk-register-button:hover { border-color: #C94F2D !important; background: #C94F2D !important; }
+  .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(47,91,133,0.56) !important; }
   .plk-search-shell { border-radius: 5px !important; }
   .plk-search-shell:hover { border-color: #B7C7D8 !important; }
   .plk-search-submit { border-radius: 3px !important; }
-  .plk-search-submit:not(:disabled) { background: #E88300 !important; color: #fff !important; box-shadow: none !important; }
-  .plk-search-submit:hover:not(:disabled) { background: #CB7300 !important; box-shadow: none !important; }
-  .plk-mic:hover { background: rgba(0,107,198,0.10) !important; color: #006BC6 !important; }
-  .plk-skill-chip:hover { border-color: #80AFD7 !important; color: #005DAA !important; box-shadow: 0 8px 22px -16px rgba(0,107,198,0.5) !important; transform: translateY(-1px); }
-  .plk-secondary:hover { border-color: #AFC4D9 !important; color: var(--text,#152431) !important; background: var(--panel,#F7F8FB) !important; }
+  .plk-search-submit:not(:disabled) { background: #E65F39 !important; color: #fff !important; box-shadow: none !important; }
+  .plk-search-submit:hover:not(:disabled) { background: #C94F2D !important; box-shadow: none !important; }
+  .plk-mic:hover { background: rgba(47,91,133,0.10) !important; color: #2F5B85 !important; }
+  .plk-skill-chip:hover { border-color: #B0D8FE !important; color: #24476A !important; box-shadow: 0 8px 22px -16px rgba(47,91,133,0.5) !important; transform: translateY(-1px); }
+  .plk-secondary:hover { border-color: #AFC4D9 !important; color: var(--text,#152431) !important; background: var(--panel,#F3F4F6) !important; }
   .plk-category-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; }
-  .plk-category-chip { min-height: 32px; padding: 6px 13px; border: 1px solid transparent; border-radius: 9px; background: #E7ECF1; color: #263b4a; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 500; line-height: 1.2; }
-  .plk-category-chip:hover { border-color: #9dbbd1 !important; background: #f5f8fa !important; color: #005da8 !important; box-shadow: 0 8px 20px -16px rgba(0,107,198,0.72) !important; transform: translateY(-1px); }
-  :root[data-theme="dark"] .plk-category-chip { background: #20303d; color: #e9f1f5; border-color: #314756; }
-  .plk-start-plain:hover { color: #005093 !important; text-decoration: underline; text-underline-offset: 3px; }
-  .plk-site-footer { background: var(--footer,#102532); color: #fff; }
-  .plk-site-footer a { color: var(--footer-text,#c5d2db); }
+  .plk-category-chip { min-height: 32px; padding: 6px 13px; border: 1px solid transparent; border-radius: 9px; background: #ECEEF0; color: #152431; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 500; line-height: 1.2; }
+  .plk-category-chip:hover { border-color: #9dbbd1 !important; background: #F3F4F6 !important; color: #24476A !important; box-shadow: 0 8px 20px -16px rgba(47,91,133,0.72) !important; transform: translateY(-1px); }
+  :root[data-theme="dark"] .plk-category-chip { background: #1C2C3A; color: #e9f1f5; border-color: #2C3E4E; }
+  .plk-start-plain:hover { color: #24476A !important; text-decoration: underline; text-underline-offset: 3px; }
+  .plk-site-footer { background: var(--footer,#152431); color: #fff; }
+  .plk-site-footer a { color: var(--footer-text,#DCDFE2); }
   .plk-site-footer a:hover { color: #fff; }
   .plk-footer-grid { display: grid; grid-template-columns: minmax(180px,1.2fr) repeat(3,minmax(145px,1fr)) minmax(160px,0.85fr); gap: 34px; align-items: start; }
   .plk-footer-column { display: flex; flex-direction: column; gap: 10px; }
   .plk-footer-link { display: inline-flex; width: fit-content; font-size: 13px; line-height: 1.45; }
   .plk-footer-link:hover { transform: translateX(2px); }
-  .plk-footer-language { width: 100%; height: 40px; padding: 0 34px 0 12px; border: 1px solid #6f8290; border-radius: 4px; color: #fff; background: #1a3040; font: inherit; font-size: 13px; cursor: pointer; }
-  .plk-footer-legal { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; margin-top: 28px; border-top: 1px solid var(--footer-line,#2b4251); }
+  .plk-footer-language { width: 100%; height: 40px; padding: 0 34px 0 12px; border: 1px solid #6f8290; border-radius: 4px; color: #fff; background: #22374A; font: inherit; font-size: 13px; cursor: pointer; }
+  .plk-footer-legal { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; margin-top: 28px; border-top: 1px solid var(--footer-line,#2C3E4E); }
   .plk-footer-legal-links, .plk-footer-socials { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
-  .plk-footer-legal a, .plk-footer-copyright { font-size: 11.5px; color: #91a7b6; }
-  .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border: 1px solid #496170; border-radius: 4px; color: #abc0cd !important; font-size: 11px; font-weight: 700; }
+  .plk-footer-legal a, .plk-footer-copyright { font-size: 11.5px; color: #8C8E8F; }
+  .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border: 1px solid #496170; border-radius: 4px; color: #DCDFE2 !important; font-size: 11px; font-weight: 700; }
   .plk-footer-social:hover { border-color: #92a9b8; color: #fff !important; transform: translateY(-1px); }
   .plk-footer-social img { display: block; width: 15px; height: 15px; opacity: 0.92; transition: filter 0.16s ease, opacity 0.16s ease; }
   .plk-footer-social:hover img, .plk-footer-social:focus-visible img { filter: brightness(1.45); opacity: 1; }
   .plk-footer-social:focus-visible { outline: 2px solid #92a9b8; outline-offset: 2px; }
-  .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #D9E0E6; border-radius: 6px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); }
+  .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #DCDFE2; border-radius: 6px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); }
   .plk-login-popup-label { display: block; margin: 0 0 6px; color: var(--text,#152431); font-size: 12px; font-weight: 650; }
-  .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#D9E0E6); border-radius: 4px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
-  .plk-login-popup-input:focus, .plk-login-popup-select:focus { border-color: #78A9D2; box-shadow: 0 0 0 3px rgba(0,107,198,0.11); }
+  .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#DCDFE2); border-radius: 4px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
+  .plk-login-popup-input:focus, .plk-login-popup-select:focus { border-color: #B0D8FE; box-shadow: 0 0 0 3px rgba(47,91,133,0.11); }
   .plk-login-popup-primary, .plk-login-popup-social { width: 100%; min-height: 40px; border: 0; border-radius: 4px; color: #fff; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
-  .plk-login-popup-primary { background: #b85c00; }
-  .plk-login-popup-primary:hover { background: #994a00; }
+  .plk-login-popup-primary { background: #E65F39; }
+  .plk-login-popup-primary:hover { background: #C94F2D; }
   .plk-login-popup-social { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .plk-login-popup-social[data-provider="facebook"] { background: #3B5998; }
   .plk-login-popup-social[data-provider="linkedin"] { background: #0679a8; }
@@ -116,37 +116,37 @@
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/pwa/icon-192.png">
-<meta name="theme-color" content="#102532">
-<title>ProLinker: Hire trusted freelancers, instantly matched by AI</title>
+<meta name="theme-color" content="#152431">
+<title>ProLinker: Hire someone great. Not just someone available.</title>
 <meta name="description" content="Describe your project in plain words and ProLinker's AI instantly matches you with vetted freelancers across design, IT, marketing, sales, finance, legal and admin. Post free. Pay only for work done.">
 <meta name="keywords" content="hire freelancers, freelance platform, AI freelancer matching, post a project, design, development, marketing, sales, finance, legal, virtual assistant">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://prolinker.com/post-project">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ProLinker">
-<meta property="og:title" content="Hire trusted freelancers, instantly matched by AI | ProLinker">
+<meta property="og:title" content="Hire someone great. Not just someone available. | ProLinker">
 <meta property="og:description" content="Post your project for free and get matched with vetted freelancers in seconds.">
 <meta property="og:url" content="https://prolinker.com/post-project">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ProLinker","url":"https://prolinker.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://prolinker.com/freelancers?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","name":"ProLinker","url":"https://prolinker.com","logo":"https://prolinker.com/images/logo_pro/main-logo.png","description":"AI-powered freelance marketplace connecting businesses with vetted professionals across design, IT, marketing, sales, finance, legal and admin."},{"@type":"WebApplication","name":"ProLinker AI Project Assistant","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ProLinker","url":"https://prolinker.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://prolinker.com/freelancers?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","name":"ProLinker","url":"https://prolinker.com","logo":"https://prolinker.com/images/logo_pro/main-logo.png","description":"AI-powered freelance network connecting businesses with vetted professionals across design, IT, marketing, sales, finance, legal and admin."},{"@type":"WebApplication","name":"ProLinker AI Project Assistant","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
 </helmet>
 
-<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <a class="plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
-    <div class="plk-glass-nav plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; position: static; z-index: 30;">
+    <div class="plk-glass-nav plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 5px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <div class="plk-public-menu-wrap" style="position: relative;">
-          <button class="plk-menu-trigger plk-public-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
+          <button class="plk-menu-trigger plk-public-menu-trigger" onClick="{{ onToggleMenu }}" aria-label="Menu" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
           <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
             <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-            <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+            <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
               <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
                 <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
               </sc-for>
-              <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
+              <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
               <button class="plk-menu-link" role="switch" aria-checked="{{ isDark }}" onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);">
                 <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
                 <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
@@ -156,8 +156,8 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <a class="plk-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
-        <button class="plk-auth-text plk-public-action plk-public-action-blue" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #5992C2; border-radius: 3px; background: #5992C2; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
+        <a class="plk-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html" style="height: 38px; padding: 0 15px; border: 1px solid #2F5B85; border-radius: 3px; background: #2F5B85; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700;">{{ t.companies }}</a>
+        <button class="plk-auth-text plk-public-action plk-public-action-blue" onClick="{{ onLogin }}" style="height: 38px; padding: 0 15px; border: 1px solid #2F5B85; border-radius: 3px; background: #2F5B85; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; color: #fff;">{{ t.login }}</button>
         <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
@@ -174,7 +174,7 @@
       <h1 class="plk-home-title" style="margin: 0; text-align: center; font-size: 46px; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; max-width: 620px; text-wrap: balance;">
         {{ t.headA }}<span style="color: {{ nameColor }};">{{ firstName }}</span>{{ t.headB }}
       </h1>
-      <p class="plk-home-subtitle" style="margin: 16px 0 0; text-align: center; font-size: 17px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 480px; text-wrap: pretty;">
+      <p class="plk-home-subtitle" style="margin: 16px 0 0; text-align: center; font-size: 17px; line-height: 1.5; color: var(--muted,#424444); max-width: 480px; text-wrap: pretty;">
         {{ t.subtitle }}
       </p>
 
@@ -217,15 +217,15 @@
           </sc-if>
         </div>
         <div style="display: flex; justify-content: center; margin-top: 2px;">
-          <a class="plk-start-plain" href="Prolinker Brief.dc.html" style="font-size: 13.5px; font-weight: 600; color: var(--muted,#626B77); padding: 6px 8px;">{{ t.startWithout }}</a>
+          <a class="plk-start-plain" href="Prolinker Brief.dc.html" style="font-size: 13.5px; font-weight: 600; color: var(--muted,#424444); padding: 6px 8px;">{{ t.startWithout }}</a>
         </div>
       </div>
 
     </div>
 
-    <section class="plk-category-section" aria-labelledby="plk-category-title" style="width: 100%; max-width: 1240px; margin-top: 58px; padding-top: 30px; border-top: 1px solid var(--hairline,#ECEEF2);">
+    <section class="plk-category-section" aria-labelledby="plk-category-title" style="width: 100%; max-width: 1240px; margin-top: 58px; padding-top: 30px; border-top: 1px solid var(--hairline,#ECEEF0);">
       <div id="plk-category-title" style="text-align: center; font-size: 17px; line-height: 1.3; font-weight: 700; color: var(--text,#152431);">{{ t.tryLabel }}</div>
-      <p style="margin: 7px auto 18px; text-align: center; font-size: 13px; line-height: 1.45; color: var(--muted,#626B77);">{{ t.categoryHint }}</p>
+      <p style="margin: 7px auto 18px; text-align: center; font-size: 13px; line-height: 1.45; color: var(--muted,#424444);">{{ t.categoryHint }}</p>
       <div id="plk-category-list" class="plk-category-list">
         <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="4">
           <button class="plk-category-chip" type="button" onClick="{{ s.pick }}" aria-label="{{ s.ariaLabel }}">{{ s.label }}</button>
@@ -233,7 +233,7 @@
       </div>
       <sc-if value="{{ showExpandBtn }}" hint-placeholder-val="{{ true }}">
         <div style="display: flex; justify-content: center; margin-top: 20px;">
-          <button class="plk-secondary" type="button" onClick="{{ onToggleExpand }}" aria-expanded="{{ categoriesExpanded }}" aria-controls="plk-category-list" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--border,#E4E5EC); border-radius: 7px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted,#6B6E7B); white-space: nowrap;">
+          <button class="plk-secondary" type="button" onClick="{{ onToggleExpand }}" aria-expanded="{{ categoriesExpanded }}" aria-controls="plk-category-list" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--border,#DCDFE2); border-radius: 7px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted,#424444); white-space: nowrap;">
             <span>{{ expandLabel }}</span>
             <span style="font-size: 15px; line-height: 1; transform: {{ arrowTransform }}; transition: transform 0.2s;">⌄</span>
           </button>
@@ -248,7 +248,7 @@
     <section id="plk-login-popup-dialog" class="plk-login-popup" role="dialog" aria-modal="true" aria-label="{{ loginDialogLabel }}" onClick="{{ onStopLoginClick }}">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
         <strong style="font-size: 17px; line-height: 1.2;">{{ loginDialogLabel }}</strong>
-        <button type="button" onClick="{{ onCloseLogin }}" aria-label="{{ loginCloseLabel }}" style="width: 28px; height: 28px; border: 1px solid var(--border,#D9E0E6); border-radius: 4px; background: var(--surface,#fff); color: var(--muted,#667587); font: inherit; font-size: 17px; cursor: pointer;">&times;</button>
+        <button type="button" onClick="{{ onCloseLogin }}" aria-label="{{ loginCloseLabel }}" style="width: 28px; height: 28px; border: 1px solid var(--border,#DCDFE2); border-radius: 4px; background: var(--surface,#fff); color: var(--muted,#424444); font: inherit; font-size: 17px; cursor: pointer;">&times;</button>
       </div>
 
       <sc-if value="{{ loginFormVisible }}" hint-placeholder-val="true">
@@ -263,29 +263,29 @@
           <input id="plk-popup-contact" class="plk-login-popup-input" type="tel" inputMode="tel" autocomplete="tel" value="{{ loginContact }}" onInput="{{ onLoginContact }}" placeholder="+31 6 12345678" aria-invalid="{{ loginHasError }}">
 
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 9px;">
-            <label style="display: inline-flex; align-items: center; gap: 7px; color: var(--text,#152431); font-size: 11px; cursor: pointer;"><input type="checkbox" checked="{{ loginRemember }}" onChange="{{ onLoginRemember }}" style="width: 13px; height: 13px; margin: 0; accent-color: #006BC6;">{{ loginRememberLabel }}</label>
-            <a href="Prolinker Login.dc.html?mode=login" style="font-size: 10.5px; color: #4E8FC5;">{{ loginHelpLabel }}</a>
+            <label style="display: inline-flex; align-items: center; gap: 7px; color: var(--text,#152431); font-size: 11px; cursor: pointer;"><input type="checkbox" checked="{{ loginRemember }}" onChange="{{ onLoginRemember }}" style="width: 13px; height: 13px; margin: 0; accent-color: #2F5B85;">{{ loginRememberLabel }}</label>
+            <a href="Prolinker Login.dc.html?mode=login" style="font-size: 10.5px; color: #2F5B85;">{{ loginHelpLabel }}</a>
           </div>
 
           <sc-if value="{{ loginHasError }}" hint-placeholder-val="false"><div class="plk-login-popup-error" role="alert">{{ loginError }}</div></sc-if>
           <button class="plk-login-popup-primary" type="submit" style="margin-top: 15px;">{{ loginSubmitLabel }}</button>
         </form>
 
-        <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0; color: var(--faint,#8A97A6); font-size: 11px;"><span style="height: 1px; flex: 1; background: var(--hairline,#E9EDF1);"></span>{{ loginOrLabel }}<span style="height: 1px; flex: 1; background: var(--hairline,#E9EDF1);"></span></div>
+        <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0; color: var(--faint,#8C8E8F); font-size: 11px;"><span style="height: 1px; flex: 1; background: var(--hairline,#ECEEF0);"></span>{{ loginOrLabel }}<span style="height: 1px; flex: 1; background: var(--hairline,#ECEEF0);"></span></div>
         <button class="plk-login-popup-social" data-provider="facebook" type="button" onClick="{{ onFacebookLogin }}"><span class="plk-login-popup-provider-icon">f</span>{{ facebookLoginLabel }}</button>
         <button class="plk-login-popup-social" data-provider="linkedin" type="button" onClick="{{ onLinkedinLogin }}" style="margin-top: 6px;"><span class="plk-login-popup-provider-icon">in</span>{{ linkedinLoginLabel }}</button>
-        <a href="Prolinker Login.dc.html?mode=register" style="display: inline-flex; margin-top: 14px; color: #4E8FC5; font-size: 11px;">{{ createAccountLabel }}</a>
+        <a href="Prolinker Login.dc.html?mode=register" style="display: inline-flex; margin-top: 14px; color: #2F5B85; font-size: 11px;">{{ createAccountLabel }}</a>
       </sc-if>
 
       <sc-if value="{{ loginCodeVisible }}" hint-placeholder-val="false">
         <form onSubmit="{{ onLoginCodeSubmit }}" novalidate="novalidate">
-          <p style="margin: 0 0 12px; color: var(--muted,#667587); font-size: 12px; line-height: 1.45;">{{ loginCodeIntro }}</p>
+          <p style="margin: 0 0 12px; color: var(--muted,#424444); font-size: 12px; line-height: 1.45;">{{ loginCodeIntro }}</p>
           <label class="plk-login-popup-label" for="plk-popup-code">{{ loginCodeLabel }}</label>
           <input id="plk-popup-code" class="plk-login-popup-input" type="text" inputMode="numeric" autocomplete="one-time-code" maxLength="6" value="{{ loginCode }}" onInput="{{ onLoginCode }}" placeholder="123456" aria-invalid="{{ loginHasError }}">
-          <div style="margin-top: 7px; color: var(--faint,#8A97A6); font-size: 10.5px;">{{ loginDemoCode }}</div>
+          <div style="margin-top: 7px; color: var(--faint,#8C8E8F); font-size: 10.5px;">{{ loginDemoCode }}</div>
           <sc-if value="{{ loginHasError }}" hint-placeholder-val="false"><div class="plk-login-popup-error" role="alert">{{ loginError }}</div></sc-if>
           <button class="plk-login-popup-primary" type="submit" style="margin-top: 14px;">{{ loginVerifyLabel }}</button>
-          <button type="button" onClick="{{ onLoginBack }}" style="width: 100%; margin-top: 8px; border: 0; background: transparent; color: #4E8FC5; font: inherit; font-size: 11px; cursor: pointer;">{{ loginEditLabel }}</button>
+          <button type="button" onClick="{{ onLoginBack }}" style="width: 100%; margin-top: 8px; border: 0; background: transparent; color: #2F5B85; font: inherit; font-size: 11px; cursor: pointer;">{{ loginEditLabel }}</button>
         </form>
       </sc-if>
     </section>
@@ -296,10 +296,9 @@
       <div class="plk-footer-grid">
         <div class="plk-footer-brand">
           <a href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; gap: 9px; color: #fff;">
-            <img src="assets/prolinker-mark.png" alt="" style="width: 32px; height: 32px; display: block;">
-            <span style="font-size: 25px; line-height: 1; font-weight: 750; letter-spacing: -0.04em;"><span style="color: #35A7E8;">Pro</span>Linker</span>
+            <img src="assets/prolinker-logo-white.png" alt="ProLinker" style="width: 170px; height: auto; display: block;">
           </a>
-          <p style="max-width: 230px; margin: 17px 0 0; color: #91a7b6; font-size: 12.5px; line-height: 1.6;">{{ t.footerTagline }}</p>
+          <p style="max-width: 240px; margin: 16px 0 0; color: #ECEEF0; font-size: 13px; line-height: 1.6;">{{ t.footerTagline }}</p>
         </div>
 
         <nav class="plk-footer-column" aria-label="{{ t.footerMarketplace }}">
@@ -351,7 +350,7 @@
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;jobCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Design&quot;,&quot;IT &amp; Development&quot;,&quot;Marketing&quot;,&quot;Sales&quot;,&quot;Finance&quot;,&quot;Legal&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;jobCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Design&quot;,&quot;IT &amp; Development&quot;,&quot;Marketing&quot;,&quot;Sales&quot;,&quot;Finance&quot;,&quot;Legal&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
   state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 0, anim: '', listening: false, theme: 'light', language: '', menuOpen: false, authenticated: false, authRole: null, authName: '', loginOpen: false, loginStep: 'form', loginRole: 'client', loginContact: '', loginCode: '', loginRemember: true, loginError: '' };
 
@@ -536,7 +535,7 @@ class Component extends DCLogic {
   }
 
   hexToRgba(hex, a) {
-    let h = (hex || '#006BC6').replace('#', '');
+    let h = (hex || '#2F5B85').replace('#', '');
     if (h.length === 3) h = h.split('').map((c) => c + c).join('');
     const n = parseInt(h, 16);
     return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
@@ -585,9 +584,9 @@ class Component extends DCLogic {
       errMin: 'Enter at least 3 characters (e.g. SEO)',
       errCaps: 'Avoid writing your whole brief in capital letters',
       speak: 'Speak your project', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer',
-      settings: 'Settings', darkMode: 'Dark mode', companies: 'For companies', login: 'Log in', register: 'Sign up', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View opportunities', referrals: 'Earn 2% with referrals',
+      settings: 'Settings', darkMode: 'Dark mode', companies: 'For companies', login: 'Log in', register: 'Sign up', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View projects', referrals: 'Earn 2% with referrals',
       loginDialog: 'Log in', loginClose: 'Close login', loginRole: 'Account type', loginRoleClient: 'Client', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp number', loginRemember: 'Remember my WhatsApp number', loginHelp: 'Login help', loginSubmit: 'Log in', loginOr: 'or', facebookLogin: 'Log in with Facebook', linkedinLogin: 'Log in with LinkedIn', createAccount: 'Create account', loginCodeIntro: 'Enter the code sent to your WhatsApp number.', loginCode: 'Verification code', loginDemoCode: 'Demo code: 123456', loginVerify: 'Verify', loginEdit: 'Change number',
-      footerTagline: 'The trusted network for businesses and independent professionals.', footerMarketplace: 'Marketplace', footerGetStarted: 'Get started', footerCompany: 'ProLinker',
+      footerTagline: 'Hire someone great. Not just someone available.', footerMarketplace: 'Network', footerGetStarted: 'Get started', footerCompany: 'ProLinker',
       faq: 'Frequently asked questions', careers: 'Careers at ProLinker', contact: 'Contact', language: 'Language', rightsReserved: 'All rights reserved.', privacy: 'Privacy', terms: 'Terms and Conditions',
       pickCategory: (label) => 'Use ' + label + ' for my project',
     };
@@ -595,7 +594,7 @@ class Component extends DCLogic {
       nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
       becomeFreelancer: 'Freelancer worden', becomeRecruiter: 'Recruiter worden',
       search: 'Zoeken', headA: 'Welke skill zoek je, ', headB: '?',
-      subtitle: 'Zoek een skill en wij koppelen je direct aan de beste geverifieerde professionals.',
+      subtitle: 'Zoek een skill en wij koppelen je direct aan de beste gescreende professionals.',
       tryLabel: 'Categorieën freelancers', categoryHint: 'Kies een specialisme en voeg het direct toe aan je opdracht.', startWithout: 'Zonder AI beginnen', continueLabel: 'Doorgaan',
       showMore: (n) => 'Toon ' + n + ' meer', showLess: 'Toon minder',
       errMin: 'Voer minstens 3 tekens in (bijv. SEO)',
@@ -603,7 +602,7 @@ class Component extends DCLogic {
       speak: 'Spreek je project in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer',
       settings: 'Instellingen', darkMode: 'Donkere modus', companies: 'Voor bedrijven', login: 'Inloggen', register: 'Aanmelden', logout: 'Uitloggen', searchLabel: 'Beschrijf de skill of opdracht die je nodig hebt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten', referrals: 'Verdien 2% met referrals',
       loginDialog: 'Inloggen', loginClose: 'Login sluiten', loginRole: 'Accounttype', loginRoleClient: 'Opdrachtgever', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp-nummer', loginRemember: 'Onthoud mijn WhatsApp-nummer', loginHelp: 'Hulp bij inloggen', loginSubmit: 'Inloggen', loginOr: 'of', facebookLogin: 'Inloggen met Facebook', linkedinLogin: 'Inloggen met LinkedIn', createAccount: 'Account aanmaken', loginCodeIntro: 'Vul de code in die naar je WhatsApp-nummer is gestuurd.', loginCode: 'Verificatiecode', loginDemoCode: 'Democode: 123456', loginVerify: 'Bevestigen', loginEdit: 'Nummer wijzigen',
-      footerTagline: 'Het vertrouwde netwerk voor opdrachtgevers en zelfstandige professionals.', footerMarketplace: 'Marktplaats', footerGetStarted: 'Aan de slag', footerCompany: 'ProLinker',
+      footerTagline: 'Hire someone great. Not just someone available.', footerMarketplace: 'Netwerk', footerGetStarted: 'Aan de slag', footerCompany: 'ProLinker',
       faq: 'Veelgestelde vragen', careers: 'Werken bij ProLinker', contact: 'Contact', language: 'Taal', rightsReserved: 'Alle rechten voorbehouden.', privacy: 'Privacy', terms: 'Algemene Voorwaarden',
       pickCategory: (label) => 'Gebruik ' + label + ' voor mijn opdracht',
     };
@@ -801,7 +800,7 @@ class Component extends DCLogic {
     const trimmed = text.trim();
     const max = 60;
 
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const accentShadow = this.hexToRgba(accent, 0.28);
     const accentRing = this.hexToRgba(accent, 0.12);
     const accentTint = this.hexToRgba(accent, 0.12);
@@ -817,7 +816,7 @@ class Component extends DCLogic {
     const valid = trimmed.length >= 3;
     const hasError = errors.length > 0;
 
-    const borderColor = hasError ? '#D92D20' : (this.state.focused ? accent : 'var(--border,#E4E5EC)');
+    const borderColor = hasError ? '#D92D20' : (this.state.focused ? accent : 'var(--border,#DCDFE2)');
     const boxShadow = hasError ? '0 0 0 4px rgba(217,45,32,0.10), 0 10px 30px -14px rgba(217,45,32,0.35)'
       : (this.state.focused
         ? '0 0 0 4px ' + accentRing + ', 0 14px 34px -14px ' + this.hexToRgba(accent, 0.34)
@@ -1022,12 +1021,12 @@ class Component extends DCLogic {
       listening: this.state.listening,
       micShow: this.micSupported(),
       micBg: this.state.listening ? accentTint : 'transparent',
-      micColor: this.state.listening ? accent : '#8A8D99',
+      micColor: this.state.listening ? accent : '#8C8E8F',
       micPulse: this.state.listening ? 'plk-pulse 1.3s infinite' : 'none',
       onToggleMic: () => this.toggleMic(),
       charsLeft: (max - text.length).toLocaleString(),
       animPlaceholder: this.state.text ? '' : (this.state.focused ? t.egPh : this.state.anim + '▏'),
-      counterColor: text.length > max * 0.9 ? '#D92D20' : '#A2A5B2',
+      counterColor: text.length > max * 0.9 ? '#D92D20' : '#8C8E8F',
       errors,
       showErrors: hasError,
       queryInvalid: hasError,
@@ -1039,15 +1038,15 @@ class Component extends DCLogic {
       logoFilter: this.state.theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
       nameColor: this.state.theme === 'dark' ? '#ffffff' : accent,
       fontStack: ({
-        'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif",
-        'Geist': "'Geist', system-ui, sans-serif",
-        'General Sans': "'General Sans', system-ui, sans-serif",
-      })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
+        'Lato': "'Lato', system-ui, sans-serif",
+        'Lato': "'Lato', system-ui, sans-serif",
+        'Lato': "'Lato', system-ui, sans-serif",
+      })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       onToggleTheme: () => this.toggleTheme(),
       menuOpen: this.state.menuOpen, onToggleMenu: () => this.toggleMenu(), onCloseMenu: () => this.closeMenu(),
-      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
-      themeSwitchBg: this.state.theme === 'dark' ? accent : 'var(--border,#E4E5EC)', themeKnobLeft: this.state.theme === 'dark' ? '18px' : '2px',
-      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#565B62' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
+      themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#424444', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
+      themeSwitchBg: this.state.theme === 'dark' ? accent : 'var(--border,#DCDFE2)', themeKnobLeft: this.state.theme === 'dark' ? '18px' : '2px',
+      gridEl: (function(d){ return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: d ? 'rgba(255,255,255,0.72)' : '#424444' }, [[5,5],[12,5],[19,5],[5,12],[12,12],[19,12],[5,19],[12,19],[19,19]].map(function(p, i){ return React.createElement('circle', { key: i, cx: p[0], cy: p[1], r: 1.7 }); })); })(this.state.theme === 'dark'),
       anonymous: !authenticated,
       authenticated: authenticated,
       dashboardLabel: this.state.authRole === 'client' ? t.dashboardClient : t.dashboardFreelancer,
@@ -1116,8 +1115,8 @@ class Component extends DCLogic {
       continueOpacity: valid ? 1 : 0.4,
       continueDisabled: !valid,
       continueCursor: valid ? 'pointer' : 'not-allowed',
-      goBg: valid ? accent : 'var(--hairline,#ECEDF2)',
-      goColor: valid ? '#fff' : 'var(--faint,#A2A5B2)',
+      goBg: valid ? accent : 'var(--hairline,#ECEEF0)',
+      goColor: valid ? '#fff' : 'var(--faint,#8C8E8F)',
       goShadow: valid ? '0 4px 12px ' + accentShadow : 'none',
       searchRef: (el) => { this._searchInput = el; },
       onInput: (e) => this.setState({ text: e.target.value, touched: true }),

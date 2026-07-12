@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v24-settings-icons";
+const CACHE_VERSION = "v27-audience-brand-content";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -20,6 +20,11 @@ const PRECACHE_URLS = [
   "./manifest.webmanifest",
   "./assets/prolinker-mark.png",
   "./assets/prolinker-logo.png",
+  "./assets/brand-imagery/employer/people-reviewing-work.jpg",
+  "./assets/brand-imagery/employer/team-at-work.jpg",
+  "./assets/brand-imagery/freelancer/independent-creative.jpg",
+  "./assets/brand-imagery/freelancer/independent-home-work.jpg",
+  "./assets/brand-imagery/freelancer/own-terms-remote-work.jpg",
   "./assets/social/facebook.svg",
   "./assets/social/linkedin.svg",
   "./assets/social/instagram.svg",

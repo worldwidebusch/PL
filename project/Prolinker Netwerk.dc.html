@@ -12,65 +12,106 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F5F7F9; --surface:#fff; --panel:#F8FAFC; --text:#10273A; --muted:#617286; --faint:#91A0B0; --border:#DCE4EB; --hair:#E9EEF3; --blue:#2F82C8; --blue-dark:#1767AA; --orange:#ED8500; --green:#2FA95B; }
-  :root[data-theme="dark"] { --bg:#101820; --surface:#17232D; --panel:#121D26; --text:#F5F8FA; --muted:#B4C1CC; --faint:#81909D; --border:#31414E; --hair:#263541; }
+  :root { --bg:#F3F4F6; --surface:#fff; --panel:#F8FAFC; --text:#152431; --muted:#424444; --faint:#8C8E8F; --border:#DCDFE2; --hair:#ECEEF0; --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; --green:#2FA95B; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --surface:#152431; --panel:#0F1A23; --text:#F3F4F6; --muted:#B4C1CC; --faint:#8C8E8F; --border:#2C3E4E; --hair:#1C2C3A; }
   * { box-sizing:border-box; } html,body { margin:0; min-height:100%; }
-  body { background:var(--bg); color:var(--text); font-family:'Geist',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body { background:var(--bg); color:var(--text); font-family:'Lato',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; } button,input { font:inherit; } button { -webkit-tap-highlight-color:transparent; }
-  button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid rgba(47,130,200,.23); outline-offset:2px; }
-  .plk-shell-header { height:58px; background:var(--surface); border-bottom:1px solid var(--border); position:relative; z-index:50; }
-  .plk-shell-inner { max-width:1240px; height:100%; margin:0 auto; padding:0 22px; display:flex; align-items:center; gap:24px; }
-  .plk-logo { width:112px; height:auto; display:block; } .plk-header-links { margin-left:auto; display:flex; align-items:center; gap:22px; font-size:13px; font-weight:550; }
-  .plk-header-link:hover { color:var(--blue); } .plk-account-btn { min-height:38px; border:0; background:transparent; padding:4px 6px; display:flex; align-items:center; gap:9px; color:var(--text); cursor:pointer; }
-  .plk-avatar { width:31px; height:31px; border-radius:50%; background:#E6F1FB; color:var(--blue-dark); border:1px solid #C9DEEF; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
-  .plk-account-menu { position:absolute; right:0; top:44px; width:278px; background:var(--surface); border:1px solid var(--border); border-radius:8px; box-shadow:0 18px 42px rgba(16,39,58,.16); overflow:hidden; z-index:70; }
-  .plk-menu-link { display:grid; grid-template-columns:30px 1fr; gap:10px; padding:9px 12px; border-bottom:1px solid var(--hair); } .plk-menu-link:hover { background:var(--panel); }
-  .plk-menu-icon { width:28px; height:28px; border-radius:6px; background:#EDF4FA; color:var(--blue-dark); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; }
-  .plk-menu-label { display:block; font-size:13px; font-weight:650; line-height:1.2; } .plk-menu-desc { display:block; margin-top:2px; color:var(--faint); font-size:10.5px; line-height:1.25; }
-  .plk-main { max-width:1080px; width:100%; margin:0 auto; padding:38px 24px 80px; }
-  .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; }
-  .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-dark); }
-  .plk-title { margin:8px 0 0; font-size:29px; line-height:1.15; letter-spacing:-.025em; } .plk-subtitle { margin:8px 0 0; max-width:650px; color:var(--muted); font-size:14px; line-height:1.55; }
-  .plk-btn { min-height:38px; padding:0 14px; border:1px solid var(--border); border-radius:7px; background:var(--surface); color:var(--text); cursor:pointer; font-size:12.5px; font-weight:650; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
-  .plk-btn:hover { border-color:#9CBAD3; color:var(--blue-dark); } .plk-btn-primary { border-color:var(--blue); background:var(--blue); color:#fff; } .plk-btn-primary:hover { background:var(--blue-dark); color:#fff; }
-  .plk-btn-danger { color:#9D3F35; } .plk-btn:disabled { opacity:.55; cursor:wait; }
-  .plk-toolbar { margin-top:25px; border:1px solid var(--border); border-radius:8px; background:var(--surface); padding:11px; display:flex; align-items:center; gap:10px; }
-  .plk-view-switch { display:flex; border:1px solid var(--border); border-radius:7px; overflow:hidden; flex-shrink:0; } .plk-view-switch button { min-width:82px; height:36px; border:0; border-right:1px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; font-size:12px; font-weight:650; }
-  .plk-view-switch button:last-child { border-right:0; } .plk-view-switch button.active { background:#EAF3FB; color:var(--blue-dark); }
-  .plk-search { flex:1; display:flex; align-items:center; border:1px solid var(--border); border-radius:7px; background:var(--panel); min-width:180px; }
-  .plk-search input { width:100%; min-height:36px; padding:0 11px; border:0; background:transparent; color:var(--text); outline:none; font-size:12.5px; } .plk-search input::placeholder { color:var(--faint); }
-  .plk-counts { color:var(--muted); font-size:11.5px; white-space:nowrap; }
-  .plk-layout { margin-top:16px; display:grid; grid-template-columns:minmax(0,1.7fr) minmax(280px,.85fr); gap:16px; align-items:start; }
-  .plk-card { border:1px solid var(--border); border-radius:8px; background:var(--surface); overflow:hidden; } .plk-card-head { min-height:52px; padding:13px 16px; border-bottom:1px solid var(--hair); display:flex; align-items:center; justify-content:space-between; gap:14px; }
-  .plk-card-title { margin:0; font-size:15px; font-weight:700; } .plk-card-note { color:var(--faint); font-size:11px; }
-  .plk-invite { display:grid; grid-template-columns:40px minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--hair); } .plk-invite:last-child { border-bottom:0; }
-  .plk-person-avatar { width:40px; height:40px; border-radius:50%; background:var(--person-bg); color:#24557C; border:1px solid rgba(36,85,124,.12); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
-  .plk-person-name { font-size:13px; font-weight:700; } .plk-person-meta { margin-top:3px; color:var(--muted); font-size:11px; line-height:1.35; }
-  .plk-actions { display:flex; gap:6px; } .plk-actions .plk-btn { min-height:32px; padding:0 10px; font-size:11px; }
-  .plk-member { display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:12px; align-items:center; padding:13px 16px; border-bottom:1px solid var(--hair); } .plk-member:last-child { border-bottom:0; } .plk-member:hover { background:var(--panel); }
-  .plk-member .plk-person-avatar { width:42px; height:42px; } .plk-skills { margin-top:6px; display:flex; flex-wrap:wrap; gap:5px; } .plk-skill { padding:2px 6px; border-radius:4px; background:var(--panel); border:1px solid var(--hair); color:var(--muted); font-size:9.5px; }
-  .plk-profile-link { color:var(--blue-dark); font-size:11px; font-weight:700; } .plk-profile-link:hover { text-decoration:underline; }
-  .plk-empty { padding:34px 16px; color:var(--muted); text-align:center; font-size:12.5px; }
-  .plk-form { padding:15px; display:grid; gap:10px; } .plk-field label { display:block; margin-bottom:5px; color:var(--muted); font-size:10.5px; font-weight:650; }
-  .plk-field input { width:100%; height:38px; border:1px solid var(--border); border-radius:6px; background:var(--panel); padding:0 10px; color:var(--text); font-size:12px; } .plk-field input:focus { border-color:var(--blue); outline:none; background:var(--surface); }
-  .plk-help { color:var(--faint); font-size:10.5px; line-height:1.45; } .plk-wa { width:100%; background:#22A65A; border-color:#22A65A; color:#fff; } .plk-wa:hover { background:#168346; color:#fff; }
-  .plk-outbound { padding:12px 15px; border-top:1px solid var(--hair); } .plk-outbound-row { display:flex; justify-content:space-between; gap:10px; padding:7px 0; color:var(--muted); font-size:11px; border-bottom:1px solid var(--hair); } .plk-outbound-row:last-child { border-bottom:0; }
-  .plk-graph { position:relative; min-height:480px; overflow:hidden; background:radial-gradient(circle at center,rgba(47,130,200,.10) 0 1px,transparent 2px),radial-gradient(circle at center,transparent 0 25%,rgba(47,130,200,.08) 25.2%,transparent 25.5% 48%,rgba(47,130,200,.06) 48.2%,transparent 48.5%); }
-  .plk-graph-line { position:absolute; left:50%; top:50%; height:1px; width:34%; background:var(--border); transform-origin:0 50%; z-index:1; }
-  .plk-graph-center { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:74px; height:74px; border-radius:50%; background:var(--blue); color:#fff; border:7px solid rgba(47,130,200,.14); box-shadow:0 7px 24px rgba(16,39,58,.16); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; z-index:4; }
-  .plk-graph-node { position:absolute; transform:translate(-50%,-50%); width:96px; text-align:center; z-index:3; } .plk-node-avatar { margin:0 auto; width:49px; height:49px; border-radius:50%; border:3px solid var(--surface); box-shadow:0 2px 9px rgba(16,39,58,.16); display:flex; align-items:center; justify-content:center; background:var(--person-bg); color:#24557C; font-size:11px; font-weight:800; }
-  .plk-node-name { display:block; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10.5px; font-weight:700; } .plk-node-role { display:block; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9px; }
-  .plk-loading { margin-top:20px; padding:38px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--muted); text-align:center; font-size:13px; }
-  .plk-error { margin-top:20px; padding:14px; border:1px solid #E7B4A9; border-radius:8px; background:#FFF7F5; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:12.5px; }
-  .plk-toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:100; max-width:calc(100vw - 28px); padding:10px 15px; border-radius:7px; background:#10273A; color:#fff; box-shadow:0 10px 32px rgba(16,39,58,.28); font-size:12px; font-weight:650; }
-  .plk-footer { max-width:1080px; margin:0 auto; padding:0 24px 28px; color:var(--faint); font-size:11px; }
-  @media(max-width:860px) { .plk-header-links{display:none}.plk-layout{grid-template-columns:1fr}.plk-graph{min-height:520px} }
-  @media(max-width:590px) {
-    .plk-shell-header{height:54px}.plk-shell-inner{padding:0 14px}.plk-logo{width:100px}.plk-account-name{display:none}.plk-account-menu{position:fixed;left:10px;right:10px;top:60px;width:auto;max-height:calc(100vh - 72px);overflow:auto}
-    .plk-main{padding:26px 14px 58px}.plk-title{font-size:25px}.plk-page-head{align-items:flex-start}.plk-page-head .plk-btn{padding:0 10px}.plk-toolbar{display:grid;grid-template-columns:1fr auto}.plk-view-switch{grid-column:1 / -1}.plk-view-switch button{flex:1}.plk-counts{font-size:10px}
-    .plk-invite{grid-template-columns:38px minmax(0,1fr)}.plk-invite .plk-actions{grid-column:2}.plk-member{grid-template-columns:40px minmax(0,1fr)}.plk-member>div:last-child{grid-column:2;display:flex;align-items:center;justify-content:space-between}.plk-graph{min-height:560px}.plk-graph-node{width:78px}.plk-footer{padding:0 14px 22px}
+  button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
+  .plk-netmain { flex:1; display:flex; flex-direction:column; position:relative; }
+  .plk-net-meta { position:absolute; left:28px; top:10px; z-index:5; }
+  .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
+  .plk-net-count { display:block; margin-top:5px; color:var(--faint); font-size:11.5px; }
+  .plk-viewswitch { position:absolute; left:50%; top:14px; transform:translateX(-50%); z-index:6; display:flex; gap:2px; padding:4px; border:1px solid var(--border); border-radius:10px; background:var(--surface); box-shadow:0 8px 22px -16px rgba(21,36,49,.45); }
+  .plk-viewswitch button { min-width:86px; height:34px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:12.5px; font-weight:650; cursor:pointer; }
+  .plk-viewswitch button.active { background:var(--blue); color:#fff; }
+  .plk-listwrap { position:absolute; left:50%; top:64px; transform:translateX(-50%); z-index:500; width:min(620px, calc(100vw - 40px)); max-height:calc(100% - 92px); overflow:auto; overscroll-behavior:contain; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 30px 70px -30px rgba(11,17,25,.5); }
+  .plk-lrow { display:flex; align-items:center; gap:12px; padding:13px 16px; border-bottom:1px solid var(--hair); }
+  .plk-lrow:last-child { border-bottom:0; }
+  .plk-lrow:hover { background:var(--panel); }
+  .plk-lava { width:42px; height:42px; flex:0 0 42px; border-radius:50%; overflow:hidden; background:#E9EFF5; color:#24557C; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
+  .plk-lava img { width:100%; height:100%; object-fit:cover; display:block; }
+  .plk-lava-pending { border:2px dashed var(--orange); background:#FFE9E2; color:#C94F2D; }
+  .plk-linfo { flex:1; min-width:0; }
+  .plk-lname { display:block; font-size:13.5px; font-weight:700; }
+  .plk-lrole { display:block; margin-top:2px; color:var(--muted); font-size:11.5px; }
+  .plk-lact { display:flex; gap:6px; }
+  .plk-lact .plk-btn { min-height:32px; padding:0 11px; font-size:11px; }
+  .plk-learned { min-width:86px; text-align:right; font-family:'Josefin Sans','Lato',sans-serif; font-size:15px; font-weight:600; color:var(--blue-dark); }
+  .plk-total-chip { position:absolute; right:24px; top:14px; z-index:6; text-align:right; padding:10px 16px; border:1px solid var(--border); border-radius:12px; background:var(--surface); box-shadow:0 10px 26px -20px rgba(21,36,49,.5); }
+  .plk-total-label { display:block; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+  .plk-total-value { display:block; margin-top:3px; font-family:'Josefin Sans','Lato',sans-serif; font-size:22px; font-weight:600; color:var(--blue-dark); }
+  .plk-listhead { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid var(--hair); background:var(--panel); }
+  .plk-sortbar { display:flex; gap:2px; padding:3px; border:1px solid var(--border); border-radius:9px; background:var(--surface); }
+  .plk-sortbar button { height:28px; padding:0 10px; border:0; border-radius:6px; background:transparent; color:var(--muted); font-size:11px; font-weight:650; cursor:pointer; }
+  .plk-sortbar button.active { background:var(--blue); color:#fff; }
+  .plk-mapwrap { position:relative; flex:1; min-height:560px; }
+  #plk-map { position:absolute; inset:0; z-index:1; }
+  .plk-map-fallback { position:absolute; left:50%; top:45%; transform:translate(-50%,-50%); z-index:2; color:var(--muted); font-size:13px; text-align:center; width:min(400px,84vw); }
+  .leaflet-div-icon { background:none !important; border:none !important; }
+  .plk-mpin { display:block; width:44px; height:44px; margin:0 auto; border-radius:50%; overflow:hidden; border:3px solid #fff; box-shadow:0 4px 12px rgba(16,39,58,.35); background:#E9EFF5; color:#24557C; text-align:center; line-height:38px; font-size:12px; font-weight:800; }
+  .plk-mpin img { width:100%; height:100%; object-fit:cover; display:block; }
+  .plk-mname { display:block; margin-top:3px; text-align:center; font-size:10px; font-weight:700; color:#152431; text-shadow:0 0 3px #fff, 0 1px 2px #fff; white-space:nowrap; }
+  .leaflet-popup-content { font-family:'Lato',system-ui,sans-serif; font-size:12.5px; }
+  .leaflet-popup-content a { color:#24476A; font-weight:700; }
+  @media(max-width:640px) { .plk-total-chip { right:14px; top:60px; } }
+  .plk-stage { position:relative; flex:1; min-height:560px; overflow:hidden; }
+  .plk-graph-line { position:absolute; left:50%; top:50%; height:1px; background:rgba(21,36,49,.13); transform-origin:0 50%; z-index:1; }
+  .plk-graph-line.dashed { height:0; background:none; border-top:1px dashed rgba(230,95,57,.4); }
+  .plk-center-wrap { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:4; text-align:center; width:130px; }
+  .plk-graph-center { margin:0 auto; width:84px; height:84px; border-radius:50%; overflow:hidden; background:var(--blue-dark); color:#fff; border:3px solid var(--surface); box-shadow:0 8px 26px rgba(16,39,58,.20); display:flex; align-items:center; justify-content:center; font-family:'Josefin Sans','Lato',sans-serif; font-size:20px; font-weight:600; }
+  .plk-graph-center img { width:100%; height:100%; object-fit:cover; display:block; }
+  .plk-node-avatar img { width:100%; height:100%; object-fit:cover; display:block; border-radius:50%; }
+  .plk-center-name { display:block; margin-top:8px; font-size:12.5px; font-weight:700; }
+  .plk-center-sub { display:block; margin-top:2px; color:var(--faint); font-size:10px; }
+  .plk-graph-node { position:absolute; transform:translate(-50%,-50%); width:104px; text-align:center; z-index:3; border:0; background:none; padding:0; cursor:pointer; }
+  .plk-node-avatar { margin:0 auto; width:52px; height:52px; border-radius:50%; overflow:hidden; border:3px solid var(--surface); box-shadow:0 3px 10px rgba(16,39,58,.14); display:flex; align-items:center; justify-content:center; background:var(--person-bg,#E9EFF5); color:#24557C; font-size:12px; font-weight:800; transition:transform .15s ease, box-shadow .15s ease; }
+  .plk-graph-node:hover .plk-node-avatar { transform:scale(1.08); box-shadow:0 8px 20px rgba(16,39,58,.26); }
+  .plk-node-pending .plk-node-avatar { border:2px dashed var(--orange); background:#FFE9E2; color:#C94F2D; }
+  .plk-node-name { display:block; margin-top:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; font-weight:700; }
+  .plk-node-role { display:block; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:9.5px; }
+  .plk-node-pending .plk-node-role { color:#C94F2D; font-weight:700; }
+  .plk-corner { position:absolute; right:24px; bottom:24px; z-index:6; display:flex; flex-direction:column; align-items:flex-end; gap:9px; }
+  .plk-mini { width:42px; height:42px; border:1px solid var(--border); border-radius:10px; background:var(--surface); color:var(--muted); cursor:pointer; font-size:16px; display:inline-flex; align-items:center; justify-content:center; }
+  .plk-mini:hover { border-color:var(--blue); color:var(--blue-dark); }
+  .plk-fab { min-height:48px; padding:0 20px; border:1px solid var(--orange); border-radius:12px; background:var(--orange); color:#fff; cursor:pointer; font-size:14px; font-weight:750; display:inline-flex; align-items:center; gap:8px; box-shadow:0 14px 30px -14px rgba(230,95,57,.55); }
+  .plk-fab:hover { background:#C94F2D; border-color:#C94F2D; }
+  .plk-pop { position:absolute; right:24px; bottom:84px; z-index:8; width:300px; max-width:calc(100vw - 40px); border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 24px 60px -20px rgba(11,17,25,.35); padding:16px; }
+  .plk-pop-title { margin:0 0 10px; font-size:14.5px; font-weight:700; }
+  .plk-field label { display:block; margin-bottom:5px; color:var(--muted); font-size:10.5px; font-weight:650; }
+  .plk-field { margin-bottom:10px; }
+  .plk-field input { width:100%; height:40px; border:1px solid var(--border); border-radius:8px; background:var(--panel); padding:0 11px; color:var(--text); font-size:12.5px; }
+  .plk-field input:focus { border-color:var(--blue); outline:none; background:var(--surface); }
+  .plk-help { color:var(--faint); font-size:10.5px; line-height:1.45; margin-bottom:10px; }
+  .plk-btn { min-height:40px; padding:0 14px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); cursor:pointer; font-size:12.5px; font-weight:650; display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+  .plk-btn:hover { border-color:var(--blue); color:var(--blue-dark); }
+  .plk-btn-primary { border-color:var(--blue); background:var(--blue); color:#fff; } .plk-btn-primary:hover { background:var(--blue-dark); color:#fff; }
+  .plk-btn-danger { color:#9D3F35; }
+  .plk-btn:disabled,.plk-btn[aria-disabled="true"] { opacity:.55; cursor:not-allowed; }
+  .plk-wa { width:100%; background:#22A65A; border-color:#22A65A; color:#fff; } .plk-wa:hover { background:#168346; border-color:#168346; color:#fff; }
+  .plk-method-switch { display:flex; gap:2px; padding:4px; border:1px solid var(--border); border-radius:10px; background:var(--panel); margin-bottom:12px; }
+  .plk-method-switch button { flex:1; height:34px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:12px; font-weight:650; cursor:pointer; }
+  .plk-method-switch button.active { background:var(--surface); color:var(--blue-dark); box-shadow:0 1px 4px rgba(16,39,58,.14); }
+  .plk-linkbox { border:1px solid var(--hair); border-radius:8px; background:var(--panel); padding:10px 12px; font-size:11.5px; color:var(--muted); word-break:break-all; margin-bottom:10px; }
+  .plk-mailbtn { width:100%; background:var(--blue); border-color:var(--blue); color:#fff; } .plk-mailbtn:hover { background:var(--blue-dark); border-color:var(--blue-dark); color:#fff; }
+  .plk-copybtn { width:100%; background:var(--orange); border-color:var(--orange); color:#fff; } .plk-copybtn:hover { background:#C94F2D; border-color:#C94F2D; color:#fff; }
+  .plk-personpop { position:absolute; left:50%; bottom:26px; transform:translateX(-50%); z-index:8; width:320px; max-width:calc(100vw - 40px); border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 24px 60px -20px rgba(11,17,25,.35); padding:15px; text-align:center; }
+  .plk-personpop .plk-actions { margin-top:12px; display:flex; justify-content:center; gap:8px; }
+  .plk-empty-center { position:absolute; left:50%; top:58%; transform:translateX(-50%); text-align:center; color:var(--muted); font-size:13px; width:min(400px, 84vw); line-height:1.55; }
+  .plk-loading { margin:80px auto 0; max-width:420px; padding:38px; border:1px solid var(--border); border-radius:14px; background:var(--surface); color:var(--muted); text-align:center; font-size:13px; }
+  .plk-error { margin:80px auto 0; max-width:520px; padding:16px; border:1px solid #FF9D82; border-radius:12px; background:#FFE9E2; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:14px; font-size:12.5px; }
+  .plk-toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:100; max-width:calc(100vw - 28px); padding:10px 15px; border-radius:8px; background:#152431; color:#fff; box-shadow:0 10px 32px rgba(16,39,58,.28); font-size:12px; font-weight:650; }
+  .plk-footer { padding:0 24px 18px; color:var(--faint); font-size:11px; text-align:center; }
+  @media(max-width:640px) {
+    .plk-net-meta { left:16px; top:6px; }
+    .plk-stage { min-height:520px; }
+    .plk-graph-node { width:84px; } .plk-node-avatar { width:44px; height:44px; }
+    .plk-graph-center { width:70px; height:70px; font-size:17px; border-width:6px; }
+    .plk-center-wrap { width:110px; }
+    .plk-corner { right:14px; bottom:16px; }
+    .plk-pop { right:14px; bottom:74px; }
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -83,23 +124,65 @@
 <div style="min-height:100vh; display:flex; flex-direction:column;">
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
     <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="network"></prolinker-account-menu></div>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="network"></prolinker-account-menu></div>
   </header>
 
-  <main class="plk-main" style="flex:1;">
-    <div class="plk-page-head"><div><div class="plk-eyebrow">Connecties</div><h1 class="plk-title">Mijn netwerk</h1><p class="plk-subtitle">Vind professionals, beheer uitnodigingen en bouw een netwerk dat bij iedere opdracht direct inzetbaar is.</p></div><button class="plk-btn" type="button" onClick="{{ onRefresh }}" disabled="{{ refreshing }}">{{ refreshLabel }}</button></div>
+  <main class="plk-netmain">
     <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">Je netwerk wordt geladen...</div></sc-if>
     <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ errorMessage }}</span><button class="plk-btn" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
     <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
-      <form class="plk-toolbar" onSubmit="{{ onSearchSubmit }}"><div class="plk-view-switch" aria-label="Weergave"><button type="button" class="{{ listClass }}" onClick="{{ onList }}">Lijst</button><button type="button" class="{{ graphClass }}" onClick="{{ onGraph }}">Netwerk</button></div><div class="plk-search"><input type="search" value="{{ query }}" onInput="{{ onQuery }}" placeholder="Zoek op naam, expertise of locatie" aria-label="Netwerk doorzoeken"><button type="submit" style="height:36px; padding:0 12px; border:0; border-left:1px solid var(--border); background:transparent; color:var(--blue-dark); cursor:pointer; font-size:11px; font-weight:700;">Zoek</button></div><span class="plk-counts">{{ connectedCount }} connecties</span></form>
-      <div class="plk-layout">
-        <div>
-          <sc-if value="{{ hasInvitations }}" hint-placeholder-val="{{ true }}"><section class="plk-card" style="margin-bottom:16px;" aria-labelledby="pending-title"><div class="plk-card-head"><h2 class="plk-card-title" id="pending-title">Openstaande uitnodigingen</h2><span class="plk-card-note">{{ invitationCount }} wachtend</span></div><sc-for list="{{ invitations }}" as="invite" hint-placeholder-count="2"><div class="plk-invite"><span class="plk-person-avatar" style="--person-bg:{{ invite.color }};">{{ invite.initials }}</span><div><div class="plk-person-name">{{ invite.name }}</div><div class="plk-person-meta">{{ invite.headline }} · {{ invite.mutualLabel }}</div></div><div class="plk-actions"><button class="plk-btn plk-btn-primary" type="button" onClick="{{ invite.onAccept }}" disabled="{{ invite.busy }}">Accepteren</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ invite.onReject }}" disabled="{{ invite.busy }}">Weigeren</button></div></div></sc-for></section></sc-if>
-          <sc-if value="{{ showList }}" hint-placeholder-val="{{ true }}"><section class="plk-card" aria-labelledby="connections-title"><div class="plk-card-head"><h2 class="plk-card-title" id="connections-title">Connecties</h2><span class="plk-card-note">Gesorteerd op gedeelde connecties</span></div><sc-if value="{{ hasMembers }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ members }}" as="member" hint-placeholder-count="6"><div class="plk-member"><span class="plk-person-avatar" style="--person-bg:{{ member.color }};">{{ member.initials }}</span><div><div class="plk-person-name">{{ member.name }}</div><div class="plk-person-meta">{{ member.headline }} · {{ member.location }} · {{ member.mutualLabel }}</div><div class="plk-skills"><sc-for list="{{ member.skills }}" as="skill" hint-placeholder-count="2"><span class="plk-skill">{{ skill }}</span></sc-for></div></div><div style="text-align:right;"><a class="plk-profile-link" href="{{ member.profileHref }}">Bekijk profiel</a><div style="margin-top:8px;"><button class="plk-btn plk-btn-danger" type="button" onClick="{{ member.onRemove }}" disabled="{{ member.busy }}" style="min-height:30px; padding:0 9px; font-size:10.5px;">Verwijderen</button></div></div></div></sc-for></sc-if><sc-if value="{{ noMembers }}" hint-placeholder-val="{{ false }}"><div class="plk-empty">Geen connecties gevonden. Probeer een andere zoekterm.</div></sc-if></section></sc-if>
-          <sc-if value="{{ showGraph }}" hint-placeholder-val="{{ false }}"><section class="plk-card"><div class="plk-card-head"><h2 class="plk-card-title">Netwerkweergave</h2><span class="plk-card-note">Klik op een profiel om het te openen</span></div><div class="plk-graph"><sc-for list="{{ graphLines }}" as="line" hint-placeholder-count="6"><span class="plk-graph-line" style="transform:rotate({{ line.angle }}deg);"></span></sc-for><span class="plk-graph-center">{{ userInitials }}</span><sc-for list="{{ graphMembers }}" as="member" hint-placeholder-count="6"><a class="plk-graph-node" href="{{ member.profileHref }}" style="left:{{ member.x }}%; top:{{ member.y }}%;"><span class="plk-node-avatar" style="--person-bg:{{ member.color }};">{{ member.initials }}</span><span class="plk-node-name">{{ member.name }}</span><span class="plk-node-role">{{ member.headline }}</span></a></sc-for></div></section></sc-if>
+      <div class="plk-net-meta"><span class="plk-eyebrow">Mijn netwerk</span><span class="plk-net-count">{{ countLabel }}</span></div>
+      <div class="plk-viewswitch" role="tablist" aria-label="Weergave"><button type="button" class="{{ mapTabClass }}" onClick="{{ onViewMap }}">Kaart</button><button type="button" class="{{ listTabClass }}" onClick="{{ onViewList }}">Lijst</button></div>
+        <div class="plk-mapwrap" aria-label="Netwerkkaart">
+          <div id="plk-map"></div>
+          <div class="plk-total-chip"><span class="plk-total-label">Verdiend via je netwerk</span><span class="plk-total-value">{{ totalEarnedLabel }}</span></div>
+          <sc-if value="{{ mapError }}" hint-placeholder-val="{{ false }}"><div class="plk-map-fallback">De kaart kon niet worden geladen. Controleer je internetverbinding en probeer het opnieuw.</div></sc-if>
+          <sc-if value="{{ viewList }}" hint-placeholder-val="{{ false }}">
+        <div class="plk-listwrap" aria-label="Netwerklijst">
+          <div class="plk-listhead"><div><span class="plk-total-label">Verdiend via je netwerk</span><span class="plk-total-value">{{ totalEarnedLabel }}</span></div><div class="plk-sortbar" role="tablist" aria-label="Sorteren"><button type="button" class="{{ sortEarnedClass }}" onClick="{{ onSortEarned }}">Verdiensten</button><button type="button" class="{{ sortNameClass }}" onClick="{{ onSortName }}">Naam</button><button type="button" class="{{ sortMutualClass }}" onClick="{{ onSortMutual }}">Gedeeld</button></div></div>
+          <sc-for list="{{ pendingList }}" as="pi" hint-placeholder-count="1">
+            <div class="plk-lrow"><span class="plk-lava plk-lava-pending">{{ pi.initials }}</span><span class="plk-linfo"><span class="plk-lname">{{ pi.name }}</span><span class="plk-lrole">{{ pi.headline }} · Wacht op jou</span></span><span class="plk-lact"><button class="plk-btn plk-btn-primary" type="button" onClick="{{ pi.onAccept }}" disabled="{{ pi.busy }}">Accepteren</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ pi.onReject }}" disabled="{{ pi.busy }}">Weigeren</button></span></div>
+          </sc-for>
+          <sc-for list="{{ memberList }}" as="mi" hint-placeholder-count="5">
+            <div class="plk-lrow"><span class="plk-lava"><sc-if value="{{ mi.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ mi.photo }}" alt=""></sc-if><sc-if value="{{ mi.noPhoto }}" hint-placeholder-val="{{ true }}">{{ mi.initials }}</sc-if></span><span class="plk-linfo"><span class="plk-lname">{{ mi.name }}</span><span class="plk-lrole">{{ mi.headline }}</span></span><span class="plk-learned">{{ mi.earnedLabel }}</span><span class="plk-lact"><a class="plk-btn" href="{{ mi.profileHref }}">Profiel</a><button class="plk-btn plk-btn-danger" type="button" onClick="{{ mi.onRemove }}" disabled="{{ mi.busy }}">Verwijderen</button></span></div>
+          </sc-for>
         </div>
-        <aside class="plk-card" aria-labelledby="invite-title"><div class="plk-card-head"><h2 class="plk-card-title" id="invite-title">Uitnodigen via WhatsApp</h2></div><div class="plk-form"><div class="plk-field"><label for="invite-name">Naam</label><input id="invite-name" type="text" value="{{ inviteName }}" onInput="{{ onInviteName }}" placeholder="Voor- en achternaam" autocomplete="name"></div><div class="plk-field"><label for="invite-phone">WhatsApp-nummer</label><input id="invite-phone" type="tel" value="{{ invitePhone }}" onInput="{{ onInvitePhone }}" placeholder="+31 6 12345678" autocomplete="tel"></div><div class="plk-help">Je opent WhatsApp met een persoonlijke uitnodiging. Er wordt niets verstuurd zonder jouw bevestiging.</div><a class="plk-btn plk-wa" href="{{ inviteHref }}" target="_blank" rel="noopener noreferrer" onClick="{{ onInvite }}" aria-disabled="{{ inviteDisabled }}">Open WhatsApp</a></div><sc-if value="{{ hasOutbound }}" hint-placeholder-val="{{ false }}"><div class="plk-outbound"><div style="font-size:11px; font-weight:700; margin-bottom:5px;">Recent uitgenodigd</div><sc-for list="{{ outbound }}" as="out" hint-placeholder-count="2"><div class="plk-outbound-row"><span>{{ out.name }}</span><span>In afwachting</span></div></sc-for></div></sc-if></aside>
+          </sc-if>
+        </div>
+
+      <div class="plk-corner">
+        <button class="plk-mini" type="button" onClick="{{ onRefresh }}" disabled="{{ refreshing }}" aria-label="Verversen" title="Verversen">&#8635;</button>
+        <button class="plk-fab" type="button" onClick="{{ onToggleInvite }}">+ Uitnodigen</button>
       </div>
+
+      <sc-if value="{{ showInvite }}" hint-placeholder-val="{{ false }}">
+        <div class="plk-pop" role="dialog" aria-label="Iemand uitnodigen">
+          <h2 class="plk-pop-title">Nodig iemand uit</h2>
+          <div class="plk-method-switch" role="tablist" aria-label="Uitnodigen via">
+            <button type="button" class="{{ waClass }}" onClick="{{ onMethodWa }}">WhatsApp</button>
+            <button type="button" class="{{ mailClass }}" onClick="{{ onMethodMail }}">E-mail</button>
+            <button type="button" class="{{ linkClass }}" onClick="{{ onMethodLink }}">Link</button>
+          </div>
+          <sc-if value="{{ methodWa }}" hint-placeholder-val="{{ true }}">
+            <div class="plk-field"><label for="invite-name">Naam</label><input id="invite-name" type="text" value="{{ inviteName }}" onInput="{{ onInviteName }}" placeholder="Voor- en achternaam" autocomplete="name"></div>
+            <div class="plk-field"><label for="invite-phone">WhatsApp-nummer</label><input id="invite-phone" type="tel" value="{{ invitePhone }}" onInput="{{ onInvitePhone }}" placeholder="+31 6 12345678" autocomplete="tel"></div>
+            <div class="plk-help">Je opent WhatsApp met een persoonlijke uitnodiging. Er wordt niets verstuurd zonder jouw bevestiging.</div>
+            <a class="plk-btn plk-wa" href="{{ inviteHref }}" target="_blank" rel="noopener noreferrer" onClick="{{ onInvite }}" aria-disabled="{{ inviteDisabled }}">Open WhatsApp</a>
+          </sc-if>
+          <sc-if value="{{ methodMail }}" hint-placeholder-val="{{ false }}">
+            <div class="plk-field"><label for="invite-name-mail">Naam</label><input id="invite-name-mail" type="text" value="{{ inviteName }}" onInput="{{ onInviteName }}" placeholder="Voor- en achternaam" autocomplete="name"></div>
+            <div class="plk-field"><label for="invite-email">E-mailadres</label><input id="invite-email" type="email" value="{{ inviteEmail }}" onInput="{{ onInviteEmail }}" placeholder="naam@bedrijf.nl" autocomplete="email"></div>
+            <div class="plk-help">Je opent je eigen mailprogramma met een persoonlijke uitnodiging en jouw referral-link.</div>
+            <a class="plk-btn plk-mailbtn" href="{{ emailHref }}" onClick="{{ onEmailInvite }}" aria-disabled="{{ emailDisabled }}">Open e-mail</a>
+          </sc-if>
+          <sc-if value="{{ methodLink }}" hint-placeholder-val="{{ false }}">
+            <div class="plk-help">Deel je persoonlijke link. Iedereen die zich hiermee aanmeldt, komt via jouw aanbeveling binnen.</div>
+            <div class="plk-linkbox">{{ refLink }}</div>
+            <button class="plk-btn plk-copybtn" type="button" onClick="{{ onCopyLink }}">Kopieer link</button>
+          </sc-if>
+        </div>
+      </sc-if>
+
     </sc-if>
   </main>
   <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Jouw netwerk blijft van jou.</footer>
@@ -108,7 +191,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:980}}">
 class Component extends DCLogic {
-  state = { loading: true, refreshing: false, error: '', data: null, session: null, view: 'list', query: '', menuOpen: false, theme: 'light', busyId: '', inviteName: '', invitePhone: '', toast: '' };
+  state = { loading: true, refreshing: false, error: '', data: null, session: null, menuOpen: false, theme: 'light', busyId: '', inviteName: '', invitePhone: '', inviteEmail: '', inviteMethod: 'whatsapp', toast: '', inviteOpen: false, selectedId: '', radius: 240, view: 'map', listSort: 'earned', mapError: false };
 
   componentDidMount() {
     document.documentElement.setAttribute('lang', 'nl');
@@ -118,17 +201,105 @@ class Component extends DCLogic {
     if (!session) return;
     this.setState({ session: session });
     this.load(false);
-    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
+    this._sizeHandler = () => this.setState({ radius: this.computeRadius() });
+    window.addEventListener('resize', this._sizeHandler);
+    this._sizeHandler();
+    this._keyHandler = (event) => { if (event.key === 'Escape') this.setState({ inviteOpen: false, selectedId: '' }); };
     window.addEventListener('keydown', this._keyHandler);
   }
 
-  componentWillUnmount() { if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler); clearTimeout(this._toastTimer); }
+  componentWillUnmount() {
+    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
+    if (this._sizeHandler) window.removeEventListener('resize', this._sizeHandler);
+    clearTimeout(this._toastTimer);
+    this.destroyMap();
+  }
+
+  earningsFor(name) {
+    let hash = 2166136261;
+    const src = String(name || '');
+    for (let i = 0; i < src.length; i += 1) { hash ^= src.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+    const gross = 600 + ((hash >>> 0) % 92) * 50;
+    return { gross: gross, earned: Math.round(gross * 2) / 100 };
+  }
+
+  formatMoney(value) {
+    try { return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(value); }
+    catch (e) { return '\u20ac ' + value.toFixed(2); }
+  }
+
+  cityCoords(location) {
+    const table = { 'amsterdam': [52.3676, 4.9041], 'rotterdam': [51.9244, 4.4777], 'den haag': [52.0705, 4.3007], 'utrecht': [52.0907, 5.1214], 'eindhoven': [51.4416, 5.4697], 'groningen': [53.2194, 6.5665], 'haarlem': [52.3874, 4.6462], 'leiden': [52.1601, 4.4970], 'delft': [52.0116, 4.3571], 'breda': [51.5719, 4.7683], 'nijmegen': [51.8126, 5.8372], 'tilburg': [51.5606, 5.0919], 'almere': [52.3508, 5.2647], 'arnhem': [51.9851, 5.8987], 'maastricht': [50.8514, 5.6910], 'zwolle': [52.5168, 6.0830], 'gent': [51.0543, 3.7174], 'antwerpen': [51.2194, 4.4025], 'brussel': [50.8503, 4.3517], 'leuven': [50.8796, 4.7009], 'brugge': [51.2093, 3.2247] };
+    const key = String(location || '').toLowerCase().trim();
+    return table[key] || null;
+  }
+
+  ensureLeaflet() {
+    if (window.L) return Promise.resolve();
+    if (this._leafletPromise) return this._leafletPromise;
+    this._leafletPromise = new Promise((resolve, reject) => {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(css);
+      const js = document.createElement('script');
+      js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      js.onload = () => resolve();
+      js.onerror = () => { this._leafletPromise = null; reject(new Error('leaflet')); };
+      document.head.appendChild(js);
+    });
+    return this._leafletPromise;
+  }
+
+  destroyMap() { if (this._map) { try { this._map.remove(); } catch (e) {} this._map = null; } }
+
+  initMap() {
+    const el = document.getElementById('plk-map');
+    if (!el) return;
+    this.ensureLeaflet().then(() => {
+      const node = document.getElementById('plk-map');
+      if (!node || node._leaflet_id) return;
+      const map = window.L.map(node, { scrollWheelZoom: false });
+      this._map = map;
+      window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+      const data = this.state.data || { members: [] };
+      const points = [];
+      (data.members || []).forEach((item, index) => {
+        const base = this.cityCoords(item.location);
+        if (!base) return;
+        let hash = 0; const src = String(item.id || item.name || index);
+        for (let i = 0; i < src.length; i += 1) hash = (hash * 31 + src.charCodeAt(i)) >>> 0;
+        const lat = base[0] + (((hash % 100) - 50) / 3200);
+        const lng = base[1] + ((((hash >> 7) % 100) - 50) / 2000);
+        const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || '';
+        const initials = item.initials || String(item.name || '?').split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase();
+        const inner = photo ? '<img src="' + photo + '" alt="">' : initials;
+        const icon = window.L.divIcon({ html: '<span class="plk-mpin">' + inner + '</span><span class="plk-mname">' + String(item.name || '').replace(/</g, '&lt;') + '</span>', iconSize: [90, 66], iconAnchor: [45, 33] });
+        const marker = window.L.marker([lat, lng], { icon: icon }).addTo(map);
+        const headline = String(item.headline || '').replace(/</g, '&lt;');
+        marker.bindPopup('<b>' + String(item.name || '').replace(/</g, '&lt;') + '</b><br>' + headline + (item.profileHref ? '<br><a href="' + item.profileHref + '">Bekijk profiel</a>' : ''));
+        points.push([lat, lng]);
+      });
+      if (points.length) map.fitBounds(points, { padding: [70, 70], maxZoom: 10 });
+      else map.setView([52.1, 5.1], 7);
+      setTimeout(() => { try { map.invalidateSize(); } catch (e) {} }, 120);
+    }).catch(() => this.setState({ mapError: true }));
+  }
+
+  componentDidUpdate() {
+    const el = document.getElementById('plk-map');
+    if (el && !el._leaflet_id) this.initMap();
+  }
+
+  computeRadius() {
+    const width = window.innerWidth || 1200;
+    const height = window.innerHeight || 800;
+    return Math.max(130, Math.min(250, width * 0.5 - 90, (height - 320) / 2));
+  }
 
   async load(refresh) {
     this.setState({ loading: !this.state.data, refreshing: !!refresh, error: '' });
     try {
-      const options = { query: this.state.query };
-      const data = refresh ? await window.ProLinkerApp.network.refresh(options) : await window.ProLinkerApp.network.list(options);
+      const data = refresh ? await window.ProLinkerApp.network.refresh({}) : await window.ProLinkerApp.network.list({});
       this.setState({ data: data, loading: false, refreshing: false, error: '' });
     } catch (error) { this.setState({ loading: false, refreshing: false, error: error && error.message ? error.message : 'Netwerk laden is niet gelukt.' }); }
   }
@@ -142,6 +313,7 @@ class Component extends DCLogic {
       else if (kind === 'reject') await window.ProLinkerApp.network.reject(id);
       else await window.ProLinkerApp.network.remove(id);
       this.toast(kind === 'accept' ? name + ' is aan je netwerk toegevoegd.' : kind === 'reject' ? 'Uitnodiging geweigerd.' : name + ' is uit je netwerk verwijderd.');
+      this.setState({ selectedId: '' });
       await this.load(false);
     } catch (error) { this.setState({ error: error && error.message ? error.message : 'Actie uitvoeren is niet gelukt.' }); }
     this.setState({ busyId: '' });
@@ -155,11 +327,42 @@ class Component extends DCLogic {
     if (!name) { if (event && event.preventDefault) event.preventDefault(); this.toast('Vul eerst een naam in.'); return; }
     try {
       await window.ProLinkerApp.network.invite({ name: name, phone: this.state.invitePhone });
-      this.setState({ inviteName: '', invitePhone: '' });
+      this.setState({ inviteName: '', invitePhone: '', inviteOpen: false });
       this.toast('WhatsApp is geopend. Verstuur het bericht om de uitnodiging af te ronden.');
       await this.load(false);
     } catch (error) { this.toast(error && error.message ? error.message : 'Uitnodiging opslaan is niet gelukt.'); }
     return href;
+  }
+
+
+  referralCode(session) {
+    const rawName = String((session && session.name) || 'member').toLowerCase();
+    const slug = rawName.normalize ? rawName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 20) : 'member';
+    const source = String((session && session.contact) || '') + '|' + rawName;
+    let hash = 2166136261;
+    for (let i = 0; i < source.length; i += 1) { hash ^= source.charCodeAt(i); hash = Math.imul(hash, 16777619); }
+    const suffix = (hash >>> 0).toString(36).slice(0, 8);
+    const code = ((slug || 'member') + '-' + suffix).replace(/[^a-z0-9-]/g, '').slice(0, 48);
+    return /^[a-z0-9-]{4,48}$/.test(code) ? code : 'member-2percent';
+  }
+
+  referralLink(session) {
+    try {
+      const url = new URL('Prolinker Login.dc.html', window.location.href);
+      url.search = '';
+      url.searchParams.set('mode', 'register');
+      url.searchParams.set('ref', this.referralCode(session));
+      return url.href;
+    } catch (e) {
+      return 'Prolinker Login.dc.html?mode=register&ref=' + encodeURIComponent(this.referralCode(session));
+    }
+  }
+
+  copyReferralLink() {
+    const link = this.referralLink(this.state.session);
+    const done = () => this.toast('Link gekopieerd. Deel hem met wie je aanbeveelt.');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, () => this.toast(link));
+    else this.toast(link);
   }
 
   toggleTheme() {
@@ -176,23 +379,75 @@ class Component extends DCLogic {
     const menuItems = window.ProLinkerApp ? window.ProLinkerApp.routes.accountMenu(role).map((item) => Object.assign({}, item, { bg: item.key === 'network' ? 'var(--panel)' : 'transparent' })) : [];
     const userName = String(session.name || (data.currentUser && data.currentUser.name) || 'ProLinker gebruiker').trim();
     const userInitials = (data.currentUser && data.currentUser.initials) || userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
-    const invitations = (data.invitations || []).map((item) => Object.assign({}, item, { mutualLabel: item.mutual + ' gedeelde connecties', busy: this.state.busyId === item.id, onAccept: () => this.act('accept', item.id, item.name), onReject: () => this.act('reject', item.id, item.name) }));
-    const members = (data.members || []).slice().sort((a, b) => b.mutual - a.mutual).map((item) => Object.assign({}, item, { mutualLabel: item.mutual + ' gedeeld', busy: this.state.busyId === item.id, onRemove: () => this.act('remove', item.id, item.name) }));
-    const graphMembers = members.slice(0, 10).map((item, index, list) => { const angle = -90 + index * (360 / Math.max(1, list.length)); const radians = angle * Math.PI / 180; return Object.assign({}, item, { x: (50 + Math.cos(radians) * 36).toFixed(2), y: (50 + Math.sin(radians) * 37).toFixed(2), angle: angle }); });
+    const invitations = (data.invitations || []).map((item) => Object.assign({}, item, { pending: true, busy: this.state.busyId === item.id, onAccept: () => this.act('accept', item.id, item.name), onReject: () => this.act('reject', item.id, item.name) }));
+    const members = (data.members || []).slice().sort((a, b) => b.mutual - a.mutual).map((item) => { const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || ''; const money = this.earningsFor(item.name); return Object.assign({}, item, { pending: false, photo: photo, hasPhoto: !!photo, noPhoto: !photo, gross: money.gross, earned: money.earned, earnedLabel: this.formatMoney(money.earned), busy: this.state.busyId === item.id, onRemove: () => this.act('remove', item.id, item.name) }); });
+    const ringSource = invitations.concat(members);
+    const radius = this.state.radius;
+    const positioned = ringSource.map((item, index, list) => {
+      const angle = -90 + index * (360 / Math.max(1, list.length));
+      const radians = angle * Math.PI / 180;
+      const organic = 0.84 + 0.24 * (((index * 53) % 7) / 6);
+      const tier = list.length > 12 && index % 2 ? 0.70 : 1;
+      const dist = radius * organic * tier;
+      const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || '';
+      return Object.assign({}, item, {
+        x: (Math.cos(radians) * dist).toFixed(1),
+        y: (Math.sin(radians) * dist).toFixed(1),
+        angle: angle.toFixed(2),
+        len: dist.toFixed(1),
+        cls: item.pending ? 'dashed' : '',
+        photo: photo, hasPhoto: !!photo, noPhoto: !photo,
+        onSelect: item.pending ? (() => this.setState({ selectedId: item.id, inviteOpen: false })) : null
+      });
+    });
+    const connectedNodes = positioned.filter((item) => !item.pending);
+    const pendingNodes = positioned.filter((item) => item.pending);
+    const selected = pendingNodes.find((item) => item.id === this.state.selectedId) || null;
     let inviteHref = '';
     try { if (this.state.inviteName.trim() && this.state.invitePhone.trim()) inviteHref = window.ProLinkerApp.network.whatsappLink({ name: this.state.inviteName, phone: this.state.invitePhone }); } catch (error) {}
+    let emailHref = '';
+    const mailName = this.state.inviteName.trim();
+    const mailTo = this.state.inviteEmail.trim();
+    if (mailName && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mailTo)) {
+      const refLink = this.referralLink(session);
+      const subject = 'Uitnodiging voor ProLinker';
+      const bodyText = 'Hoi ' + mailName + ',\n\n' + userName + ' nodigt je uit voor ProLinker. Meld je aan via jouw persoonlijke link:\n' + refLink + '\n\nTot snel!';
+      emailHref = 'mailto:' + encodeURIComponent(mailTo) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
+    }
+    const profile = session && session.profile && typeof session.profile === 'object' ? session.profile : {};
+    const userAvatar = session.avatarUrl || session.avatar || session.photoUrl || profile.pictureUrl || profile.avatarUrl || (data.currentUser && data.currentUser.avatarUrl) || '';
+    const connectedCount = data.totals.connected || members.length;
     return {
-      menuOpen: this.state.menuOpen, menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC', onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })), onCloseMenu: () => this.setState({ menuOpen: false }),
-      menuItems: menuItems, userName: userName, userInitials: userInitials, roleLabel: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
+      menuOpen: this.state.menuOpen, onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })), onCloseMenu: () => this.setState({ menuOpen: false }),
+      menuItems: menuItems, userName: userName, userInitials: userInitials, hasAvatar: !!userAvatar, noAvatar: !userAvatar, userAvatar: userAvatar,
       onTheme: () => this.toggleTheme(), themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus', onLogout: () => window.ProLinkerApp.session.logout(),
       loading: this.state.loading, ready: !this.state.loading && !this.state.error && !!this.state.data, hasError: !!this.state.error, errorMessage: this.state.error, onRetry: () => this.load(false),
-      refreshing: this.state.refreshing, refreshLabel: this.state.refreshing ? 'Verversen...' : 'Verversen', onRefresh: () => this.load(true),
-      query: this.state.query, onQuery: (event) => this.setState({ query: event.target.value }), onSearchSubmit: (event) => { event.preventDefault(); this.load(false); },
-      listClass: this.state.view === 'list' ? 'active' : '', graphClass: this.state.view === 'graph' ? 'active' : '', onList: () => this.setState({ view: 'list' }), onGraph: () => this.setState({ view: 'graph' }), showList: this.state.view === 'list', showGraph: this.state.view === 'graph',
-      connectedCount: data.totals.connected || members.length, hasInvitations: invitations.length > 0, invitationCount: invitations.length, invitations: invitations,
-      hasMembers: members.length > 0, noMembers: members.length === 0, members: members, graphMembers: graphMembers, graphLines: graphMembers.map((item) => ({ angle: item.angle })),
+      refreshing: this.state.refreshing, onRefresh: () => this.load(true),
+      countLabel: connectedCount + ' connecties' + (invitations.length ? ' · ' + invitations.length + ' wachtend' : ''),
+      ringItems: positioned, connectedNodes: connectedNodes, pendingNodes: pendingNodes,
+      viewGraph: this.state.view === 'graph', viewList: this.state.view === 'list', viewMap: this.state.view === 'map', mapError: this.state.mapError,
+      graphTabClass: this.state.view === 'graph' ? 'active' : '', listTabClass: this.state.view === 'list' ? 'active' : '', mapTabClass: this.state.view === 'map' ? 'active' : '',
+      onViewList: () => this.setState({ view: 'list', selectedId: '' }), onViewMap: () => this.setState({ view: 'map', selectedId: '' }),
+      pendingList: invitations,
+      memberList: members.slice().sort((a, b) => this.state.listSort === 'name' ? String(a.name).localeCompare(String(b.name)) : this.state.listSort === 'mutual' ? (b.mutual || 0) - (a.mutual || 0) : (b.earned || 0) - (a.earned || 0)),
+      totalEarnedLabel: this.formatMoney(members.reduce((sum, m) => sum + (m.earned || 0), 0)),
+      sortEarnedClass: this.state.listSort === 'earned' ? 'active' : '', sortNameClass: this.state.listSort === 'name' ? 'active' : '', sortMutualClass: this.state.listSort === 'mutual' ? 'active' : '',
+      onSortEarned: () => this.setState({ listSort: 'earned' }), onSortName: () => this.setState({ listSort: 'name' }), onSortMutual: () => this.setState({ listSort: 'mutual' }),
+      isEmpty: positioned.length === 0,
+      showInvite: this.state.inviteOpen, onToggleInvite: () => this.setState((state) => ({ inviteOpen: !state.inviteOpen, selectedId: '' })),
       inviteName: this.state.inviteName, invitePhone: this.state.invitePhone, onInviteName: (event) => this.setState({ inviteName: event.target.value }), onInvitePhone: (event) => this.setState({ invitePhone: event.target.value }), inviteHref: inviteHref, inviteDisabled: !inviteHref, onInvite: (event) => this.invite(event),
-      hasOutbound: (data.outbound || []).length > 0, outbound: (data.outbound || []).slice(0, 4), showToast: !!this.state.toast, toast: this.state.toast
+      methodWa: this.state.inviteMethod === 'whatsapp', methodMail: this.state.inviteMethod === 'email', methodLink: this.state.inviteMethod === 'link',
+      waClass: this.state.inviteMethod === 'whatsapp' ? 'active' : '', mailClass: this.state.inviteMethod === 'email' ? 'active' : '', linkClass: this.state.inviteMethod === 'link' ? 'active' : '',
+      onMethodWa: () => this.setState({ inviteMethod: 'whatsapp' }), onMethodMail: () => this.setState({ inviteMethod: 'email' }), onMethodLink: () => this.setState({ inviteMethod: 'link' }),
+      inviteEmail: this.state.inviteEmail, onInviteEmail: (event) => this.setState({ inviteEmail: event.target.value }),
+      emailHref: emailHref, emailDisabled: !emailHref,
+      onEmailInvite: (event) => { if (!emailHref) { if (event && event.preventDefault) event.preventDefault(); this.toast('Vul eerst een naam en e-mailadres in.'); return; } this.setState({ inviteOpen: false }); this.toast('Je mailprogramma is geopend. Verstuur de mail om uit te nodigen.'); },
+      refLink: this.referralLink(session), onCopyLink: () => this.copyReferralLink(),
+      showPersonPop: !!selected, popName: selected ? selected.name : '', popHeadline: selected ? selected.headline : '', popBusy: selected ? this.state.busyId === selected.id : false,
+      onPopAccept: () => selected && this.act('accept', selected.id, selected.name),
+      onPopReject: () => selected && this.act('reject', selected.id, selected.name),
+      onPopClose: () => this.setState({ selectedId: '' }),
+      showToast: !!this.state.toast, toast: this.state.toast
     };
   }
 }

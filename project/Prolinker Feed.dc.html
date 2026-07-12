@@ -10,18 +10,19 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="prolinker-theme.css">
 <style>
-  :root { --bg:#F4F5F7; --text:#152431; --muted:#565B62; --faint:#9AA0A6; --surface:#ffffff; --panel:#F7F8FB; --border:#E4E5EC; --hairline:#ECEDF2; --glass:rgba(255,255,255,0.82); }
-  :root[data-theme="dark"] { --bg:#0d141b; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#141d27; --panel:#111a23; --border:#2b3a47; --hairline:#1b2732; --glass:rgba(13,20,27,0.72); }
+  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: 'Geist', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #006BC6; text-decoration: none; }
-  a:hover { color: #005093; }
-  ::selection { background: #cfe6fb; }
+  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
+  a { color: #2F5B85; text-decoration: none; }
+  a:hover { color: #24476A; }
+  ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes plk-toast { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
   button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.16s ease; }
@@ -35,30 +36,30 @@
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div data-screen-label="Feed" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div data-screen-label="Feed" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; position: relative; z-index: 5;">
-    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
       <div style="position: relative;">
-        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F7F8FB);">
-          <span style="width: 36px; height: 36px; border-radius: 50%; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
+        <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 2px 12px 2px 2px; border-radius: 999px; border: none; background: none; cursor: pointer; font-family: inherit;" style-hover="background: var(--panel,#F3F4F6);">
+          <span style="width: 36px; height: 36px; border-radius: 8px; background: {{ avatarBg }}; color: {{ accent }}; display: inline-flex; align-items: center; justify-content: center; font-size: 13.5px; font-weight: 700;">{{ initials }}</span>
           <span style="font-size: 14px; font-weight: 600; color: var(--text,#152431); white-space: nowrap;">{{ firstName }}</span>
           <span style="display: inline-flex; transition: transform 0.2s ease; transform: {{ menuChevronRotate }};">{{ chevronEl }}</span>
         </button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
-          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
+          <div style="position: absolute; right: 0; top: 48px; z-index: 40; width: 236px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
             <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="3">
-              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F7F8FB);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F3F4F6);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
             </sc-for>
-            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#9AA0A6); padding: 4px 12px 3px;">{{ t.settings }}</div>
-            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F7F8FB);">
+            <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
+            <button onClick="{{ onToggleTheme }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 11px; padding: 10px 12px; border: none; background: none; border-radius: 9px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text,#152431);" style-hover="background: var(--panel,#F3F4F6);">
               <span style="display: flex; align-items: center; gap: 11px;"><span style="display: inline-flex;">{{ themeIconEl }}</span>{{ t.darkMode }}</span>
               <span style="width: 38px; height: 22px; border-radius: 999px; background: {{ themeSwitchBg }}; position: relative; flex-shrink: 0; transition: background 0.2s ease;"><span style="position: absolute; top: 2px; left: {{ themeKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.2); transition: left 0.2s ease;"></span></span>
             </button>
-            <div style="height: 1px; background: var(--hairline,#ECEDF2); margin: 7px 4px;"></div>
-            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#565B62);" style-hover="background: var(--panel,#F7F8FB); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
+            <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
+            <a href="Prolinker Login.dc.html" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--muted,#424444);" style-hover="background: var(--panel,#F3F4F6); color: var(--text,#152431);"><span style="display: inline-flex;">{{ logoutEl }}</span>{{ t.logout }}</a>
           </div>
         </sc-if>
       </div>
@@ -68,7 +69,7 @@
   <main style="max-width: 820px; width: 100%; margin: 0 auto; padding: 30px 32px 90px; flex: 1;">
 
     <div style="display: flex; align-items: center; justify-content: flex-end; margin: 0 0 16px; animation: plk-rise 0.5s ease both;">
-      <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff);">
+      <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--surface,#fff);">
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
           <button onClick="{{ f.onClick }}" style="height: 32px; padding: 0 15px; border: none; border-radius: 999px; background: {{ f.bg }}; color: {{ f.color }}; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">{{ f.label }}</button>
         </sc-for>
@@ -77,7 +78,7 @@
 
     <div style="display: flex; flex-direction: column; gap: 12px;">
       <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="4">
-        <div data-reveal style="display: flex; align-items: center; gap: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 14px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); transition: box-shadow 0.18s ease, border-color 0.18s ease; animation: plk-rise 0.5s ease both; animation-delay: {{ j.delay }};" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42); border-color: {{ accentRing }};">
+        <div data-reveal style="display: flex; align-items: center; gap: 18px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; padding: 20px 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); transition: box-shadow 0.18s ease, border-color 0.18s ease; animation: plk-rise 0.5s ease both; animation-delay: {{ j.delay }};" style-hover="box-shadow: 0 16px 34px -22px rgba(20,36,49,0.42); border-color: {{ accentRing }};">
 
           <div onClick="{{ j.onOpen }}" style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ j.mBg }}; color: {{ j.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; align-self: flex-start; cursor: pointer;">{{ j.mLetter }}</div>
 
@@ -88,11 +89,11 @@
                 <span title="{{ t.newBadge }}" style="flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: {{ accent }};"></span>
               </sc-if>
             </div>
-            <div style="font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ j.client }} &middot; {{ j.location }} &middot; {{ j.posted }}</div>
+            <div style="font-size: 13.5px; color: var(--faint,#8C8E8F);">{{ j.client }} &middot; {{ j.location }} &middot; {{ j.posted }}</div>
             <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 3px;">
-              <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ j.rate }}</span>
+              <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 650; color: var(--text,#152431); white-space: nowrap;">{{ j.rate }}</span>
               <sc-for list="{{ j.chips }}" as="c" hint-placeholder-count="3">
-                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62); white-space: nowrap;">{{ c }}</span>
+                <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 500; color: var(--muted,#424444); white-space: nowrap;">{{ c }}</span>
               </sc-for>
             </div>
             <div style="display: flex; align-items: center; gap: 7px; margin-top: 3px;">
@@ -104,7 +105,7 @@
           <div style="flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px; align-self: stretch;">
             <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700; white-space: nowrap;">{{ j.relevance }}% match</span>
             <sc-if value="{{ j.sent }}" hint-placeholder-val="{{ false }}">
-              <button onClick="{{ j.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
+              <button onClick="{{ j.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 1.5px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--panel,#F3F4F6); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
             </sc-if>
             <sc-if value="{{ j.notSent }}" hint-placeholder-val="{{ true }}">
               <button onClick="{{ j.onToggleInterest }}" title="{{ t.interestTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 20px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.interest }}</button>
@@ -114,7 +115,7 @@
         </div>
       </sc-for>
       <sc-if value="{{ emptyFilter }}" hint-placeholder-val="{{ false }}">
-        <div style="padding: 44px 20px; text-align: center; color: var(--faint,#9AA0A6); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#E4E5EC); border-radius: 14px;">{{ t.emptyFilter }}</div>
+        <div style="padding: 44px 20px; text-align: center; color: var(--faint,#8C8E8F); font-size: 14.5px; background: var(--surface,#fff); border: 1px dashed var(--border,#DCDFE2); border-radius: 14px;">{{ t.emptyFilter }}</div>
       </sc-if>
     </div>
 
@@ -122,30 +123,30 @@
 
   <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ onCloseModal }}" style="position: fixed; inset: 0; z-index: 70; background: rgba(11,17,25,0.45); backdrop-filter: blur(3px);"></div>
-    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100vw - 40px)); background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
+    <div role="dialog" aria-modal="true" style="position: fixed; z-index: 71; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100vw - 40px)); background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 18px; box-shadow: 0 40px 90px -30px rgba(11,17,25,0.55); padding: 26px 28px; animation: plk-rise 0.25s ease both;">
       <div style="display: flex; align-items: flex-start; gap: 16px;">
         <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 13px; background: {{ modalJob.mBg }}; color: {{ modalJob.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700;">{{ modalJob.mLetter }}</div>
         <div style="flex: 1; min-width: 0;">
           <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.015em;">{{ modalJob.title }}</div>
-          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#9AA0A6);">{{ modalJob.client }} &middot; {{ modalJob.location }} &middot; {{ modalJob.posted }}</div>
+          <div style="margin-top: 4px; font-size: 13.5px; color: var(--faint,#8C8E8F);">{{ modalJob.client }} &middot; {{ modalJob.location }} &middot; {{ modalJob.posted }}</div>
         </div>
-        <button onClick="{{ onCloseModal }}" aria-label="{{ t.close }}" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F7F8FB); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#565B62); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEDF2);">&times;</button>
+        <button onClick="{{ onCloseModal }}" aria-label="{{ t.close }}" style="flex-shrink: 0; width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--panel,#F3F4F6); cursor: pointer; font-size: 17px; line-height: 1; color: var(--muted,#424444); display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: var(--hairline,#ECEEF0);">&times;</button>
       </div>
-      <p style="margin: 18px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#565B62); text-wrap: pretty;">{{ modalJob.desc }}</p>
+      <p style="margin: 18px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--muted,#424444); text-wrap: pretty;">{{ modalJob.desc }}</p>
       <div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 16px;">
-        <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 650;">{{ modalJob.rate }}</span>
+        <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 650;">{{ modalJob.rate }}</span>
         <sc-for list="{{ modalJob.chips }}" as="c" hint-placeholder-count="3">
-          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F7F8FB); border: 1px solid var(--hairline,#ECEDF2); font-size: 12.5px; font-weight: 500; color: var(--muted,#565B62);">{{ c }}</span>
+          <span style="padding: 4px 11px; border-radius: 999px; background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); font-size: 12.5px; font-weight: 500; color: var(--muted,#424444);">{{ c }}</span>
         </sc-for>
       </div>
       <div style="display: flex; align-items: center; gap: 7px; margin-top: 14px;">
         <span style="display: inline-flex; flex-shrink: 0;">{{ sparkEl }}</span>
         <span style="font-size: 13px; font-weight: 550; color: {{ accent }};">{{ modalJob.matchReason }}</span>
       </div>
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEDF2);">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hairline,#ECEEF0);">
         <span style="padding: 4px 12px; border-radius: 999px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12.5px; font-weight: 700;">{{ modalJob.relevance }}% match</span>
         <sc-if value="{{ modalJob.sent }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ modalJob.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
+          <button onClick="{{ modalJob.onToggleInterest }}" title="{{ t.undoTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border: 1.5px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--panel,#F3F4F6); color: var(--text,#152431); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;" style-hover="border-color: #D92D20; color: #D92D20;"><span style="display: inline-flex; flex-shrink: 0; color: #1F8A5B;">{{ checkGreenEl }}</span>{{ t.sent }}</button>
         </sc-if>
         <sc-if value="{{ modalJob.notSent }}" hint-placeholder-val="{{ false }}">
           <button onClick="{{ modalJob.onToggleInterest }}" title="{{ t.interestTitle }}" style="display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 22px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.interest }}</button>
@@ -155,18 +156,18 @@
   </sc-if>
 
   <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
-    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 12px 10px 16px; animation: plk-toast 0.3s ease both;">
+    <div style="position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 999px; box-shadow: 0 20px 50px -18px rgba(11,17,25,0.45); padding: 10px 12px 10px 16px; animation: plk-toast 0.3s ease both;">
       <span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>
       <span style="font-size: 14px; color: var(--text,#152431); white-space: nowrap;">{{ t.toastMsg }}</span>
-      <button onClick="{{ onUndoToast }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F7F8FB); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEDF2);">{{ t.undo }}</button>
+      <button onClick="{{ onUndoToast }}" style="flex-shrink: 0; height: 32px; padding: 0 14px; border: none; border-radius: 999px; background: var(--panel,#F3F4F6); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text,#152431);" style-hover="background: var(--hairline,#ECEEF0);">{{ t.undo }}</button>
     </div>
   </sc-if>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:940},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:940},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Geist&quot;,&quot;Schibsted Grotesk&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
   state = { theme: 'light', menuOpen: false, filter: 'all', sent: {}, copied: false, toastJob: null, name: '', profile: null, modal: null };
 
@@ -216,7 +217,7 @@ class Component extends DCLogic {
   }
 
   lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
-  hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  hexToRgba(hex, a) { let h = (hex || '#2F5B85').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
   strings() {
     const en = {
@@ -253,9 +254,9 @@ class Component extends DCLogic {
   jobsData() {
     const nl = this.lang() === 'nl';
     return [
-      { id: 'j1', title: nl ? 'Shopify-webshop migreren en optimaliseren' : 'Migrate and optimize Shopify store', client: 'Fleur & Zo', location: 'Amsterdam', posted: nl ? '2 u geleden' : '2h ago', isNew: true, relevance: 96, mLetter: 'F', mBg: '#E8F1FB', mColor: '#0B5CAB', matchReason: nl ? '5 jaar Shopify &middot; 9,2 reviewscore'.replace('&middot;', '\u00b7') : '5 yrs Shopify \u00b7 9.2 review score', rate: '\u20ac 70\u201385 /u', chips: nl ? ['24\u201332 u/wk', '3 mnd', 'Hybride'] : ['24\u201332 h/wk', '3 mo', 'Hybrid'] },
+      { id: 'j1', title: nl ? 'Shopify-webshop migreren en optimaliseren' : 'Migrate and optimize Shopify store', client: 'Fleur & Zo', location: 'Amsterdam', posted: nl ? '2 u geleden' : '2h ago', isNew: true, relevance: 96, mLetter: 'F', mBg: '#E9EFF5', mColor: '#2F5B85', matchReason: nl ? '5 jaar Shopify &middot; 9,2 reviewscore'.replace('&middot;', '\u00b7') : '5 yrs Shopify \u00b7 9.2 review score', rate: '\u20ac 70\u201385 /u', chips: nl ? ['24\u201332 u/wk', '3 mnd', 'Hybride'] : ['24\u201332 h/wk', '3 mo', 'Hybrid'] },
       { id: 'j2', title: nl ? 'Headless webshop bouwen met Next.js' : 'Build headless store with Next.js', client: 'VersBox', location: 'Rotterdam', posted: nl ? '5 u geleden' : '5h ago', isNew: true, relevance: 93, mLetter: 'V', mBg: '#E7F5EE', mColor: '#1F8A5B', matchReason: nl ? 'Next.js + Shopify Plus \u00b7 3 soortgelijke projecten' : 'Next.js + Shopify Plus \u00b7 3 similar projects', rate: '\u20ac 80\u201395 /u', chips: nl ? ['32\u201340 u/wk', '4 mnd', 'Remote'] : ['32\u201340 h/wk', '4 mo', 'Remote'] },
-      { id: 'j3', title: nl ? 'Klaviyo e-mailflows opzetten' : 'Set up Klaviyo email flows', client: 'Studio Mier', location: 'Utrecht', posted: nl ? 'Gisteren' : 'Yesterday', isNew: true, relevance: 90, mLetter: 'S', mBg: '#FBF0E7', mColor: '#B4590A', matchReason: nl ? 'Klaviyo-gecertificeerd \u00b7 retentiecases' : 'Klaviyo certified \u00b7 retention cases', rate: '\u20ac 60\u201375 /u', chips: nl ? ['8\u201316 u/wk', '6 wk', 'Remote'] : ['8\u201316 h/wk', '6 wks', 'Remote'] },
+      { id: 'j3', title: nl ? 'Klaviyo e-mailflows opzetten' : 'Set up Klaviyo email flows', client: 'Studio Mier', location: 'Utrecht', posted: nl ? 'Gisteren' : 'Yesterday', isNew: true, relevance: 90, mLetter: 'S', mBg: '#FFE0D6', mColor: '#C94F2D', matchReason: nl ? 'Klaviyo-gecertificeerd \u00b7 retentiecases' : 'Klaviyo certified \u00b7 retention cases', rate: '\u20ac 60\u201375 /u', chips: nl ? ['8\u201316 u/wk', '6 wk', 'Remote'] : ['8\u201316 h/wk', '6 wks', 'Remote'] },
       { id: 'j4', title: nl ? 'Migratie van Lightspeed naar Shopify' : 'Lightspeed to Shopify migration', client: 'Outdoorland', location: 'Zwolle', posted: nl ? '1 dag geleden' : '1 day ago', isNew: false, relevance: 87, mLetter: 'O', mBg: '#EEEBFB', mColor: '#5B4CC4', matchReason: nl ? '3 Lightspeed-migraties \u00b7 POS-ervaring' : '3 Lightspeed migrations \u00b7 POS experience', rate: '\u20ac 65\u201380 /u', chips: nl ? ['16\u201324 u/wk', '2 mnd', 'Hybride'] : ['16\u201324 h/wk', '2 mo', 'Hybrid'] },
       { id: 'j5', title: nl ? 'Shopify-app voor abonnementen' : 'Shopify subscriptions app', client: 'Brouwerij Noorderlicht', location: 'Groningen', posted: nl ? '2 dagen geleden' : '2 days ago', isNew: false, relevance: 84, mLetter: 'B', mBg: '#FBEDEF', mColor: '#B42334', matchReason: nl ? 'App-development \u00b7 abonnementscases' : 'App development \u00b7 subscription cases', rate: '\u20ac 75\u201390 /u', chips: nl ? ['24 u/wk', '3 mnd', 'Remote'] : ['24 h/wk', '3 mo', 'Remote'] },
       { id: 'j6', title: nl ? 'Performance-audit en CRO' : 'Performance audit and CRO', client: 'Van Dijk Wonen', location: 'Den Haag', posted: nl ? '3 dagen geleden' : '3 days ago', isNew: false, relevance: 81, mLetter: 'V', mBg: '#E6F4F6', mColor: '#0E7C8A', matchReason: nl ? '+18% conversie bij 4 webshops' : '+18% conversion across 4 stores', rate: '\u20ac 65\u201380 /u', chips: nl ? ['8\u201312 u/wk', '6 wk', 'Remote'] : ['8\u201312 h/wk', '6 wks', 'Remote'] },
@@ -325,12 +326,12 @@ class Component extends DCLogic {
 
   renderVals() {
     const t = this.strings();
-    const accent = this.props.accentColor || '#006BC6';
+    const accent = this.props.accentColor || '#2F5B85';
     const accentShadow = this.hexToRgba(accent, 0.28);
     const accentRing = this.hexToRgba(accent, 0.18);
     const accentTint = this.hexToRgba(accent, 0.12);
     const isDark = this.state.theme === 'dark';
-    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#6B6E7B';
+    const mutedIcon = isDark ? 'rgba(255,255,255,0.62)' : '#424444';
 
     const name = ((this.state.profile && this.state.profile.name) || this.state.name || 'Rachid Benali').trim();
     const firstName = name.split(' ')[0];
@@ -353,7 +354,7 @@ class Component extends DCLogic {
       label: f.label,
       onClick: () => this.setState({ filter: f.key }),
       bg: filter === f.key ? accent : 'transparent',
-      color: filter === f.key ? '#fff' : 'var(--muted,#565B62)',
+      color: filter === f.key ? '#fff' : 'var(--muted,#424444)',
     }));
 
     const decorate = (j, i) => {
@@ -381,7 +382,7 @@ class Component extends DCLogic {
 
     return {
       t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing, accentTint: accentTint,
-      fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Geist', system-ui, sans-serif",
+      fontStack: ({ 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif", 'Lato': "'Lato', system-ui, sans-serif" })[this.props.fontPairing] || "'Lato', system-ui, sans-serif",
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       showStrip: this.props.showStrip !== false,
       firstName: firstName, initials: initials, avatarBg: accentTint,
@@ -398,7 +399,7 @@ class Component extends DCLogic {
       ],
       onToggleTheme: () => this.toggleTheme(),
       themeIconEl: this.iconEl(isDark ? 'sun' : 'moon', mutedIcon, 16),
-      themeSwitchBg: isDark ? accent : 'var(--border,#E4E5EC)',
+      themeSwitchBg: isDark ? accent : 'var(--border,#DCDFE2)',
       themeKnobLeft: isDark ? '18px' : '2px',
       logoutEl: this.iconEl('logout', mutedIcon, 15),
       chevronEl: this.iconEl('chevron', mutedIcon, 14),
@@ -407,7 +408,7 @@ class Component extends DCLogic {
       waEl: this.iconEl('wa', '#25D366', 16, true),
       onCopyReferral: () => this.copyReferral(),
       copyLabel: this.state.copied ? t.copied : t.copy,
-      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#E4E5EC)',
+      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#DCDFE2)',
       copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',
       copyColor: this.state.copied ? '#1F8A5B' : 'var(--text,#152431)',
       filters: filters,

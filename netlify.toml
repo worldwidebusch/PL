@@ -1,0 +1,54 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/v1/auth/linkedin/start"
+  to = "/.netlify/functions/linkedin-start"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/auth/linkedin/callback"
+  to = "/.netlify/functions/linkedin-callback"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/auth/session"
+  to = "/.netlify/functions/auth-session"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/auth/logout"
+  to = "/.netlify/functions/auth-logout"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/profile/imports/linkedin"
+  to = "/.netlify/functions/linkedin-profile-import"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/referrals/links"
+  to = "/.netlify/functions/referral-links"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/v1/referrals/events"
+  to = "/.netlify/functions/referral-events"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/r/:token"
+  to = "/.netlify/functions/referral-capture?token=:token"
+  status = 200
+  force = true
