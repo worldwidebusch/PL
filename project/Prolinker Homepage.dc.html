@@ -133,8 +133,7 @@
 
 <div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header class="plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
+  <header class="plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <div class="plk-glass-nav plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 5px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <div class="plk-public-menu-wrap" style="position: relative;">
@@ -169,7 +168,7 @@
   <main class="plk-home-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 72px 24px 72px; width: 100%;">
     <div style="width: 100%; max-width: 760px; display: flex; flex-direction: column; align-items: center; animation: plk-rise 0.5s ease both;">
 
-      <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 58px; height: 58px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
+      <img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="width: 100px; height: 100px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
 
       <h1 class="plk-home-title" style="margin: 0; text-align: center; font-size: 46px; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; max-width: 620px; text-wrap: balance;">
         {{ t.headA }}<span style="color: {{ nameColor }};">{{ firstName }}</span>{{ t.headB }}

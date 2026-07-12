@@ -171,7 +171,7 @@
 <div class="plk-auth-page plk-theme-page {{ authModeClass }}" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-auth-header plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-auth-brand plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
+    <a class="plk-auth-brand plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 100px;"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="display: block; width: 100px; height: 100px; object-fit: contain; filter: {{ logoFilter }};"></a>
     <nav class="plk-auth-nav plk-glass-nav plk-public-nav" aria-label="Hoofdnavigatie" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
       <div class="plk-auth-menu plk-public-menu-wrap" style="position: relative;">
@@ -206,7 +206,7 @@
 
       <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
         <form class="plk-auth-form" data-screen-label="Auth form" onSubmit="{{ onSubmitFormEvent }}" novalidate="novalidate" style="display: flex; flex-direction: column; align-items: center;">
-          <img class="plk-auth-mark" src="assets/prolinker-mark.png" alt="" style="width: 50px; height: 50px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
+          <img class="plk-auth-mark" src="assets/prolinker-mark.png" alt="" style="width: 100px; height: 100px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
           <h1 class="plk-auth-title" style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
           <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#424444); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
 

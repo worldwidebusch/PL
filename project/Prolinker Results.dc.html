@@ -50,7 +50,7 @@
 <div data-screen-label="Results" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;">
       <prolinker-account-menu></prolinker-account-menu>
     </div>
@@ -71,7 +71,7 @@
           <span style="position: absolute; width: 140px; height: 140px; animation: plk-rotate 5.5s linear infinite;"><span style="position: absolute; left: 50%; top: -5px; margin-left: -5px; width: 10px; height: 10px; border-radius: 50%; background: #FE7852; box-shadow: 0 0 10px rgba(254,120,82,0.9);"></span></span>
           <span style="position: absolute; width: 116px; height: 116px; animation: plk-rotate-rev 8s linear infinite;"><span style="position: absolute; left: 50%; bottom: -4px; margin-left: -4px; width: 8px; height: 8px; border-radius: 50%; background: #B0D8FE; box-shadow: 0 0 9px rgba(176,216,254,0.9);"></span></span>
           <div style="width: 96px; height: 96px; border-radius: 50%; background: #ffffff; box-shadow: 0 16px 40px -12px rgba(0,0,0,0.55); display: inline-flex; align-items: center; justify-content: center; animation: plk-breathe 2.2s ease-in-out infinite;">
-            <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 60px; height: 60px; display: block;">
+            <img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="width: 100px; height: 100px; display: block;">
           </div>
         </div>
         <h1 style="margin: 0; font-size: clamp(25px, 3vw, 31px); letter-spacing: -0.01em; color: #ffffff; text-wrap: balance;">{{ t.scanTitle }}</h1>

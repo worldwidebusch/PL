@@ -1482,6 +1482,54 @@
     ];
   }
 
+  function enforceHeaderBranding() {
+    if (!global.document || !global.document.querySelectorAll) return;
+    var homeHeader = global.document.querySelector('header.plk-home-header');
+    if (homeHeader) {
+      Array.prototype.forEach.call(homeHeader.querySelectorAll('.plk-public-brand'), function (brand) {
+        brand.style.setProperty('display', 'none', 'important');
+        brand.setAttribute('aria-hidden', 'true');
+        brand.setAttribute('tabindex', '-1');
+      });
+      var homeNav = homeHeader.querySelector('.plk-public-nav');
+      if (homeNav) homeNav.style.setProperty('margin-left', 'auto', 'important');
+      return;
+    }
+    var dark = global.document.documentElement && global.document.documentElement.getAttribute('data-theme') === 'dark';
+    var source = dark ? 'assets/prolinker-mark-white.png' : 'assets/prolinker-mark.png';
+    Array.prototype.forEach.call(global.document.querySelectorAll('header .plk-public-brand img'), function (image) {
+      image.classList.add('plk-brand-mark');
+      if (image.getAttribute('src') !== source) image.setAttribute('src', source);
+      image.style.setProperty('width', '100px', 'important');
+      image.style.setProperty('height', '100px', 'important');
+      image.style.setProperty('min-width', '100px', 'important');
+      image.style.setProperty('min-height', '100px', 'important');
+      image.style.setProperty('object-fit', 'contain', 'important');
+      image.style.setProperty('filter', 'none', 'important');
+      image.style.setProperty('content', 'url("' + source + '")', 'important');
+    });
+  }
+
+  function installHeaderBrandingGuard() {
+    if (!global.document) return;
+    var queued = false;
+    var run = function () { queued = false; enforceHeaderBranding(); };
+    var schedule = function () {
+      if (queued) return;
+      queued = true;
+      if (typeof global.requestAnimationFrame === 'function') global.requestAnimationFrame(run);
+      else global.setTimeout(run, 0);
+    };
+    if (global.document.readyState === 'loading') global.document.addEventListener('DOMContentLoaded', schedule, { once: true });
+    else schedule();
+    global.setTimeout(schedule, 80);
+    global.setTimeout(schedule, 400);
+    if (typeof MutationObserver === 'function' && global.document.documentElement) {
+      var observer = new MutationObserver(schedule);
+      observer.observe(global.document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-theme'] });
+    }
+  }
+
   var contracts = Object.freeze({
     session: '{ authenticated:true, channel:"whatsapp|linkedin|facebook", role:"client|freelancer", id?:string, contact?:string, providerSubject?:string, name?:string, email?:string, avatarUrl?:string, profile?:object }',
     linkedinProfileImport: '{ source:"linkedin", firstName, lastName, name, email?, pictureUrl?, locale?, importedFields[] }',
@@ -1524,4 +1572,5 @@
     projects: Object.freeze({ create: createProject }),
     referrals: Object.freeze({ getSummary: getReferralSummary, createLink: createReferralLink, track: trackReferralEvent, shareUrls: referralShareUrls, copy: copyReferralLink })
   });
+  installHeaderBrandingGuard();
 })(window);

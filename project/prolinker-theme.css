@@ -86,6 +86,21 @@ h2, h3, .plk-section-title, .plk-page-title, .plk-auth-title {
   height: auto;
 }
 
+.plk-public-brand img.plk-brand-mark {
+  width: 100px !important;
+  height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  object-fit: contain;
+  filter: none !important;
+}
+
+img.plk-brand-mark:not(.plk-brand-mark-print),
+img.plk-auth-mark {
+  min-width: 100px !important;
+  min-height: 100px !important;
+}
+
 .plk-public-nav {
   display: flex !important;
   align-items: center !important;
@@ -224,6 +239,11 @@ details.plk-public-menu-wrap > summary::-webkit-details-marker {
     width: 108px;
   }
 
+  .plk-public-brand img.plk-brand-mark {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
   .plk-public-nav {
     gap: 5px !important;
     padding: 5px 6px !important;
@@ -254,6 +274,10 @@ details.plk-public-menu-wrap > summary::-webkit-details-marker {
 :root[data-theme="dark"] .plk-public-brand img,
 :root[data-theme="dark"] .plk-home-brand img {
   content: url("assets/prolinker-logo-white.png");
+}
+
+:root[data-theme="dark"] .plk-public-brand img.plk-brand-mark {
+  content: url("assets/prolinker-mark-white.png");
 }
 
 :root[data-theme="dark"] .plk-auth-mark {

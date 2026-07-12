@@ -49,7 +49,7 @@
 <div style="min-height: 100vh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-public-header">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
     <nav class="plk-public-nav" aria-label="Hoofdnavigatie">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
       <details class="plk-public-menu-wrap">
@@ -77,7 +77,7 @@
   <main style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 72px 24px 120px; width: 100%;">
     <div style="width: 100%; max-width: 760px; display: flex; flex-direction: column; align-items: center; animation: plk-rise 0.5s ease both;">
 
-      <img src="assets/prolinker-mark.png" alt="ProLinker" style="width: 58px; height: 58px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
+      <img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="width: 100px; height: 100px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
 
       <h1 style="margin: 0; text-align: center; font-size: 46px; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; max-width: 620px;">
         {{ t.headA }}<span style="color: {{ nameColor }};">{{ firstName }}</span>{{ t.headB }}
