@@ -214,6 +214,13 @@ class Component extends DCLogic {
   }
 
   lang() {
+    try {
+      const saved = localStorage.getItem('plk-language');
+      if (saved === 'nl' || saved === 'en') return saved;
+    } catch (e) {}
+    const htmlLang = ((document.documentElement && document.documentElement.lang) || '').toLowerCase();
+    if (htmlLang.indexOf('nl') === 0) return 'nl';
+    if (htmlLang.indexOf('en') === 0) return 'en';
     const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
     return l.indexOf('nl') === 0 ? 'nl' : 'en';
   }

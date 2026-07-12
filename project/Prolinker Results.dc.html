@@ -352,7 +352,17 @@ class Component extends DCLogic {
   setProfileTab(tab) { this.setState({ profileTab: tab }); }
   setRatingSide(side) { this.setState({ ratingSide: side }); }
   toggleContact() { this.setState((s) => ({ contactOpen: !s.contactOpen })); }
-  lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
+  lang() {
+    try {
+      const saved = localStorage.getItem('plk-language');
+      if (saved === 'nl' || saved === 'en') return saved;
+    } catch (e) {}
+    const htmlLang = ((document.documentElement && document.documentElement.lang) || '').toLowerCase();
+    if (htmlLang.indexOf('nl') === 0) return 'nl';
+    if (htmlLang.indexOf('en') === 0) return 'en';
+    const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return l.indexOf('nl') === 0 ? 'nl' : 'en';
+  }
   hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
   fmtNum(n) { try { return Number(n).toLocaleString(this.lang() === 'nl' ? 'nl-NL' : 'en-US'); } catch (e) { return '' + n; } }
 
