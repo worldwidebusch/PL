@@ -72,6 +72,9 @@
   .plk-footer-legal a, .plk-footer-copyright { font-size: 11.5px; color: #91a7b6; }
   .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border: 1px solid #496170; border-radius: 4px; color: #abc0cd !important; font-size: 11px; font-weight: 700; }
   .plk-footer-social:hover { border-color: #92a9b8; color: #fff !important; transform: translateY(-1px); }
+  .plk-footer-social img { display: block; width: 15px; height: 15px; opacity: 0.92; transition: filter 0.16s ease, opacity 0.16s ease; }
+  .plk-footer-social:hover img, .plk-footer-social:focus-visible img { filter: brightness(1.45); opacity: 1; }
+  .plk-footer-social:focus-visible { outline: 2px solid #92a9b8; outline-offset: 2px; }
   .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #D9E0E6; border-radius: 6px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); }
   .plk-login-popup-label { display: block; margin: 0 0 6px; color: var(--text,#152431); font-size: 12px; font-weight: 650; }
   .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#D9E0E6); border-radius: 4px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
@@ -327,9 +330,9 @@
             <option value="en">English</option>
           </select>
           <div class="plk-footer-socials" style="margin-top: 7px;">
-            <a class="plk-footer-social" href="https://www.facebook.com/JoinProlinker" target="_blank" rel="noopener noreferrer" aria-label="Facebook">f</a>
-            <a class="plk-footer-social" href="https://www.linkedin.com/company/prolinker" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
-            <a class="plk-footer-social" href="https://www.instagram.com/prolinker_network/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">ig</a>
+            <a class="plk-footer-social" href="https://www.facebook.com/JoinProlinker" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><img src="assets/social/facebook.svg" width="15" height="15" alt="" aria-hidden="true"></a>
+            <a class="plk-footer-social" href="https://www.linkedin.com/company/prolinker" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><img src="assets/social/linkedin.svg" width="15" height="15" alt="" aria-hidden="true"></a>
+            <a class="plk-footer-social" href="https://www.instagram.com/prolinker_network/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="assets/social/instagram.svg" width="15" height="15" alt="" aria-hidden="true"></a>
           </div>
         </div>
       </div>
