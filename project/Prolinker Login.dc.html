@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -170,6 +171,7 @@
   <header class="plk-auth-header plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <a class="plk-auth-brand plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
     <nav class="plk-auth-nav plk-glass-nav plk-public-nav" aria-label="Hoofdnavigatie" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; position: static; z-index: 30;">
+      <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
       <div class="plk-auth-menu plk-public-menu-wrap" style="position: relative;">
         <button class="plk-auth-menu-trigger plk-menu-trigger plk-public-menu-trigger" type="button" onClick="{{ onToggleMenu }}" aria-label="{{ t.navMenu }}" aria-haspopup="menu" aria-expanded="{{ menuOpen }}" title="{{ t.navMenu }}" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="false">
@@ -190,6 +192,10 @@
       <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-auth-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.navCompanies }}</a>
       <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html?mode=login">{{ t.navLogin }}</a>
       <prolinker-signup-menu></prolinker-signup-menu>
+      </sc-if>
+      <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
+        <prolinker-account-menu></prolinker-account-menu>
+      </sc-if>
     </nav>
   </header>
 
@@ -375,7 +381,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false };
+  state = { mode: 'login', step: 'form', role: null, name: '', firstName: '', lastName: '', companyName: '', email: '', category: '', password: '', passwordConfirm: '', termsAccepted: false, humanConfirmed: false, contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '', menuOpen: false, authenticated: false };
 
   componentDidMount() {
     this._els = [];
@@ -384,7 +390,7 @@ class Component extends DCLogic {
       if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); }
     } catch (e) {}
     let mode = (this.props.startMode === 'Register') ? 'register' : 'login';
-    let role = null; let next = ''; let saved = ''; let savedName = ''; let referralCode = '';
+    let role = null; let next = ''; let saved = ''; let savedName = ''; let referralCode = ''; let authenticated = false;
     let firstName = ''; let lastName = '';
     try {
       const params = new URLSearchParams(window.location.search);
@@ -397,6 +403,9 @@ class Component extends DCLogic {
       saved = localStorage.getItem('plk-auth-contact') || '';
       if (!this.isPhone(saved)) saved = '';
       savedName = localStorage.getItem('plk-user-name') || '';
+      const rawSession = localStorage.getItem('plk-auth-session');
+      const session = rawSession ? JSON.parse(rawSession) : null;
+      authenticated = !!(session && session.authenticated === true && session.channel === 'whatsapp' && (session.role === 'client' || session.role === 'freelancer') && this.isPhone(session.contact));
     } catch (e) {}
     if ((!firstName || !lastName) && savedName) {
       const parts = savedName.trim().split(/\s+/);
@@ -405,7 +414,7 @@ class Component extends DCLogic {
     }
     const fullName = [firstName, lastName].filter(Boolean).join(' ') || savedName;
     document.title = mode === 'register' ? (this.lang() === 'nl' ? 'Registreren | ProLinker' : 'Register | ProLinker') : (this.lang() === 'nl' ? 'Inloggen | ProLinker' : 'Log in | ProLinker');
-    this.setState({ mode: mode, role: role, contact: saved, name: fullName, firstName: firstName, lastName: lastName, next: next, referralCode: referralCode });
+    this.setState({ mode: mode, role: role, contact: saved, name: fullName, firstName: firstName, lastName: lastName, next: next, referralCode: referralCode, authenticated: authenticated });
     this._onKey = (e) => {
       if (e.key !== 'Escape') return;
       if (this.state.menuOpen) this.setState({ menuOpen: false });
@@ -688,8 +697,9 @@ class Component extends DCLogic {
         if (referralCode) localStorage.setItem('plk-referred-by', referralCode);
         else localStorage.removeItem('plk-referred-by');
       }
+      window.dispatchEvent(new Event('plk-session-change'));
     } catch (e) {}
-    this.setState({ step: 'done', codeError: false, verifying: false, socialBusy: '', contact: contact, name: name, role: role, password: '', passwordConfirm: '' });
+    this.setState({ step: 'done', codeError: false, verifying: false, socialBusy: '', contact: contact, name: name, role: role, password: '', passwordConfirm: '', authenticated: true });
   }
   completeAuth() {
     this.finishAuthenticatedSession('whatsapp', this.state.contact, this.state.name);
@@ -895,6 +905,8 @@ class Component extends DCLogic {
 
     return {
       t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing, accentTint: accentTint,
+      authenticated: this.state.authenticated === true,
+      anonymous: this.state.authenticated !== true,
       menuOpen: this.state.menuOpen,
       onToggleMenu: () => this.setState({ menuOpen: !this.state.menuOpen }),
       onCloseMenu: () => this.setState({ menuOpen: false }),

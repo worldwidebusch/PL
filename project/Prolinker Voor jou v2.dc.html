@@ -800,10 +800,12 @@ class Component extends DCLogic {
   componentDidMount() {
     this._mounted = true;
     let freelancerSession = false;
+    let anySession = false;
     try {
       const savedTheme = localStorage.getItem('plk-theme') === 'dark' ? 'dark' : 'light';
       const rawSession = localStorage.getItem('plk-auth-session');
       const session = rawSession ? JSON.parse(rawSession) : null;
+      anySession = this.isValidWhatsappSession(session);
       freelancerSession = this.isValidWhatsappSession(session, 'freelancer');
       const locationPrefs = freelancerSession ? this.getLS('plk-vj2-location') : {};
       const savedRadius = [25, 50, 75, 100, 150, 250].indexOf(Number(locationPrefs.radiusKm)) !== -1 ? Number(locationPrefs.radiusKm) : 75;
@@ -821,8 +823,8 @@ class Component extends DCLogic {
         sent: freelancerSession ? this.getLS('plk-vj2-sent') : {},
         review: freelancerSession ? this.getLS('plk-vj2-review') : {},
         promoHidden: freelancerSession && localStorage.getItem('plk-vj2-promo') === '1',
-        name: freelancerSession ? ((session && session.name) || localStorage.getItem('plk-user-name') || '') : '',
-        authenticated: freelancerSession,
+        name: anySession ? ((session && session.name) || localStorage.getItem('plk-user-name') || '') : '',
+        authenticated: anySession,
         authRole: session && session.role ? session.role : null,
         theme: savedTheme,
         locationKey: savedLocationKey,

@@ -27,17 +27,17 @@
   @media(max-width:560px){.plk-shell-header{height:54px}.plk-shell-inner{padding:0 14px}.plk-logo{width:100px}.plk-account-name{display:none}.plk-account-menu{position:fixed;left:10px;right:10px;top:60px;width:auto;max-height:calc(100vh - 72px);overflow:auto}.plk-main{padding:26px 14px 58px}.plk-title{font-size:25px}.plk-subtitle{font-size:13px}.plk-page-head .plk-btn{padding:0 10px}.plk-tab{padding:0 9px}.plk-detail-grid{grid-template-columns:1fr}.plk-modal-shade{padding:0;align-items:flex-end}.plk-detail{width:100%;max-height:92vh;border-radius:9px 9px 0 0}.plk-detail-actions{display:grid;grid-template-columns:1fr 1fr}.plk-detail-actions .plk-btn:last-child:nth-child(odd){grid-column:1 / -1}.plk-footer{padding:0 14px 22px}}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
 <title>Mijn opdrachten | ProLinker</title>
 <meta name="robots" content="noindex,nofollow">
 </helmet>
 
 <div style="min-height:100vh;display:flex;flex-direction:column;">
-  <header class="plk-shell-header"><div class="plk-shell-inner">
-    <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
-    <nav class="plk-header-links" aria-label="Hoofdnavigatie"><a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a><a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a><a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a><a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a><a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a></nav>
-    <prolinker-account-menu current="assignments"></prolinker-account-menu>
-  </div></header>
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="assignments"></prolinker-account-menu></div>
+  </header>
 
   <main class="plk-main" style="flex:1;">
     <div class="plk-page-head"><div><div class="plk-eyebrow">{{ roleLabel }}</div><h1 class="plk-title">Mijn opdrachten</h1><p class="plk-subtitle">{{ pageSubtitle }}</p></div><a class="plk-btn plk-btn-primary" href="{{ primaryHref }}">{{ primaryLabel }}</a></div>

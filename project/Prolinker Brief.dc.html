@@ -227,7 +227,7 @@ class Component extends DCLogic {
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
     try {
       const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
-      this.setState({ authenticated: this.isValidWhatsappSession(session, 'client') });
+      this.setState({ authenticated: this.isValidWhatsappSession(session) });
     } catch (e) {}
     let q = '';
     try { q = new URLSearchParams(window.location.search).get('q') || ''; } catch (e) {}

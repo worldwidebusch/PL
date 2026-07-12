@@ -36,6 +36,7 @@
   a:active { transform: scale(0.985); }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <title>Best matches, ranked by AI Instant Match | ProLinker</title>
 <meta name="description" content="ProLinker's AI Instant Match ranks vetted freelancers for your project by relevance and availability - instantly.">
@@ -44,9 +45,9 @@
 
 <div data-screen-label="Results" style="min-height: 100vh; background: var(--bg,#F4F5F7); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; min-height: 78px; background: transparent; position: relative; z-index: 5;">
-    <a href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; filter: {{ logoFilter }};"></a>
-    <div style="display: flex; align-items: center; margin-left: auto; padding: 4px 6px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 5px; backdrop-filter: blur(8px); position: static; z-index: 30;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;">
       <prolinker-account-menu></prolinker-account-menu>
     </div>
   </header>

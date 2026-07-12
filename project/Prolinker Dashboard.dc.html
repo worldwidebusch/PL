@@ -88,22 +88,16 @@
   }
   @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
 <title>Mijn dashboard | ProLinker</title>
 <meta name="robots" content="noindex,nofollow">
 </helmet>
 
 <div style="min-height:100vh; display:flex; flex-direction:column;">
-  <header class="plk-shell-header">
-    <div class="plk-shell-inner">
-      <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
-      <nav class="plk-header-links" aria-label="Hoofdnavigatie">
-        <a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a>
-        <a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a>
-        <a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a>
-        <a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a>
-        <a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a>
-      </nav>
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;">
       <prolinker-account-menu current="dashboard"></prolinker-account-menu>
     </div>
   </header>

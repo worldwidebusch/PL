@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v15-homepage-menu";
+const CACHE_VERSION = "v16-authenticated-header";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;

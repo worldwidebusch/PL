@@ -32,17 +32,17 @@
   @media(max-width:560px){.plk-shell-header{height:54px}.plk-shell-inner{padding:0 14px}.plk-logo{width:100px}.plk-account-name{display:none}.plk-account-menu{position:fixed;left:10px;right:10px;top:60px;width:auto;max-height:calc(100vh - 72px);overflow:auto}.plk-main{padding:25px 14px 52px}.plk-page-head{align-items:flex-start}.plk-title{font-size:25px}.plk-subtitle{font-size:13px}.plk-unread-summary{min-height:31px;padding:0 8px;font-size:10.5px}.plk-workspace{margin-top:19px;height:calc(100vh - 170px);min-height:510px;border-radius:8px}.plk-thread{padding-left:12px;padding-right:12px}.plk-conversation-head{padding:10px}.plk-conversation-head>.plk-person-avatar{display:none}.plk-conversation-actions .plk-btn{font-size:11px}.plk-message-wrap{max-width:91%}.plk-compose-row{align-items:stretch}.plk-send{min-width:72px;height:auto}.plk-compose-meta span:first-child{display:none}.plk-footer{padding:0 14px 22px}}
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
 <title>Mijn berichten | ProLinker</title>
 <meta name="robots" content="noindex,nofollow">
 </helmet>
 
 <div style="min-height:100vh;display:flex;flex-direction:column;">
-  <header class="plk-shell-header"><div class="plk-shell-inner">
-    <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
-    <nav class="plk-header-links" aria-label="Hoofdnavigatie"><a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a><a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a><a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a><a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a><a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a></nav>
-    <prolinker-account-menu current="messages"></prolinker-account-menu>
-  </div></header>
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
+    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img src="assets/prolinker-logo.png" alt="ProLinker"></a>
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#e4e5ec);border-radius:5px;position:static;z-index:30;"><prolinker-account-menu current="messages"></prolinker-account-menu></div>
+  </header>
 
   <main class="plk-main" style="flex:1;">
     <div class="plk-page-head"><div><div class="plk-eyebrow">Communicatie</div><h1 class="plk-title">Mijn berichten</h1><p class="plk-subtitle">Houd gesprekken, afspraken en vervolgstappen overzichtelijk bij.</p></div><div class="plk-unread-summary" aria-label="{{ unreadAria }}"><span aria-hidden="true"></span>{{ unreadLabel }}</div></div>
