@@ -92,7 +92,8 @@
   .plk-auth-referral { border-radius: 4px !important; text-align: left !important; }
   .plk-auth-hint { justify-content: flex-start !important; margin-top: 10px !important; }
   .plk-auth-actions { width: 100%; display: flex; flex-direction: column; align-items: stretch; gap: 7px; margin-top: 9px; }
-  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; background: #5992C2 !important; }
+  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 40px !important; min-height: 40px !important; margin: 0 !important; border: 1px solid #25D366 !important; background: #25D366 !important; }
+  .plk-auth-actions .plk-auth-primary:hover:not(:disabled) { border-color: #1FB85A !important; background: #1FB85A !important; filter: none !important; }
   .plk-auth-divider { width: 100%; min-height: 22px; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; color: var(--plk-faint,#8a97a6); font-size: 11px; text-transform: lowercase; }
   .plk-auth-divider::before,
   .plk-auth-divider::after { display: block; content: ""; height: 1px; flex: 1; background: var(--plk-line,#dbe2e8); }
@@ -105,6 +106,7 @@
   .plk-auth-provider-linkedin { background: #0679a8; }
   .plk-auth-provider-linkedin:hover { background: #066b95; }
   .plk-auth-provider-mark { width: 20px; font-size: 19px; font-weight: 800; line-height: 1; text-align: center; }
+  .plk-auth-whatsapp-mark { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
   .plk-auth-mode-links { width: 100%; margin: 17px 0 0; color: var(--plk-muted,#667587); font-size: 10.5px; line-height: 1.55; text-align: center; }
   .plk-auth-mode-link { min-height: 28px; padding: 2px 1px; border: 0; background: transparent; color: #4e8fc5; font: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
   .plk-auth-terms { max-width: none !important; text-align: left !important; }
@@ -264,7 +266,7 @@
           <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
 
           <div class="plk-auth-actions">
-            <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }};"><span>{{ continueLabel }}</span></button>
+            <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }};"><span class="plk-auth-whatsapp-mark" aria-hidden="true">{{ continueIconEl }}</span><span>{{ continueLabel }}</span></button>
             <div class="plk-auth-divider"><span>{{ t.orLabel }}</span></div>
             <div class="plk-auth-providers" aria-label="{{ t.socialLabel }}">
               <button class="plk-auth-provider plk-auth-provider-facebook" type="button" disabled="{{ socialBusy }}" onClick="{{ onFacebook }}"><span class="plk-auth-provider-mark" aria-hidden="true">f</span><span>{{ facebookLabel }}</span></button>
@@ -421,7 +423,7 @@ class Component extends DCLogic {
       roleLabel: 'What do you want to do?', roleClient: 'I need freelancers', roleFreelancer: "I'm a freelancer",
       nameLabel: 'Full name', contactLabel: 'WhatsApp number', namePh: 'Full name', contactPh: '+1 202 555 0123',
       categoryLabel: 'Industry', categoryPh: 'Select an industry', firstNameLabel: 'First name', firstNamePh: 'First name', lastNameLabel: 'Last name', lastNamePh: 'Last name', emailLabel: 'Email', emailPh: 'Email address', passwordLabel: 'Password', passwordPh: 'At least 8 characters', passwordConfirmLabel: 'Repeat password', passwordConfirmPh: 'Repeat password',
-      continueLogin: 'Continue with WhatsApp', continueRegister: 'Create account', codeHint: 'Secure verification via WhatsApp',
+      continueLogin: 'Log in with WhatsApp', continueRegister: 'Create account', codeHint: 'Secure verification via WhatsApp',
       errContact: 'Enter an international WhatsApp number beginning with + or 00', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker', errCategory: 'Select your industry', errFirstName: 'Enter your first name', errLastName: 'Enter your last name', errNameLong: 'Keep your full name within 40 characters', errEmail: 'Enter a valid email address', errPassword: 'Use at least 8 characters for your password', errPasswordConfirm: 'The passwords do not match', errTerms: 'Accept the terms and privacy policy to continue',
       safetyTitle: 'Stay safe', safetyPayment: 'Only accept payments through ProLinker so your work remains protected.', safetyPrivacy: 'Your personal details are never shared with third parties without permission.',
       termsCheckA: 'I agree to the ', termsCheckB: ' and ',
@@ -449,7 +451,7 @@ class Component extends DCLogic {
       roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
       nameLabel: 'Volledige naam', contactLabel: 'Mobiel nummer', namePh: 'Volledige naam', contactPh: '+31 6 12345678',
       categoryLabel: 'Branche', categoryPh: 'Selecteer een categorie', firstNameLabel: 'Voornaam', firstNamePh: 'Voornaam', lastNameLabel: 'Achternaam', lastNamePh: 'Achternaam', emailLabel: 'E-mail', emailPh: 'E-mailadres', passwordLabel: 'Wachtwoord', passwordPh: 'Minimaal 8 tekens', passwordConfirmLabel: 'Wachtwoord herhalen', passwordConfirmPh: 'Wachtwoord herhalen',
-      continueLogin: 'Doorgaan met WhatsApp', continueRegister: 'Account aanmaken', codeHint: 'Veilige verificatie via WhatsApp',
+      continueLogin: 'Inloggen met WhatsApp', continueRegister: 'Account aanmaken', codeHint: 'Veilige verificatie via WhatsApp',
       errContact: 'Vul een internationaal mobiel nummer in dat begint met + of 00', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken', errCategory: 'Selecteer je branche', errFirstName: 'Vul je voornaam in', errLastName: 'Vul je achternaam in', errNameLong: 'Gebruik maximaal 40 tekens voor je volledige naam', errEmail: 'Vul een geldig e-mailadres in', errPassword: 'Gebruik minimaal 8 tekens voor je wachtwoord', errPasswordConfirm: 'De wachtwoorden komen niet overeen', errTerms: 'Ga akkoord met de voorwaarden en het privacybeleid',
       safetyTitle: 'Blijf veilig', safetyPayment: 'Ontvang betalingen alleen via ProLinker, zodat je veilig samenwerkt.', safetyPrivacy: 'Wij delen je persoonlijke gegevens nooit zonder toestemming met derden.',
       termsCheckA: 'Ik ga akkoord met de ', termsCheckB: ' en het ',
@@ -865,6 +867,7 @@ class Component extends DCLogic {
       errors: errors, showErrors: errors.length > 0,
       continueDisabled: !valid, continueOpacity: valid ? 1 : 0.4, continueCursor: valid ? 'pointer' : 'not-allowed',
       continueLabel: isRegister ? t.continueRegister : t.continueLogin,
+      continueIconEl: this.iconEl('wa', '#ffffff', 18, true),
       onSubmitForm: () => this.submitForm(),
       onSubmitFormEvent: (e) => { if (e && e.preventDefault) e.preventDefault(); this.submitForm(); },
       hintIconEl: this.iconEl('shield', isDark ? 'rgba(255,255,255,0.72)' : '#6B7480', 13),
