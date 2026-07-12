@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v7-unified-navbar";
+const CACHE_VERSION = "v8-brief-step-design";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
