@@ -42,25 +42,72 @@
   .plk-auth-link:hover { text-decoration: underline; text-underline-offset: 3px; }
   .plk-code-grid { width: 100%; max-width: 352px; display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin-top: 28px; }
   .plk-code-grid input { width: 100% !important; min-width: 0; }
+  .plk-auth-page { background: var(--plk-surface,#fff) !important; color: var(--plk-text,#152431) !important; }
+  .plk-auth-header { display: none !important; }
+  .plk-auth-main { justify-content: flex-start !important; padding: 34px 20px 68px !important; }
+  .plk-auth-card { max-width: 414px !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
+  .plk-auth-form,
+  .plk-auth-code,
+  .plk-auth-done { align-items: stretch !important; }
+  .plk-auth-mark { display: none !important; }
+  .plk-auth-title { margin: 0 !important; color: var(--plk-ink,#102532) !important; font-family: Georgia, 'Times New Roman', serif !important; font-size: 22px !important; line-height: 1.2 !important; font-weight: 700 !important; letter-spacing: 0 !important; text-align: left !important; }
+  .plk-auth-copy { max-width: none !important; margin: 7px 0 0 !important; color: var(--plk-muted,#667587) !important; font-size: 13.5px !important; line-height: 1.5 !important; text-align: left !important; }
+  .plk-auth-form > .plk-auth-copy { display: none !important; }
+  .plk-auth-fields { gap: 10px !important; margin-top: 13px !important; }
+  .plk-auth-label { margin: 0 0 -4px !important; color: var(--plk-text,#152431) !important; font-size: 12px !important; font-weight: 700 !important; }
+  .plk-auth-role-group { gap: 7px !important; }
+  .plk-auth-role { height: 42px !important; border-width: 1px !important; border-radius: 4px !important; font-size: 12.5px !important; box-shadow: none !important; }
+  .plk-auth-role[aria-checked="true"] { box-shadow: inset 3px 0 0 #006bc6 !important; }
+  .plk-auth-input { height: 44px !important; padding: 0 13px !important; border-width: 1px !important; border-radius: 4px !important; background: var(--plk-panel,#eef2f5) !important; color: var(--plk-text,#152431) !important; font-size: 13.5px !important; }
+  .plk-auth-input:focus { border-color: #7aadd6 !important; background: var(--plk-surface,#fff) !important; box-shadow: 0 0 0 3px rgba(0,107,198,0.12) !important; }
+  .plk-auth-primary { min-height: 38px !important; border-radius: 3px !important; box-shadow: none !important; font-size: 12px !important; font-weight: 700 !important; }
+  .plk-auth-referral { border-radius: 4px !important; text-align: left !important; }
+  .plk-auth-hint { justify-content: flex-start !important; margin-top: 10px !important; }
+  .plk-auth-actions { width: 100%; display: grid; grid-template-columns: 175px 24px minmax(0,1fr); align-items: start; gap: 5px; margin-top: 9px; }
+  .plk-auth-actions .plk-auth-primary { width: 100% !important; height: 38px !important; min-height: 38px !important; margin: 0 !important; background: #356f9f !important; }
+  .plk-auth-divider { width: 100%; min-height: 38px; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; color: var(--plk-faint,#8a97a6); font-size: 11px; text-transform: lowercase; }
+  .plk-auth-divider::before,
+  .plk-auth-divider::after { display: none; content: ""; height: 1px; flex: 1; background: var(--plk-line,#dbe2e8); }
+  .plk-auth-providers { width: 100%; display: grid; gap: 7px; }
+  .plk-auth-provider { width: 100%; min-height: 30px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; border-radius: 2px; color: #fff; font: inherit; font-size: 10.5px; font-weight: 700; cursor: pointer; }
+  .plk-auth-provider-facebook { background: #3d5c9b; }
+  .plk-auth-provider-facebook:hover { background: #304b83; }
+  .plk-auth-provider-linkedin { background: #0679a8; }
+  .plk-auth-provider-linkedin:hover { background: #066b95; }
+  .plk-auth-provider-mark { width: 20px; font-size: 19px; font-weight: 800; line-height: 1; text-align: center; }
+  .plk-auth-mode-links { width: 100%; margin: 17px 0 0; color: var(--plk-muted,#667587); font-size: 10.5px; line-height: 1.55; text-align: center; }
+  .plk-auth-mode-link { min-height: 28px; padding: 2px 1px; border: 0; background: transparent; color: #4e8fc5; font: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .plk-auth-terms { max-width: none !important; text-align: left !important; }
+  .plk-auth-code .plk-auth-channel { margin: 0 0 16px !important; }
+  .plk-auth-code .plk-auth-title,
+  .plk-auth-done .plk-auth-title { text-align: left !important; }
+  .plk-code-grid { max-width: none; gap: 6px; margin-top: 24px; }
+  .plk-code-grid input { height: 52px !important; border-width: 1px !important; border-radius: 4px !important; background: var(--plk-panel,#eef2f5) !important; font-size: 21px !important; }
+  .plk-auth-demo-code { align-self: flex-start; border-radius: 4px !important; }
+  .plk-auth-done .plk-auth-success-icon { margin-bottom: 18px; }
+  .plk-auth-done .plk-auth-primary { align-self: flex-start; margin-top: 24px !important; }
+  .plk-auth-footer { display: none !important; }
   @media (max-width: 520px) {
-    .plk-auth-header { padding: 12px 14px !important; }
-    .plk-auth-header img { width: 112px !important; height: auto !important; }
-    .plk-auth-switch { height: 38px !important; padding: 0 13px !important; font-size: 12.5px !important; }
-    .plk-auth-main { justify-content: flex-start !important; padding: 34px 14px 60px !important; }
-    .plk-auth-card { padding: 26px 18px; border-radius: 20px; }
-    .plk-auth-role-group { flex-direction: column; }
+    .plk-auth-main { padding: 28px 16px 52px !important; }
+    .plk-auth-card { padding: 0 !important; }
+    .plk-auth-actions { grid-template-columns: minmax(0,1fr); gap: 7px; }
+    .plk-auth-divider { min-height: auto; margin: 1px 0; text-transform: lowercase; }
+    .plk-auth-divider::before,
+    .plk-auth-divider::after { display: block; }
+    .plk-auth-provider { min-height: 38px; font-size: 11.5px; }
     .plk-code-grid { gap: 6px; }
-    .plk-code-grid input { height: 52px !important; font-size: 21px !important; border-radius: 10px !important; }
+    .plk-code-grid input { height: 48px !important; font-size: 20px !important; border-radius: 4px !important; }
   }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <title>Inloggen | ProLinker</title>
 <meta name="description" content="Log in bij ProLinker of maak gratis een account.">
 <meta name="robots" content="noindex, nofollow">
 </helmet>
 
-<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div class="plk-auth-page plk-theme-page" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(0,107,198,0.055)), rgba(0,107,198,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-auth-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; position: relative; z-index: 5;">
     <a class="plk-auth-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 42px;"><img src="assets/prolinker-logo.png" alt="ProLinker" style="display: block; width: 132px; height: auto; object-fit: contain; filter: {{ logoFilter }};"></a>
@@ -71,28 +118,30 @@
     <div class="plk-auth-card" style="width: 100%; max-width: 448px; display: flex; flex-direction: column; animation: plk-rise 0.5s ease both;">
 
       <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
-        <form data-screen-label="Auth form" onSubmit="{{ onSubmitFormEvent }}" novalidate="novalidate" style="display: flex; flex-direction: column; align-items: center;">
-          <img src="assets/prolinker-mark.png" alt="" style="width: 50px; height: 50px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
-          <h1 style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
-          <p style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
+        <form class="plk-auth-form" data-screen-label="Auth form" onSubmit="{{ onSubmitFormEvent }}" novalidate="novalidate" style="display: flex; flex-direction: column; align-items: center;">
+          <img class="plk-auth-mark" src="assets/prolinker-mark.png" alt="" style="width: 50px; height: 50px; display: block; margin-bottom: 20px; filter: {{ logoFilter }};">
+          <h1 class="plk-auth-title" style="margin: 0; text-align: center; font-size: 32px; line-height: 1.12; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;">{{ heading }}</h1>
+          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15.5px; line-height: 1.5; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ subheading }}</p>
 
           <sc-if value="{{ showReferralNotice }}" hint-placeholder-val="{{ false }}">
-            <div style="width: 100%; margin-top: 18px; padding: 12px 15px; border: 1px solid rgba(0,107,198,0.18); border-radius: 10px; background: rgba(0,107,198,0.06); color: var(--text,#152431); font-size: 13.5px; line-height: 1.45; text-align: center;">{{ t.referralNotice }}</div>
+            <div class="plk-auth-referral" style="width: 100%; margin-top: 18px; padding: 12px 15px; border: 1px solid rgba(0,107,198,0.18); border-radius: 10px; background: rgba(0,107,198,0.06); color: var(--text,#152431); font-size: 13.5px; line-height: 1.45; text-align: center;">{{ t.referralNotice }}</div>
           </sc-if>
 
-          <div style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
-            <div role="radiogroup" aria-label="{{ t.roleLabel }}">
-              <div style="margin: 0 0 7px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
-              <div class="plk-auth-role-group" style="display: flex; gap: 10px;">
-                <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
-                <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleFreelancerActive }}" onClick="{{ onRoleFreelancer }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleFreelancerBorder }}; border-radius: 999px; background: {{ roleFreelancerBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleFreelancerColor }};">{{ t.roleFreelancer }}</button>
+          <div class="plk-auth-fields" style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 30px;">
+            <sc-if value="{{ showRoleChoice }}" hint-placeholder-val="false">
+              <div role="radiogroup" aria-label="{{ t.roleLabel }}">
+                <div class="plk-auth-label" style="margin: 0 0 7px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.roleLabel }}</div>
+                <div class="plk-auth-role-group" style="display: flex; gap: 10px;">
+                  <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleClientActive }}" onClick="{{ onRoleClient }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleClientBorder }}; border-radius: 999px; background: {{ roleClientBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleClientColor }};">{{ t.roleClient }}</button>
+                  <button class="plk-auth-role" type="button" role="radio" aria-checked="{{ roleFreelancerActive }}" onClick="{{ onRoleFreelancer }}" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; border: 1.5px solid {{ roleFreelancerBorder }}; border-radius: 999px; background: {{ roleFreelancerBg }}; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; color: {{ roleFreelancerColor }};">{{ t.roleFreelancer }}</button>
+                </div>
               </div>
-            </div>
+            </sc-if>
             <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
-              <label for="plk-auth-name" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.nameLabel }}</label>
+              <label class="plk-auth-label" for="plk-auth-name" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.nameLabel }}</label>
               <input class="plk-auth-input" id="plk-auth-name" name="name" type="text" autocomplete="name" enterKeyHint="next" value="{{ nameVal }}" onInput="{{ onNameInput }}" ref="{{ nameRef }}" aria-invalid="{{ nameInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.namePh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
             </sc-if>
-            <label for="plk-auth-contact" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.contactLabel }}</label>
+            <label class="plk-auth-label" for="plk-auth-contact" style="margin: 0 0 -5px 7px; font-size: 12.5px; font-weight: 650; color: var(--muted,#6B6E7B);">{{ t.contactLabel }}</label>
             <input class="plk-auth-input" id="plk-auth-contact" name="contact" type="tel" inputMode="tel" autocomplete="tel" enterKeyHint="go" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}" style="width: 100%; height: 54px; border: 1.5px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#fff); padding: 0 22px; font-size: 15.5px; color: var(--text,#152431);">
           </div>
 
@@ -107,20 +156,35 @@
             </sc-if>
           </div>
 
-          <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 50px; margin-top: 6px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }}; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ t.continueLabel }}</span><span style="font-size: 17px; line-height: 1;">→</span></button>
-          <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
+          <div class="plk-auth-hint" style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--faint,#A2A5B2); display: flex; align-items: center; gap: 7px;"><span style="display: inline-flex;">{{ hintIconEl }}</span>{{ t.codeHint }}</div>
+
+          <div class="plk-auth-actions">
+            <button class="plk-auth-primary" type="submit" disabled="{{ continueDisabled }}" aria-disabled="{{ continueDisabled }}" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border: none; background: {{ accent }}; color: #fff; font-family: inherit; cursor: {{ continueCursor }}; opacity: {{ continueOpacity }};"><span>{{ t.continueLabel }}</span></button>
+            <div class="plk-auth-divider"><span>{{ t.orLabel }}</span></div>
+            <div class="plk-auth-providers" aria-label="{{ t.socialLabel }}">
+              <button class="plk-auth-provider plk-auth-provider-facebook" type="button" disabled="{{ socialBusy }}" onClick="{{ onFacebook }}"><span class="plk-auth-provider-mark" aria-hidden="true">f</span><span>{{ facebookLabel }}</span></button>
+              <button class="plk-auth-provider plk-auth-provider-linkedin" type="button" disabled="{{ socialBusy }}" onClick="{{ onLinkedin }}"><span class="plk-auth-provider-mark" aria-hidden="true">in</span><span>{{ linkedinLabel }}</span></button>
+            </div>
+          </div>
+
+          <sc-if value="{{ isLogin }}" hint-placeholder-val="true">
+            <p class="plk-auth-mode-links">{{ t.noAccount }} <button class="plk-auth-mode-link" type="button" onClick="{{ onRegisterFreelancer }}">{{ t.createFreelancer }}</button> {{ t.orLabel }} <button class="plk-auth-mode-link" type="button" onClick="{{ onRegisterClient }}">{{ t.createClient }}</button></p>
+          </sc-if>
+          <sc-if value="{{ isRegister }}" hint-placeholder-val="false">
+            <p class="plk-auth-mode-links">{{ t.haveAccount }} <button class="plk-auth-mode-link" type="button" onClick="{{ onSwitchMode }}">{{ t.loginLink }}</button></p>
+          </sc-if>
 
           <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
-            <p style="margin: 18px 0 0; text-align: center; font-size: 12.5px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 320px;">{{ t.termsA }}<a class="plk-auth-link" href="https://prolinker.com/terms">{{ t.termsTerms }}</a>{{ t.termsB }}<a class="plk-auth-link" href="https://prolinker.com/privacy">{{ t.termsPrivacy }}</a>.</p>
+            <p class="plk-auth-terms" style="margin: 18px 0 0; text-align: center; font-size: 12.5px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 320px;">{{ t.termsA }}<a class="plk-auth-link" href="https://prolinker.com/terms">{{ t.termsTerms }}</a>{{ t.termsB }}<a class="plk-auth-link" href="https://prolinker.com/privacy">{{ t.termsPrivacy }}</a>.</p>
           </sc-if>
         </form>
       </sc-if>
 
       <sc-if value="{{ showCode }}" hint-placeholder-val="{{ false }}">
-        <div data-screen-label="Verify code" style="display: flex; flex-direction: column; align-items: center;">
-          <div style="width: 64px; height: 64px; border-radius: 50%; background: {{ channelIconBg }}; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">{{ channelIconEl }}</div>
-          <h1 ref="{{ codeHeadingRef }}" tabindex="-1" style="margin: 0; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">{{ codeTitle }}</h1>
-          <p style="margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ codeSubA }}<b style="color: var(--text,#152431); font-weight: 600;">{{ contactShown }}</b></p>
+        <div class="plk-auth-code" data-screen-label="Verify code" style="display: flex; flex-direction: column; align-items: center;">
+          <div class="plk-auth-channel" style="width: 64px; height: 64px; border-radius: 50%; background: {{ channelIconBg }}; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">{{ channelIconEl }}</div>
+          <h1 class="plk-auth-title" ref="{{ codeHeadingRef }}" tabindex="-1" style="margin: 0; text-align: center; font-size: 28px; font-weight: 700; letter-spacing: -0.02em;">{{ codeTitle }}</h1>
+          <p class="plk-auth-copy" style="margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.55; color: var(--muted,#6B6E7B); max-width: 340px; text-wrap: pretty;">{{ codeSubA }}<b style="color: var(--text,#152431); font-weight: 600;">{{ contactShown }}</b></p>
 
           <div class="plk-code-grid">
             <sc-for list="{{ codeBoxes }}" as="c" hint-placeholder-count="6">
@@ -128,7 +192,7 @@
             </sc-for>
           </div>
 
-          <div style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#6B6E7B);">{{ t.demoCode }}</div>
+          <div class="plk-auth-demo-code" style="margin-top: 13px; padding: 7px 11px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--panel,#F7F8FB); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted,#6B6E7B);">{{ t.demoCode }}</div>
           <sc-if value="{{ codeInvalid }}" hint-placeholder-val="false"><div role="alert" aria-live="assertive" style="margin-top: 12px; color: #D92D20; font-size: 13.5px; font-weight: 600;">{{ t.invalidCode }}</div></sc-if>
 
           <div style="min-height: 24px; margin-top: 20px; display: flex; align-items: center; gap: 14px;">
@@ -150,10 +214,10 @@
       </sc-if>
 
       <sc-if value="{{ showDone }}" hint-placeholder-val="{{ false }}">
-        <div data-screen-label="Success" style="display: flex; flex-direction: column; align-items: center;">
-          <div style="width: 76px; height: 76px; border-radius: 50%; background: {{ accentTint }}; display: flex; align-items: center; justify-content: center;">{{ bigCheckEl }}</div>
-          <h1 ref="{{ successHeadingRef }}" tabindex="-1" style="margin: 22px 0 0; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">{{ t.successTitle }}</h1>
-          <p style="margin: 8px 0 0; text-align: center; font-size: 15.5px; color: var(--muted,#6B6E7B);">{{ successSub }}</p>
+        <div class="plk-auth-done" data-screen-label="Success" style="display: flex; flex-direction: column; align-items: center;">
+          <div class="plk-auth-success-icon" style="width: 76px; height: 76px; border-radius: 50%; background: {{ accentTint }}; display: flex; align-items: center; justify-content: center;">{{ bigCheckEl }}</div>
+          <h1 class="plk-auth-title" ref="{{ successHeadingRef }}" tabindex="-1" style="margin: 22px 0 0; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: -0.02em;">{{ t.successTitle }}</h1>
+          <p class="plk-auth-copy" style="margin: 8px 0 0; text-align: center; font-size: 15.5px; color: var(--muted,#6B6E7B);">{{ successSub }}</p>
           <a class="plk-auth-primary" href="{{ successHref }}" style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 26px; margin-top: 28px; border-radius: 999px; background: {{ accent }}; color: #fff; font-size: 15px; font-weight: 600; box-shadow: 0 4px 14px {{ accentShadow }};"><span>{{ successCta }}</span><span style="font-size: 17px; line-height: 1;">→</span></a>
         </div>
       </sc-if>
@@ -161,13 +225,13 @@
     </div>
   </main>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#A2A5B2);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { mode: 'login', step: 'form', role: null, name: '', contact: '', touched: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '' };
+  state = { mode: 'login', step: 'form', role: null, name: '', contact: '', touched: false, socialAttempted: false, code: ['', '', '', '', '', ''], codeError: false, verifying: false, resendIn: 30, theme: 'light', next: '', referralCode: '', socialBusy: '', oauthError: '' };
 
   componentDidMount() {
     this._els = [];
@@ -194,7 +258,7 @@ class Component extends DCLogic {
     this._onKey = (e) => { if (e.key === 'Escape' && this.state.step === 'code' && !this.state.verifying) this.backToForm(); };
     window.addEventListener('keydown', this._onKey);
   }
-  componentWillUnmount() { clearInterval(this._cd); clearTimeout(this._vt); if (this._onKey) window.removeEventListener('keydown', this._onKey); }
+  componentWillUnmount() { clearInterval(this._cd); clearTimeout(this._vt); clearTimeout(this._socialTimer); if (this._onKey) window.removeEventListener('keydown', this._onKey); }
 
   lang() { const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase(); return l.indexOf('nl') === 0 ? 'nl' : 'en'; }
   hexToRgba(hex, a) { let h = (hex || '#006BC6').replace('#', ''); if (h.length === 3) h = h.split('').map((c) => c + c).join(''); const n = parseInt(h, 16); return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
@@ -226,7 +290,7 @@ class Component extends DCLogic {
 
   strings() {
     const en = {
-      loginTitle: 'Welcome back', registerTitle: 'Create your account',
+      loginTitle: 'Log in', registerTitle: 'Create your account',
       loginSub: 'Log in securely with your WhatsApp number. No password needed.',
       registerSub: 'Create your free account with your WhatsApp number.',
       switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
@@ -242,9 +306,15 @@ class Component extends DCLogic {
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
       codeAria: (n) => 'Digit ' + n,
       referralNotice: 'You were invited by a ProLinker member. Your referral will be linked after freelancer registration.',
+      orLabel: 'or', socialLabel: 'Social login options',
+      facebookLogin: 'Log in with Facebook', facebookRegister: 'Register with Facebook',
+      linkedinLogin: 'Log in with LinkedIn', linkedinRegister: 'Register with LinkedIn',
+      facebookUser: 'Facebook user', linkedinUser: 'LinkedIn user',
+      noAccount: 'No account yet?', createFreelancer: 'Create a freelancer account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
+      oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.',
     };
     const nl = {
-      loginTitle: 'Welkom terug', registerTitle: 'Maak je account',
+      loginTitle: 'Inloggen', registerTitle: 'Account aanmaken',
       loginSub: 'Log veilig in met je WhatsApp-nummer. Geen wachtwoord nodig.',
       registerSub: 'Maak gratis je account met je WhatsApp-nummer.',
       switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
@@ -260,6 +330,12 @@ class Component extends DCLogic {
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
       codeAria: (n) => 'Cijfer ' + n,
       referralNotice: 'Je bent uitgenodigd door een ProLinker-lid. Je referral wordt gekoppeld na je freelancerregistratie.',
+      orLabel: 'of', socialLabel: 'Sociale inlogopties',
+      facebookLogin: 'Inloggen met Facebook', facebookRegister: 'Registreren met Facebook',
+      linkedinLogin: 'Inloggen met LinkedIn', linkedinRegister: 'Registreren met LinkedIn',
+      facebookUser: 'Facebook-gebruiker', linkedinUser: 'LinkedIn-gebruiker',
+      noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als freelancer', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
+      oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.',
     };
     return this.lang() === 'nl' ? nl : en;
   }
@@ -310,6 +386,7 @@ class Component extends DCLogic {
   }
 
   submitForm() {
+    this.setState({ socialAttempted: false });
     const contactOk = this.isPhone(this.state.contact);
     const nameOk = this.state.mode === 'login' || (this.state.name || '').trim().length >= 2;
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
@@ -336,13 +413,14 @@ class Component extends DCLogic {
     const candidate = code.join('');
     if (candidate.length === 6) this.verify(candidate);
   }
-  completeAuth() {
+  finishAuthenticatedSession(provider, contactValue, nameValue) {
     clearInterval(this._cd);
     const role = this.state.role === 'freelancer' ? 'freelancer' : 'client';
-    const contact = (this.state.contact || '').trim();
-    let name = (this.state.name || '').trim();
+    const providerName = provider === 'facebook' || provider === 'linkedin' ? provider : 'whatsapp';
+    const contact = String(contactValue || this.state.contact || '').trim();
+    let name = String(nameValue || this.state.name || '').trim();
     try { if (!name) name = (localStorage.getItem('plk-user-name') || '').trim(); } catch (e) {}
-    const session = { version: 2, authenticated: true, channel: 'whatsapp', contact: contact, name: name, role: role, createdAt: Date.now() };
+    const session = { version: 2, authenticated: true, channel: 'whatsapp', authProvider: providerName, contact: contact, name: name, role: role, demo: providerName !== 'whatsapp', createdAt: Date.now() };
     try {
       localStorage.setItem('plk-auth-session', JSON.stringify(session));
       localStorage.setItem('plk-auth-contact', contact);
@@ -354,7 +432,87 @@ class Component extends DCLogic {
         else localStorage.removeItem('plk-referred-by');
       }
     } catch (e) {}
-    this.setState({ step: 'done', codeError: false, verifying: false, name: name, role: role });
+    this.setState({ step: 'done', codeError: false, verifying: false, socialBusy: '', contact: contact, name: name, role: role });
+  }
+  completeAuth() {
+    this.finishAuthenticatedSession('whatsapp', this.state.contact, this.state.name);
+  }
+  oauthEndpoint(provider) {
+    try {
+      const raw = this.oauthRaw(provider);
+      if (!raw) return null;
+      const url = new URL(raw, window.location.href);
+      const localHost = /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(url.hostname);
+      if (url.protocol !== 'https:' && !(url.protocol === 'http:' && localHost)) return null;
+      return url;
+    } catch (e) { return null; }
+  }
+  oauthRaw(provider) {
+    try {
+      const root = window.PRO_LINKER_CONFIG;
+      const oauth = root && typeof root === 'object' && root.oauth && typeof root.oauth === 'object' ? root.oauth : null;
+      const key = provider === 'facebook' ? 'facebookUrl' : 'linkedinUrl';
+      return oauth && typeof oauth[key] === 'string' ? oauth[key].trim() : '';
+    } catch (e) { return ''; }
+  }
+  authReturnUrl(provider) {
+    try {
+      const url = new URL('Prolinker Login.dc.html', window.location.href);
+      url.searchParams.set('mode', this.state.mode === 'register' ? 'register' : 'login');
+      url.searchParams.set('role', this.state.role === 'freelancer' ? 'freelancer' : 'client');
+      const nextRoute = this.safeNext(this.state.next);
+      const referralCode = this.safeReferralCode(this.state.referralCode);
+      if (nextRoute) url.searchParams.set('next', nextRoute);
+      if (referralCode) url.searchParams.set('ref', referralCode);
+      url.searchParams.set('oauth', provider);
+      return url.href;
+    } catch (e) { return ''; }
+  }
+  startSocialAuth(provider) {
+    if (this.state.socialBusy) return;
+    const safeProvider = provider === 'facebook' ? 'facebook' : 'linkedin';
+    if (this.state.role !== 'client' && this.state.role !== 'freelancer') {
+      this.setState({ touched: true, socialAttempted: true });
+      return;
+    }
+    this.setState({ oauthError: '' });
+    const configuredRaw = this.oauthRaw(safeProvider);
+    const endpoint = this.oauthEndpoint(safeProvider);
+    if (configuredRaw && !endpoint) {
+      this.setState({ oauthError: this.strings().oauthConfigError });
+      return;
+    }
+    if (endpoint) {
+      endpoint.searchParams.set('provider', safeProvider);
+      endpoint.searchParams.set('mode', this.state.mode === 'register' ? 'register' : 'login');
+      endpoint.searchParams.set('role', this.state.role);
+      const nextRoute = this.safeNext(this.state.next);
+      const referralCode = this.safeReferralCode(this.state.referralCode);
+      if (nextRoute) endpoint.searchParams.set('next', nextRoute);
+      if (referralCode) endpoint.searchParams.set('ref', referralCode);
+      const returnTo = this.authReturnUrl(safeProvider);
+      if (returnTo) endpoint.searchParams.set('returnTo', returnTo);
+      window.location.assign(endpoint.href);
+      return;
+    }
+    const rootConfig = window.PRO_LINKER_CONFIG && typeof window.PRO_LINKER_CONFIG === 'object' ? window.PRO_LINKER_CONFIG : {};
+    if (rootConfig.demoAuth === false) {
+      this.setState({ oauthError: this.strings().oauthUnavailable });
+      return;
+    }
+    this.setState({ socialBusy: safeProvider });
+    clearTimeout(this._socialTimer);
+    this._socialTimer = setTimeout(() => {
+      let contact = (this.state.contact || '').trim();
+      let name = (this.state.name || '').trim();
+      try {
+        if (!this.isPhone(contact)) contact = (localStorage.getItem('plk-auth-contact') || '').trim();
+        if (!name) name = (localStorage.getItem('plk-user-name') || '').trim();
+      } catch (e) {}
+      if (!this.isPhone(contact)) contact = safeProvider === 'facebook' ? '+3197000000001' : '+3197000000002';
+      if (!name) name = safeProvider === 'facebook' ? this.strings().facebookUser : this.strings().linkedinUser;
+      this.finishAuthenticatedSession(safeProvider, contact, name);
+    }, 260);
   }
   verify(candidate) {
     if (this.state.verifying) return;
@@ -367,13 +525,14 @@ class Component extends DCLogic {
       else { this.setState({ verifying: false, codeError: true, code: ['', '', '', '', '', ''] }); this.focusBox(0); }
     }, 550);
   }
-  switchMode() {
+  switchMode(roleOverride) {
     const nextMode = this.state.mode === 'login' ? 'register' : 'login';
     clearInterval(this._cd); clearTimeout(this._vt);
-    const role = this.state.role;
+    const role = roleOverride === 'client' || roleOverride === 'freelancer' ? roleOverride : this.state.role;
     const nextRoute = this.safeNext(this.state.next);
     const referralCode = this.safeReferralCode(this.state.referralCode);
-    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, codeError: false, verifying: false, code: ['', '', '', '', '', ''] });
+    clearTimeout(this._socialTimer);
+    this.setState({ mode: nextMode, role: role, next: nextRoute, referralCode: referralCode, step: 'form', touched: false, socialAttempted: false, codeError: false, verifying: false, socialBusy: '', oauthError: '', code: ['', '', '', '', '', ''] });
     try {
       const query = ['mode=' + encodeURIComponent(nextMode)];
       if (role) query.push('role=' + encodeURIComponent(role));
@@ -398,11 +557,12 @@ class Component extends DCLogic {
     const roleOk = this.state.role === 'client' || this.state.role === 'freelancer';
     const valid = contactOk && nameOk && roleOk;
     const errors = [];
+    if (this.state.oauthError) errors.push(this.state.oauthError);
     if (this.state.touched) {
-      if (!nameOk) errors.push(t.errName);
+      if (!this.state.socialAttempted && !nameOk) errors.push(t.errName);
       if (!roleOk) errors.push(t.errRole);
-      if (!contactOk && (this.state.contact || '').trim().length > 0) errors.push(t.errContact);
-      else if (!contactOk) errors.push(t.errContact);
+      if (!this.state.socialAttempted && !contactOk && (this.state.contact || '').trim().length > 0) errors.push(t.errContact);
+      else if (!this.state.socialAttempted && !contactOk) errors.push(t.errContact);
     }
 
     const roleActive = (r) => this.state.role === r;
@@ -434,12 +594,19 @@ class Component extends DCLogic {
       fontStack: ({ 'Schibsted Grotesk': "'Schibsted Grotesk', system-ui, sans-serif", 'Geist': "'Geist', system-ui, sans-serif", 'General Sans': "'General Sans', system-ui, sans-serif" })[this.props.fontPairing] || "'Schibsted Grotesk', system-ui, sans-serif",
       logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
       showForm: this.state.step === 'form', showCode: this.state.step === 'code', showDone: this.state.step === 'done',
-      isRegister: isRegister,
+      isRegister: isRegister, isLogin: !isRegister, showRoleChoice: true,
       showReferralNotice: isRegister && this.state.role === 'freelancer' && !!this.safeReferralCode(this.state.referralCode),
       heading: isRegister ? t.registerTitle : t.loginTitle,
       subheading: isRegister ? t.registerSub : t.loginSub,
       altModeLabel: isRegister ? t.switchToLogin : t.switchToRegister,
       onSwitchMode: () => this.switchMode(),
+      onRegisterFreelancer: () => this.switchMode('freelancer'),
+      onRegisterClient: () => this.switchMode('client'),
+      socialBusy: !!this.state.socialBusy,
+      facebookLabel: isRegister ? t.facebookRegister : t.facebookLogin,
+      linkedinLabel: isRegister ? t.linkedinRegister : t.linkedinLogin,
+      onFacebook: () => this.startSocialAuth('facebook'),
+      onLinkedin: () => this.startSocialAuth('linkedin'),
       onRoleClient: () => this.setState({ role: 'client' }),
       onRoleFreelancer: () => this.setState({ role: 'freelancer' }),
       roleClientActive: roleActive('client'),
@@ -450,10 +617,10 @@ class Component extends DCLogic {
       roleFreelancerBorder: roleActive('freelancer') ? accent : 'var(--border,#E4E5EC)',
       roleFreelancerBg: roleActive('freelancer') ? accentTint : 'var(--surface,#fff)',
       roleFreelancerColor: roleActive('freelancer') ? accent : 'var(--muted,#6B6E7B)',
-      nameVal: this.state.name, onNameInput: (e) => this.setState({ name: e.target.value }),
-      contactVal: this.state.contact, onContactInput: (e) => this.setState({ contact: e.target.value }),
-      nameInvalid: this.state.touched && !nameOk,
-      contactInvalid: this.state.touched && !contactOk,
+      nameVal: this.state.name, onNameInput: (e) => this.setState({ name: e.target.value, oauthError: '' }),
+      contactVal: this.state.contact, onContactInput: (e) => this.setState({ contact: e.target.value, oauthError: '' }),
+      nameInvalid: this.state.touched && !this.state.socialAttempted && !nameOk,
+      contactInvalid: this.state.touched && !this.state.socialAttempted && !contactOk,
       nameRef: (el) => { this._nameInput = el; },
       contactRef: (el) => { this._contactInput = el; },
       onFieldKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitForm(); } },

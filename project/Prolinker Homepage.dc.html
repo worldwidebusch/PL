@@ -63,6 +63,18 @@
   .plk-footer-legal a, .plk-footer-copyright { font-size: 11.5px; color: #91a7b6; }
   .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border: 1px solid #496170; border-radius: 4px; color: #abc0cd !important; font-size: 11px; font-weight: 700; }
   .plk-footer-social:hover { border-color: #92a9b8; color: #fff !important; transform: translateY(-1px); }
+  .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #D9E0E6; border-radius: 6px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); }
+  .plk-login-popup-label { display: block; margin: 0 0 6px; color: var(--text,#152431); font-size: 12px; font-weight: 650; }
+  .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#D9E0E6); border-radius: 4px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
+  .plk-login-popup-input:focus, .plk-login-popup-select:focus { border-color: #78A9D2; box-shadow: 0 0 0 3px rgba(0,107,198,0.11); }
+  .plk-login-popup-primary, .plk-login-popup-social { width: 100%; min-height: 40px; border: 0; border-radius: 4px; color: #fff; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
+  .plk-login-popup-primary { background: #b85c00; }
+  .plk-login-popup-primary:hover { background: #994a00; }
+  .plk-login-popup-social { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .plk-login-popup-social[data-provider="facebook"] { background: #3B5998; }
+  .plk-login-popup-social[data-provider="linkedin"] { background: #0679a8; }
+  .plk-login-popup-provider-icon { width: 20px; font-size: 18px; font-weight: 800; line-height: 1; text-align: center; }
+  .plk-login-popup-error { margin-top: 8px; color: #C43F3F; font-size: 11.5px; line-height: 1.4; }
   @media (max-width: 920px) {
     .plk-footer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 36px; }
     .plk-footer-brand { grid-column: 1 / -1; }
@@ -85,9 +97,11 @@
     .plk-footer-brand { grid-column: auto; }
     .plk-footer-legal { align-items: flex-start; flex-direction: column; gap: 16px; }
     .plk-footer-legal-links { gap: 12px 16px; }
+    .plk-login-popup { top: 64px; right: 14px; width: calc(100vw - 28px); }
   }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+<link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-mark.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="assets/pwa/icon-192.png">
@@ -216,6 +230,54 @@
 
   </main>
 
+  <sc-if value="{{ loginOpen }}" hint-placeholder-val="false">
+    <div onClick="{{ onCloseLogin }}" style="position: fixed; z-index: 80; inset: 0; background: transparent;"></div>
+    <section id="plk-login-popup-dialog" class="plk-login-popup" role="dialog" aria-modal="true" aria-label="{{ loginDialogLabel }}" onClick="{{ onStopLoginClick }}">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+        <strong style="font-size: 17px; line-height: 1.2;">{{ loginDialogLabel }}</strong>
+        <button type="button" onClick="{{ onCloseLogin }}" aria-label="{{ loginCloseLabel }}" style="width: 28px; height: 28px; border: 1px solid var(--border,#D9E0E6); border-radius: 4px; background: var(--surface,#fff); color: var(--muted,#667587); font: inherit; font-size: 17px; cursor: pointer;">&times;</button>
+      </div>
+
+      <sc-if value="{{ loginFormVisible }}" hint-placeholder-val="true">
+        <form onSubmit="{{ onLoginSubmit }}" novalidate="novalidate">
+          <label class="plk-login-popup-label" for="plk-popup-role">{{ loginRoleLabel }}</label>
+          <select id="plk-popup-role" class="plk-login-popup-select" value="{{ loginRole }}" onChange="{{ onLoginRole }}">
+            <option value="client">{{ loginRoleClient }}</option>
+            <option value="freelancer">{{ loginRoleFreelancer }}</option>
+          </select>
+
+          <label class="plk-login-popup-label" for="plk-popup-contact" style="margin-top: 12px;">{{ loginContactLabel }}</label>
+          <input id="plk-popup-contact" class="plk-login-popup-input" type="tel" inputMode="tel" autocomplete="tel" value="{{ loginContact }}" onInput="{{ onLoginContact }}" placeholder="+31 6 12345678" aria-invalid="{{ loginHasError }}">
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 9px;">
+            <label style="display: inline-flex; align-items: center; gap: 7px; color: var(--text,#152431); font-size: 11px; cursor: pointer;"><input type="checkbox" checked="{{ loginRemember }}" onChange="{{ onLoginRemember }}" style="width: 13px; height: 13px; margin: 0; accent-color: #006BC6;">{{ loginRememberLabel }}</label>
+            <a href="Prolinker Login.dc.html?mode=login" style="font-size: 10.5px; color: #4E8FC5;">{{ loginHelpLabel }}</a>
+          </div>
+
+          <sc-if value="{{ loginHasError }}" hint-placeholder-val="false"><div class="plk-login-popup-error" role="alert">{{ loginError }}</div></sc-if>
+          <button class="plk-login-popup-primary" type="submit" style="margin-top: 15px;">{{ loginSubmitLabel }}</button>
+        </form>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0; color: var(--faint,#8A97A6); font-size: 11px;"><span style="height: 1px; flex: 1; background: var(--hairline,#E9EDF1);"></span>{{ loginOrLabel }}<span style="height: 1px; flex: 1; background: var(--hairline,#E9EDF1);"></span></div>
+        <button class="plk-login-popup-social" data-provider="facebook" type="button" onClick="{{ onFacebookLogin }}"><span class="plk-login-popup-provider-icon">f</span>{{ facebookLoginLabel }}</button>
+        <button class="plk-login-popup-social" data-provider="linkedin" type="button" onClick="{{ onLinkedinLogin }}" style="margin-top: 6px;"><span class="plk-login-popup-provider-icon">in</span>{{ linkedinLoginLabel }}</button>
+        <a href="Prolinker Login.dc.html?mode=register" style="display: inline-flex; margin-top: 14px; color: #4E8FC5; font-size: 11px;">{{ createAccountLabel }}</a>
+      </sc-if>
+
+      <sc-if value="{{ loginCodeVisible }}" hint-placeholder-val="false">
+        <form onSubmit="{{ onLoginCodeSubmit }}" novalidate="novalidate">
+          <p style="margin: 0 0 12px; color: var(--muted,#667587); font-size: 12px; line-height: 1.45;">{{ loginCodeIntro }}</p>
+          <label class="plk-login-popup-label" for="plk-popup-code">{{ loginCodeLabel }}</label>
+          <input id="plk-popup-code" class="plk-login-popup-input" type="text" inputMode="numeric" autocomplete="one-time-code" maxLength="6" value="{{ loginCode }}" onInput="{{ onLoginCode }}" placeholder="123456" aria-invalid="{{ loginHasError }}">
+          <div style="margin-top: 7px; color: var(--faint,#8A97A6); font-size: 10.5px;">{{ loginDemoCode }}</div>
+          <sc-if value="{{ loginHasError }}" hint-placeholder-val="false"><div class="plk-login-popup-error" role="alert">{{ loginError }}</div></sc-if>
+          <button class="plk-login-popup-primary" type="submit" style="margin-top: 14px;">{{ loginVerifyLabel }}</button>
+          <button type="button" onClick="{{ onLoginBack }}" style="width: 100%; margin-top: 8px; border: 0; background: transparent; color: #4E8FC5; font: inherit; font-size: 11px; cursor: pointer;">{{ loginEditLabel }}</button>
+        </form>
+      </sc-if>
+    </section>
+  </sc-if>
+
   <footer class="plk-site-footer" style="padding: 54px 28px 24px;">
     <div style="width: 100%; max-width: 1280px; margin: 0 auto;">
       <div class="plk-footer-grid">
@@ -278,11 +340,15 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;jobCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Design&quot;,&quot;IT &amp; Development&quot;,&quot;Marketing&quot;,&quot;Sales&quot;,&quot;Finance&quot;,&quot;Legal&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 0, anim: '', listening: false, theme: 'light', language: '', menuOpen: false, authenticated: false, authRole: null, authName: '' };
+  state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 0, anim: '', listening: false, theme: 'light', language: '', menuOpen: false, authenticated: false, authRole: null, authName: '', loginOpen: false, loginStep: 'form', loginRole: 'client', loginContact: '', loginCode: '', loginRemember: true, loginError: '' };
 
   isValidWhatsappSession(session, requiredRole) {
-    if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
+    if (!session || session.authenticated !== true) return false;
     if (requiredRole && session.role !== requiredRole) return false;
+    if (session.role !== 'client' && session.role !== 'freelancer') return false;
+    const channel = String(session.channel || '').toLowerCase();
+    if (channel === 'facebook' || channel === 'linkedin') return !!String(session.providerId || session.contact || '').trim();
+    if (channel !== 'whatsapp') return false;
     const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
     if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
     return (contact.match(/\d/g) || []).length >= 8;
@@ -302,8 +368,21 @@ class Component extends DCLogic {
       const rawSession = localStorage.getItem('plk-auth-session');
       const session = rawSession ? JSON.parse(rawSession) : null;
       if (this.isValidWhatsappSession(session) && (session.role === 'client' || session.role === 'freelancer')) this.setState({ authenticated: true, authRole: session.role, authName: String(session.name || localStorage.getItem('plk-user-name') || '').trim() });
+      const savedRole = localStorage.getItem('plk-auth-role');
+      const savedContact = localStorage.getItem('plk-auth-contact') || '';
+      this.setState({ loginRole: savedRole === 'freelancer' ? 'freelancer' : 'client', loginContact: savedContact });
     } catch (e) {}
-    this._onKey = (e) => { if (e.key === 'Escape' && this.state.menuOpen) this.closeMenu(); };
+    this._onKey = (e) => {
+      if (e.key === 'Escape') { if (this.state.loginOpen) this.closeLogin(); else if (this.state.menuOpen) this.closeMenu(); return; }
+      if (e.key !== 'Tab' || !this.state.loginOpen) return;
+      const dialog = document.getElementById('plk-login-popup-dialog');
+      if (!dialog || !dialog.querySelectorAll) return;
+      const nodes = Array.prototype.slice.call(dialog.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled])'));
+      if (!nodes.length) return;
+      const first = nodes[0]; const last = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
     window.addEventListener('keydown', this._onKey);
     this.registerServiceWorker();
   }
@@ -313,8 +392,88 @@ class Component extends DCLogic {
     if (isNativeApp || !isWebProtocol || !('serviceWorker' in navigator)) return;
     navigator.serviceWorker.register('./sw.js').catch(() => {});
   }
-  toggleMenu() { this.setState((s) => ({ menuOpen: !s.menuOpen })); }
+  toggleMenu() { this.setState((s) => ({ menuOpen: !s.menuOpen, loginOpen: false })); }
   closeMenu() { this.setState({ menuOpen: false }); }
+  openLogin() {
+    this._loginTrigger = document.activeElement && document.activeElement.focus ? document.activeElement : null;
+    this.setState({ loginOpen: true, loginStep: 'form', loginCode: '', loginError: '', menuOpen: false });
+    setTimeout(() => { const el = document.getElementById('plk-popup-contact'); if (el && el.focus) el.focus(); }, 0);
+  }
+  closeLogin() {
+    this.setState({ loginOpen: false, loginStep: 'form', loginCode: '', loginError: '' });
+    const trigger = this._loginTrigger;
+    setTimeout(() => { if (trigger && trigger.focus) trigger.focus(); }, 0);
+  }
+  normalizeWhatsapp(value) {
+    const raw = String(value || '').trim();
+    if (!raw || !/^\+?[\d\s().-]+$/.test(raw)) return '';
+    const digits = raw.replace(/\D/g, '');
+    return digits.length >= 8 && digits.length <= 15 ? '+' + digits : '';
+  }
+  submitPopupLogin(event) {
+    if (event && event.preventDefault) event.preventDefault();
+    const contact = this.normalizeWhatsapp(this.state.loginContact);
+    if (!contact) { this.setState({ loginError: this.lang() === 'nl' ? 'Vul een geldig WhatsApp-nummer in.' : 'Enter a valid WhatsApp number.' }); return; }
+    try {
+      if (this.state.loginRemember) localStorage.setItem('plk-auth-contact', contact);
+      else localStorage.removeItem('plk-auth-contact');
+      localStorage.setItem('plk-auth-role', this.state.loginRole);
+    } catch (e) {}
+    this.setState({ loginContact: contact, loginStep: 'code', loginCode: '', loginError: '' });
+    setTimeout(() => { const el = document.getElementById('plk-popup-code'); if (el && el.focus) el.focus(); }, 0);
+  }
+  submitPopupCode(event) {
+    if (event && event.preventDefault) event.preventDefault();
+    if (String(this.state.loginCode || '').replace(/\D/g, '') !== '123456') { this.setState({ loginError: this.lang() === 'nl' ? 'De code is niet juist.' : 'The code is not correct.' }); return; }
+    this.completePopupSession('whatsapp', this.normalizeWhatsapp(this.state.loginContact), '');
+  }
+  completePopupSession(channel, contact, providerId) {
+    const role = this.state.loginRole === 'freelancer' ? 'freelancer' : 'client';
+    const providerName = channel === 'facebook' ? 'Facebook' : (channel === 'linkedin' ? 'LinkedIn' : 'ProLinker');
+    const authProvider = channel === 'facebook' || channel === 'linkedin' ? channel : 'whatsapp';
+    const sessionContact = authProvider === 'facebook' ? '+3197000000001' : (authProvider === 'linkedin' ? '+3197000000002' : contact);
+    let name = '';
+    try { name = String(localStorage.getItem('plk-user-name') || '').trim(); } catch (e) {}
+    if (!name) name = providerName + ' gebruiker';
+    const session = { version: 3, authenticated: true, channel: 'whatsapp', authProvider: authProvider, contact: sessionContact, providerId: providerId || '', name: name, role: role, persistent: this.state.loginRemember === true, demo: providerId === 'local-demo', createdAt: Date.now() };
+    try {
+      localStorage.setItem('plk-auth-session', JSON.stringify(session));
+      localStorage.setItem('plk-auth-role', role);
+      localStorage.setItem('plk-auth-channel', authProvider);
+      localStorage.setItem('plk-user-name', name);
+      if (this.state.loginRemember) localStorage.setItem('plk-auth-contact', sessionContact);
+      else localStorage.removeItem('plk-auth-contact');
+    } catch (e) {}
+    this.setState({ authenticated: true, authRole: role, authName: name, loginOpen: false, loginStep: 'form', loginCode: '', loginError: '' });
+  }
+  socialLogin(provider) {
+    const safeProvider = provider === 'linkedin' ? 'linkedin' : 'facebook';
+    const role = this.state.loginRole === 'freelancer' ? 'freelancer' : 'client';
+    const config = window.PRO_LINKER_CONFIG && typeof window.PRO_LINKER_CONFIG === 'object' ? window.PRO_LINKER_CONFIG : {};
+    const oauth = config.oauth && typeof config.oauth === 'object' ? config.oauth : {};
+    const configuredUrl = String(oauth[safeProvider + 'Url'] || '').trim();
+    if (configuredUrl) {
+      try {
+        const base = String(config.baseUrl || window.location.href);
+        const target = new URL(configuredUrl, base);
+        const localHost = /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(target.hostname);
+        if (target.protocol !== 'https:' && !(target.protocol === 'http:' && localHost)) throw new Error('Unsupported OAuth URL');
+        target.searchParams.set('mode', 'login');
+        target.searchParams.set('role', role);
+        target.searchParams.set('next', 'Prolinker Dashboard.dc.html');
+        window.location.href = target.href;
+        return;
+      } catch (e) {
+        this.setState({ loginError: this.lang() === 'nl' ? 'Deze loginprovider is nog niet juist ingesteld.' : 'This login provider is not configured correctly.' });
+        return;
+      }
+    }
+    if (config.demoAuth === false) {
+      this.setState({ loginError: this.lang() === 'nl' ? 'Social login is nog niet gekoppeld.' : 'Social login is not connected yet.' });
+      return;
+    }
+    this.completePopupSession(safeProvider, safeProvider + ':local-demo', 'local-demo');
+  }
   toggleTheme() {
     const next = this.state.theme === 'dark' ? 'light' : 'dark';
     try {
@@ -414,6 +573,7 @@ class Component extends DCLogic {
       errCaps: 'Avoid writing your whole brief in capital letters',
       speak: 'Speak your project', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer',
       settings: 'Settings', darkMode: 'Dark mode', login: 'Log in', register: 'Register', logout: 'Log out', searchLabel: 'Describe the skill or project you need', dashboardClient: 'Post a project', dashboardFreelancer: 'View opportunities', referrals: 'Earn 2% with referrals',
+      loginDialog: 'Log in', loginClose: 'Close login', loginRole: 'Account type', loginRoleClient: 'Client', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp number', loginRemember: 'Remember my WhatsApp number', loginHelp: 'Login help', loginSubmit: 'Log in', loginOr: 'or', facebookLogin: 'Log in with Facebook', linkedinLogin: 'Log in with LinkedIn', createAccount: 'Create account', loginCodeIntro: 'Enter the code sent to your WhatsApp number.', loginCode: 'Verification code', loginDemoCode: 'Demo code: 123456', loginVerify: 'Verify', loginEdit: 'Change number',
       footerTagline: 'The trusted network for businesses and independent professionals.', footerMarketplace: 'Marketplace', footerGetStarted: 'Get started', footerCompany: 'ProLinker',
       faq: 'Frequently asked questions', careers: 'Careers at ProLinker', contact: 'Contact', language: 'Language', rightsReserved: 'All rights reserved.', privacy: 'Privacy', terms: 'Terms and Conditions',
       pickCategory: (label) => 'Use ' + label + ' for my project',
@@ -429,6 +589,7 @@ class Component extends DCLogic {
       errCaps: 'Schrijf je briefing niet volledig in hoofdletters',
       speak: 'Spreek je project in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer',
       settings: 'Instellingen', darkMode: 'Donkere modus', login: 'Inloggen', register: 'Registreren', logout: 'Uitloggen', searchLabel: 'Beschrijf de skill of opdracht die je nodig hebt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten', referrals: 'Verdien 2% met referrals',
+      loginDialog: 'Inloggen', loginClose: 'Login sluiten', loginRole: 'Accounttype', loginRoleClient: 'Opdrachtgever', loginRoleFreelancer: 'Freelancer', loginContact: 'WhatsApp-nummer', loginRemember: 'Onthoud mijn WhatsApp-nummer', loginHelp: 'Hulp bij inloggen', loginSubmit: 'Inloggen', loginOr: 'of', facebookLogin: 'Inloggen met Facebook', linkedinLogin: 'Inloggen met LinkedIn', createAccount: 'Account aanmaken', loginCodeIntro: 'Vul de code in die naar je WhatsApp-nummer is gestuurd.', loginCode: 'Verificatiecode', loginDemoCode: 'Democode: 123456', loginVerify: 'Bevestigen', loginEdit: 'Nummer wijzigen',
       footerTagline: 'Het vertrouwde netwerk voor opdrachtgevers en zelfstandige professionals.', footerMarketplace: 'Marktplaats', footerGetStarted: 'Aan de slag', footerCompany: 'ProLinker',
       faq: 'Veelgestelde vragen', careers: 'Werken bij ProLinker', contact: 'Contact', language: 'Taal', rightsReserved: 'Alle rechten voorbehouden.', privacy: 'Privacy', terms: 'Algemene Voorwaarden',
       pickCategory: (label) => 'Gebruik ' + label + ' voor mijn opdracht',
@@ -887,8 +1048,46 @@ class Component extends DCLogic {
         } catch (e) {}
         this.setState({ authenticated: false, authRole: null, authName: '' });
       },
-      onLogin: () => { window.location.href = 'Prolinker Login.dc.html?mode=login'; },
+      onLogin: () => this.openLogin(),
       onRegister: () => { window.location.href = 'Prolinker Login.dc.html?mode=register&role=client'; },
+      loginOpen: this.state.loginOpen,
+      loginFormVisible: this.state.loginStep === 'form',
+      loginCodeVisible: this.state.loginStep === 'code',
+      loginDialogLabel: t.loginDialog,
+      loginCloseLabel: t.loginClose,
+      loginRoleLabel: t.loginRole,
+      loginRoleClient: t.loginRoleClient,
+      loginRoleFreelancer: t.loginRoleFreelancer,
+      loginContactLabel: t.loginContact,
+      loginRememberLabel: t.loginRemember,
+      loginHelpLabel: t.loginHelp,
+      loginSubmitLabel: t.loginSubmit,
+      loginOrLabel: t.loginOr,
+      facebookLoginLabel: t.facebookLogin,
+      linkedinLoginLabel: t.linkedinLogin,
+      createAccountLabel: t.createAccount,
+      loginCodeIntro: t.loginCodeIntro,
+      loginCodeLabel: t.loginCode,
+      loginDemoCode: t.loginDemoCode,
+      loginVerifyLabel: t.loginVerify,
+      loginEditLabel: t.loginEdit,
+      loginRole: this.state.loginRole,
+      loginContact: this.state.loginContact,
+      loginCode: this.state.loginCode,
+      loginRemember: this.state.loginRemember,
+      loginError: this.state.loginError,
+      loginHasError: !!this.state.loginError,
+      onCloseLogin: () => this.closeLogin(),
+      onStopLoginClick: (event) => { if (event && event.stopPropagation) event.stopPropagation(); },
+      onLoginRole: (event) => { const role = event.target.value === 'freelancer' ? 'freelancer' : 'client'; try { localStorage.setItem('plk-auth-role', role); } catch (e) {} this.setState({ loginRole: role, loginError: '' }); },
+      onLoginContact: (event) => this.setState({ loginContact: event.target.value || '', loginError: '' }),
+      onLoginRemember: (event) => this.setState({ loginRemember: !!event.target.checked }),
+      onLoginSubmit: (event) => this.submitPopupLogin(event),
+      onLoginCode: (event) => this.setState({ loginCode: String(event.target.value || '').replace(/\D/g, '').slice(0, 6), loginError: '' }),
+      onLoginCodeSubmit: (event) => this.submitPopupCode(event),
+      onLoginBack: () => this.setState({ loginStep: 'form', loginCode: '', loginError: '' }),
+      onFacebookLogin: () => this.socialLogin('facebook'),
+      onLinkedinLogin: () => this.socialLogin('linkedin'),
       menuItems: menuItems,
       showExpandBtn,
       categoriesExpanded: shownCount > step,
