@@ -144,7 +144,7 @@
             <div class="plk-lrow"><span class="plk-lava plk-lava-pending">{{ pi.initials }}</span><span class="plk-linfo"><span class="plk-lname">{{ pi.name }}</span><span class="plk-lrole">{{ pi.headline }} · Wacht op jou</span></span><span class="plk-lact"><button class="plk-btn plk-btn-primary" type="button" onClick="{{ pi.onAccept }}" disabled="{{ pi.busy }}">Accepteren</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ pi.onReject }}" disabled="{{ pi.busy }}">Weigeren</button></span></div>
           </sc-for>
           <sc-for list="{{ memberList }}" as="mi" hint-placeholder-count="5">
-            <div class="plk-lrow"><span class="plk-lava"><sc-if value="{{ mi.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ mi.photo }}" alt=""></sc-if><sc-if value="{{ mi.noPhoto }}" hint-placeholder-val="{{ true }}">{{ mi.initials }}</sc-if></span><span class="plk-linfo"><span class="plk-lname">{{ mi.name }}</span><span class="plk-lrole">{{ mi.headline }}</span></span><span class="plk-learned">{{ mi.earnedLabel }}</span><span class="plk-lact"><a class="plk-btn" href="{{ mi.profileHref }}">Profiel</a><button class="plk-btn plk-btn-danger" type="button" onClick="{{ mi.onRemove }}" disabled="{{ mi.busy }}">Verwijderen</button></span></div>
+            <div class="plk-lrow"><span class="plk-lava"><sc-if value="{{ mi.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ mi.photo }}" alt=""></sc-if><sc-if value="{{ mi.noPhoto }}" hint-placeholder-val="{{ true }}">{{ mi.initials }}</sc-if></span><span class="plk-linfo"><span class="plk-lname">{{ mi.name }}</span><span class="plk-lrole">{{ mi.headline }}</span></span><span class="plk-learned">{{ mi.earnedLabel }}</span><span class="plk-lact"><button class="plk-btn" type="button" onClick="{{ mi.onProfile }}">Profiel</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ mi.onRemove }}" disabled="{{ mi.busy }}">Verwijderen</button></span></div>
           </sc-for>
         </div>
           </sc-if>
@@ -154,6 +154,31 @@
         <button class="plk-mini" type="button" onClick="{{ onRefresh }}" disabled="{{ refreshing }}" aria-label="Verversen" title="Verversen">&#8635;</button>
         <button class="plk-fab" type="button" onClick="{{ onToggleInvite }}">+ Uitnodigen</button>
       </div>
+
+      <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ onCloseProfile }}" style="position: fixed; inset: 0; z-index: 700; background: rgba(11,17,25,0.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: 44px 20px; overflow: auto;">
+          <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" style="position: relative; width: 100%; max-width: 440px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 26px; text-align: center;">
+            <button onClick="{{ onCloseProfile }}" aria-label="Sluiten" style="position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); color: var(--muted,#424444); cursor: pointer; font-size: 16px; line-height: 1;">&times;</button>
+            <span style="margin: 0 auto; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; background: {{ pv.color }}; color: #24557C; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800;"><sc-if value="{{ pv.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ pv.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if><sc-if value="{{ pv.noPhoto }}" hint-placeholder-val="{{ true }}">{{ pv.initials }}</sc-if></span>
+            <h2 style="margin: 16px 0 0; font-size: 24px; letter-spacing: -0.01em;">{{ pv.name }}</h2>
+            <div style="margin-top: 5px; color: var(--muted,#424444); font-size: 13.5px;">{{ pv.headline }}</div>
+            <span style="display: inline-block; margin-top: 10px; padding: 5px 12px; border-radius: 7px; font-size: 12px; font-weight: 700; color: #fff; background: {{ pv.availBg }};">{{ pv.availLabel }}</span>
+            <div style="margin: 20px auto 0; max-width: 330px; display: flex; flex-direction: column; gap: 9px; text-align: left;">
+              <div style="display: flex; gap: 14px;"><span style="width: 128px; flex-shrink: 0; font-size: 13px; color: var(--muted,#424444);">Locatie</span><span style="font-size: 13px; font-weight: 650;">{{ pv.location }}</span></div>
+              <div style="display: flex; gap: 14px;"><span style="width: 128px; flex-shrink: 0; font-size: 13px; color: var(--muted,#424444);">Lid sinds</span><span style="font-size: 13px; font-weight: 650;">{{ pv.sinceLabel }}</span></div>
+              <div style="display: flex; gap: 14px;"><span style="width: 128px; flex-shrink: 0; font-size: 13px; color: var(--muted,#424444);">Netwerk</span><span style="font-size: 13px; font-weight: 650;">{{ pv.mutualLabel }}</span></div>
+              <div style="display: flex; gap: 14px;"><span style="width: 128px; flex-shrink: 0; font-size: 13px; color: var(--muted,#424444);">Verdiend via jou</span><span style="font-size: 13px; font-weight: 650; color: var(--blue-dark,#24476A);">{{ pv.earnedLabel }}</span></div>
+            </div>
+            <div style="margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;">
+              <sc-for list="{{ pv.skills }}" as="sk" hint-placeholder-count="2"><span style="padding: 4px 10px; border-radius: 7px; background: var(--panel,#F8FAFC); border: 1px solid var(--hair,#ECEEF0); font-size: 12px; font-weight: 600; color: var(--muted,#424444);">{{ sk }}</span></sc-for>
+            </div>
+            <div style="margin-top: 22px; display: flex; flex-direction: column; gap: 8px;">
+              <a href="Prolinker Berichten.dc.html" style="display: inline-flex; align-items: center; justify-content: center; height: 44px; border-radius: 8px; background: #E65F39; color: #fff; font-size: 14px; font-weight: 700;">Stuur bericht</a>
+              <button type="button" onClick="{{ pv.onRemove }}" disabled="{{ pv.busy }}" style="height: 38px; border: none; background: none; color: #9D3F35; font-family: inherit; font-size: 12px; font-weight: 650; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;">Verwijderen uit netwerk</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
 
       <sc-if value="{{ showInvite }}" hint-placeholder-val="{{ false }}">
         <div class="plk-pop" role="dialog" aria-label="Iemand uitnodigen">
@@ -191,7 +216,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:980}}">
 class Component extends DCLogic {
-  state = { loading: true, refreshing: false, error: '', data: null, session: null, menuOpen: false, theme: 'light', busyId: '', inviteName: '', invitePhone: '', inviteEmail: '', inviteMethod: 'whatsapp', toast: '', inviteOpen: false, selectedId: '', radius: 240, view: 'map', listSort: 'earned', mapError: false };
+  state = { loading: true, refreshing: false, error: '', data: null, session: null, menuOpen: false, theme: 'light', busyId: '', inviteName: '', invitePhone: '', inviteEmail: '', inviteMethod: 'whatsapp', toast: '', inviteOpen: false, selectedId: '', radius: 240, view: 'map', listSort: 'earned', mapError: false, profileId: '' };
 
   componentDidMount() {
     document.documentElement.setAttribute('lang', 'nl');
@@ -204,7 +229,7 @@ class Component extends DCLogic {
     this._sizeHandler = () => this.setState({ radius: this.computeRadius() });
     window.addEventListener('resize', this._sizeHandler);
     this._sizeHandler();
-    this._keyHandler = (event) => { if (event.key === 'Escape') this.setState({ inviteOpen: false, selectedId: '' }); };
+    this._keyHandler = (event) => { if (event.key === 'Escape') this.setState({ inviteOpen: false, selectedId: '', profileId: '' }); };
     window.addEventListener('keydown', this._keyHandler);
   }
 
@@ -221,6 +246,15 @@ class Component extends DCLogic {
     for (let i = 0; i < src.length; i += 1) { hash ^= src.charCodeAt(i); hash = Math.imul(hash, 16777619); }
     const gross = 600 + ((hash >>> 0) % 92) * 50;
     return { gross: gross, earned: Math.round(gross * 2) / 100 };
+  }
+
+  memberSince(id) {
+    let hash = 0; const src = String(id || 'lid');
+    for (let i = 0; i < src.length; i += 1) hash = (hash * 33 + src.charCodeAt(i)) >>> 0;
+    const monthsAgo = 3 + (hash % 28);
+    const d = new Date(); d.setMonth(d.getMonth() - monthsAgo);
+    try { return new Intl.DateTimeFormat('nl-NL', { month: 'long', year: 'numeric' }).format(d); }
+    catch (e) { return d.getFullYear() + ''; }
   }
 
   formatMoney(value) {
@@ -275,8 +309,7 @@ class Component extends DCLogic {
         const inner = photo ? '<img src="' + photo + '" alt="">' : initials;
         const icon = window.L.divIcon({ html: '<span class="plk-mpin">' + inner + '</span><span class="plk-mname">' + String(item.name || '').replace(/</g, '&lt;') + '</span>', iconSize: [90, 66], iconAnchor: [45, 33] });
         const marker = window.L.marker([lat, lng], { icon: icon }).addTo(map);
-        const headline = String(item.headline || '').replace(/</g, '&lt;');
-        marker.bindPopup('<b>' + String(item.name || '').replace(/</g, '&lt;') + '</b><br>' + headline + (item.profileHref ? '<br><a href="' + item.profileHref + '">Bekijk profiel</a>' : ''));
+        marker.on('click', () => this.setState({ profileId: item.id }));
         points.push([lat, lng]);
       });
       if (points.length) map.fitBounds(points, { padding: [70, 70], maxZoom: 10 });
@@ -380,7 +413,7 @@ class Component extends DCLogic {
     const userName = String(session.name || (data.currentUser && data.currentUser.name) || 'ProLinker gebruiker').trim();
     const userInitials = (data.currentUser && data.currentUser.initials) || userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
     const invitations = (data.invitations || []).map((item) => Object.assign({}, item, { pending: true, busy: this.state.busyId === item.id, onAccept: () => this.act('accept', item.id, item.name), onReject: () => this.act('reject', item.id, item.name) }));
-    const members = (data.members || []).slice().sort((a, b) => b.mutual - a.mutual).map((item) => { const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || ''; const money = this.earningsFor(item.name); return Object.assign({}, item, { pending: false, photo: photo, hasPhoto: !!photo, noPhoto: !photo, gross: money.gross, earned: money.earned, earnedLabel: this.formatMoney(money.earned), busy: this.state.busyId === item.id, onRemove: () => this.act('remove', item.id, item.name) }); });
+    const members = (data.members || []).slice().sort((a, b) => b.mutual - a.mutual).map((item) => { const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || ''; const money = this.earningsFor(item.name); return Object.assign({}, item, { pending: false, photo: photo, hasPhoto: !!photo, noPhoto: !photo, gross: money.gross, earned: money.earned, earnedLabel: this.formatMoney(money.earned), busy: this.state.busyId === item.id, onProfile: () => this.setState({ profileId: item.id }), onRemove: () => this.act('remove', item.id, item.name) }); });
     const ringSource = invitations.concat(members);
     const radius = this.state.radius;
     const positioned = ringSource.map((item, index, list) => {
@@ -414,6 +447,7 @@ class Component extends DCLogic {
       const bodyText = 'Hoi ' + mailName + ',\n\n' + userName + ' nodigt je uit voor ProLinker. Meld je aan via jouw persoonlijke link:\n' + refLink + '\n\nTot snel!';
       emailHref = 'mailto:' + encodeURIComponent(mailTo) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyText);
     }
+    const profileMember = members.find((m) => m.id === this.state.profileId) || null;
     const profile = session && session.profile && typeof session.profile === 'object' ? session.profile : {};
     const userAvatar = session.avatarUrl || session.avatar || session.photoUrl || profile.pictureUrl || profile.avatarUrl || (data.currentUser && data.currentUser.avatarUrl) || '';
     const connectedCount = data.totals.connected || members.length;
@@ -447,6 +481,23 @@ class Component extends DCLogic {
       onPopAccept: () => selected && this.act('accept', selected.id, selected.name),
       onPopReject: () => selected && this.act('reject', selected.id, selected.name),
       onPopClose: () => this.setState({ selectedId: '' }),
+      profileOpen: !!profileMember,
+      pv: profileMember ? {
+        name: profileMember.name, headline: profileMember.headline || '', initials: profileMember.initials,
+        photo: profileMember.photo || '', hasPhoto: !!profileMember.photo, noPhoto: !profileMember.photo,
+        color: profileMember.color || '#E9EFF5',
+        availLabel: profileMember.availability || 'Beschikbaar',
+        availBg: String(profileMember.availability || 'Beschikbaar').toLowerCase() === 'beschikbaar' ? '#2FA35B' : '#2F5B85',
+        location: profileMember.location || '-',
+        mutualLabel: (profileMember.mutual || 0) + ' gedeelde connecties',
+        sinceLabel: this.memberSince(profileMember.id),
+        earnedLabel: profileMember.earnedLabel || this.formatMoney(0),
+        skills: profileMember.skills || [],
+        busy: this.state.busyId === profileMember.id,
+        onRemove: () => this.act('remove', profileMember.id, profileMember.name)
+      } : { skills: [] },
+      onCloseProfile: () => this.setState({ profileId: '' }),
+      stopProp: (event) => event.stopPropagation(),
       showToast: !!this.state.toast, toast: this.state.toast
     };
   }
