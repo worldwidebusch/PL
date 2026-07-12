@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v5-registration-flow";
+const CACHE_VERSION = "v6-compact-nav-shell";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
