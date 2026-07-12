@@ -325,7 +325,11 @@
         ] }
       ],
       earnings: { currency: 'EUR', available: role === 'freelancer' ? 1860 : 0, pending: role === 'freelancer' ? 3200 : 74, referralRate: 0.02 },
-      settings: { language: 'nl', notifications: { whatsapp: true, matches: true, messages: true }, privacy: { searchable: true } }
+      settings: {
+        language: 'nl',
+        notifications: { whatsapp: true, matches: true, messages: true, applicationUpdates: true, referralUpdates: true },
+        privacy: { searchable: true, contactable: true, location: '', remotePreference: 'remote' }
+      }
     };
   }
 
@@ -771,7 +775,11 @@
   async function getSettings(options) {
     options = options || {};
     var session = activeSession();
-    var defaults = { language: 'nl', notifications: { whatsapp: true, matches: true, messages: true }, privacy: { searchable: true } };
+    var defaults = {
+      language: 'nl',
+      notifications: { whatsapp: true, matches: true, messages: true, applicationUpdates: true, referralUpdates: true },
+      privacy: { searchable: true, contactable: true, location: '', remotePreference: 'remote' }
+    };
     var value = configured.baseUrl ? normalizePayload(await request('settings', { signal: options.signal })) : readRepository(session).settings;
     value = isPlainObject(value) ? value : {};
     return {
@@ -1153,14 +1161,14 @@
   }
 
   var contracts = Object.freeze({
-    session: '{ authenticated:true, channel:"whatsapp", role:"client|freelancer", contact:string, name?:string }',
+    session: '{ authenticated:true, channel:"whatsapp", role:"client|freelancer", contact:string, name?:string, phoneVerifiedAt?:ISODateTime }',
     dashboard: '{ role, user, metrics[], activity[], updatedAt }',
     network: '{ currentUser, members[], invitations[], outbound[], totals, updatedAt }',
     member: '{ id, name, initials, headline, location, availability, mutual, skills[], status, profileHref }',
     assignment: '{ id, title, status, archived, href, match?, responses?, company? }',
     messageThread: '{ id, sender, subject, preview, unread, archived, at, href, messages[] }',
     messageEntry: '{ id, sender, direction:"incoming|outgoing", text, at, read }',
-    settings: '{ language, notifications:{ whatsapp, matches, messages }, privacy:{ searchable } }',
+    settings: '{ language, notifications:{ whatsapp, matches, messages, applicationUpdates, referralUpdates }, privacy:{ searchable, contactable, location, remotePreference } }',
     opportunityList: '{ items:opportunity[], total, nextCursor }',
     opportunity: '{ id, title, summary, description, company, source, opportunityType, relevance, remote, locationLabel, locationKey, country, latitude, longitude, hoursMin, hoursMax, rateLabel, postedAt, postedHoursAgo, closesAt, startAt, durationWeeks, tags[], reasons[], saved, hidden, applicationStatus }',
     applicationList: '{ items:application[], total, nextCursor }',

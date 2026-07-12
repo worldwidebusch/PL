@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v23-social-icons";
+const CACHE_VERSION = "v24-settings-icons";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -23,6 +23,9 @@ const PRECACHE_URLS = [
   "./assets/social/facebook.svg",
   "./assets/social/linkedin.svg",
   "./assets/social/instagram.svg",
+  "./assets/icons/user-round.svg",
+  "./assets/icons/bell.svg",
+  "./assets/icons/shield-check.svg",
   "./assets/pwa/icon-192.png",
   "./assets/pwa/icon-512.png",
   "./assets/vendor/react-18.3.1.production.min.js",

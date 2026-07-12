@@ -24,19 +24,6 @@
   button,input,select { font:inherit; }
   button { -webkit-tap-highlight-color:transparent; }
   button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,130,200,.23); outline-offset:2px; }
-  .plk-shell-header { height:58px; background:var(--surface); border-bottom:1px solid var(--border); position:relative; z-index:50; }
-  .plk-shell-inner { max-width:1240px; height:100%; margin:0 auto; padding:0 22px; display:flex; align-items:center; gap:24px; }
-  .plk-logo { width:112px; height:auto; display:block; }
-  .plk-header-links { margin-left:auto; display:flex; align-items:center; gap:22px; color:var(--text); font-size:13px; font-weight:550; }
-  .plk-header-link:hover { color:var(--blue); }
-  .plk-account-btn { min-height:38px; border:0; background:transparent; padding:4px 6px; display:flex; align-items:center; gap:9px; color:var(--text); cursor:pointer; }
-  .plk-avatar { width:31px; height:31px; border-radius:50%; background:#E6F1FB; color:var(--blue-dark); border:1px solid #C9DEEF; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
-  .plk-account-menu { position:absolute; right:0; top:44px; width:278px; background:var(--surface); border:1px solid var(--border); border-radius:8px; box-shadow:0 18px 42px rgba(16,39,58,.16); overflow:hidden; z-index:70; }
-  .plk-menu-link { display:grid; grid-template-columns:30px 1fr; gap:10px; padding:9px 12px; border-bottom:1px solid var(--hair); }
-  .plk-menu-link:hover { background:var(--panel); }
-  .plk-menu-icon { width:28px; height:28px; border-radius:6px; background:#EDF4FA; color:var(--blue-dark); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; }
-  .plk-menu-label { display:block; font-size:13px; font-weight:650; line-height:1.2; }
-  .plk-menu-desc { display:block; margin-top:2px; color:var(--faint); font-size:10.5px; line-height:1.25; }
   .plk-main { max-width:1060px; width:100%; margin:0 auto; padding:38px 24px 80px; }
   .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; }
   .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-dark); }
@@ -48,7 +35,8 @@
   .plk-side { position:sticky; top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); padding:7px; }
   .plk-side-link { display:flex; align-items:center; gap:9px; min-height:40px; padding:8px 10px; border-radius:6px; color:var(--muted); font-size:12.5px; font-weight:650; }
   .plk-side-link:hover { background:var(--panel); color:var(--text); }
-  .plk-side-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#EDF4FA; color:var(--blue-dark); font-size:9px; font-weight:800; }
+  .plk-side-icon { width:24px; height:24px; border-radius:6px; display:flex; align-items:center; justify-content:center; background:#EDF4FA; }
+  .plk-side-icon img { display:block; width:15px; height:15px; }
   .plk-settings-form { min-width:0; display:flex; flex-direction:column; gap:14px; }
   .plk-section { scroll-margin-top:76px; border:1px solid var(--border); border-radius:8px; background:var(--surface); overflow:hidden; }
   .plk-section-head { padding:16px 18px 14px; border-bottom:1px solid var(--hair); }
@@ -78,12 +66,6 @@
   .plk-switch-label { width:22px; font-size:10px; font-weight:700; text-align:right; }
   .plk-switch { width:38px; height:22px; border-radius:999px; position:relative; transition:background .16s ease; }
   .plk-switch-knob { position:absolute; top:2px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(16,39,58,.25); transition:left .16s ease; }
-  .plk-integration { display:grid; grid-template-columns:36px minmax(0,1fr) auto; align-items:center; gap:12px; padding:17px 18px; }
-  .plk-integration-icon { width:36px; height:36px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; }
-  .plk-integration-title { font-size:12.5px; font-weight:700; }
-  .plk-integration-desc { margin-top:3px; color:var(--muted); font-size:11px; line-height:1.4; }
-  .plk-mode-badge { display:inline-flex; align-items:center; gap:6px; padding:5px 8px; border:1px solid var(--border); border-radius:6px; background:var(--panel); color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:600; white-space:nowrap; }
-  .plk-mode-dot { width:6px; height:6px; border-radius:50%; }
   .plk-action-bar { position:sticky; bottom:12px; z-index:10; min-height:62px; padding:10px 12px 10px 16px; border:1px solid var(--border); border-radius:8px; background:var(--surface); box-shadow:0 12px 30px rgba(16,39,58,.1); display:flex; align-items:center; justify-content:space-between; gap:14px; }
   .plk-action-status { min-width:0; color:var(--muted); font-size:11.5px; line-height:1.35; }
   .plk-action-status strong { color:var(--text); }
@@ -99,15 +81,12 @@
   .plk-success { color:#237A45; font-weight:650; }
   .plk-save-error { color:var(--danger); font-weight:650; }
   .plk-footer { max-width:1060px; margin:0 auto; padding:0 24px 28px; color:var(--faint); font-size:11px; }
-  @media (max-width:850px) { .plk-header-links { display:none; } .plk-settings-layout { grid-template-columns:1fr; } .plk-side { position:static; display:flex; overflow:auto; gap:3px; } .plk-side-link { flex:0 0 auto; } }
+  @media (max-width:850px) { .plk-settings-layout { grid-template-columns:1fr; } .plk-side { position:static; display:flex; overflow:auto; gap:3px; } .plk-side-link { flex:0 0 auto; } }
   @media (max-width:560px) {
-    .plk-shell-header { height:54px; } .plk-shell-inner { padding:0 14px; } .plk-logo { width:100px; }
-    .plk-account-name { display:none; } .plk-account-menu { position:fixed; left:10px; right:10px; top:60px; width:auto; max-height:calc(100vh - 72px); overflow:auto; }
     .plk-main { padding:26px 14px 62px; } .plk-page-head { align-items:flex-start; margin-bottom:18px; } .plk-title { font-size:25px; } .plk-subtitle { font-size:13px; }
-    .plk-unsaved { display:none; } .plk-side-icon { display:none; } .plk-side-link { min-height:34px; padding:7px 9px; font-size:11.5px; }
+    .plk-unsaved { display:none; } .plk-side-link { min-height:34px; padding:7px 9px; font-size:11.5px; }
     .plk-section-head { padding:14px; } .plk-section-body { padding:14px; } .plk-identity-grid,.plk-field-grid { grid-template-columns:1fr; }
     .plk-choice-row { padding:12px 14px; } .plk-choice-desc { font-size:10.5px; }
-    .plk-integration { grid-template-columns:34px 1fr; padding:14px; } .plk-mode-badge { grid-column:2; justify-self:start; }
     .plk-action-bar { bottom:8px; padding:9px; align-items:stretch; flex-direction:column; } .plk-actions { width:100%; } .plk-actions .plk-btn { flex:1; }
     .plk-action-status { text-align:center; } .plk-footer { padding:0 14px 22px; }
   }
@@ -136,8 +115,8 @@
     <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
       <div class="plk-settings-layout">
         <nav class="plk-side" aria-label="Instellingensecties">
-          <sc-for list="{{ sectionLinks }}" as="section" hint-placeholder-count="4">
-            <a class="plk-side-link" href="{{ section.href }}"><span class="plk-side-icon">{{ section.icon }}</span>{{ section.label }}</a>
+          <sc-for list="{{ sectionLinks }}" as="section" hint-placeholder-count="3">
+            <a class="plk-side-link" href="{{ section.href }}"><span class="plk-side-icon"><img src="{{ section.iconSrc }}" width="15" height="15" alt="" aria-hidden="true"></span>{{ section.label }}</a>
           </sc-for>
         </nav>
 
@@ -147,7 +126,7 @@
             <div class="plk-section-body">
               <div class="plk-identity-grid">
                 <div class="plk-readonly"><span class="plk-field-label">Naam</span><div class="plk-readonly-value">{{ userName }}</div></div>
-                <div class="plk-readonly"><span class="plk-field-label">WhatsApp-contact</span><div class="plk-readonly-value" dir="ltr">{{ whatsappContact }}</div><span class="plk-verified"><span class="plk-verified-dot"></span>Geverifieerde sessie</span></div>
+                <div class="plk-readonly"><span class="plk-field-label">WhatsApp-contact</span><div class="plk-readonly-value" dir="ltr">{{ whatsappContact }}</div><sc-if value="{{ whatsappVerified }}" hint-placeholder-val="false"><span class="plk-verified"><span class="plk-verified-dot"></span>Geverifieerd</span></sc-if></div>
               </div>
               <div class="plk-field-grid">
                 <label class="plk-field"><span class="plk-field-label">Taal</span><select class="plk-select" value="{{ language }}" onChange="{{ onLanguage }}" disabled="{{ saving }}"><option value="nl">Nederlands</option><option value="en">English</option></select><span class="plk-help">Voor navigatie, meldingen en systeemteksten.</span></label>
@@ -171,11 +150,6 @@
             </sc-for>
           </section>
 
-          <section class="plk-section" id="integration" aria-labelledby="integration-title">
-            <div class="plk-section-head"><h2 class="plk-section-title" id="integration-title">Integratie-status</h2><p class="plk-section-note">Technische status van de gegevensbron voor dit account.</p></div>
-            <div class="plk-integration"><span class="plk-integration-icon" style="background:{{ integrationIconBg }}; color:{{ integrationIconColor }};">{{ integrationIcon }}</span><div><div class="plk-integration-title">{{ integrationTitle }}</div><div class="plk-integration-desc">{{ integrationDescription }}</div></div><span class="plk-mode-badge"><span class="plk-mode-dot" style="background:{{ integrationDot }};"></span>{{ integrationMode }}</span></div>
-          </section>
-
           <sc-if value="{{ hasSubmitError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ submitError }}</span><button class="plk-btn" type="button" onClick="{{ onDismissError }}">Sluiten</button></div></sc-if>
 
           <div class="plk-action-bar">
@@ -193,27 +167,24 @@
 class Component extends DCLogic {
   state = {
     loading: true, saving: false, fatalError: '', submitError: '', notice: '', session: null, sourceSettings: null,
-    baseline: null, menuOpen: false, theme: 'light', language: 'nl', location: '', remotePreference: 'remote',
+    baseline: null, language: 'nl', location: '', remotePreference: 'remote',
     notifications: { matches: true, messages: true, applicationUpdates: true, referralUpdates: true },
     privacy: { searchable: true, contactable: true }, validation: {}
   };
 
   componentDidMount() {
     document.documentElement.setAttribute('lang', 'nl');
-    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (error) {}
+    try { if (localStorage.getItem('plk-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (error) {}
     if (!window.ProLinkerApp) { this.setState({ loading: false, fatalError: 'De app-service kon niet worden geladen.' }); return; }
     const session = window.ProLinkerApp.session.require({ next: 'Prolinker Instellingen.dc.html' });
     if (!session) return;
     this.setState({ session: session });
     this.load();
-    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
     this._beforeUnload = (event) => { if (!this.isDirty()) return; event.preventDefault(); event.returnValue = ''; };
-    window.addEventListener('keydown', this._keyHandler);
     window.addEventListener('beforeunload', this._beforeUnload);
   }
 
   componentWillUnmount() {
-    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
     if (this._beforeUnload) window.removeEventListener('beforeunload', this._beforeUnload);
   }
 
@@ -264,6 +235,7 @@ class Component extends DCLogic {
       const draft = this.normalizeSettings(settings);
       this.applyDraft(draft, { loading: false, fatalError: '', sourceSettings: this.isObject(settings) ? settings : {}, baseline: this.clone(draft) });
       document.documentElement.setAttribute('lang', draft.language);
+      try { localStorage.setItem('plk-language', draft.language); } catch (error) {}
     } catch (error) {
       this.setState({ loading: false, fatalError: error && error.message ? error.message : 'Instellingen laden is niet gelukt.' });
     }
@@ -321,6 +293,7 @@ class Component extends DCLogic {
       const savedDraft = this.normalizeSettings(merged);
       this.applyDraft(savedDraft, { saving: false, sourceSettings: merged, baseline: this.clone(savedDraft), notice: 'saved', submitError: '' });
       document.documentElement.setAttribute('lang', savedDraft.language);
+      try { localStorage.setItem('plk-language', savedDraft.language); } catch (error) {}
     } catch (error) {
       this.setState({ saving: false, submitError: error && error.message ? error.message : 'Opslaan is niet gelukt. Probeer het opnieuw.' });
     }
@@ -352,18 +325,6 @@ class Component extends DCLogic {
     this.setState({ privacy: next, notice: '', submitError: '' });
   }
 
-  toggleTheme() {
-    const next = this.state.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('plk-theme', next); } catch (error) {}
-    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
-    this.setState({ theme: next, menuOpen: false });
-  }
-
-  initials(name) {
-    const parts = String(name || 'ProLinker').trim().split(/\s+/).filter(Boolean);
-    return ((parts[0] || 'P').charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : 'L')).toUpperCase();
-  }
-
   switchItem(key, title, description, checked, kind) {
     return {
       key: key, title: title, description: description, checked: checked,
@@ -375,16 +336,10 @@ class Component extends DCLogic {
 
   renderVals() {
     const app = window.ProLinkerApp;
-    const session = this.state.session || { role: 'freelancer', name: 'ProLinker gebruiker', contact: '' };
-    const role = session.role === 'client' ? 'client' : 'freelancer';
-    const userName = String(session.name || 'ProLinker gebruiker').trim();
+    const session = this.state.session || {};
+    const userName = String(session.name || '').trim();
     const whatsappContact = app ? (app.session.normalizeWhatsapp(session.contact) || String(session.contact || '')) : String(session.contact || '');
-    let currentKey = 'settings';
-    try { if (new URLSearchParams(window.location.search).get('section') === 'profiel') currentKey = 'profile'; } catch (error) {}
-    const menuItems = app ? app.routes.accountMenu(role).map((item) => Object.assign({}, item, { bg: item.key === currentKey ? 'var(--panel)' : 'transparent' })) : [];
     const dirty = this.isDirty();
-    const config = app ? app.getConfig() : { mode: 'local', baseUrl: '' };
-    const connected = config.mode === 'api';
     const notificationItems = [
       this.switchItem('matches', 'Nieuwe matches', 'Ontvang een melding wanneer ProLinker een relevante nieuwe match vindt.', !!this.state.notifications.matches, 'notification'),
       this.switchItem('messages', 'Nieuwe berichten', 'Blijf op de hoogte van nieuwe gesprekken en antwoorden.', !!this.state.notifications.messages, 'notification'),
@@ -396,22 +351,18 @@ class Component extends DCLogic {
       this.switchItem('contactable', 'Contactverzoeken toestaan', 'Andere leden mogen je via ProLinker een contact- of netwerkverzoek sturen.', !!this.state.privacy.contactable, 'privacy')
     ];
     return {
-      menuOpen: this.state.menuOpen, menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC',
-      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })), onCloseMenu: () => this.setState({ menuOpen: false }),
-      menuItems: menuItems, userName: userName, userInitials: this.initials(userName), whatsappContact: whatsappContact,
-      roleLabel: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
-      onTheme: () => this.toggleTheme(), themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
-      onLogout: () => app.session.logout(),
+      userName: userName || 'Niet ingesteld', whatsappContact: whatsappContact || 'Niet beschikbaar',
+      whatsappVerified: typeof session.phoneVerifiedAt === 'string' && Number.isFinite(Date.parse(session.phoneVerifiedAt)),
       loading: this.state.loading, ready: !this.state.loading && !this.state.fatalError, hasFatalError: !!this.state.fatalError, fatalError: this.state.fatalError, onRetry: () => this.load(),
-      sectionLinks: [{ href: '#account', icon: 'A', label: 'Account' }, { href: '#notifications', icon: 'M', label: 'Meldingen' }, { href: '#privacy', icon: 'P', label: 'Privacy' }, { href: '#integration', icon: 'I', label: 'Integratie-status' }],
+      sectionLinks: [
+        { href: '#account', iconSrc: 'assets/icons/user-round.svg', label: 'Account' },
+        { href: '#notifications', iconSrc: 'assets/icons/bell.svg', label: 'Meldingen' },
+        { href: '#privacy', iconSrc: 'assets/icons/shield-check.svg', label: 'Privacy' }
+      ],
       language: this.state.language, location: this.state.location, remotePreference: this.state.remotePreference, saving: this.state.saving,
       onLanguage: (event) => this.changeField('language', event.target.value), onLocation: (event) => this.changeField('location', event.target.value), onRemotePreference: (event) => this.changeField('remotePreference', event.target.value),
       locationInvalid: !!this.state.validation.location, hasLocationError: !!this.state.validation.location, locationError: this.state.validation.location || '',
       notificationItems: notificationItems, privacyItems: privacyItems,
-      integrationIcon: connected ? '\u2713' : 'L', integrationIconBg: connected ? '#E9F6EE' : '#FFF1E3', integrationIconColor: connected ? '#237A45' : '#A65300',
-      integrationTitle: connected ? 'Verbonden API' : 'Lokale mockgegevens',
-      integrationDescription: connected ? 'Voorkeuren worden via de geconfigureerde ProLinker API geladen en opgeslagen.' : 'Deze prototypeversie bewaart accountgegevens lokaal in deze browser.',
-      integrationMode: connected ? 'API verbonden' : 'Lokale modus', integrationDot: connected ? '#2FA95B' : '#ED8500',
       dirty: dirty, saved: this.state.notice === 'saved', idleStatus: !this.state.saving && this.state.notice !== 'saved',
       statusText: dirty ? 'Je hebt wijzigingen die nog niet zijn opgeslagen.' : 'Alle wijzigingen zijn opgeslagen.',
       hasSubmitError: !!this.state.submitError, submitError: this.state.submitError, onDismissError: () => this.setState({ submitError: '' }),
