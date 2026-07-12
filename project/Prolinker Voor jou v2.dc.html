@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -156,7 +157,8 @@
 
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
-      <div style="position: relative;">
+      <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
+        <div style="position: relative;">
         <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
@@ -184,14 +186,14 @@
             </button>
           </div>
         </sc-if>
-      </div>
+        </div>
+      </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <button onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;">Inloggen</button>
         <button onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};">Registreren</button>
       </sc-if>
       <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
-        <button onClick="{{ onProfile }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 650; color: var(--text,#152431); padding: 8px 4px;">Mijn profiel</button>
-        <button onClick="{{ onLogout }}" style="height: 38px; padding: 0 16px; border: 1px solid var(--border,#E4E5EC); border-radius: 999px; background: var(--surface,#FFFFFF); color: var(--muted,#5A6472); font-family: inherit; font-size: 13.5px; font-weight: 650; cursor: pointer;">Uitloggen</button>
+        <prolinker-account-menu></prolinker-account-menu>
       </sc-if>
     </div>
   </header>

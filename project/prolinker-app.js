@@ -1125,14 +1125,30 @@
 
   function accountMenu(role) {
     var safeRole = role === 'client' ? 'client' : 'freelancer';
+    var unreadMessages = 0;
+    var profileIssues = 0;
+    try {
+      var session = activeSession();
+      if (configured.baseUrl) {
+        unreadMessages = Math.max(0, Number(session.unreadMessages || (session.notifications && session.notifications.unreadMessages)) || 0);
+        profileIssues = Math.max(0, Number(session.profileIssues || (session.notifications && session.notifications.profileIssues)) || 0);
+      } else {
+        var repository = readRepository(session);
+        unreadMessages = Array.isArray(repository.messages)
+          ? repository.messages.filter(function (message) { return message && message.unread === true && message.archived !== true; }).length
+          : 0;
+      }
+    } catch (error) {}
+    var unreadText = unreadMessages > 99 ? '99+' : (unreadMessages > 0 ? String(unreadMessages) : '');
+    var profileText = profileIssues > 99 ? '99+' : String(profileIssues);
     return [
-      { key: 'dashboard', label: 'Mijn dashboard', description: 'Overzicht en activiteit', href: ROUTES.dashboard, icon: 'D' },
-      { key: 'network', label: 'Mijn netwerk', description: 'Connecties en uitnodigingen', href: ROUTES.network, icon: 'N' },
-      { key: 'assignments', label: 'Mijn opdrachten', description: safeRole === 'client' ? 'Plaatsingen en reacties' : 'Sollicitaties en samenwerkingen', href: ROUTES.assignments + '?role=' + safeRole, icon: 'O' },
-      { key: 'messages', label: 'Mijn berichten', description: 'Gesprekken en updates', href: ROUTES.messages, icon: 'B' },
-      { key: 'profile', label: 'Mijn profiel', description: safeRole === 'client' ? 'Account- en organisatieprofiel' : 'CV, expertise en portfolio', href: safeRole === 'client' ? ROUTES.clientProfile : ROUTES.freelancerProfile, icon: 'P' },
-      { key: 'earnings', label: safeRole === 'client' ? 'Referralverdiensten' : 'Mijn verdiensten', description: 'Uitbetalingen en 2% referrals', href: ROUTES.earnings, icon: '2%' },
-      { key: 'settings', label: 'Instellingen', description: 'Account en meldingen', href: ROUTES.settings, icon: 'I' }
+      { key: 'dashboard', label: 'Mijn Dashboard', description: 'Overzicht en activiteit', href: ROUTES.dashboard, icon: '\u25a3', badgeText: '' },
+      { key: 'network', label: 'Mijn Netwerk', description: 'Connecties en uitnodigingen', href: ROUTES.network, icon: '\u2723', badgeText: '' },
+      { key: 'assignments', label: 'Mijn Opdrachten', description: safeRole === 'client' ? 'Plaatsingen en reacties' : 'Sollicitaties en samenwerkingen', href: ROUTES.assignments + '?role=' + safeRole, icon: '\u25a4', badgeText: '' },
+      { key: 'messages', label: 'Mijn Berichten', description: 'Gesprekken en updates', href: ROUTES.messages, icon: '\u25b1', badgeText: unreadText },
+      { key: 'profile', label: 'Mijn Profiel', description: safeRole === 'client' ? 'Account- en organisatieprofiel' : 'CV, expertise en portfolio', href: safeRole === 'client' ? ROUTES.clientProfile : ROUTES.freelancerProfile, icon: '\u25ce', badgeText: profileText },
+      { key: 'earnings', label: 'Mijn Transacties', description: 'Betalingen, uitbetalingen en referrals', href: ROUTES.earnings, icon: '\u25cc', badgeText: '' },
+      { key: 'settings', label: 'Instellingen', description: 'Account en meldingen', href: ROUTES.settings, icon: '\u2699', badgeText: '' }
     ];
   }
 

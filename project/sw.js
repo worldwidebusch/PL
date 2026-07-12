@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v3-login-theme";
+const CACHE_VERSION = "v4-account-menu";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -14,6 +14,7 @@ const PRECACHE_URLS = [
   "./Prolinker Profiel.dc.html",
   "./prolinker-theme.css",
   "./prolinker-app.js",
+  "./prolinker-account-menu.js",
   "./support.js",
   "./manifest.webmanifest",
   "./assets/prolinker-mark.png",

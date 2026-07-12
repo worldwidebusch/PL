@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -84,24 +85,7 @@
         <a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a>
         <a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a>
       </nav>
-      <div class="plk-account-wrap">
-        <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-haspopup="menu" aria-label="Accountmenu openen">
-          <span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size: 12.5px; font-weight: 650;">{{ userName }}</span><span style="font-size: 10px; color: var(--faint,#9AA0A6);">{{ menuChevron }}</span>
-        </button>
-        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-          <button class="plk-menu-scrim" type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 60; border: 0; background: transparent;"></button>
-          <div class="plk-account-menu" role="menu">
-            <div style="padding: 11px 12px; border-bottom: 1px solid var(--hairline,#ECEDF2);"><div style="font-size: 12.5px; font-weight: 700;">{{ userName }}</div><div style="margin-top: 2px; color: var(--faint,#9AA0A6); font-size: 10.5px;">{{ roleLabel }}</div></div>
-            <sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7">
-              <a class="plk-menu-link" href="{{ item.href }}" role="menuitem" aria-current="{{ item.current }}" style="background: {{ item.bg }}; box-shadow: {{ item.activeShadow }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a>
-            </sc-for>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline,#ECEDF2); border-top: 1px solid var(--hairline,#ECEDF2);">
-              <button class="plk-menu-action" type="button" onClick="{{ onTheme }}">{{ themeLabel }}</button>
-              <button class="plk-menu-action" type="button" onClick="{{ onLogout }}" style="color: #A2463B;">Uitloggen</button>
-            </div>
-          </div>
-        </sc-if>
-      </div>
+      <prolinker-account-menu current="earnings"></prolinker-account-menu>
     </div>
   </header>
 

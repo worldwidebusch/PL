@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -35,10 +36,7 @@
   <header class="plk-shell-header"><div class="plk-shell-inner">
     <a href="Prolinker Homepage.dc.html" aria-label="ProLinker start"><img class="plk-logo" src="assets/prolinker-logo-ink.png" alt="ProLinker"></a>
     <nav class="plk-header-links" aria-label="Hoofdnavigatie"><a class="plk-header-link" href="Prolinker Results.dc.html">Freelancers</a><a class="plk-header-link" href="Prolinker Voor jou v2.dc.html">Opdrachten</a><a class="plk-header-link" href="https://prolinker.com/nl/hoe-werkt-het">Hoe het werkt</a><a class="plk-header-link" href="Prolinker Brief.dc.html">Opdracht plaatsen</a><a class="plk-header-link" href="https://prolinker.com/nl/blog?page=1">Blog</a></nav>
-    <div style="position:relative;margin-left:auto;">
-      <button class="plk-account-btn" type="button" onClick="{{ onToggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Accountmenu openen"><span class="plk-avatar">{{ userInitials }}</span><span class="plk-account-name" style="font-size:12.5px;font-weight:650;">{{ userName }}</span><span style="font-size:10px;color:var(--faint);">{{ menuChevron }}</span></button>
-      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}"><button type="button" aria-label="Menu sluiten" onClick="{{ onCloseMenu }}" style="position:fixed;inset:0;z-index:60;border:0;background:transparent;"></button><div class="plk-account-menu" role="menu"><div style="padding:11px 12px;border-bottom:1px solid var(--hair);"><div style="font-size:12.5px;font-weight:700;">{{ userName }}</div><div style="margin-top:2px;color:var(--faint);font-size:10.5px;">{{ roleLabel }}</div></div><sc-for list="{{ menuItems }}" as="item" hint-placeholder-count="7"><a class="plk-menu-link" href="{{ item.href }}" role="menuitem" style="background:{{ item.bg }};"><span class="plk-menu-icon">{{ item.icon }}</span><span><span class="plk-menu-label">{{ item.label }}</span><span class="plk-menu-desc">{{ item.description }}</span></span></a></sc-for><div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border-top:1px solid var(--hair);"><button type="button" onClick="{{ onTheme }}" style="min-height:42px;border:0;background:var(--surface);color:var(--muted);cursor:pointer;font-size:11px;font-weight:650;">{{ themeLabel }}</button><button type="button" onClick="{{ onLogout }}" style="min-height:42px;border:0;background:var(--surface);color:#A2463B;cursor:pointer;font-size:11px;font-weight:650;">Uitloggen</button></div></div></sc-if>
-    </div>
+    <prolinker-account-menu current="assignments"></prolinker-account-menu>
   </div></header>
 
   <main class="plk-main" style="flex:1;">

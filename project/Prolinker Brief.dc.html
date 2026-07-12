@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -43,7 +45,8 @@
 
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <div style="display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 14px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#E4E5EC); border-radius: 999px; backdrop-filter: blur(8px); position: fixed; top: 16px; right: 28px; z-index: 30;">
-      <div style="position: relative;">
+      <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
+        <div style="position: relative;">
         <button onClick="{{ onToggleMenu }}" aria-label="Menu" title="Menu" style="width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border,#E4E5EC); background: var(--surface,#fff); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">{{ gridEl }}</button>
         <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
@@ -59,9 +62,13 @@
             </button>
           </div>
         </sc-if>
-      </div>
-      <button onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;" style-hover="color: {{ accent }};">{{ t.login }}</button>
-      <button onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.register }}</button>
+        </div>
+        <button onClick="{{ onLogin }}" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--text,#152431); padding: 8px 4px;" style-hover="color: {{ accent }};">{{ t.login }}</button>
+        <button onClick="{{ onRegister }}" style="height: 38px; padding: 0 18px; border: none; border-radius: 999px; background: {{ accent }}; color: #fff; font-family: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 14px {{ accentShadow }};" style-hover="transform: translateY(-1px);">{{ t.register }}</button>
+      </sc-if>
+      <sc-if value="{{ authenticated }}" hint-placeholder-val="false">
+        <prolinker-account-menu></prolinker-account-menu>
+      </sc-if>
     </div>
   </header>
 
@@ -163,7 +170,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1100},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand &amp; logo design&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#006BC6&quot;,&quot;options&quot;:[&quot;#006BC6&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C2410C&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { theme: 'light', query: '', desc: '', budgetMode: 'hourly', budgetMin: '', budgetMax: '', hours: 24, workMode: 'remote', location: '', aiLoading: false, listening: false, micNote: false, menuOpen: false, attempted: false, aiGate: false, hoursTouched: false };
+  state = { theme: 'light', query: '', desc: '', budgetMode: 'hourly', budgetMin: '', budgetMax: '', hours: 24, workMode: 'remote', location: '', aiLoading: false, listening: false, micNote: false, menuOpen: false, attempted: false, aiGate: false, hoursTouched: false, authenticated: false };
 
   isValidWhatsappSession(session, requiredRole) {
     if (!session || session.authenticated !== true || session.channel !== 'whatsapp') return false;
@@ -175,6 +182,10 @@ class Component extends DCLogic {
 
   componentDidMount() {
     try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
+    try {
+      const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
+      this.setState({ authenticated: this.isValidWhatsappSession(session, 'client') });
+    } catch (e) {}
     let q = '';
     try { q = new URLSearchParams(window.location.search).get('q') || ''; } catch (e) {}
     if (!q) { try { q = localStorage.getItem('plk-query') || ''; } catch (e) {} }
@@ -416,6 +427,7 @@ class Component extends DCLogic {
 
     return {
       t: t, accent: accent, accentShadow: accentShadow, accentRing: accentRing, accentTint: accentTint,
+      authenticated: this.state.authenticated, anonymous: !this.state.authenticated,
       isDark: isDark, isLight: !isDark, onToggleTheme: () => this.toggleTheme(),
       menuOpen: this.state.menuOpen, onToggleMenu: () => this.toggleMenu(), onCloseMenu: () => this.closeMenu(),
       themeIconEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: this.state.theme === 'dark' ? 'rgba(255,255,255,0.72)' : '#565B62', strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' })),
