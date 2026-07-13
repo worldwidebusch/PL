@@ -66,22 +66,6 @@
   .plk-auth-main { justify-content: flex-start !important; padding: 34px 20px 68px !important; }
   .plk-auth-page.is-register .plk-auth-main { align-items: center !important; padding: 34px 20px 68px !important; }
   .plk-auth-card { max-width: 414px !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
-  .plk-auth-main { position: relative; }
-  .plk-auth-side-photo { display: none; position: absolute; left: clamp(24px, 6vw, 96px); top: 50%; transform: translateY(-50%); width: min(300px, 21vw); margin: 0; animation: plk-rise 0.5s ease 0.08s both; }
-  .plk-auth-side-photo img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 20px; box-shadow: 0 30px 64px -40px rgba(21,36,49,0.6); }
-  .plk-auth-side-poem { display: none; position: absolute; right: clamp(24px, 5vw, 84px); top: 50%; transform: translateY(-50%); width: min(320px, 23vw); animation: plk-rise 0.5s ease 0.12s both; }
-  .plk-auth-side-poem blockquote { margin: 0; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 13px; line-height: 1.8; letter-spacing: 0.012em; color: #4A5B6C; text-wrap: pretty; }
-  .plk-auth-side-poem .plk-manifest-author { margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: #8FA9C0; }
-  :root[data-theme="dark"] .plk-auth-side-poem blockquote { color: #B8C6D4; }
-  @media (min-width: 1240px) {
-    .plk-auth-side-photo, .plk-auth-side-poem { display: block; }
-    .plk-auth-manifest { display: none; }
-  }
-  .plk-auth-manifest { width: 100%; max-width: 700px; margin-top: 46px; padding: 26px 28px; border-radius: 18px; background: #152431; color: #E9EFF5; display: flex; gap: 26px; align-items: center; box-shadow: 0 24px 50px -36px rgba(21,36,49,0.6); animation: plk-rise 0.5s ease 0.08s both; }
-  .plk-auth-manifest img { width: 128px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; flex-shrink: 0; }
-  .plk-auth-manifest blockquote { margin: 0; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 12.5px; line-height: 1.75; letter-spacing: 0.012em; text-wrap: pretty; }
-  .plk-auth-manifest .plk-manifest-author { margin-top: 11px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: #8FA9C0; }
-  @media (max-width: 640px) { .plk-auth-manifest { flex-direction: column; align-items: flex-start; padding: 22px; } .plk-auth-manifest img { width: 100%; max-width: 200px; } }
   .plk-auth-page.is-register .plk-auth-card { max-width: 440px !important; }
   .plk-auth-form,
   .plk-auth-code,
@@ -226,13 +210,6 @@
   </header>
 
   <main class="plk-auth-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px 80px; width: 100%;">
-    <figure class="plk-auth-side-photo">
-      <img src="assets/brand-imagery/people/freelancer-dock.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
-    </figure>
-    <aside class="plk-auth-side-poem" aria-label="ProLinker manifest">
-      <blockquote>"For the free. The brave. The independent. For those who refuse to trade their lives for a schedule. Who choose freedom over routine. Purpose over permission. Because success isn&rsquo;t measured by how much you earn. It&rsquo;s measured by how much of your life belongs to you. Take back your time. Unlock your creativity. Work from anywhere. Live without limits. The future belongs to those who build it on their own terms. Because a life lived on your own terms is a life well lived."</blockquote>
-      <div class="plk-manifest-author">&mdash; Niels van der Schoot, ProLinker</div>
-    </aside>
     <div class="plk-auth-card" style="width: 100%; max-width: 448px; display: flex; flex-direction: column; animation: plk-rise 0.5s ease both;">
 
       <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
@@ -460,14 +437,6 @@
       </sc-if>
 
     </div>
-
-    <section class="plk-auth-manifest" aria-label="ProLinker manifest">
-      <img src="assets/brand-imagery/people/freelancer-dock.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
-      <div>
-        <blockquote>"For the free. The brave. The independent. For those who refuse to trade their lives for a schedule. Who choose freedom over routine. Purpose over permission. Because success isn&rsquo;t measured by how much you earn. It&rsquo;s measured by how much of your life belongs to you. Take back your time. Unlock your creativity. Work from anywhere. Live without limits. The future belongs to those who build it on their own terms. Because a life lived on your own terms is a life well lived."</blockquote>
-        <div class="plk-manifest-author">&mdash; Niels van der Schoot, ProLinker</div>
-      </div>
-    </section>
   </main>
 
   <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>

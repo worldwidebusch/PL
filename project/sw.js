@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v55-logo-nudge";
+const CACHE_VERSION = "v56-auth-clean";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
