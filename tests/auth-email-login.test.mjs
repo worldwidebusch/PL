@@ -89,9 +89,10 @@ test('email credentials are forwarded only to the private adapter before WhatsAp
   }
 });
 
-test('local preview offers direct role test sessions while production login remains email plus WhatsApp', async () => {
+test('public login offers temporary direct role demo sessions while standard login remains email plus WhatsApp', async () => {
   const source = await readFile(new URL('../project/Prolinker Login.dc.html', import.meta.url), 'utf8');
-  assert.match(source, /showTestLogin:\s*!isRegister\s*&&\s*this\.isPreviewRuntime\(\)/);
+  assert.match(source, /showTestLogin:\s*!isRegister/);
+  assert.doesNotMatch(source, /if\s*\(!this\.isPreviewRuntime\(\)\)/);
   assert.match(source, /loginTestAccount\('freelancer'\)/);
   assert.match(source, /loginTestAccount\('client'\)/);
   assert.match(source, /channel:\s*'test'/);

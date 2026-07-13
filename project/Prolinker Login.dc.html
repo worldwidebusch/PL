@@ -570,7 +570,6 @@ class Component extends DCLogic {
   }
   loginTestAccount(role) {
     const t = this.strings();
-    if (!this.isPreviewRuntime()) { this.setState({ oauthError: t.testUnavailable }); return; }
     const account = this.testAccounts()[role];
     if (!account) { this.setState({ oauthError: t.testUnavailable }); return; }
     const now = Date.now();
@@ -625,7 +624,7 @@ class Component extends DCLogic {
       linkedinLogin: 'Log in with LinkedIn', linkedinRegister: 'Register with LinkedIn',
       facebookUser: 'Facebook user', linkedinUser: 'LinkedIn user',
       noAccount: 'No account yet?', createFreelancer: 'Create a freelancer account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
-      testTitle: 'Open a test account', testLocalOnly: 'Preview only', testCopy: 'Skip real login details and open either logged-in version immediately.', testFreelancer: 'Test as freelancer', testClient: 'Test as client', testUnavailable: 'Test login is available only from a local preview.',
+      testTitle: 'Open a test account', testLocalOnly: 'Demo access', testCopy: 'Open either logged-in version immediately without real login details.', testFreelancer: 'Test as freelancer', testClient: 'Test as client', testUnavailable: 'This test account is temporarily unavailable.',
       oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.', oauthFailed: 'Login could not be completed. Please try again.', otpUnavailable: 'WhatsApp verification is temporarily unavailable. Please try again.',
     };
     const nl = {
@@ -655,7 +654,7 @@ class Component extends DCLogic {
       linkedinLogin: 'Inloggen met LinkedIn', linkedinRegister: 'Registreren met LinkedIn',
       facebookUser: 'Facebook-gebruiker', linkedinUser: 'LinkedIn-gebruiker',
       noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als freelancer', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
-      testTitle: 'Open een testaccount', testLocalOnly: 'Alleen preview', testCopy: 'Sla echte inloggegevens over en open direct een van de ingelogde versies.', testFreelancer: 'Test als freelancer', testClient: 'Test als opdrachtgever', testUnavailable: 'Testlogin werkt alleen in een lokale preview.',
+      testTitle: 'Open een testaccount', testLocalOnly: 'Demo-toegang', testCopy: 'Open direct een van de ingelogde versies zonder echte inloggegevens.', testFreelancer: 'Test als freelancer', testClient: 'Test als opdrachtgever', testUnavailable: 'Dit testaccount is tijdelijk niet beschikbaar.',
       oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.', oauthFailed: 'Inloggen is niet gelukt. Probeer het opnieuw.', otpUnavailable: 'WhatsApp-verificatie is tijdelijk niet beschikbaar. Probeer het opnieuw.',
     };
     return this.lang() === 'nl' ? nl : en;
@@ -1156,7 +1155,7 @@ class Component extends DCLogic {
       linkedinLabel: isRegister ? t.linkedinRegister : t.linkedinLogin,
       onFacebook: () => this.startSocialAuth('facebook'),
       onLinkedin: () => this.startSocialAuth('linkedin'),
-      showTestLogin: !isRegister && this.isPreviewRuntime(),
+      showTestLogin: !isRegister,
       onTestFreelancer: () => this.loginTestAccount('freelancer'),
       onTestClient: () => this.loginTestAccount('client'),
       onRoleClient: () => this.setRole('client'),
