@@ -70,6 +70,7 @@
   class ProLinkerHomeNetwork extends HTMLElement {
     connectedCallback() {
       this.style.display = 'block';
+      if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
       this.render();
       this._languageObserver = new MutationObserver(() => this.render());
       this._languageObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
@@ -81,7 +82,10 @@
 
     render() {
       var t = COPY[currentLanguage()];
-      this.innerHTML = `
+      var pageStyles = Array.prototype.map.call(document.querySelectorAll('head style'), function (style) {
+        return style.textContent || '';
+      }).join('\n');
+      this.shadowRoot.innerHTML = `<style>:host{display:block}${pageStyles}</style>
         <section class="plk-network-section" aria-labelledby="plk-network-title">
           <div class="plk-network-inner">
             <p class="plk-network-eyebrow">${t.eyebrow}</p>
