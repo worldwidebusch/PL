@@ -80,6 +80,11 @@ h2, h3, .plk-section-title, .plk-page-title, .plk-auth-title {
   pointer-events: auto;
 }
 
+/* Public (logged-out) dot-grid menu is hidden; visitors use the login/register actions instead. */
+.plk-public-menu-wrap {
+  display: none !important;
+}
+
 .plk-public-brand {
   min-height: 42px;
   display: inline-flex;
@@ -224,6 +229,24 @@ details.plk-public-menu-wrap > summary::-webkit-details-marker {
 .plk-public-action-blue:hover {
   border-color: #24476A !important;
   background: #24476A !important;
+}
+
+.plk-public-action.plk-public-company {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: var(--text,var(--plk-text,#152431)) !important;
+  font-weight: 600 !important;
+}
+
+.plk-public-action.plk-public-company:hover {
+  border-color: transparent !important;
+  background: var(--panel,#F3F4F6) !important;
+  color: #24476A !important;
+}
+
+:root[data-theme="dark"] .plk-public-action.plk-public-company:hover {
+  background: var(--panel,#0F1A23) !important;
+  color: #B0D8FE !important;
 }
 
 .plk-public-action-orange {

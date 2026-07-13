@@ -12,15 +12,17 @@
       employerCta: 'Find professionals',
       matches: '5 relevant matches',
       instant: 'Instant',
+      agentBadge: 'Applies automatically',
+      referralBadge: 'Earn 2%',
       professionalLabel: 'FOR PROFESSIONALS',
-      professionalTitle: 'Your personal Job Agent',
-      professionalCopy: 'Tell ProLinker what work fits you. Your agent continuously finds relevant jobs and projects, applies automatically where possible, and asks only when your input is needed.',
-      professionalCta: 'Activate Job Agent',
+      professionalTitle: 'AI Application Assistant',
+      professionalCopy: 'Upload your CV and you are set. The assistant ranks every job within your radius by relevance and applies on your behalf automatically, while you simply keep working.',
+      professionalCta: 'Find work',
       comingSoon: 'COMING SOON',
       jobAgentStatus: 'Automatic applications are not available yet.',
-      referralLabel: 'FOR THE NETWORK',
-      referralTitle: 'Make the right introduction',
-      referralCopy: 'Recommend a professional or employer you genuinely know. When your introduction becomes a collaboration, you receive an ongoing 2% referral reward.',
+      referralLabel: 'FOR YOUR NETWORK',
+      referralTitle: 'Earn Passive Income',
+      referralCopy: 'Introduce a professional or employer you know. Once they work together through ProLinker, you automatically receive 2% of the paid work value.',
       referralCta: 'Invite someone',
       trust: 'One direct referral layer. Automatically tracked.',
       referralBasis: 'The 2% is calculated on eligible work value paid through ProLinker for your direct referral: professional fees excluding VAT, platform fees, expenses, refunds and chargebacks.',
@@ -38,15 +40,17 @@
       employerCta: 'Vind professionals',
       matches: '5 relevante matches',
       instant: 'Direct',
+      agentBadge: 'Solliciteert automatisch',
+      referralBadge: 'Verdien 2%',
       professionalLabel: 'VOOR PROFESSIONALS',
-      professionalTitle: 'Jouw persoonlijke Job Agent',
-      professionalCopy: 'Vertel ProLinker welk werk bij je past. Je agent vindt voortdurend relevante vacatures en opdrachten, solliciteert waar mogelijk automatisch en vraagt alleen om jouw input wanneer die nodig is.',
-      professionalCta: 'Activeer Job Agent',
+      professionalTitle: 'AI Sollicitatie Assistent',
+      professionalCopy: 'Upload je cv en je bent klaar. De assistent rangschikt alle opdrachten in jouw regio op relevantie en solliciteert automatisch namens jou, terwijl jij gewoon doorwerkt.',
+      professionalCta: 'Vind werk',
       comingSoon: 'BINNENKORT',
       jobAgentStatus: 'Automatisch solliciteren is nog niet beschikbaar.',
-      referralLabel: 'VOOR HET NETWERK',
-      referralTitle: 'Maak de juiste introductie',
-      referralCopy: 'Beveel een professional of werkgever aan die je echt kent. Leidt jouw introductie tot een samenwerking, dan ontvang je een doorlopende referralbeloning van 2%.',
+      referralLabel: 'VOOR JOUW NETWERK',
+      referralTitle: 'Verdien Passief Inkomen',
+      referralCopy: 'Introduceer een professional of werkgever die je kent. Zodra zij via ProLinker samenwerken, ontvang jij automatisch 2% van de betaalde opdrachtwaarde.',
       referralCta: 'Nodig iemand uit',
       trust: 'Eén directe referrallaag. Automatisch bijgehouden.',
       referralBasis: 'De 2% wordt berekend over de betaalde arbeidswaarde van je directe referral via ProLinker: professionele vergoedingen exclusief btw, platformkosten, onkosten, refunds en chargebacks.',
@@ -82,6 +86,12 @@
 
     render() {
       var t = COPY[currentLanguage()];
+      var session = null;
+      try { session = window.ProLinkerApp && window.ProLinkerApp.session ? window.ProLinkerApp.session.get() : null; } catch (error) {}
+      var ctaHref = function (target, role) {
+        if (session) return target;
+        return 'Prolinker Login.dc.html?mode=login' + (role ? '&role=' + role : '') + '&next=' + encodeURIComponent(target);
+      };
       var pageStyles = Array.prototype.map.call(document.querySelectorAll('head style'), function (style) {
         return style.textContent || '';
       }).join('\n');
@@ -98,50 +108,37 @@
 
               <article class="plk-network-card">
                 <div class="plk-network-media">
-                  <img src="assets/brand-imagery/employer/team-at-work.jpg" alt="${t.employerAlt}" loading="lazy" decoding="async">
-                  <span class="plk-network-instant">${t.instant}</span>
-                  <div class="plk-network-match-overlay">
-                    <span class="plk-network-match-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span>${t.matches}</span>
-                  </div>
+                  <img src="assets/home-visual-1.png" alt="${t.employerAlt}" loading="lazy" decoding="async">
                 </div>
                 <div class="plk-network-card-body">
                   <div class="plk-network-label-row"><p class="plk-network-card-label">${t.employerLabel}</p></div>
                   <h3 class="plk-network-card-title">${t.employerTitle}</h3>
                   <p class="plk-network-card-copy">${t.employerCopy}</p>
-                  <a class="plk-network-cta" href="Prolinker Brief.dc.html"><span>${t.employerCta}</span><span aria-hidden="true">&rarr;</span></a>
+                  <a class="plk-network-cta" href="${ctaHref('Prolinker Brief.dc.html', 'client')}"><span>${t.employerCta}</span><span aria-hidden="true">&rarr;</span></a>
                 </div>
               </article>
 
               <article class="plk-network-card">
                 <div class="plk-network-media">
-                  <img src="assets/brand-imagery/freelancer/independent-home-work.jpg" alt="${t.professionalAlt}" loading="lazy" decoding="async">
-                  <span class="plk-focus-square" aria-hidden="true"></span>
+                  <img src="assets/home-visual-2.png" alt="${t.professionalAlt}" loading="lazy" decoding="async">
                 </div>
                 <div class="plk-network-card-body">
-                  <div class="plk-network-label-row"><p class="plk-network-card-label">${t.professionalLabel}</p><span class="plk-network-coming-soon">${t.comingSoon}</span></div>
+                  <div class="plk-network-label-row"><p class="plk-network-card-label">${t.professionalLabel}</p></div>
                   <h3 class="plk-network-card-title">${t.professionalTitle}</h3>
                   <p class="plk-network-card-copy">${t.professionalCopy}</p>
-                  <button class="plk-network-cta is-disabled" type="button" disabled aria-describedby="plk-job-agent-status"><span>${t.professionalCta}</span><span aria-hidden="true">&rarr;</span></button>
-                  <span class="plk-visually-hidden" id="plk-job-agent-status">${t.jobAgentStatus}</span>
+                  <a class="plk-network-cta" href="${ctaHref('Prolinker Voor jou v2.dc.html', 'freelancer')}"><span>${t.professionalCta}</span><span aria-hidden="true">&rarr;</span></a>
                 </div>
               </article>
 
               <article class="plk-network-card">
                 <div class="plk-network-media">
-                  <img src="assets/brand-imagery/employer/people-reviewing-work.jpg" alt="${t.referralAlt}" loading="lazy" decoding="async">
-                  <div class="plk-network-photo-graphic" aria-hidden="true">
-                    <span class="line a"></span><span class="line b"></span><span class="line c"></span>
-                    <span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="dot d"></span>
-                  </div>
+                  <img src="assets/home-visual-3.png" alt="${t.referralAlt}" loading="lazy" decoding="async">
                 </div>
                 <div class="plk-network-card-body">
                   <div class="plk-network-label-row"><p class="plk-network-card-label">${t.referralLabel}</p></div>
                   <h3 class="plk-network-card-title">${t.referralTitle}</h3>
                   <p class="plk-network-card-copy">${t.referralCopy}</p>
-                  <p class="plk-network-trust">${t.trust}</p>
-                  <p class="plk-network-referral-basis">${t.referralBasis}</p>
-                  <a class="plk-network-cta" href="Prolinker Netwerk.dc.html"><span>${t.referralCta}</span><span aria-hidden="true">&rarr;</span></a>
+                  <a class="plk-network-cta" href="${ctaHref('Prolinker Netwerk.dc.html', '')}"><span>${t.referralCta}</span><span aria-hidden="true">&rarr;</span></a>
                 </div>
               </article>
             </div>

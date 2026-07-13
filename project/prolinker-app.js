@@ -1978,6 +1978,33 @@
     return { items: localItems, total: localItems.length, nextCursor: null };
   }
 
+  function deriveJobTitle(input) {
+    var text = String(input || '').trim().replace(/\s+/g, ' ');
+    if (!text) return '';
+    var prefixes = ['ik ben op zoek naar', 'ik zoek naar', 'ik zoek', 'wij zoeken', 'we zoeken', 'gezocht:', 'gezocht', 'wie kan', "i'm looking for", 'i am looking for', 'looking for', 'i need', 'who can', 'i want'];
+    var articles = ['een', 'de', 'het', 'a', 'an', 'my', 'mijn', 'onze', 'our'];
+    var changed = true;
+    while (changed) {
+      changed = false;
+      var lower = text.toLowerCase();
+      for (var i = 0; i < prefixes.length; i += 1) {
+        if (lower.indexOf(prefixes[i] + ' ') === 0) { text = text.slice(prefixes[i].length + 1); changed = true; break; }
+      }
+      lower = text.toLowerCase();
+      for (var j = 0; j < articles.length; j += 1) {
+        if (lower.indexOf(articles[j] + ' ') === 0) { text = text.slice(articles[j].length + 1); changed = true; break; }
+      }
+    }
+    text = text.split(/[.!?\n]/)[0].replace(/[\s,;:-]+$/g, '').trim();
+    if (!text) return '';
+    if (text.length > 70) {
+      text = text.slice(0, 70);
+      var cut = text.lastIndexOf(' ');
+      if (cut > 30) text = text.slice(0, cut);
+    }
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   function normalizeProject(item, fallback) {
     item = isPlainObject(item) ? item : {};
     fallback = isPlainObject(fallback) ? fallback : {};
@@ -1997,7 +2024,9 @@
     input = isPlainObject(input) ? Object.assign({}, input) : {};
     var session = activeSession('client');
     var title = String(input.title || '').trim();
-    if (!title || title.length > 240) throw new ProLinkerError('Een projecttitel is verplicht.', { code: 'VALIDATION_ERROR' });
+    if (!title) title = deriveJobTitle(input.query || input.description || input.summary || '');
+    if (!title || title.length > 240) throw new ProLinkerError('Een projecttitel of omschrijving is verplicht.', { code: 'VALIDATION_ERROR' });
+    input.title = title;
     if (configured.baseUrl) {
       var idempotencyKey = validIdempotencyKey(options.idempotencyKey || input.idempotencyKey);
       delete input.idempotencyKey;
@@ -2200,7 +2229,7 @@
     } catch (error) {}
     var unreadText = unreadMessages > 99 ? '99+' : (unreadMessages > 0 ? String(unreadMessages) : '');
     var profileText = profileIssues > 99 ? '99+' : String(profileIssues);
-    return [
+    var items = [
       { key: 'dashboard', label: 'Mijn Dashboard', description: 'Overzicht en activiteit', href: ROUTES.dashboard, icon: '\u25a3', badgeText: '' },
       { key: 'network', label: 'Mijn Netwerk', description: 'Connecties en uitnodigingen', href: ROUTES.network, icon: '\u2723', badgeText: '' },
       { key: 'assignments', label: safeRole === 'client' ? 'Mijn Opdrachten' : 'Mijn Sollicitaties', description: safeRole === 'client' ? 'Plaatsingen en reacties' : 'Sollicitaties en samenwerkingen', href: ROUTES.assignments + '?role=' + safeRole, icon: '\u25a4', badgeText: '' },
@@ -2209,6 +2238,8 @@
       { key: 'earnings', label: 'Mijn Transacties', description: 'Betalingen, uitbetalingen en referrals', href: ROUTES.earnings, icon: '\u25cc', badgeText: '' },
       { key: 'settings', label: 'Instellingen', description: 'Account en meldingen', href: ROUTES.settings, icon: '\u2699', badgeText: '' }
     ];
+    if (safeRole === 'client') items.splice(3, 0, { key: 'post', label: 'Opdracht plaatsen', description: 'Start een nieuwe opdracht met Instant Match', href: 'Prolinker Brief.dc.html', icon: '+', badgeText: '' });
+    return items;
   }
 
   function enforceHeaderBranding() {
@@ -2310,7 +2341,7 @@
     opportunities: Object.freeze({ list: listOpportunities, get: getOpportunity, save: saveOpportunity, unsave: unsaveOpportunity, hide: hideOpportunity }),
     applications: Object.freeze({ create: createApplication, list: listApplications }),
     freelancers: Object.freeze({ search: searchFreelancers }),
-    projects: Object.freeze({ create: createProject, invite: inviteProjectProfessional }),
+    projects: Object.freeze({ create: createProject, invite: inviteProjectProfessional, deriveTitle: deriveJobTitle }),
     cv: Object.freeze({ redact: redactCv, upload: uploadCvDocument, get: getCvDocument, open: openCvDocument, viewerHtml: cvDocumentHtml }),
     referrals: Object.freeze({ getSummary: getReferralSummary, createLink: createReferralLink, track: trackReferralEvent, shareUrls: referralShareUrls, copy: copyReferralLink })
   });

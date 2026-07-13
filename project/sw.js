@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v35-shareable-demo";
+const CACHE_VERSION = "v55-logo-nudge";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -39,6 +39,7 @@ const ASSET_DESTINATIONS = new Set([
 ]);
 
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(PRECACHE).then((cache) => cache.addAll(PRECACHE_URLS))
   );

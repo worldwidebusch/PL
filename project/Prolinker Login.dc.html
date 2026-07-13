@@ -66,6 +66,22 @@
   .plk-auth-main { justify-content: flex-start !important; padding: 34px 20px 68px !important; }
   .plk-auth-page.is-register .plk-auth-main { align-items: center !important; padding: 34px 20px 68px !important; }
   .plk-auth-card { max-width: 414px !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; backdrop-filter: none !important; }
+  .plk-auth-main { position: relative; }
+  .plk-auth-side-photo { display: none; position: absolute; left: clamp(24px, 6vw, 96px); top: 50%; transform: translateY(-50%); width: min(300px, 21vw); margin: 0; animation: plk-rise 0.5s ease 0.08s both; }
+  .plk-auth-side-photo img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 20px; box-shadow: 0 30px 64px -40px rgba(21,36,49,0.6); }
+  .plk-auth-side-poem { display: none; position: absolute; right: clamp(24px, 5vw, 84px); top: 50%; transform: translateY(-50%); width: min(320px, 23vw); animation: plk-rise 0.5s ease 0.12s both; }
+  .plk-auth-side-poem blockquote { margin: 0; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 13px; line-height: 1.8; letter-spacing: 0.012em; color: #4A5B6C; text-wrap: pretty; }
+  .plk-auth-side-poem .plk-manifest-author { margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: #8FA9C0; }
+  :root[data-theme="dark"] .plk-auth-side-poem blockquote { color: #B8C6D4; }
+  @media (min-width: 1240px) {
+    .plk-auth-side-photo, .plk-auth-side-poem { display: block; }
+    .plk-auth-manifest { display: none; }
+  }
+  .plk-auth-manifest { width: 100%; max-width: 700px; margin-top: 46px; padding: 26px 28px; border-radius: 18px; background: #152431; color: #E9EFF5; display: flex; gap: 26px; align-items: center; box-shadow: 0 24px 50px -36px rgba(21,36,49,0.6); animation: plk-rise 0.5s ease 0.08s both; }
+  .plk-auth-manifest img { width: 128px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; flex-shrink: 0; }
+  .plk-auth-manifest blockquote { margin: 0; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 12.5px; line-height: 1.75; letter-spacing: 0.012em; text-wrap: pretty; }
+  .plk-auth-manifest .plk-manifest-author { margin-top: 11px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: #8FA9C0; }
+  @media (max-width: 640px) { .plk-auth-manifest { flex-direction: column; align-items: flex-start; padding: 22px; } .plk-auth-manifest img { width: 100%; max-width: 200px; } }
   .plk-auth-page.is-register .plk-auth-card { max-width: 440px !important; }
   .plk-auth-form,
   .plk-auth-code,
@@ -199,7 +215,7 @@
           </div>
         </sc-if>
       </div>
-      <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-auth-company-button plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.navCompanies }}</a>
+      <a class="plk-auth-nav-button plk-auth-company-button plk-public-action plk-public-company" href="Prolinker Voor bedrijven.dc.html">{{ t.navCompanies }}</a>
       <a class="plk-auth-nav-button plk-auth-nav-button-blue plk-public-action plk-public-action-blue" href="Prolinker Login.dc.html?mode=login">{{ t.navLogin }}</a>
       <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
@@ -210,6 +226,13 @@
   </header>
 
   <main class="plk-auth-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px 80px; width: 100%;">
+    <figure class="plk-auth-side-photo">
+      <img src="assets/brand-imagery/people/freelancer-dock.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    </figure>
+    <aside class="plk-auth-side-poem" aria-label="ProLinker manifest">
+      <blockquote>"For the free. The brave. The independent. For those who refuse to trade their lives for a schedule. Who choose freedom over routine. Purpose over permission. Because success isn&rsquo;t measured by how much you earn. It&rsquo;s measured by how much of your life belongs to you. Take back your time. Unlock your creativity. Work from anywhere. Live without limits. The future belongs to those who build it on their own terms. Because a life lived on your own terms is a life well lived."</blockquote>
+      <div class="plk-manifest-author">&mdash; Niels van der Schoot, ProLinker</div>
+    </aside>
     <div class="plk-auth-card" style="width: 100%; max-width: 448px; display: flex; flex-direction: column; animation: plk-rise 0.5s ease both;">
 
       <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
@@ -437,6 +460,14 @@
       </sc-if>
 
     </div>
+
+    <section class="plk-auth-manifest" aria-label="ProLinker manifest">
+      <img src="assets/brand-imagery/people/freelancer-dock.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <div>
+        <blockquote>"For the free. The brave. The independent. For those who refuse to trade their lives for a schedule. Who choose freedom over routine. Purpose over permission. Because success isn&rsquo;t measured by how much you earn. It&rsquo;s measured by how much of your life belongs to you. Take back your time. Unlock your creativity. Work from anywhere. Live without limits. The future belongs to those who build it on their own terms. Because a life lived on your own terms is a life well lived."</blockquote>
+        <div class="plk-manifest-author">&mdash; Niels van der Schoot, ProLinker</div>
+      </div>
+    </section>
   </main>
 
   <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
@@ -598,18 +629,18 @@ class Component extends DCLogic {
 
   strings() {
     const en = {
-      loginTitle: 'Log in', registerTitle: 'Create your account', registerTitleFreelancer: 'Register as a freelancer', registerTitleClient: 'Register as a client',
+      loginTitle: 'Log in', registerTitle: 'Create your account', registerTitleFreelancer: 'Register as a professional', registerTitleClient: 'Register as a client',
       loginSub: 'Log in with your email and password, then confirm securely via WhatsApp.',
       registerSub: 'Complete your basic details and verify your WhatsApp number.',
-      navMenu: 'Menu', navFreelancers: 'Freelancers', navJobs: 'Jobs', navHow: 'How it works', navPost: 'Post a job', navBlog: 'Blog', navCompanies: 'For companies', navLogin: 'Log in', navRegister: 'Sign up', navReferrals: 'Earn 2% with referrals', navBecomeFreelancer: 'Become a freelancer', navBecomeClient: 'Become a recruiter', settings: 'Settings', darkMode: 'Dark mode',
+      navMenu: 'Menu', navFreelancers: 'Professionals', navJobs: 'Jobs', navHow: 'How it works', navPost: 'Post a job', navBlog: 'Blog', navCompanies: 'For companies', navLogin: 'Log in', navRegister: 'Sign up', navReferrals: 'Earn 2% with referrals', navBecomeFreelancer: 'Become a professional', navBecomeClient: 'Become a recruiter', settings: 'Settings', darkMode: 'Dark mode',
       switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
-      roleLabel: 'What do you want to do?', roleClient: "I'm looking for freelancers", roleFreelancer: "I'm a freelancer",
+      roleLabel: 'What do you want to do?', roleClient: "I'm looking for professionals", roleFreelancer: "I'm a professional",
       nameLabel: 'Full name', contactLabel: 'WhatsApp number', namePh: 'Full name', contactPh: '+1 202 555 0123',
       categoryLabel: 'Industry', industryLabel: 'Industry', categoryPh: 'Select an industry', addIndustryAria: 'Choose an industry', companyLabel: 'Company name', companyPh: 'Company name', firstNameLabel: 'First name', firstNamePh: 'First name', lastNameLabel: 'Last name', lastNamePh: 'Last name', emailLabel: 'Email', emailPh: 'Email address', passwordLabel: 'Password', passwordPh: 'At least 8 characters', passwordConfirmLabel: 'Repeat password', passwordConfirmPh: 'Repeat password', privacyNote: 'We never share your personal details with third parties', humanLabel: "I'm not a robot", humanHelper: 'Secure verification',
       continueLogin: 'Continue to WhatsApp verification', continueRegister: 'Next', codeHint: 'WhatsApp verification is mandatory',
       errContact: 'Enter an international WhatsApp number beginning with + or 00', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker', errCategory: 'Select your industry', errCompany: 'Enter your company name', errFirstName: 'Enter your first name', errLastName: 'Enter your last name', errNameLong: 'Keep your full name within 40 characters', errEmail: 'Enter a valid email address', errPassword: 'Use at least 8 characters for your password', errPasswordConfirm: 'The passwords do not match', errTerms: 'Accept the terms and privacy policy to continue', errHuman: 'Confirm that you are not a robot',
       safetyTitle: 'Stay safe', safetyPayment: 'Only accept payments through ProLinker so your work remains protected.', safetyPrivacy: 'Your personal details are never shared with third parties without permission.',
-      clientSafetyTitle: 'Stay safe!', clientSafetyPayment: 'Only pay freelancers through ProLinker so payment protection is guaranteed.', clientSafetyPrivacy: 'Payments outside ProLinker violate your user agreement and may lead to legal action.',
+      clientSafetyTitle: 'Stay safe!', clientSafetyPayment: 'Only pay professionals through ProLinker so payment protection is guaranteed.', clientSafetyPrivacy: 'Payments outside ProLinker violate your user agreement and may lead to legal action.',
       termsCheckA: 'I agree to the ', termsCheckB: ' and ',
       codeTitleWa: 'Verify your WhatsApp number',
       codeSentWa: 'Enter the code we sent via WhatsApp to ',
@@ -618,28 +649,28 @@ class Component extends DCLogic {
       successTitle: "You're in", successLoginSub: 'Pick up where you left off.', successRegisterSub: 'Your account is ready.', successCtaClient: 'Post your first project', successCtaFreelancer: 'View projects', syncTitle: 'Find who you already know', syncSub: 'Connect Gmail, Outlook or LinkedIn and see which of your contacts are already on ProLinker.', syncBusyPrefix: 'Checking your contacts', syncFoundLabel: 'Already on ProLinker', syncInviteSuffix: ' contacts are not on ProLinker yet. Invite them anytime from My network.', syncAdd: 'Add', syncAdded: 'Added', syncDone: 'Done', syncSkip: 'Skip for now',
       termsA: 'By registering you agree to the ', termsTerms: 'terms', termsB: ' and ', termsPrivacy: 'privacy policy',
       codeAria: (n) => 'Digit ' + n,
-      referralNotice: 'You were invited by a ProLinker member. Your referral will be linked after freelancer registration.',
+      referralNotice: 'You were invited by a ProLinker member. Your referral will be linked after you register as a professional.',
       orLabel: 'or', socialLabel: 'Social login options',
       facebookLogin: 'Log in with Facebook', facebookRegister: 'Register with Facebook',
       linkedinLogin: 'Log in with LinkedIn', linkedinRegister: 'Register with LinkedIn',
       facebookUser: 'Facebook user', linkedinUser: 'LinkedIn user',
-      noAccount: 'No account yet?', createFreelancer: 'Create a freelancer account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
-      testTitle: 'Open a test account', testLocalOnly: 'Demo access', testCopy: 'Open either logged-in version immediately without real login details.', testFreelancer: 'Test as freelancer', testClient: 'Test as client', testUnavailable: 'This test account is temporarily unavailable.',
+      noAccount: 'No account yet?', createFreelancer: 'Create a professional account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
+      testTitle: 'Open a test account', testLocalOnly: 'Demo access', testCopy: 'Open either logged-in version immediately without real login details.', testFreelancer: 'Test as professional', testClient: 'Test as client', testUnavailable: 'This test account is temporarily unavailable.',
       oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.', oauthFailed: 'Login could not be completed. Please try again.', otpUnavailable: 'WhatsApp verification is temporarily unavailable. Please try again.',
     };
     const nl = {
-      loginTitle: 'Inloggen', registerTitle: 'Account aanmaken', registerTitleFreelancer: 'Aanmelden als freelancer', registerTitleClient: 'Aanmelden als opdrachtgever',
+      loginTitle: 'Inloggen', registerTitle: 'Account aanmaken', registerTitleFreelancer: 'Aanmelden als professional', registerTitleClient: 'Aanmelden als opdrachtgever',
       loginSub: 'Log in met je e-mail en wachtwoord en bevestig daarna veilig via WhatsApp.',
       registerSub: 'Vul je basisgegevens in en verifieer daarna je WhatsApp-nummer.',
-      navMenu: 'Menu', navFreelancers: 'Freelancers', navJobs: 'Opdrachten', navHow: 'Hoe werkt het', navPost: 'Opdracht plaatsen', navBlog: 'Blog', navCompanies: 'Voor bedrijven', navLogin: 'Inloggen', navRegister: 'Aanmelden', navReferrals: 'Verdien 2% met referrals', navBecomeFreelancer: 'Freelancer worden', navBecomeClient: 'Recruiter worden', settings: 'Instellingen', darkMode: 'Donkere modus',
+      navMenu: 'Menu', navFreelancers: 'Professionals', navJobs: 'Opdrachten', navHow: 'Hoe werkt het', navPost: 'Opdracht plaatsen', navBlog: 'Blog', navCompanies: 'Voor bedrijven', navLogin: 'Inloggen', navRegister: 'Aanmelden', navReferrals: 'Verdien 2% met referrals', navBecomeFreelancer: 'Professional worden', navBecomeClient: 'Recruiter worden', settings: 'Instellingen', darkMode: 'Donkere modus',
       switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
-      roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
+      roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek professionals', roleFreelancer: 'Ik ben professional',
       nameLabel: 'Volledige naam', contactLabel: 'Mobiel nummer', namePh: 'Volledige naam', contactPh: '+31 6 12345678',
       categoryLabel: 'Branche', industryLabel: 'Industrie', categoryPh: 'Selecteer een categorie', addIndustryAria: 'Industrie kiezen', companyLabel: 'Bedrijfsnaam', companyPh: 'Bedrijfsnaam', firstNameLabel: 'Voornaam', firstNamePh: 'Voornaam', lastNameLabel: 'Achternaam', lastNamePh: 'Achternaam', emailLabel: 'E-mail', emailPh: 'E-mailadres', passwordLabel: 'Wachtwoord', passwordPh: 'Minimaal 8 tekens', passwordConfirmLabel: 'Wachtwoord herhalen', passwordConfirmPh: 'Wachtwoord herhalen', privacyNote: 'Wij delen uw persoonlijke gegevens nooit met derden', humanLabel: 'Ik ben geen robot', humanHelper: 'Beveiligde controle',
       continueLogin: 'Doorgaan naar WhatsApp-verificatie', continueRegister: 'Volgende', codeHint: 'WhatsApp-verificatie is verplicht',
       errContact: 'Vul een internationaal mobiel nummer in dat begint met + of 00', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken', errCategory: 'Selecteer je branche', errCompany: 'Vul je bedrijfsnaam in', errFirstName: 'Vul je voornaam in', errLastName: 'Vul je achternaam in', errNameLong: 'Gebruik maximaal 40 tekens voor je volledige naam', errEmail: 'Vul een geldig e-mailadres in', errPassword: 'Gebruik minimaal 8 tekens voor je wachtwoord', errPasswordConfirm: 'De wachtwoorden komen niet overeen', errTerms: 'Ga akkoord met de voorwaarden en het privacybeleid', errHuman: 'Bevestig dat je geen robot bent',
       safetyTitle: 'Blijf veilig', safetyPayment: 'Ontvang betalingen alleen via ProLinker, zodat je veilig samenwerkt.', safetyPrivacy: 'Wij delen je persoonlijke gegevens nooit zonder toestemming met derden.',
-      clientSafetyTitle: 'Blijf veilig!', clientSafetyPayment: 'Betaal freelancers alleen via ProLinker, zodat betalingsbescherming gegarandeerd is.', clientSafetyPrivacy: 'Betalingen buiten ProLinker om schenden je gebruikersovereenkomst en kunnen leiden tot juridische stappen.',
+      clientSafetyTitle: 'Blijf veilig!', clientSafetyPayment: 'Betaal professionals alleen via ProLinker, zodat betalingsbescherming gegarandeerd is.', clientSafetyPrivacy: 'Betalingen buiten ProLinker om schenden je gebruikersovereenkomst en kunnen leiden tot juridische stappen.',
       termsCheckA: 'Ik ga akkoord met de ', termsCheckB: ' en het ',
       codeTitleWa: 'Verifieer je WhatsApp-nummer',
       codeSentWa: 'Vul de code in die we via WhatsApp stuurden naar ',
@@ -648,13 +679,13 @@ class Component extends DCLogic {
       successTitle: 'Je bent binnen', successLoginSub: 'Ga verder waar je was gebleven.', successRegisterSub: 'Je account staat klaar.', successCtaClient: 'Plaats je eerste opdracht', successCtaFreelancer: 'Bekijk opdrachten', syncTitle: 'Vind wie je al kent', syncSub: 'Koppel Gmail, Outlook of LinkedIn en zie wie van jouw contacten al op ProLinker zit.', syncBusyPrefix: 'We bekijken je contacten', syncFoundLabel: 'Al op ProLinker', syncInviteSuffix: ' contacten staan nog niet op ProLinker. Nodig ze op elk moment uit via Mijn netwerk.', syncAdd: 'Voeg toe', syncAdded: 'Toegevoegd', syncDone: 'Klaar', syncSkip: 'Overslaan voor nu',
       termsA: 'Door te registreren ga je akkoord met de ', termsTerms: 'voorwaarden', termsB: ' en het ', termsPrivacy: 'privacybeleid',
       codeAria: (n) => 'Cijfer ' + n,
-      referralNotice: 'Je bent uitgenodigd door een ProLinker-lid. Je referral wordt gekoppeld na je freelancerregistratie.',
+      referralNotice: 'Je bent uitgenodigd door een ProLinker-lid. Je referral wordt gekoppeld na je registratie als professional.',
       orLabel: 'of', socialLabel: 'Sociale inlogopties',
       facebookLogin: 'Inloggen met Facebook', facebookRegister: 'Registreren met Facebook',
       linkedinLogin: 'Inloggen met LinkedIn', linkedinRegister: 'Registreren met LinkedIn',
       facebookUser: 'Facebook-gebruiker', linkedinUser: 'LinkedIn-gebruiker',
-      noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als freelancer', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
-      testTitle: 'Open een testaccount', testLocalOnly: 'Demo-toegang', testCopy: 'Open direct een van de ingelogde versies zonder echte inloggegevens.', testFreelancer: 'Test als freelancer', testClient: 'Test als opdrachtgever', testUnavailable: 'Dit testaccount is tijdelijk niet beschikbaar.',
+      noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als professional', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
+      testTitle: 'Open een testaccount', testLocalOnly: 'Demo-toegang', testCopy: 'Open direct een van de ingelogde versies zonder echte inloggegevens.', testFreelancer: 'Test als professional', testClient: 'Test als opdrachtgever', testUnavailable: 'Dit testaccount is tijdelijk niet beschikbaar.',
       oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.', oauthFailed: 'Inloggen is niet gelukt. Probeer het opnieuw.', otpUnavailable: 'WhatsApp-verificatie is tijdelijk niet beschikbaar. Probeer het opnieuw.',
     };
     return this.lang() === 'nl' ? nl : en;

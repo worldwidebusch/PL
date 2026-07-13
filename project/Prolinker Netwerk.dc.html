@@ -26,8 +26,8 @@
   .plk-net-meta { position:absolute; left:28px; top:10px; z-index:5; }
   .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
   .plk-net-count { display:block; margin-top:5px; color:var(--faint); font-size:11.5px; }
-  .plk-viewswitch { position:absolute; left:50%; top:14px; transform:translateX(-50%); z-index:6; display:flex; gap:2px; padding:4px; border:1px solid var(--border); border-radius:10px; background:var(--surface); box-shadow:0 8px 22px -16px rgba(21,36,49,.45); }
-  .plk-viewswitch button { min-width:86px; height:34px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:12.5px; font-weight:650; cursor:pointer; }
+  .plk-viewswitch { position:absolute; left:50%; top:16px; transform:translateX(-50%); z-index:6; display:flex; gap:2px; padding:6px; border:1px solid var(--border); border-radius:10px; background:var(--surface); box-shadow:0 8px 22px -16px rgba(21,36,49,.45); }
+  .plk-viewswitch button { min-width:86px; height:36px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:12.5px; font-weight:650; cursor:pointer; }
   .plk-viewswitch button.active { background:var(--blue); color:#fff; }
   .plk-listwrap { position:absolute; left:50%; top:64px; transform:translateX(-50%); z-index:500; width:min(620px, calc(100vw - 40px)); max-height:calc(100% - 92px); overflow:auto; overscroll-behavior:contain; border:1px solid var(--border); border-radius:14px; background:var(--surface); box-shadow:0 30px 70px -30px rgba(11,17,25,.5); }
   .plk-lrow { display:flex; align-items:center; gap:12px; padding:13px 16px; border-bottom:1px solid var(--hair); }
@@ -183,6 +183,7 @@
 
       <sc-if value="{{ showInvite }}" hint-placeholder-val="{{ false }}">
         <div class="plk-pop" role="dialog" aria-label="Iemand uitnodigen">
+          <img src="assets/brand-imagery/people/network-share.jpg" alt="" aria-hidden="true" loading="lazy" style="display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border-radius: 12px; margin-bottom: 14px;">
           <h2 class="plk-pop-title">Nodig iemand uit</h2>
           <div class="plk-method-switch" role="tablist" aria-label="Uitnodigen via">
             <button type="button" class="{{ waClass }}" onClick="{{ onMethodWa }}">WhatsApp</button>

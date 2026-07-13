@@ -444,7 +444,7 @@ class Component extends DCLogic {
       extern: { text: 'Extern', bg: 'transparent', color: 'var(--muted,#424444)', bd: 'var(--border,#DCDFE2)' },
       uitnodiging: { text: 'Uitnodiging', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
       nieuw: { text: 'Nieuw', bg: 'rgba(31,138,91,0.14)', color: green, bd: 'transparent' },
-      platform: { text: 'Platform', bg: 'var(--panel,#F3F4F6)', color: 'var(--muted,#424444)', bd: 'var(--hairline,#ECEEF0)' },
+      platform: { text: 'ProLinker', bg: 'var(--panel,#F3F4F6)', color: 'var(--muted,#424444)', bd: 'var(--hairline,#ECEEF0)' },
       bedrijf: { text: 'Aanbevolen bedrijf', bg: 'var(--panel,#F3F4F6)', color: 'var(--muted,#424444)', bd: 'var(--hairline,#ECEEF0)' },
       ontdek: { text: 'Nieuw voor jou', bg: 'rgba(91,76,196,0.14)', color: purple, bd: 'transparent' },
     };
@@ -556,12 +556,12 @@ class Component extends DCLogic {
       add(saved ? 'Verwijderen uit bewaard' : 'Bewaren', () => this.toggleSave(x.id));
       add('Delen', () => this.share(x));
       if (x.co) add(followed ? 'Ontvolg ' + x.co : 'Volg ' + x.co, () => this.toggleFollow(x.co));
-      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort kansen.'));
+      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort opdrachten.'));
       add('Verbergen', () => this.hide(x.id));
       add('Meld probleem', () => this.report(), true);
     } else if (x.type === 'company') {
       add(followed ? 'Ontvolgen' : 'Volgen', () => this.toggleFollow(x.co));
-      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort kansen.'));
+      add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort opdrachten.'));
       add('Verbergen', () => this.hide(x.id));
     } else if (x.type === 'referral') {
       add('Delen', () => this.copyReferral());
@@ -742,9 +742,9 @@ class Component extends DCLogic {
       verifiedEl: this.iconEl('check', isDark ? '#63D9A5' : '#1F8A5B', 9),
       dotsEl: this.iconEl('dots', mutedIcon, 17, true),
       arrowUpEl: this.iconEl('arrowUp', '#ffffff', 14),
-      subGreeting: newCount + ' nieuwe kansen vandaag \u00b7 gerangschikt op wat bij jou past',
+      subGreeting: newCount + ' nieuwe opdrachten vandaag \u00b7 gerangschikt op wat bij jou past',
       newPillVisible: this.props.showNewIndicator !== false && this.state.newReady && !this.state.inserted,
-      newLabel: '2 nieuwe kansen',
+      newLabel: '2 nieuwe opdrachten',
       onInsertNew: () => this.insertNew(),
       sortLabel: sortLabels[sortKey],
       sortOpen: this.state.sortOpen,
@@ -756,7 +756,7 @@ class Component extends DCLogic {
       gridTemplate: cols === 4 ? 'repeat(4, minmax(0, 1fr))' : (cols === 2 ? 'repeat(2, minmax(0, 1fr))' : 'minmax(0, 1fr)'),
       items: items,
       emptyFilter: items.length === 0,
-      emptyText: filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik het bladwijzericoon op een kaart om kansen hier terug te vinden.' : 'Geen kansen in deze weergave. Pas je filters aan of kom later terug.',
+      emptyText: filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik het bladwijzericoon op een kaart om opdrachten hier terug te vinden.' : 'Geen opdrachten in deze weergave. Pas je filters aan of kom later terug.',
       onCloseOverlays: () => this.setState({ whyId: null, cardMenuId: null }),
       modalOpen: !!modalSrc, modalItem: modalItem,
       onCloseModal: () => this.setState({ modalId: null }),

@@ -58,16 +58,37 @@
   .plk-gg-badge { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; margin-left: 6px; border-radius: 50%; background: #E24B4A; color: #fff; font-size: 10px; font-weight: 800; }
   .plk-gg input[type="text"], .plk-gg select, .plk-gg textarea { width: 100%; border: 1px solid var(--border,#DCDFE2); border-radius: 6px; background: var(--panel,#F8FAFC); color: var(--text,#152431); padding: 9px 12px; font-size: 13px; font-family: inherit; }
   .plk-gg textarea { min-height: 150px; resize: vertical; line-height: 1.55; }
-  .plk-gg-photo { width: 96px; height: 96px; flex: 0 0 96px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border,#DCDFE2); background: var(--panel,#F8FAFC); }
+  .plk-gg-photo { width: 96px; height: 96px; flex: 0 0 96px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border,#DCDFE2); background: var(--panel,#F8FAFC); }
   .plk-btn-kies { display: inline-flex; align-items: center; min-height: 34px; padding: 0 16px; border: 1px solid #C94F2D; border-radius: 5px; background: #E65F39; color: #fff; cursor: pointer; font-size: 12.5px; font-weight: 700; }
   .plk-btn-kies:hover { background: #D14F2B; }
   .plk-gg-hint { margin-top: 10px; color: #7A9BC0; font-size: 12px; line-height: 1.5; }
-  .plk-btn-opslaan { display: inline-flex; align-items: center; min-height: 38px; padding: 0 22px; border: 1px solid #3F7CB4; border-radius: 5px; background: #4A90D9; color: #fff; cursor: pointer; font-size: 13px; font-weight: 700; margin-top: 18px; }
-  .plk-btn-opslaan:hover { background: #3F7CB4; }
+  .plk-btn-opslaan { display: inline-flex; align-items: center; min-height: 38px; padding: 0 22px; border: 1px solid #2F5B85; border-radius: 5px; background: #2F5B85; color: #fff; cursor: pointer; font-size: 13px; font-weight: 700; margin-top: 18px; }
+  .plk-btn-opslaan:hover { border-color: #24476A; background: #24476A; }
   .plk-gg-verified { color: #27A567; font-size: 13px; font-weight: 650; }
   .plk-gg-unverified { color: var(--faint,#8C8E8F); font-size: 13px; }
   .plk-gg-phone { display: flex; gap: 8px; }
   .plk-gg-phone select { width: 88px; flex: 0 0 88px; }
+  .plk-gg-inline { display: flex; gap: 8px; align-items: center; }
+  .plk-gg-add { width: 36px; height: 36px; flex: 0 0 36px; border: 1px solid #3E9C57; border-radius: 6px; background: #52B788; color: #fff; font-size: 19px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  .plk-gg-add:hover { background: #3E9C57; }
+  .plk-gg-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+  .plk-gg-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; background: var(--panel,#F8FAFC); border: 1px solid var(--border,#DCDFE2); font-size: 12.5px; font-weight: 600; }
+  .plk-gg-chip button { width: 16px; height: 16px; border: 0; border-radius: 50%; background: none; color: var(--faint,#8C8E8F); cursor: pointer; padding: 0; line-height: 1; font-size: 13px; }
+  .plk-gg-chip button:hover { color: #A2463B; }
+  .plk-btn-view { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--text,#152431); font-size: 13px; font-weight: 700; cursor: pointer; }
+  .plk-btn-view:hover { border-color: #B0D8FE; color: #24476A; }
+  .plk-preview-shade { position: fixed; inset: 0; z-index: 90; background: rgba(11,17,25,0.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: 44px 20px; overflow-y: auto; }
+  .plk-preview { position: relative; width: 100%; max-width: 460px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 32px 30px; text-align: center; }
+  .plk-preview-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--muted,#424444); font-size: 17px; cursor: pointer; }
+  .plk-preview-avatar { width: 96px; height: 96px; margin: 0 auto; border-radius: 50%; overflow: hidden; border: 1px solid var(--border,#DCDFE2); background: var(--panel,#F8FAFC); display: flex; align-items: center; justify-content: center; color: #7A9BC0; }
+  .plk-preview-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .plk-preview-name { margin: 14px 0 0; font-size: 23px; font-weight: 800; letter-spacing: -0.01em; }
+  .plk-preview-sub { margin-top: 4px; color: var(--muted,#424444); font-size: 13.5px; }
+  .plk-preview-badges { margin-top: 12px; display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; }
+  .plk-preview-pill { display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 7px; font-size: 12px; font-weight: 700; color: #fff; background: #2FA35B; }
+  .plk-preview-rate { display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 7px; font-size: 12px; font-weight: 700; background: var(--panel,#F8FAFC); border: 1px solid var(--border,#DCDFE2); }
+  .plk-preview-bio { margin: 16px 0 0; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.6; text-align: left; }
+  .plk-preview-note { margin: 16px 0 0; padding: 9px 11px; border: 1px solid #B9D2E8; border-radius: 8px; background: #E9EFF5; color: #24476A; font-size: 11.5px; line-height: 1.5; text-align: left; }
   @media (max-width: 640px) { .plk-gg-row { grid-template-columns: 1fr; gap: 6px; } }
   @media(min-width:781px){ .plk-topline { padding-right: 225px; } }
   @media(max-width:780px){ .plk-profile-main { padding-top: 72px !important; } }
@@ -105,7 +126,7 @@
 
     <div class="plk-topline" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; animation: plk-rise 0.5s ease both;">
       <h1 style="margin: 0; font-size: 32px; letter-spacing: -0.01em;">{{ t.title }}</h1>
-      <span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span>
+      <span style="display: inline-flex; align-items: center; gap: 14px;"><span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span><button class="plk-btn-view" type="button" onClick="{{ onPreview }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>Bekijk profiel</button></span>
     </div>
 
     <section class="plk-gg" aria-labelledby="gg-title">
@@ -134,6 +155,27 @@
       <div class="plk-gg-row" style="align-items: flex-start;"><span class="plk-gg-label" style="padding-top: 8px;">Omschrijving <span class="req">*</span></span><textarea value="{{ pBio }}" onInput="{{ onBio }}" aria-label="Omschrijving"></textarea></div>
       <button class="plk-btn-opslaan" type="button" onClick="{{ onSaveAll }}">Opslaan</button>
       <sc-if value="{{ hasGgToast }}" hint-placeholder-val="{{ false }}"><div role="status" style="margin-top: 10px; font-size: 12.5px; color: var(--muted,#424444);">{{ ggToast }}</div></sc-if>
+    </section>
+
+    <section class="plk-gg" aria-labelledby="og-title" style="animation-delay: 0.1s;">
+      <h2 id="og-title">Overige gegevens</h2>
+      <div class="plk-gg-row"><span class="plk-gg-label">Branche <span class="req">*</span></span><div style="min-width:0;"><div class="plk-gg-inline"><select value="{{ oBranche }}" onChange="{{ onOBranche }}" aria-label="Branche" style="flex:1;"><sc-for list="{{ branches }}" as="c" hint-placeholder-count="5"><option value="{{ c.v }}">{{ c.v }}</option></sc-for></select><button class="plk-gg-add" type="button" onClick="{{ onAddBranche }}" aria-label="Branche toevoegen">+</button></div><sc-if value="{{ hasBrancheChips }}" hint-placeholder-val="{{ false }}"><div class="plk-gg-chips"><sc-for list="{{ brancheChips }}" as="bc" hint-placeholder-count="2"><span class="plk-gg-chip">{{ bc.label }}<button type="button" onClick="{{ bc.onRemove }}" aria-label="{{ bc.removeAria }}">&times;</button></span></sc-for></div></sc-if></div></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Vakgebied</span><input type="text" value="{{ oVakgebied }}" onInput="{{ onOVakgebied }}" aria-label="Vakgebied"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Twitter</span><input type="text" value="{{ oTwitter }}" onInput="{{ onOTwitter }}" placeholder="https://twitter.com/..." aria-label="Twitter"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">LinkedIn</span><input type="text" value="{{ oLinkedin }}" onInput="{{ onOLinkedin }}" placeholder="https://www.linkedin.com/..." aria-label="LinkedIn"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Uurtarief</span><div class="plk-gg-inline"><select value="{{ oCurrency }}" onChange="{{ onOCurrency }}" aria-label="Valuta" style="width:88px;flex:0 0 88px;"><option value="EUR">EUR</option><option value="USD">USD</option></select><input type="text" inputMode="numeric" value="{{ oRate }}" onInput="{{ onORate }}" aria-label="Uurtarief" style="flex:1;"></div></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Beschikbaarheid</span><select value="{{ oAvailability }}" onChange="{{ onOAvailability }}" aria-label="Beschikbaarheid"><option value="now">Per direct</option><option value="soon">Binnenkort beschikbaar</option><option value="busy">Niet beschikbaar</option></select></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Uren beschikbaar per week</span><input type="text" inputMode="numeric" value="{{ oHours }}" onInput="{{ onOHours }}" aria-label="Uren beschikbaar per week"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Aantal jaren ervaring</span><input type="text" inputMode="numeric" value="{{ oYears }}" onInput="{{ onOYears }}" aria-label="Aantal jaren ervaring"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Geboortedatum</span><input type="date" value="{{ oBirthdate }}" onInput="{{ onOBirthdate }}" aria-label="Geboortedatum"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Website</span><input type="text" value="{{ oWebsite }}" onInput="{{ onOWebsite }}" placeholder="Website" aria-label="Website"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Kamer van Koophandel</span><input type="text" value="{{ oKvk }}" onInput="{{ onOKvk }}" placeholder="KvK nummer" aria-label="KvK nummer"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">BTW</span><input type="text" value="{{ oBtw }}" onInput="{{ onOBtw }}" placeholder="BTW-nummer" aria-label="BTW-nummer"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">IBAN</span><input type="text" value="{{ oIban }}" onInput="{{ onOIban }}" aria-label="IBAN"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">BIC</span><input type="text" value="{{ oBic }}" onInput="{{ onOBic }}" aria-label="BIC"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Banknaam</span><input type="text" value="{{ oBankName }}" onInput="{{ onOBankName }}" aria-label="Banknaam"></div>
+      <div class="plk-gg-row" style="align-items: flex-start;"><span class="plk-gg-label" style="padding-top: 8px;">Skills</span><div style="min-width:0;"><div class="plk-gg-inline"><input type="text" value="{{ skillInput }}" onInput="{{ onSkillInput }}" onKeyDown="{{ onSkillKey }}" placeholder="Skill" aria-label="Skill toevoegen" style="flex:1;"><button class="plk-gg-add" type="button" onClick="{{ onSkillAdd }}" aria-label="Skill toevoegen">+</button></div><sc-if value="{{ hasSkills }}" hint-placeholder-val="{{ true }}"><div class="plk-gg-chips"><sc-for list="{{ skills }}" as="sk" hint-placeholder-count="5"><span class="plk-gg-chip">{{ sk.label }}<button type="button" onClick="{{ sk.onRemove }}" aria-label="{{ sk.removeAria }}">&times;</button></span></sc-for></div></sc-if></div></div>
+      <button class="plk-btn-opslaan" type="button" onClick="{{ onSaveAll }}">Opslaan</button>
     </section>
 
     <section class="plk-cv-card" aria-labelledby="cv-upload-title" style="position: relative; margin-top: 14px; background: var(--surface,#fff); border: 1px solid {{ cvBorder }}; border-radius: 14px; padding: 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.08s both; transition: border-color 0.18s ease, background-color 0.18s ease;" onDragEnter="{{ onCvDragEnter }}" onDragOver="{{ onCvDragOver }}" onDragLeave="{{ onCvDragLeave }}" onDrop="{{ onCvDrop }}">
@@ -246,6 +288,23 @@
 
   </main>
 
+  <sc-if value="{{ previewOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="plk-preview-shade" onClick="{{ onClosePreview }}" role="presentation">
+      <div class="plk-preview" role="dialog" aria-modal="true" aria-label="Profielvoorbeeld zoals opdrachtgevers het zien" onClick="{{ onPreviewClick }}">
+        <button class="plk-preview-close" type="button" onClick="{{ onClosePreview }}" aria-label="Voorbeeld sluiten">&times;</button>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--faint,#8C8E8F);">Zo zien opdrachtgevers jou</div>
+        <div class="plk-preview-avatar" style="margin-top: 16px;"><sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ photoSrc }}" alt=""></sc-if><sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></sc-if></div>
+        <h2 class="plk-preview-name">{{ pvName }}</h2>
+        <div class="plk-preview-sub">{{ pvSub }}</div>
+        <div class="plk-preview-badges"><span class="plk-preview-pill" style="background: {{ pvAvailBg }};">{{ pvAvail }}</span><span class="plk-preview-rate">{{ pvRate }}</span></div>
+        <sc-if value="{{ hasSkills }}" hint-placeholder-val="{{ true }}"><div class="plk-preview-badges" style="margin-top: 14px;"><sc-for list="{{ skills }}" as="sk" hint-placeholder-count="4"><span class="plk-gg-chip">{{ sk.label }}</span></sc-for></div></sc-if>
+        <sc-if value="{{ pvHasBio }}" hint-placeholder-val="{{ false }}"><p class="plk-preview-bio">{{ pvBio }}</p></sc-if>
+        <div class="plk-preview-note">Je volledige naam, contactgegevens en externe links worden door AI afgeschermd totdat een samenwerking start.</div>
+        <sc-if value="{{ pvHasCv }}" hint-placeholder-val="{{ false }}"><button class="plk-btn-view" type="button" onClick="{{ onCvView }}" style="margin-top: 16px;">Bekijk je geanonimiseerde cv</button></sc-if>
+      </div>
+    </div>
+  </sc-if>
+
   <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
@@ -268,6 +327,7 @@ class Component extends DCLogic {
     syncError: '',
     session: null,
     menuOpen: false,
+    previewOpen: false,
   };
 
   isValidWhatsappFreelancerSession(session) {
@@ -303,7 +363,7 @@ class Component extends DCLogic {
 
   static seed(name) {
     const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
-    return { name: name || '', firstName: parts[0] || '', lastName: parts.slice(1).join(' '), company: '', country: 'Nederland', postcode: '', city: '', address: '', phoneDial: '+31', phone: '', avatarUrl: '', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '', portfolio: [] };
+    return { name: name || '', firstName: parts[0] || '', lastName: parts.slice(1).join(' '), company: '', country: 'Nederland', postcode: '', city: '', address: '', phoneDial: '+31', phone: '', avatarUrl: '', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '', portfolio: [], branche: '', branches: [], vakgebied: '', twitter: '', linkedin: '', rateCurrency: 'EUR', hoursPerWeek: '', yearsExperience: '', birthdate: '', website: '', kvk: '', btw: '', iban: '', bic: '', bankName: '' };
   }
 
   static sanitizeProfile(raw, seed) {
@@ -328,6 +388,21 @@ class Component extends DCLogic {
     if (typeof source.phoneDial === 'string' && /^\+\d{1,4}$/.test(source.phoneDial)) safe.phoneDial = source.phoneDial;
     if (typeof source.phone === 'string') safe.phone = source.phone.replace(/[^0-9 ]/g, '').slice(0, 24);
     if (typeof source.avatarUrl === 'string' && (/^data:image\/(?:png|jpeg|webp);base64,/.test(source.avatarUrl) || /^https:\/\//.test(source.avatarUrl))) safe.avatarUrl = source.avatarUrl.slice(0, 2500000);
+    if (typeof source.branche === 'string') safe.branche = source.branche.slice(0, 80);
+    if (Array.isArray(source.branches)) safe.branches = source.branches.filter((b) => typeof b === 'string' && b.trim()).map((b) => b.trim().slice(0, 80)).slice(0, 6);
+    if (typeof source.vakgebied === 'string') safe.vakgebied = source.vakgebied.slice(0, 120);
+    if (typeof source.twitter === 'string') safe.twitter = source.twitter.slice(0, 200);
+    if (typeof source.linkedin === 'string') safe.linkedin = source.linkedin.slice(0, 200);
+    if (source.rateCurrency === 'EUR' || source.rateCurrency === 'USD') safe.rateCurrency = source.rateCurrency;
+    if (typeof source.hoursPerWeek === 'string' || typeof source.hoursPerWeek === 'number') safe.hoursPerWeek = String(source.hoursPerWeek).replace(/[^0-9]/g, '').slice(0, 2);
+    if (typeof source.yearsExperience === 'string' || typeof source.yearsExperience === 'number') safe.yearsExperience = String(source.yearsExperience).replace(/[^0-9]/g, '').slice(0, 2);
+    if (typeof source.birthdate === 'string') safe.birthdate = source.birthdate.slice(0, 10);
+    if (typeof source.website === 'string') safe.website = source.website.slice(0, 200);
+    if (typeof source.kvk === 'string') safe.kvk = source.kvk.slice(0, 20);
+    if (typeof source.btw === 'string') safe.btw = source.btw.slice(0, 24);
+    if (typeof source.iban === 'string') safe.iban = source.iban.replace(/[^A-Za-z0-9 ]/g, '').slice(0, 34);
+    if (typeof source.bic === 'string') safe.bic = source.bic.replace(/[^A-Za-z0-9]/g, '').slice(0, 11);
+    if (typeof source.bankName === 'string') safe.bankName = source.bankName.slice(0, 80);
     return safe;
   }
 
@@ -891,6 +966,7 @@ class Component extends DCLogic {
     if (!(p.city || '').trim()) missing.push('stad');
     if (!(p.phone || '').trim()) missing.push('mobiel nummer');
     if (!(p.bio || '').trim()) missing.push('omschrijving');
+    if (!(p.branche || '').trim()) missing.push('branche');
     if (missing.length) { this.toastSaved('Vul nog in: ' + missing.join(', ') + '.'); return; }
     this.save({ name: (p.firstName + ' ' + p.lastName).trim() });
     this.toastSaved('Je gegevens zijn opgeslagen.');
@@ -1050,7 +1126,7 @@ class Component extends DCLogic {
       menuItems: menuItems,
       userName: userName,
       userInitials: userInitials,
-      roleLabel: 'Freelancer',
+      roleLabel: role === 'client' ? 'Opdrachtgever' : 'Professional',
       onTheme: () => this.toggleTheme(),
       themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
       onLogout: () => { if (window.ProLinkerApp && window.ProLinkerApp.session) window.ProLinkerApp.session.logout(); },
@@ -1103,6 +1179,39 @@ class Component extends DCLogic {
       phoneIsVerified: !!(session.phoneVerified || session.contact), phoneNotVerified: !(session.phoneVerified || session.contact),
       onSaveAll: () => this.saveAll(),
       hasGgToast: !!this.state.ggToast, ggToast: this.state.ggToast || '',
+      oBranche: p.branche, onOBranche: (e) => this.save({ branche: e.target.value }),
+      branches: ['', 'Sales en Account management', 'Marketing en Communicatie', 'Website en Apps', 'Design en Creatie', 'Data en AI', 'Finance en Control', 'Legal', 'HR en Recruitment', 'Operations', 'Anders'].map((v) => ({ v: v })),
+      onAddBranche: () => { const value = (p.branche || '').trim(); if (!value) return; const list = (p.branches || []).slice(); if (list.indexOf(value) < 0) { list.push(value); this.save({ branches: list }); } },
+      hasBrancheChips: (p.branches || []).length > 0,
+      brancheChips: (p.branches || []).map((b) => ({ label: b, removeAria: b + ' verwijderen', onRemove: () => this.save({ branches: p.branches.filter((x) => x !== b) }) })),
+      oVakgebied: p.vakgebied, onOVakgebied: (e) => this.save({ vakgebied: e.target.value }),
+      oTwitter: p.twitter, onOTwitter: (e) => this.save({ twitter: e.target.value }),
+      oLinkedin: p.linkedin, onOLinkedin: (e) => this.save({ linkedin: e.target.value }),
+      oCurrency: p.rateCurrency || 'EUR', onOCurrency: (e) => this.save({ rateCurrency: e.target.value }),
+      oRate: p.rate, onORate: (e) => this.save({ rate: e.target.value.replace(/[^0-9]/g, '').slice(0, 3) }),
+      oAvailability: p.availability || 'now', onOAvailability: (e) => this.save({ availability: e.target.value }),
+      oHours: p.hoursPerWeek, onOHours: (e) => this.save({ hoursPerWeek: e.target.value }),
+      oYears: p.yearsExperience, onOYears: (e) => this.save({ yearsExperience: e.target.value }),
+      oBirthdate: p.birthdate, onOBirthdate: (e) => this.save({ birthdate: e.target.value }),
+      oWebsite: p.website, onOWebsite: (e) => this.save({ website: e.target.value }),
+      oKvk: p.kvk, onOKvk: (e) => this.save({ kvk: e.target.value }),
+      oBtw: p.btw, onOBtw: (e) => this.save({ btw: e.target.value }),
+      oIban: p.iban, onOIban: (e) => this.save({ iban: e.target.value }),
+      oBic: p.bic, onOBic: (e) => this.save({ bic: e.target.value }),
+      oBankName: p.bankName, onOBankName: (e) => this.save({ bankName: e.target.value }),
+      onSkillAdd: () => this.addSkill(),
+      hasSkills: (p.skills || []).length > 0,
+      previewOpen: this.state.previewOpen,
+      onPreview: () => this.setState({ previewOpen: true }),
+      onClosePreview: () => this.setState({ previewOpen: false }),
+      onPreviewClick: (e) => e.stopPropagation(),
+      pvName: ((p.firstName || p.name.split(/\s+/)[0] || 'Professional') + ' ' + ((p.lastName || '').charAt(0) ? (p.lastName || '').charAt(0).toUpperCase() + '.' : '')).trim(),
+      pvSub: [p.vakgebied || p.headline, p.branche].filter(Boolean).join(' · '),
+      pvAvail: p.availability === 'busy' ? 'Niet beschikbaar' : (p.availability === 'soon' ? 'Binnenkort beschikbaar' : 'Per direct beschikbaar'),
+      pvAvailBg: p.availability === 'busy' ? '#E65F39' : '#2FA35B',
+      pvRate: (p.rateCurrency === 'USD' ? '$' : '€') + ' ' + (p.rate || '—') + ' per uur',
+      pvHasBio: !!(p.bio || '').trim(), pvBio: p.bio,
+      pvHasCv: !!this.state.cvRecord,
       pName: p.name, onName: (e) => this.save({ name: e.target.value }),
       pHeadline: p.headline, onHeadline: (e) => this.save({ headline: e.target.value }),
       pRate: p.rate, onRate: (e) => this.save({ rate: e.target.value.replace(/[^0-9]/g, '').slice(0, 3) }),

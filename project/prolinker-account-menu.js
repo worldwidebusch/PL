@@ -21,21 +21,21 @@
 
   function mainNavigationItems(lang) {
     if (lang === 'en') return [
-      ['Freelancers', 'Prolinker Results.dc.html'],
+      ['Professionals', 'Prolinker Results.dc.html'],
       ['Jobs', 'Prolinker Voor jou v2.dc.html'],
       ['Post a job', 'Prolinker Brief.dc.html'],
       ['Blog', 'https://prolinker.com/nl/blog?page=1'],
       ['Earn 2% with referrals', 'Prolinker Verdiensten.dc.html'],
-      ['Become a freelancer', 'Prolinker Login.dc.html?mode=register&role=freelancer'],
+      ['Become a professional', 'Prolinker Login.dc.html?mode=register&role=freelancer'],
       ['Become a recruiter', 'Prolinker Login.dc.html?mode=register&role=client']
     ];
     return [
-      ['Freelancers', 'Prolinker Results.dc.html'],
+      ['Professionals', 'Prolinker Results.dc.html'],
       ['Opdrachten', 'Prolinker Voor jou v2.dc.html'],
       ['Opdracht plaatsen', 'Prolinker Brief.dc.html'],
       ['Blog', 'https://prolinker.com/nl/blog?page=1'],
       ['Verdien 2% met referrals', 'Prolinker Verdiensten.dc.html'],
-      ['Freelancer worden', 'Prolinker Login.dc.html?mode=register&role=freelancer'],
+      ['Professional worden', 'Prolinker Login.dc.html?mode=register&role=freelancer'],
       ['Recruiter worden', 'Prolinker Login.dc.html?mode=register&role=client']
     ];
   }
@@ -43,7 +43,7 @@
   function fallbackAccountItems(role, lang) {
     var safeRole = role === 'client' ? 'client' : 'freelancer';
     var english = lang === 'en';
-    return [
+    var items = [
       { key: 'dashboard', label: english ? 'My dashboard' : 'Mijn Dashboard', href: 'Prolinker Dashboard.dc.html', badgeText: '' },
       { key: 'network', label: english ? 'My network' : 'Mijn Netwerk', href: 'Prolinker Netwerk.dc.html', badgeText: '' },
       { key: 'assignments', label: english ? (safeRole === 'client' ? 'My jobs' : 'My applications') : (safeRole === 'client' ? 'Mijn Opdrachten' : 'Mijn Sollicitaties'), href: 'Prolinker Mijn opdrachten.dc.html?role=' + safeRole, badgeText: '' },
@@ -52,6 +52,8 @@
       { key: 'earnings', label: english ? 'My transactions' : 'Mijn Transacties', href: 'Prolinker Verdiensten.dc.html', badgeText: '' },
       { key: 'settings', label: english ? 'Settings' : 'Instellingen', href: 'Prolinker Instellingen.dc.html', badgeText: '' }
     ];
+    if (safeRole === 'client') items.splice(3, 0, { key: 'post', label: english ? 'Post a job' : 'Opdracht plaatsen', href: 'Prolinker Brief.dc.html', badgeText: '' });
+    return items;
   }
 
   function accountItemLabel(item, lang, role) {
@@ -60,6 +62,7 @@
       dashboard: 'My dashboard',
       network: 'My network',
       assignments: role === 'client' ? 'My jobs' : 'My applications',
+      post: 'Post a job',
       messages: 'My messages',
       profile: 'My profile',
       earnings: 'My transactions',
@@ -235,6 +238,20 @@
       if (this._themeKnob) this._themeKnob.setAttribute('data-on', isDark ? 'true' : 'false');
     }
 
+    switchRole(role) {
+      this.close(false);
+      try {
+        var raw = JSON.parse(global.localStorage.getItem('plk-auth-session') || 'null');
+        if (!raw || raw.role === role) return;
+        raw.role = role;
+        raw.accountType = role;
+        global.localStorage.setItem('plk-auth-session', JSON.stringify(raw));
+        global.localStorage.setItem('plk-user-role', role);
+        global.dispatchEvent(new Event('plk-session-change'));
+      } catch (error) { return; }
+      global.location.href = 'Prolinker Dashboard.dc.html';
+    }
+
     logout() {
       this.close(false);
       if (global.ProLinkerApp && global.ProLinkerApp.session) global.ProLinkerApp.session.logout();
@@ -297,6 +314,10 @@
         '.theme-track[data-on="true"]{background:#2F5B85}',
         '.theme-knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .2s ease}',
         '.theme-knob[data-on="true"]{left:18px}',
+        '.role-switch{display:flex;gap:4px;margin:2px 8px 7px;padding:4px;border:1px solid var(--border,#DCDFE2);border-radius:9px;background:var(--panel,#F3F4F6)}',
+        '.role-switch button{flex:1;min-height:32px;border:0;border-radius:7px;background:transparent;color:var(--muted,#424444);cursor:pointer;font-size:12.5px;font-weight:700}',
+        '.role-switch button[data-on="true"]{background:#2F5B85;color:#fff}',
+        '.role-switch button:not([data-on="true"]):hover{color:var(--text,#152431)}',
         '.main-trigger:focus-visible,.identity:focus-visible,.main-item:focus-visible,.account-main-item:focus-visible,.theme-button:focus-visible{outline:2px solid rgba(47,91,133,.32);outline-offset:2px}',
         '@media(max-width:560px){.identity-name{max-width:76px;font-size:11px}.main-panel{position:fixed;left:10px;right:10px;top:62px;width:auto;max-width:none;max-height:calc(100vh - 74px)}}',
         '@media(prefers-reduced-motion:reduce){.theme-track,.theme-knob{transition:none}}'
@@ -320,6 +341,20 @@
       mainPanel.hidden = true;
       mainPanel.setAttribute('role', 'menu');
       mainPanel.setAttribute('aria-label', lang === 'en' ? 'Main navigation' : 'Hoofdnavigatie');
+      mainPanel.appendChild(element('div', 'main-caption', lang === 'en' ? 'Active as' : 'Actief als'));
+      var roleSwitch = element('div', 'role-switch');
+      roleSwitch.setAttribute('role', 'group');
+      roleSwitch.setAttribute('aria-label', lang === 'en' ? 'Switch account role' : 'Wissel van rol');
+      var self = this;
+      [['client', lang === 'en' ? 'Client' : 'Opdrachtgever'], ['freelancer', 'Professional']].forEach(function (option) {
+        var roleButton = element('button', '', option[1]);
+        roleButton.type = 'button';
+        roleButton.setAttribute('data-on', role === option[0] ? 'true' : 'false');
+        roleButton.setAttribute('aria-pressed', role === option[0] ? 'true' : 'false');
+        roleButton.addEventListener('click', function () { self.switchRole(option[0]); });
+        roleSwitch.appendChild(roleButton);
+      });
+      mainPanel.appendChild(roleSwitch);
       mainPanel.appendChild(element('div', 'main-caption', lang === 'en' ? 'My account' : 'Mijn account'));
       items.forEach(function (item) {
         var accountLink = element('a', 'account-main-item');

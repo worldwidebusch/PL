@@ -69,7 +69,7 @@
         referrals: {
           title: 'Jouw aanbevelingen',
           intro: 'Draag iemand aan die je vertrouwt. Hier volg je wat je daarmee verdient.',
-          explain: 'Draag een goede freelancer aan. Zodra die via ProLinker betaald werk afrondt, ontvang jij 2% van de betaalde opdrachtwaarde.',
+          explain: 'Draag een goede professional aan. Zodra die via ProLinker betaald werk afrondt, ontvang jij 2% van de betaalde opdrachtwaarde.',
           cta: 'Delen via WhatsApp'
         }
       },
@@ -78,7 +78,7 @@
         registration: {
           title: 'Je bent te goed om op prijs te concurreren.',
           intro: 'Werk op jouw voorwaarden. Vul je gegevens in en verifieer je WhatsApp-nummer.',
-          roleLabel: 'Ik werk als freelancer',
+          roleLabel: 'Ik werk als professional',
           referral: 'Iemand uit het ProLinker-netwerk heeft je aanbevolen. Na je registratie koppelen we die aanbeveling aan je profiel.',
           safety: 'Ontvang betalingen via ProLinker. Zo blijven je werk en afspraken beschermd.',
           successTitle: 'Welkom in het netwerk.',
@@ -135,7 +135,7 @@
         referrals: {
           title: 'Verdiensten & aanbevelingen',
           intro: 'Bekijk wat je hebt verdiend en wat er nog onderweg is.',
-          explain: 'Draag een goede freelancer aan. Zodra die via ProLinker betaald werk afrondt, ontvang jij 2% van de betaalde opdrachtwaarde.',
+          explain: 'Draag een goede professional aan. Zodra die via ProLinker betaald werk afrondt, ontvang jij 2% van de betaalde opdrachtwaarde.',
           cta: 'Delen via WhatsApp'
         }
       },

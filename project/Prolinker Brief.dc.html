@@ -36,8 +36,7 @@
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
   a:active { transform: scale(0.985); }
-  .plk-brief-main { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 18px 32px 48px; }
-  @media(min-width:781px){ .plk-brief-progress { padding-right: 225px; } }
+  .plk-brief-main { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 82px 32px 48px; }
   .plk-brief-progress { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin: 0 auto 8px; max-width: 300px; }
   .plk-brief-progress::before { content: ''; position: absolute; top: 11px; left: 25%; right: 25%; height: 1px; background: var(--border,#DCDFE2); }
   .plk-brief-progress-item { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; color: var(--muted,#424444); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -117,7 +116,7 @@
           </div>
         </sc-if>
         </div>
-        <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">{{ t.companies }}</a>
+        <a class="plk-public-action plk-public-company" href="Prolinker Voor bedrijven.dc.html">{{ t.companies }}</a>
         <button class="plk-public-action plk-public-action-blue" onClick="{{ onLogin }}">{{ t.login }}</button>
         <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
@@ -531,8 +530,8 @@ class Component extends DCLogic {
   }
   content() {
     const en = {
-      nav1: 'Freelancers', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog',
-      becomeFreelancer: 'Become a freelancer', becomeRecruiter: 'Become a recruiter',
+      nav1: 'Professionals', nav2: 'Projects', nav3: 'How it works', nav4: 'Post a project', nav5: 'Blog',
+      becomeFreelancer: 'Become a professional', becomeRecruiter: 'Become a recruiter',
       companies: 'For companies', login: 'Log in', register: 'Sign up', theme: 'Toggle dark mode',
       settings: 'Settings', darkMode: 'Dark mode',
       step: 'Step 2/2', stepOne: 'Project', stepTwo: 'Details', progressLabel: 'Project posting progress',
@@ -548,8 +547,8 @@ class Component extends DCLogic {
       descRequired: 'Please add a project description (min. 20 characters).', budgetRequired: 'Enter a valid budget or choose “Open to discuss”.',
     };
     const nl = {
-      nav1: 'Freelancers', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
-      becomeFreelancer: 'Freelancer worden', becomeRecruiter: 'Recruiter worden',
+      nav1: 'Professionals', nav2: 'Opdrachten', nav3: 'Hoe werkt het', nav4: 'Opdracht plaatsen', nav5: 'Blog',
+      becomeFreelancer: 'Professional worden', becomeRecruiter: 'Recruiter worden',
       companies: 'Voor bedrijven', login: 'Inloggen', register: 'Aanmelden', theme: 'Donkere modus',
       settings: 'Instellingen', darkMode: 'Donkere modus',
       step: 'Stap 2/2', stepOne: 'Opdracht', stepTwo: 'Details', progressLabel: 'Voortgang opdracht plaatsen',
@@ -558,7 +557,7 @@ class Component extends DCLogic {
       aiGenerate: 'Genereer met AI', aiImprove: 'Verbeter met AI', aiWriting: 'Schrijven\u2026', aiWorking: 'AI schrijft je omschrijving\u2026',
       budgetLabel: 'Budget', budgetTypeLabel: 'Type budget', budgetMinLabel: 'Minimumbudget', budgetMaxLabel: 'Maximumbudget', hourly: 'Uurtarief', project: 'Projectbudget', perHour: '/uur', projectSuffix: 'totaal', budgetPh: 'bijv. 75', budgetTo: 'tot', budgetMinPh: 'min', budgetMaxPh: 'max',
       hoursLabel: 'Uren per week', hoursUnit: 'u/week', hoursMax: '40+ u/week',
-      workLabel: 'Waar werkt de freelancer?', remote: 'Op afstand', hybrid: 'Hybride', onsite: 'Op locatie',
+      workLabel: 'Waar werkt de professional?', remote: 'Op afstand', hybrid: 'Hybride', onsite: 'Op locatie',
       whereLabel: 'Locatie', wherePh: 'Stad of regio', whereHint: 'Typ een stad of regio en kies een bevestigde locatie.', whereSelectedHint: 'Bevestigde locatie gekozen.', whereVerified: 'Bevestigd', whereVerifiedShort: 'Bevestigd', whereResultsLabel: 'Bevestigde locaties', whereNoResults: 'Geen bevestigde locatie gevonden. Probeer een andere stad of regio.', whereSource: 'Bevestigde locaties in Nederland en Belgi\u00eb',
       back: 'Terug', continue: 'Ga verder naar matches', locationRequired: 'Kies een bevestigde locatie uit de lijst.',
       micLabel: 'Spreek je omschrijving in', aiGateMsg: 'Vul eerst budget, locatie en uren in om met AI te genereren.', micUnsupported: 'Spraakinvoer wordt niet ondersteund in deze browser.',
@@ -619,7 +618,7 @@ class Component extends DCLogic {
       if (window.claude && typeof window.claude.complete === 'function') {
         const prompt = nl
           ? 'Een opdrachtgever zoekt een freelancer en typte in: "' + seed + '". Schrijf op basis daarvan een heldere, professionele projectomschrijving van 90-130 woorden, in de ik-vorm, in het Nederlands, in 2-3 alinea\u2019s. Gebruik ook deze context: ' + ctx + ' Geef alleen de omschrijving terug, zonder kop of aanhalingstekens.'
-          : 'A client is looking for a freelancer and typed: "' + seed + '". Based on that, write a clear, professional 90-130 word project description, first person from the client, in English, in 2-3 short paragraphs. Also use this context: ' + ctx + ' Return only the description text, no heading or quotes.';
+          : 'A client is looking for a professional and typed: "' + seed + '". Based on that, write a clear, professional 90-130 word project description, first person from the client, in English, in 2-3 short paragraphs. Also use this context: ' + ctx + ' Return only the description text, no heading or quotes.';
         const res = await window.claude.complete({ messages: [{ role: 'user', content: prompt }], max_tokens: 600 });
         out = typeof res === 'string' ? res : '';
       }

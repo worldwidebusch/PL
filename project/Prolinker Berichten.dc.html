@@ -456,17 +456,17 @@ class Component extends DCLogic {
       timeLabel: this.formatDate(entry.at, true),
       channelClass: entry.direction === 'outgoing' && entry.deliveryStatus === 'read' ? 'read' : (entry.channel === 'whatsapp' ? 'wa' : 'pf'),
       channelLabel: entry.direction === 'outgoing'
-        ? (entry.channel !== 'whatsapp' ? '· bezorgd op platform'
+        ? (entry.channel !== 'whatsapp' ? '· bezorgd via ProLinker'
           : (entry.deliveryStatus === 'read' ? '· gelezen op WhatsApp'
             : (entry.deliveryStatus === 'sent' ? '· verzonden via WhatsApp-agent' : '· bezorgd via WhatsApp-agent')))
-        : (entry.channel === 'whatsapp' ? '· via WhatsApp' : '· via platform')
+        : (entry.channel === 'whatsapp' ? '· via WhatsApp' : '· via ProLinker')
     })) : [];
     const noFolderItems = folderThreads.length === 0;
     const emptyTitle = query ? 'Geen gesprekken gevonden' : (jobFilter ? 'Geen gesprekken voor deze opdracht' : (this.state.folder === 'archived' ? 'Nog niets gearchiveerd' : 'Je inbox is leeg'));
     const emptyText = query ? 'Probeer een andere naam, onderwerp of zoekterm.' : (jobFilter ? 'Zodra kandidaten op deze opdracht reageren, vind je de gesprekken hier.' : (this.state.folder === 'archived' ? 'Gesprekken die je archiveert verschijnen hier.' : 'Nieuwe gesprekken over opdrachten en samenwerkingen verschijnen hier automatisch.'));
     const draftLength = String(this.state.draft || '').length;
     return {
-      menuOpen:this.state.menuOpen,menuChevron:this.state.menuOpen?'\u25B2':'\u25BC',onToggleMenu:()=>this.setState((state)=>({menuOpen:!state.menuOpen})),onCloseMenu:()=>this.setState({menuOpen:false}),menuItems:menuItems,userName:userName,userInitials:this.initials(userName),roleLabel:role==='client'?'Opdrachtgever':'Freelancer',onTheme:()=>this.toggleTheme(),themeLabel:this.state.theme==='dark'?'Lichte modus':'Donkere modus',onLogout:()=>window.ProLinkerApp.session.logout(),
+      menuOpen:this.state.menuOpen,menuChevron:this.state.menuOpen?'\u25B2':'\u25BC',onToggleMenu:()=>this.setState((state)=>({menuOpen:!state.menuOpen})),onCloseMenu:()=>this.setState({menuOpen:false}),menuItems:menuItems,userName:userName,userInitials:this.initials(userName),roleLabel:role==='client'?'Opdrachtgever':'Professional',onTheme:()=>this.toggleTheme(),themeLabel:this.state.theme==='dark'?'Lichte modus':'Donkere modus',onLogout:()=>window.ProLinkerApp.session.logout(),
       unreadLabel:unreadCount===1?'1 ongelezen':unreadCount+' ongelezen',unreadAria:unreadCount===1?'1 ongelezen gesprek':unreadCount+' ongelezen gesprekken',loading:this.state.loading,hasError:!!this.state.error,errorMessage:this.state.error,onRetry:()=>this.load('', true),ready:!this.state.loading&&!this.state.error,
       listMobileClass:selected?'plk-mobile-hidden':'',conversationMobileClass:selected?'':'plk-mobile-hidden',inboxTabClass:this.state.folder==='inbox'?'active':'',archivedTabClass:this.state.folder==='archived'?'active':'',inboxSelected:this.state.folder==='inbox',archivedSelected:this.state.folder==='archived',inboxCount:inbox.length,archivedCount:archived.length,onInbox:()=>this.setFolder('inbox'),onArchived:()=>this.setFolder('archived'),query:this.state.query,hasQuery:!!this.state.query,onQuery:(event)=>this.setState({query:event.target.value}),onClearQuery:()=>this.setState({query:''}),
       threads:threads,hasThreads:threads.length>0,noThreads:threads.length===0,emptyTitle:emptyTitle,emptyText:emptyText,

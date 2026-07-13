@@ -15,9 +15,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#F3F4F6;--text:#152431;--muted:#424444;--faint:#8C8E8F;--surface:#fff;--panel:#F8FAFC;--border:#DCDFE2;--hair:#ECEEF0;--glass:rgba(255,255,255,.82);--blue:#2F5B85;--blue-dark:#24476A;--orange:#E65F39;--green:#27834A;--link:#4A90D9}
-  :root[data-theme="dark"]{--bg:#0F1A23;--text:#F3F4F6;--muted:#B4C1CC;--faint:#8C8E8F;--surface:#152431;--panel:#0F1A23;--border:#2C3E4E;--hair:#1C2C3A;--glass:rgba(13,20,27,.72);--link:#7FB3E8}
-  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Lato',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid rgba(47,91,133,.23);outline-offset:2px}
+  :root{--bg:#F3F4F6;--text:#152431;--muted:#424444;--faint:#8C8E8F;--surface:#fff;--panel:#F8FAFC;--border:#DCDFE2;--hair:#ECEEF0;--glass:rgba(255,255,255,.82);--blue:#2F5B85;--blue-dark:#24476A;--orange:#E65F39;--green:#27834A;--link:#2F5B85}
+  :root[data-theme="dark"]{--bg:#0F1A23;--text:#F3F4F6;--muted:#B4C1CC;--faint:#8C8E8F;--surface:#152431;--panel:#0F1A23;--border:#2C3E4E;--hair:#1C2C3A;--glass:rgba(13,20,27,.72);--link:#9CC0E0}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Lato',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{background-color:#F7F9FB;background-image:radial-gradient(rgba(47,91,133,0.06) 1px,transparent 1px);background-size:22px 22px;background-attachment:fixed}
+  :root[data-theme="dark"] body{background-color:var(--bg);background-image:radial-gradient(rgba(255,255,255,0.035) 1px,transparent 1px)}a{color:inherit;text-decoration:none}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid rgba(47,91,133,.23);outline-offset:2px}
   @keyframes plk-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   .plk-main{max-width:1180px;width:100%;margin:0 auto;padding:22px 24px 90px;flex:1}
   .plk-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;animation:plk-rise .5s ease both}
@@ -25,8 +27,8 @@
   .plk-subtitle{margin:8px 0 0;color:var(--muted);font-size:13.5px;line-height:1.55}
   .plk-head-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:58px}
   @media(max-width:780px){.plk-head-actions{margin-top:6px}}
-  .plk-btn-blue{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid #3F7CB4;border-radius:5px;background:#4A90D9;color:#fff;cursor:pointer;font-size:13px;font-weight:650}
-  .plk-btn-blue:hover{background:#3F7CB4}
+  .plk-btn-blue{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid var(--blue);border-radius:5px;background:var(--blue);color:#fff;cursor:pointer;font-size:13px;font-weight:650}
+  .plk-btn-blue:hover{border-color:var(--blue-dark);background:var(--blue-dark)}
   .plk-btn-orange{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid #C94F2D;border-radius:5px;background:#E65F39;color:#fff;cursor:pointer;font-size:13px;font-weight:650}
   .plk-btn-orange:hover{background:#D14F2B}
   .plk-tabline{margin-top:34px;border-bottom:1px solid var(--border);animation:plk-rise .5s ease .05s both}
@@ -47,7 +49,7 @@
   .plk-money-amount{min-width:72px;font-weight:750}
   .plk-money-link{color:var(--link);text-decoration:underline;text-underline-offset:2px}
   .plk-money-link:hover{color:var(--blue-dark)}
-  .plk-help{width:17px;height:17px;flex:0 0 auto;margin-left:auto;border-radius:50%;background:#4A90D9;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;cursor:help}
+  .plk-help{width:17px;height:17px;flex:0 0 auto;margin-left:auto;border-radius:50%;background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;cursor:help}
   .plk-empty-band{margin-top:24px;padding:15px 20px;border:1px solid var(--border);border-radius:5px;background:var(--surface);text-align:center;color:var(--muted);font-size:13px;animation:plk-rise .5s ease .12s both}
   .plk-hired-row{margin-top:24px;border:1px solid var(--border);border-radius:5px;background:var(--surface);overflow:hidden}
   .plk-hired-item{display:flex;align-items:center;gap:13px;padding:13px 18px;border-top:1px solid var(--hair)}
@@ -79,7 +81,7 @@
     <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
       <div class="plk-page-head">
         <div style="min-width:0;">
-          <h1 class="plk-title">Hallo {{ firstName }}</h1>
+          <h1 class="plk-title">{{ greeting }}, {{ firstName }}</h1>
           <p class="plk-subtitle">{{ subtitle }}</p>
         </div>
         <div class="plk-head-actions">
@@ -172,7 +174,15 @@ class Component extends DCLogic {
   renderVals() {
     const session = this.state.session || { role: 'client', name: '' };
     const role = session.role === 'client' ? 'client' : 'freelancer';
-    const firstName = String(session.name || (role === 'client' ? 'opdrachtgever' : 'professional')).trim().split(/\s+/)[0];
+    let firstName = '';
+    try {
+      const storedProfile = JSON.parse(localStorage.getItem('plk-profile') || 'null');
+      if (storedProfile && storedProfile.firstName) firstName = String(storedProfile.firstName).trim();
+    } catch (e) {}
+    if (!firstName) firstName = String(session.firstName || '').trim();
+    if (!firstName) firstName = String(session.name || (role === 'client' ? 'opdrachtgever' : 'professional')).trim().split(/\s+/)[0];
+    const hourNow = new Date().getHours();
+    const greeting = hourNow < 12 ? 'Goedemorgen' : (hourNow < 18 ? 'Goedemiddag' : 'Goedenavond');
     const assignments = this.state.assignments;
     const now = new Date();
     const thisMonth = assignments.filter((item) => { const date = new Date(item.updatedAt || item.createdAt || 0); return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth(); }).length;
@@ -183,12 +193,13 @@ class Component extends DCLogic {
       loading: this.state.loading, hasError: !!this.state.error, errorMessage: this.state.error, onRetry: () => this.load(),
       ready: !this.state.loading && !this.state.error,
       firstName: firstName,
-      subtitle: role === 'client' ? 'Maximaliseer uw productiviteit door projecten te plaatsen en freelancers in te huren' : 'Maximaliseer je inkomsten door te reageren op opdrachten die bij je passen',
+      greeting: greeting,
+      subtitle: role === 'client' ? 'Je opdrachten, aanbevolen professionals en gesprekken op één plek.' : 'Passend werk, reacties en samenwerkingen op één plek.',
       payoutHref: 'Prolinker Verdiensten.dc.html',
       referralHref: 'Prolinker Verdiensten.dc.html#referral',
       primaryHref: role === 'client' ? 'Prolinker Results.dc.html' : 'Prolinker Voor jou v2.dc.html',
       primaryLabel: role === 'client' ? 'Zoek professionals' : 'Zoek opdrachten',
-      roleTab: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
+      roleTab: role === 'client' ? 'Opdrachtgever' : 'Professional',
       statPosted: assignments.length,
       statPostedLabel: role === 'client' ? 'Opdrachten geplaatst' : 'Sollicitaties verstuurd',
       statPostedMonth: thisMonth,
@@ -201,8 +212,8 @@ class Component extends DCLogic {
       saldoLabel: this.eur(balance.available),
       bonusLabel: this.eur(balance.bonus),
       inviteLabel: this.eur(0),
-      hiredTab: role === 'client' ? 'Freelancers ingehuurd' : 'Actieve opdrachten',
-      hiredEmpty: role === 'client' ? 'Je hebt nog geen freelancers aangenomen' : 'Je hebt nog geen actieve opdrachten',
+      hiredTab: role === 'client' ? 'Professionals ingehuurd' : 'Actieve opdrachten',
+      hiredEmpty: role === 'client' ? 'Je hebt nog geen professionals aangenomen' : 'Je hebt nog geen actieve opdrachten',
       noHired: true, hasHired: false, hired: [],
       showToast: !!this.state.toast, toast: this.state.toast
     };

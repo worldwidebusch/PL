@@ -19,16 +19,16 @@
     return nl
       ? {
           tagline: 'Hire someone great. Not just someone available.',
-          network: 'Netwerk', freelancers: 'Freelancers', projects: 'Opdrachten', how: 'Hoe werkt het',
-          getStarted: 'Aan de slag', post: 'Opdracht plaatsen', become: 'Freelancer worden', faq: 'Veelgestelde vragen',
+          network: 'Netwerk', freelancers: 'Professionals', projects: 'Opdrachten', how: 'Hoe werkt het',
+          getStarted: 'Aan de slag', post: 'Opdracht plaatsen', become: 'Professional worden', faq: 'Veelgestelde vragen',
           company: 'ProLinker', careers: 'Werken bij ProLinker', blog: 'Blog', contact: 'Contact',
           languageLabel: 'Taal', rights: 'Alle rechten voorbehouden.', privacy: 'Privacy', terms: 'Algemene Voorwaarden',
           brandAria: 'ProLinker startpagina'
         }
       : {
           tagline: 'Hire someone great. Not just someone available.',
-          network: 'Network', freelancers: 'Freelancers', projects: 'Projects', how: 'How it works',
-          getStarted: 'Get started', post: 'Post a project', become: 'Become a freelancer', faq: 'Frequently asked questions',
+          network: 'Network', freelancers: 'Professionals', projects: 'Projects', how: 'How it works',
+          getStarted: 'Get started', post: 'Post a project', become: 'Become a professional', faq: 'Frequently asked questions',
           company: 'ProLinker', careers: 'Careers at ProLinker', blog: 'Blog', contact: 'Contact',
           languageLabel: 'Language', rights: 'All rights reserved.', privacy: 'Privacy', terms: 'Terms and Conditions',
           brandAria: 'ProLinker home'

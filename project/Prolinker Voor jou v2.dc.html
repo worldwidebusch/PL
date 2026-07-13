@@ -21,7 +21,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body { font-family: 'Lato', system-ui, sans-serif; background: #F3F4F6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-  @media (min-width: 781px) { body { zoom: 0.8; } }
+  @media (min-width: 781px) { .plk-feed-shell { zoom: 0.8; } }
   a { color: #2F5B85; text-decoration: none; }
   a:hover { color: #14498F; }
   ::selection { background: #B0D8FE; }
@@ -203,7 +203,7 @@
         </div>
       </sc-if>
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
-        <a class="plk-public-action plk-public-action-blue plk-public-company" href="Prolinker Brief.dc.html">Voor bedrijven</a>
+        <a class="plk-public-action plk-public-company" href="Prolinker Voor bedrijven.dc.html">Voor bedrijven</a>
         <button class="plk-public-action plk-public-action-blue" onClick="{{ onLogin }}">Inloggen</button>
         <prolinker-signup-menu></prolinker-signup-menu>
       </sc-if>
@@ -216,8 +216,8 @@
   <main class="plk-main" style="max-width: 1480px; width: 100%; margin: 0 auto; padding: 30px 28px 36px; flex: 1;">
 
     <div style="animation: plk-rise 0.5s ease both;">
-      <h1 class="plk-page-title" style="margin: 0; font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; color: #152431;">Opdrachten voor jou</h1>
-      <p class="plk-page-subtitle" style="margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: #424444;">Alle kansen uit de markt, gerangschikt op jouw profiel.</p>
+      <h1 class="plk-page-title" style="margin: 0; font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; color: #152431;">Werk dat bij jou past</h1>
+      <p class="plk-page-subtitle" style="margin: 6px 0 0; font-size: 15px; line-height: 1.45; color: #424444;">Opdrachten en vacatures van bedrijven die jouw ervaring waarderen &mdash; gerangschikt op match.</p>
     </div>
 
     <div class="plk-search-row" data-location-open="{{ locationOpen }}" style="margin-top: 20px; animation: plk-rise 0.5s ease both; animation-delay: 0.04s;">
@@ -285,7 +285,7 @@
     </div>
 
     <section class="plk-feed-shell plk-desktop-feed" aria-label="Gerangschikte opdrachten voor jou">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 15px;"><div><h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste kansen voor jou</h2><p style="margin: 5px 0 0; font-size: 13.5px; color: var(--muted,#424444);">Automatisch gerangschikt op jouw profiel.</p></div><span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F);">{{ feedRangeLabel }}</span></div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 15px;"><div><h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste opdrachten voor jou</h2><p style="margin: 5px 0 0; font-size: 13.5px; color: var(--muted,#424444);">Automatisch gerangschikt op jouw profiel.</p></div><span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F);">{{ feedRangeLabel }}</span></div>
       <div class="plk-feed-list" data-layout="{{ feedLayout }}"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><div class="plk-feed-result" data-reveal><article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
         <button class="plk-feed-category" onClick="{{ job.onOpen }}" aria-label="Bekijk {{ job.title }}, categorie {{ job.categoryLabel }}" title="{{ job.categoryLabel }}" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.categoryIconEl }}</button>
         <div style="min-width: 0; display: flex; flex-direction: column;"><div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 15.5px; line-height: 1.3; font-weight: 800; letter-spacing: -0.015em; text-align: left; cursor: pointer;">{{ job.title }}</button><span style="padding: 3px 8px; border-radius: 999px; background: {{ job.kindBg }}; color: {{ job.kindColor }}; font-size: 10.5px; font-weight: 800; white-space: nowrap;">{{ job.kindLabel }}</span><sc-if value="{{ job.isNew }}" hint-placeholder-val="false"><span style="padding: 3px 8px; border-radius: 999px; background: #F2ECFC; color: #7653A8; font-size: 10.5px; font-weight: 800;">Nieuw</span></sc-if></div><div style="margin-top: 5px; font-size: 13px; color: var(--faint,#8C8E8F);">{{ job.metaLine }}</div><p class="plk-feed-description" style="margin: 5px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted,#424444);">{{ job.description }}</p>
@@ -296,10 +296,10 @@
     </section>
 
     <section class="plk-feed-shell plk-mobile-feed" aria-label="Activity feed met opdrachten">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 10px;"><div><h2 style="margin: 0; font-size: 19px; line-height: 1.2; font-weight: 800; color: #152431;">Nieuwe kansen</h2><p style="margin: 4px 0 0; font-size: 12.5px; color: #6B7688;">Tik om de opdracht direct te openen.</p></div><span style="font-size: 10.5px; color: #8993A3;">{{ feedRangeLabel }}</span></div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 10px;"><div><h2 style="margin: 0; font-size: 19px; line-height: 1.2; font-weight: 800; color: #152431;">Nieuwe opdrachten</h2><p style="margin: 4px 0 0; font-size: 12.5px; color: #6B7688;">Tik om de opdracht direct te openen.</p></div><span style="font-size: 10.5px; color: #8993A3;">{{ feedRangeLabel }}</span></div>
       <div class="plk-mobile-activity"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><a class="plk-activity-item" href="{{ job.jobHref }}" onClick="{{ job.onOpen }}" aria-label="Open {{ job.title }}"><span class="plk-activity-icon" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.mobileCategoryIconEl }}</span><span style="min-width: 0;"><span style="display: block; font-size: 14px; line-height: 1.3; font-weight: 800; color: #14243A;">{{ job.title }}</span><span style="display: block; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: #697589;">{{ job.company }}</span><span style="display: block; margin-top: 5px; font-size: 11px; color: #2F5B85;">{{ job.activitySummary }}</span></span><span style="display: inline-flex; color: #8390A3;">{{ mobileChevronEl }}</span></a></sc-for></div>
     </section>
-    <sc-if value="{{ feedHasMore }}" hint-placeholder-val="true"><div style="display: flex; justify-content: center; padding: 24px 0 4px;"><button onClick="{{ onLoadMore }}" style="height: 40px; padding: 0 16px; border: 1px solid #CFD7E2; border-radius: 8px; background: var(--surface,#FFFFFF); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Meer kansen laden</button></div></sc-if>
+    <sc-if value="{{ feedHasMore }}" hint-placeholder-val="true"><div style="display: flex; justify-content: center; padding: 24px 0 4px;"><button onClick="{{ onLoadMore }}" style="height: 40px; padding: 0 16px; border: 1px solid #CFD7E2; border-radius: 8px; background: var(--surface,#FFFFFF); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Meer opdrachten laden</button></div></sc-if>
 
     <sc-if value="{{ legacyFeedUiVisible }}" hint-placeholder-val="false">
     <div class="plk-search-row" data-location-open="{{ locationOpen }}" style="display: flex; align-items: center; gap: 10px; margin-top: 20px; animation: plk-rise 0.5s ease both; animation-delay: 0.04s;">
@@ -337,7 +337,7 @@
               <div role="radiogroup" aria-label="Maximale afstand" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px;">
                 <sc-for list="{{ radiusOptions }}" as="rd" hint-placeholder-count="6"><button role="radio" aria-checked="{{ rd.active }}" onClick="{{ rd.onClick }}" style="height: 30px; padding: 0 10px; border: 1px solid {{ rd.border }}; border-radius: 8px; background: {{ rd.bg }}; color: {{ rd.color }}; font-family: inherit; font-size: 11.5px; font-weight: 800; cursor: pointer;">{{ rd.label }}</button></sc-for>
               </div>
-              <button onClick="{{ onToggleIncludeRemote }}" aria-pressed="{{ includeRemote }}" style="width: 100%; margin-top: 11px; padding: 9px 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: none; background: none; color: #424444; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;"><span style="text-align: left;">Ook remote kansen</span><span style="width: 38px; height: 22px; border-radius: 999px; background: {{ remoteSwitchBg }}; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 2px; left: {{ remoteKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span></span></button>
+              <button onClick="{{ onToggleIncludeRemote }}" aria-pressed="{{ includeRemote }}" style="width: 100%; margin-top: 11px; padding: 9px 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: none; background: none; color: #424444; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;"><span style="text-align: left;">Ook remote opdrachten</span><span style="width: 38px; height: 22px; border-radius: 999px; background: {{ remoteSwitchBg }}; position: relative; flex-shrink: 0;"><span style="position: absolute; top: 2px; left: {{ remoteKnobLeft }}; width: 18px; height: 18px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span></span></button>
             </sc-if>
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #ECEEF0;"><button onClick="{{ onClearLocation }}" style="border: none; background: none; color: #5D6878; font-family: inherit; font-size: 12px; font-weight: 750; cursor: pointer;">Alleen remote</button><span style="font-size: 11px; color: #424444; text-align: right;">{{ locationScopeLabel }}</span></div>
           </div>
@@ -364,14 +364,14 @@
       </div>
     </div>
 
-    <div role="radiogroup" aria-label="Kansenweergave" style="display: flex; align-items: center; gap: 7px; margin-top: 10px; animation: plk-rise 0.5s ease both; animation-delay: 0.09s; overflow-x: auto; scrollbar-width: none;">
+    <div role="radiogroup" aria-label="Opdrachtenweergave" style="display: flex; align-items: center; gap: 7px; margin-top: 10px; animation: plk-rise 0.5s ease both; animation-delay: 0.09s; overflow-x: auto; scrollbar-width: none;">
       <sc-for list="{{ filterChips }}" as="f" hint-placeholder-count="8">
         <button role="radio" onClick="{{ f.onClick }}" aria-checked="{{ f.active }}" style="height: 30px; padding: 0 10px; border: 1px solid {{ f.bd }}; border-radius: 999px; background: {{ f.bg }}; color: {{ f.color }}; font-family: inherit; font-size: 11.5px; font-weight: 650; cursor: pointer; white-space: nowrap;" style-hover="background: #E7EBF1;">{{ f.label }}</button>
       </sc-for>
     </div>
 
     <div class="plk-market-filterbar" style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 11px; padding: 8px; overflow-x: visible; border: 1px solid #DCDFE2; border-radius: 13px; background: rgba(255,255,255,0.78); box-shadow: 0 6px 18px -16px rgba(10,28,54,0.28); animation: plk-rise 0.5s ease both; animation-delay: 0.1s;">
-      <div role="radiogroup" aria-label="Soort kans" style="display: flex; align-items: center; gap: 4px; flex-shrink: 0; padding-right: 9px; border-right: 1px solid #DCDFE2;">
+      <div role="radiogroup" aria-label="Soort werk" style="display: flex; align-items: center; gap: 4px; flex-shrink: 0; padding-right: 9px; border-right: 1px solid #DCDFE2;">
         <span style="padding: 0 5px; font-size: 11px; font-weight: 800; color: #424444; white-space: nowrap;">Werkvorm</span>
         <sc-for list="{{ opportunityTypeOptions }}" as="op" hint-placeholder-count="3">
           <button role="radio" aria-checked="{{ op.active }}" onClick="{{ op.onClick }}" style="height: 30px; padding: 0 10px; border: 1px solid {{ op.border }}; border-radius: 8px; background: {{ op.bg }}; color: {{ op.color }}; font-family: inherit; font-size: 11.5px; font-weight: 750; cursor: pointer; white-space: nowrap;">{{ op.label }}</button>
@@ -407,7 +407,7 @@
     <section class="plk-feed-shell" aria-label="Gerangschikte opdrachten voor jou">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 15px;">
         <div>
-          <h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste kansen voor jou</h2>
+          <h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste opdrachten voor jou</h2>
           <p style="margin: 5px 0 0; font-size: 13.5px; color: var(--muted,#424444);">Gerangschikt op de match met jouw profiel.</p>
         </div>
         <span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F);">{{ feedRangeLabel }}</span>
@@ -466,17 +466,17 @@
 
       <sc-if value="{{ feedHasMore }}" hint-placeholder-val="true">
         <div style="display: flex; justify-content: center; padding: 24px 0 4px;">
-          <button onClick="{{ onLoadMore }}" style="height: 42px; padding: 0 20px; border: 1px solid #CFD7E2; border-radius: 999px; background: var(--surface,#FFFFFF); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer; box-shadow: 0 8px 20px -18px rgba(10,28,54,0.4);">Meer kansen laden</button>
+          <button onClick="{{ onLoadMore }}" style="height: 42px; padding: 0 20px; border: 1px solid #CFD7E2; border-radius: 999px; background: var(--surface,#FFFFFF); color: var(--text,#152431); font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer; box-shadow: 0 8px 20px -18px rgba(10,28,54,0.4);">Meer opdrachten laden</button>
         </div>
       </sc-if>
     </section>
     </sc-if>
 
     <sc-if value="{{ legacyMapVisible }}" hint-placeholder-val="false">
-    <section aria-label="Persoonlijke kansenkaart" style="position: relative; height: clamp(680px, calc(100vh - 300px), 980px); overflow: hidden; margin-top: 16px; border: 1px solid #DCDFE2; border-radius: 22px; background: radial-gradient(circle at 50% 48%, #E9EFF5 0%, #F3F4F6 42%, #ECEEF0 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.72), 0 20px 50px -35px rgba(10,28,54,0.35); animation: plk-rise 0.5s ease both; animation-delay: 0.11s;">
+    <section aria-label="Persoonlijke opdrachtenkaart" style="position: relative; height: clamp(680px, calc(100vh - 300px), 980px); overflow: hidden; margin-top: 16px; border: 1px solid #DCDFE2; border-radius: 22px; background: radial-gradient(circle at 50% 48%, #E9EFF5 0%, #F3F4F6 42%, #ECEEF0 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.72), 0 20px 50px -35px rgba(10,28,54,0.35); animation: plk-rise 0.5s ease both; animation-delay: 0.11s;">
       <div style="position: absolute; z-index: 20; left: 24px; right: 24px; top: 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; pointer-events: none;">
         <div class="plk-map-title" style="padding: 12px 15px; border: 1px solid rgba(216,224,234,0.92); border-radius: 12px; background: rgba(255,255,255,0.9); box-shadow: 0 10px 24px -18px rgba(10,28,54,0.32); backdrop-filter: blur(8px);">
-          <div style="font-size: 18px; line-height: 1.1; font-weight: 800; color: #152431;">Jouw kansenuniversum</div>
+          <div style="font-size: 18px; line-height: 1.1; font-weight: 800; color: #152431;">Jouw opdrachtenuniversum</div>
           <div style="margin-top: 4px; font-size: 13px; color: #424444;">Jouw markt, direct om je heen.</div>
         </div>
         <div class="plk-map-count" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid rgba(216,224,234,0.92); border-radius: 12px; background: rgba(255,255,255,0.9); box-shadow: 0 10px 24px -18px rgba(10,28,54,0.32); backdrop-filter: blur(8px); pointer-events: auto;">
@@ -488,7 +488,7 @@
         </div>
       </div>
 
-      <div class="plk-map-viewport" data-scale-band="{{ mapScaleBand }}" tabindex="0" aria-label="Interactieve kansenkaart. Sleep of gebruik de pijltjestoetsen om te verkennen. Gebruik plus en min om te zoomen." onPointerDown="{{ onMapPointerDown }}" onPointerMove="{{ onMapPointerMove }}" onPointerUp="{{ onMapPointerUp }}" onPointerCancel="{{ onMapPointerUp }}" style="position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: {{ mapCursor }}; outline: none;">
+      <div class="plk-map-viewport" data-scale-band="{{ mapScaleBand }}" tabindex="0" aria-label="Interactieve opdrachtenkaart. Sleep of gebruik de pijltjestoetsen om te verkennen. Gebruik plus en min om te zoomen." onPointerDown="{{ onMapPointerDown }}" onPointerMove="{{ onMapPointerMove }}" onPointerUp="{{ onMapPointerUp }}" onPointerCancel="{{ onMapPointerUp }}" style="position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: {{ mapCursor }}; outline: none;">
         <canvas class="plk-overview-canvas" aria-hidden="true" style="position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none;"></canvas>
         <div class="plk-map-world" data-scale-band="{{ mapScaleBand }}" style="position: absolute; z-index: 1; left: 50%; top: 50%; width: {{ marketWorldSize }}px; height: {{ marketWorldSize }}px; transform: {{ wallTransform }}; transform-origin: center; transition: {{ wallTransition }};">
           <div style="position: absolute; inset: 0; z-index: 1;">{{ marketDensityEl }}</div>
@@ -537,7 +537,7 @@
               </sc-if>
               <sc-if value="{{ it.showActions }}" hint-placeholder-val="false">
                 <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; margin-top: 15px;">
-                  <button onClick="{{ it.onOpen }}" style="height: 39px; padding: 0 14px; border: none; border-radius: 8px; background: #ffffff; color: #0F1A23; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer;">Bekijk kans</button>
+                  <button onClick="{{ it.onOpen }}" style="height: 39px; padding: 0 14px; border: none; border-radius: 8px; background: #ffffff; color: #0F1A23; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer;">Bekijk opdracht</button>
                   <button onClick="{{ it.onSave }}" style="height: 39px; padding: 0 14px; border: 1px solid rgba(255,255,255,0.58); border-radius: 8px; background: transparent; color: #ffffff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;">{{ it.saveLabel }}</button>
                 </div>
               </sc-if>
@@ -591,7 +591,7 @@
 
     <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
       <section style="position: relative; overflow: hidden; height: 340px; margin-top: 24px; border-radius: 18px; background: linear-gradient(108deg, #0F1A23 0%, #24476A 56%, #2F5B85 100%); color: #ffffff; padding: 36px 34px; box-shadow: 0 18px 40px -24px rgba(10,31,63,0.6); animation: plk-rise 0.5s ease both; animation-delay: 0.11s;">
-        <img src="assets/prolinker-mark-white.png" alt="" style="position: absolute; right: 28px; top: 50%; width: 290px; height: 290px; transform: translateY(-47%); object-fit: contain; opacity: 0.62; pointer-events: none;">
+        <img src="assets/brand-imagery/people/mobile-office.jpg" alt="" style="position: absolute; right: 0; top: 0; height: 100%; width: 46%; object-fit: cover; opacity: 0.88; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 42%); mask-image: linear-gradient(90deg, transparent 0%, #000 42%);">
         <div style="position: relative; z-index: 1; max-width: 70%; display: flex; flex-direction: column; gap: 14px;">
           <div onClick="{{ onOpenFeatured }}" style="cursor: pointer;">
             <div style="font-size: 42px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.06;">Interim Sales Manager</div>
@@ -616,7 +616,7 @@
 
     <sc-if value="{{ showWide }}" hint-placeholder-val="{{ true }}">
       <section onClick="{{ onOpenWide }}" style="position: relative; overflow: hidden; height: 205px; margin-top: 24px; border-radius: 18px; background: linear-gradient(105deg, #0F1A23 0%, #24476A 56%, #2F5B85 100%); color: #ffffff; padding: 29px 34px; box-shadow: 0 16px 36px -24px rgba(11,61,51,0.6); cursor: pointer; animation: plk-rise 0.5s ease both; animation-delay: 0.13s;">
-        <img src="assets/prolinker-mark-white.png" alt="" style="position: absolute; right: 30px; top: 50%; width: 248px; height: 248px; transform: translateY(-43%); object-fit: contain; opacity: 0.43; pointer-events: none;">
+        <img src="assets/brand-imagery/people/mobile-evening.jpg" alt="" style="position: absolute; right: 0; top: 0; height: 100%; width: 42%; object-fit: cover; opacity: 0.82; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%);">
         <div style="position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; max-width: 74%;">
           <div>
             <div style="font-size: 36px; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em;">AI Automation Consultant</div>
@@ -675,7 +675,7 @@
         <aside class="plk-wall-tile" style="position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; min-width: 0; background: #E8F0FB; border: 1px solid #D5E2F4; border-radius: 18px; padding: 28px; animation: plk-rise 0.5s ease both; animation-delay: 0.3s;">
           <img src="assets/prolinker-mark.png" alt="" style="position: absolute; width: 142px; height: 142px; right: -18px; bottom: -25px; opacity: 0.14; pointer-events: none;">
           <button onClick="{{ onHidePromo }}" aria-label="Sluiten" style="position: absolute; z-index: 1; top: 12px; right: 12px; width: 28px; height: 28px; border: none; border-radius: 50%; background: none; cursor: pointer; font-size: 20px; line-height: 1; color: #647084; display: inline-flex; align-items: center; justify-content: center; padding: 0; font-family: inherit;" style-hover="background: rgba(16,32,58,0.08);">&times;</button>
-          <div style="position: relative; z-index: 1; font-size: 24px; line-height: 1.12; font-weight: 800; color: #152431; letter-spacing: -0.01em; max-width: 255px;">8 nieuwe kansen beschikbaar</div>
+          <div style="position: relative; z-index: 1; font-size: 24px; line-height: 1.12; font-weight: 800; color: #152431; letter-spacing: -0.01em; max-width: 255px;">8 nieuwe opdrachten beschikbaar</div>
           <div style="position: relative; z-index: 1; font-size: 17px; line-height: 1.38; color: #424444; max-width: 270px;">Maak je profiel compleet en ontgrendel 146 extra matches.</div>
           <a href="Prolinker Profiel.dc.html" style="position: relative; z-index: 1; display: inline-flex; align-items: center; height: 46px; padding: 0 18px; border-radius: 9px; background: #2F5B85; color: #ffffff; font-size: 16px; font-weight: 700; margin-top: 4px; box-shadow: 0 7px 15px rgba(47,91,133,0.24);" style-hover="background: #14498F; color: #ffffff; transform: translateY(-1px);">Bekijk aanbod</a>
         </aside>
@@ -721,9 +721,9 @@
       </sc-for>
 
       <sc-if value="{{ showMap }}" hint-placeholder-val="{{ true }}">
-        <aside class="plk-wall-tile" aria-label="Kaart met kansen in Nederland en Belgi&euml;" style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-width: 0; background: #E9EDF2; border: 1px solid #DCDFE2; border-radius: 18px; animation: plk-rise 0.5s ease both; animation-delay: 0.36s;">
+        <aside class="plk-wall-tile" aria-label="Kaart met opdrachten in Nederland en Belgi&euml;" style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-width: 0; background: #E9EDF2; border: 1px solid #DCDFE2; border-radius: 18px; animation: plk-rise 0.5s ease both; animation-delay: 0.36s;">
           <div style="position: absolute; inset: 0;">{{ europeMapEl }}</div>
-          <div style="position: absolute; left: 18px; bottom: 16px; z-index: 1; display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; border-radius: 8px; background: rgba(255,255,255,0.9); border: 1px solid #DCDFE2; font-size: 14px; font-weight: 700; color: #152431; box-shadow: 0 5px 14px rgba(16,32,58,0.08);">{{ pinAccentEl }}Kansen in jouw regio</div>
+          <div style="position: absolute; left: 18px; bottom: 16px; z-index: 1; display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; border-radius: 8px; background: rgba(255,255,255,0.9); border: 1px solid #DCDFE2; font-size: 14px; font-weight: 700; color: #152431; box-shadow: 0 5px 14px rgba(16,32,58,0.08);">{{ pinAccentEl }}Opdrachten in jouw regio</div>
         </aside>
       </sc-if>
     </div>
@@ -892,7 +892,7 @@ class Component extends DCLogic {
       }
       if (tag === 'input' || tag === 'textarea') return;
       const activeLabel = (document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('aria-label')) || '';
-      if (activeLabel.indexOf('Interactieve kansenkaart') !== 0) return;
+      if (activeLabel.indexOf('Interactieve opdrachtenkaart') !== 0) return;
       if (e.key === 'ArrowLeft') { e.preventDefault(); this.panMapBy(45, 0); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); this.panMapBy(-45, 0); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); this.panMapBy(0, 45); }
@@ -1112,7 +1112,7 @@ class Component extends DCLogic {
       co: company,
       source: source,
       labels: labels,
-      chips: [{ i: isNew ? 'spark' : (remote ? 'pin' : 'mail'), t: isNew ? 'Nieuw' : (remote ? 'Remote' : (location || 'Nieuwe kans')) }],
+      chips: [{ i: isNew ? 'spark' : (remote ? 'pin' : 'mail'), t: isNew ? 'Nieuw' : (remote ? 'Remote' : (location || 'Nieuwe opdracht')) }],
       match: relevance,
       relevance: relevance,
       rate: rate,
@@ -1148,7 +1148,7 @@ class Component extends DCLogic {
     this._opportunityAbort = controller;
     const requestId = (this._opportunityRequestId || 0) + 1;
     this._opportunityRequestId = requestId;
-    if (this._mounted) this.setState({ apiSyncStatus: 'loading', apiSyncMessage: options.refresh ? 'Nieuwe kansen ophalen...' : 'Kansen synchroniseren...' });
+    if (this._mounted) this.setState({ apiSyncStatus: 'loading', apiSyncMessage: options.refresh ? 'Nieuwe opdrachten ophalen...' : 'Opdrachten synchroniseren...' });
     try {
       const response = await app.opportunities.list({ limit: 250, refresh: !!options.refresh, signal: controller ? controller.signal : undefined });
       if (!this._mounted || requestId !== this._opportunityRequestId) return [];
@@ -1169,11 +1169,11 @@ class Component extends DCLogic {
         if (item._apiHidden) hidden[item.id] = true;
         if (item._apiApplied) sent[item.id] = true;
       });
-      this.setState({ saved: saved, hidden: hidden, sent: sent, feedShown: 24, apiSyncStatus: 'synced', apiSyncMessage: remote.length + (remote.length === 1 ? ' API-kans gesynchroniseerd.' : ' API-kansen gesynchroniseerd.') });
+      this.setState({ saved: saved, hidden: hidden, sent: sent, feedShown: 24, apiSyncStatus: 'synced', apiSyncMessage: remote.length + (remote.length === 1 ? ' API-opdracht gesynchroniseerd.' : ' API-opdrachten gesynchroniseerd.') });
       return remote;
     } catch (error) {
       if (controller && controller.signal.aborted) return [];
-      if (this._mounted && requestId === this._opportunityRequestId) this.setState({ apiSyncStatus: 'error', apiSyncMessage: this.apiErrorMessage(error, 'API-kansen konden niet worden geladen. De lokale feed blijft beschikbaar.') });
+      if (this._mounted && requestId === this._opportunityRequestId) this.setState({ apiSyncStatus: 'error', apiSyncMessage: this.apiErrorMessage(error, 'API-opdrachten konden niet worden geladen. De lokale feed blijft beschikbaar.') });
       return [];
     }
   }
@@ -1219,7 +1219,7 @@ class Component extends DCLogic {
       const relevance = Math.round(Number(x.relevance === undefined ? x.match : x.relevance) || 0);
       return {
         id: x.id,
-        title: String(x.title || 'Kans').replace(/\s+/g, ' ').trim(),
+        title: String(x.title || 'Opdracht').replace(/\s+/g, ' ').trim(),
         relevance: relevance,
         value: this.formatAssignmentValue(x.totalValue),
         left: layout.left,
@@ -1251,7 +1251,7 @@ class Component extends DCLogic {
       }
       return text.slice(0, low).trimEnd() + '…';
     };
-    const words = String(tile.title || 'Kans').split(/\s+/).filter(Boolean);
+    const words = String(tile.title || 'Opdracht').split(/\s+/).filter(Boolean);
     const lines = [];
     let cursor = 0;
     for (let lineIndex = 0; lineIndex < maxLines && cursor < words.length; lineIndex++) {
@@ -1504,7 +1504,7 @@ class Component extends DCLogic {
       mapY: this.clampPanY((this.marketWorldCenter() - y) * zoom),
       activeCluster: { id: id, x: x, y: y, count: count, category: category, tone: tone }
     });
-    this.showToast(count + ' kansen in ' + category.toLowerCase() + '. Klik een kaart voor details.');
+    this.showToast(count + ' opdrachten in ' + category.toLowerCase() + '. Klik een kaart voor details.');
   }
   locationDirectory() {
     if (this._locationDirectory) return this._locationDirectory;
@@ -1894,11 +1894,11 @@ class Component extends DCLogic {
       else if (network) labels.push('netwerk');
       return {
         id: id, title: entry[0], sub: entry[1], co: entry[2],
-        source: source, labels: labels, chips: [{ i: isNew ? 'spark' : (network ? 'users' : (remote ? 'pin' : 'mail')), t: isNew ? 'Nieuw' : (network ? 'Netwerkkans' : location) }],
+        source: source, labels: labels, chips: [{ i: isNew ? 'spark' : (network ? 'users' : (remote ? 'pin' : 'mail')), t: isNew ? 'Nieuw' : (network ? 'Via je netwerk' : location) }],
         match: 81 - Math.floor(i / 6), rate: rates[i % rates.length], dl: 4 + ((i * 5) % 25), h: postedHours, isNew: isNew, remote: remote,
         metaChips: [location, hours[i % hours.length]],
         desc: entry[1] + ' Je werkt met een duidelijk mandaat, een gescreende opdrachtgever en een afgebakende scope.',
-        reasons: [String(81 - Math.floor(i / 6)) + '% aansluiting op jouw bredere profiel', remote ? 'Volledig remote mogelijk' : 'Past binnen jouw regiofocus', network ? 'Versterkt door jouw netwerk' : 'Actuele marktkans']
+        reasons: [String(81 - Math.floor(i / 6)) + '% aansluiting op jouw bredere profiel', remote ? 'Volledig remote mogelijk' : 'Past binnen jouw regiofocus', network ? 'Versterkt door jouw netwerk' : 'Actueel in de markt']
       };
     });
   }
@@ -2170,9 +2170,9 @@ class Component extends DCLogic {
       { id: 'cb3', cluster: 'blue', title: 'Product Launch Copywriter', sub: 'Positionering en launchcopy voor een AI-product.', co: 'LaunchWorks', source: 'external', labels: ['extern', 'nieuw'], chips: [{ i: 'spark', t: 'Nieuw' }], match: 82, rate: '\u20ac4.500 projectbudget', dl: 5, h: 1, isNew: true, remote: true, metaChips: ['Remote', '3 weken'], desc: 'Vertaal een technisch AI-product naar heldere positionering, landingspagina en launchcampagne.', reasons: ['Sluit binnenkort', 'Vast projectbudget', 'Nieuwe aangrenzende richting'] },
       { id: 'cg1', cluster: 'green', title: 'Partner Sales Strategist', sub: 'Referralprogramma uitbouwen via warme relaties.', co: 'via jouw netwerk', source: 'internal', labels: ['intern', 'netwerk'], chips: [{ i: 'users', t: '2 gedeelde connecties' }], match: 90, rate: '\u20ac75\u2013\u20ac90 per uur', dl: 12, h: 6, isNew: false, remote: true, metaChips: ['Remote', '20 u/wk'], desc: 'Ontwerp het partnerkanaal, activeer bestaande relaties en bouw een herhaalbaar referralproces.', reasons: ['Twee warme introducties', 'Sterke salesmatch', 'Remote inzetbaar'] },
       { id: 'cg2', cluster: 'green', title: 'AI Workshop Facilitator', sub: 'Praktische AI-sessies voor drie managementteams.', co: 'Netwerkcollectief', source: 'internal', labels: ['intern', 'netwerk'], chips: [{ i: 'mail', t: 'Uitnodiging' }], match: 87, rate: '\u20ac3.200 projectbudget', dl: 14, h: 18, isNew: false, remote: false, metaChips: ['Utrecht', '4 workshops'], desc: 'Ontwerp en faciliteer workshops die teams helpen kansrijke AI-workflows te kiezen en valideren.', reasons: ['Directe uitnodiging', 'Past bij jouw automation-cases', 'Korte duidelijke opdracht'] },
-      { id: 'cg3', cluster: 'green', title: 'Community Lead Tech', sub: 'Freelance community en events laten groeien.', co: 'Founder Circle', source: 'external', labels: ['extern', 'netwerk'], chips: [{ i: 'users', t: 'Netwerkkans' }], match: 84, rate: '\u20ac55\u2013\u20ac68 per uur', dl: 20, h: 40, isNew: false, remote: true, metaChips: ['Remote', '12 u/wk'], desc: 'Bouw programmering, partnerships en ritme voor een Europese community van tech-founders.', reasons: ['Via jouw netwerk', 'Flexibele uren', 'Nieuwe zichtbaarheid in de markt'] },
-      { id: 'cp1', cluster: 'purple', title: 'Fractional AI Product Owner', sub: 'Van AI-kansen naar een uitvoerbare roadmap.', co: 'Nova Labs', source: 'external', labels: ['extern', 'nieuw'], chips: [{ i: 'spark', t: 'Nieuwe richting' }], match: 89, rate: '\u20ac85\u2013\u20ac105 per uur', dl: 6, h: 4, isNew: true, remote: true, metaChips: ['Remote', '16 u/wk'], desc: 'Prioriteer use-cases, valideer waarde en begeleid een klein productteam van experiment naar productie.', reasons: ['Sterke AI-match', 'Hoger tariefpotentieel', 'Past bij jouw advieservaring'] },
-      { id: 'cp2', cluster: 'purple', title: 'Sustainability Data Consultant', sub: 'ESG-data vertalen naar bruikbare rapportage.', co: 'GreenMetric', source: 'external', labels: ['extern', 'nieuw'], chips: [{ i: 'spark', t: 'Ontdekking' }], match: 85, rate: '\u20ac68\u2013\u20ac82 per uur', dl: 16, h: 12, isNew: true, remote: false, metaChips: ['Rotterdam \u00b7 Hybride', '20 u/wk'], desc: 'Breng databronnen samen en bouw een betrouwbaar rapportageproces voor Europese duurzaamheidsdata.', reasons: ['Aangrenzende datakans', 'In jouw regio', 'Gescreende opdrachtgever'] },
+      { id: 'cg3', cluster: 'green', title: 'Community Lead Tech', sub: 'Freelance community en events laten groeien.', co: 'Founder Circle', source: 'external', labels: ['extern', 'netwerk'], chips: [{ i: 'users', t: 'Via je netwerk' }], match: 84, rate: '\u20ac55\u2013\u20ac68 per uur', dl: 20, h: 40, isNew: false, remote: true, metaChips: ['Remote', '12 u/wk'], desc: 'Bouw programmering, partnerships en ritme voor een Europese community van tech-founders.', reasons: ['Via jouw netwerk', 'Flexibele uren', 'Nieuwe zichtbaarheid in de markt'] },
+      { id: 'cp1', cluster: 'purple', title: 'Fractional AI Product Owner', sub: 'Van AI-use-cases naar een uitvoerbare roadmap.', co: 'Nova Labs', source: 'external', labels: ['extern', 'nieuw'], chips: [{ i: 'spark', t: 'Nieuwe richting' }], match: 89, rate: '\u20ac85\u2013\u20ac105 per uur', dl: 6, h: 4, isNew: true, remote: true, metaChips: ['Remote', '16 u/wk'], desc: 'Prioriteer use-cases, valideer waarde en begeleid een klein productteam van experiment naar productie.', reasons: ['Sterke AI-match', 'Hoger tariefpotentieel', 'Past bij jouw advieservaring'] },
+      { id: 'cp2', cluster: 'purple', title: 'Sustainability Data Consultant', sub: 'ESG-data vertalen naar bruikbare rapportage.', co: 'GreenMetric', source: 'external', labels: ['extern', 'nieuw'], chips: [{ i: 'spark', t: 'Ontdekking' }], match: 85, rate: '\u20ac68\u2013\u20ac82 per uur', dl: 16, h: 12, isNew: true, remote: false, metaChips: ['Rotterdam \u00b7 Hybride', '20 u/wk'], desc: 'Breng databronnen samen en bouw een betrouwbaar rapportageproces voor Europese duurzaamheidsdata.', reasons: ['Aangrenzende data-expertise', 'In jouw regio', 'Gescreende opdrachtgever'] },
       { id: 'cp3', cluster: 'purple', title: 'No-code Solutions Architect', sub: 'Interne tools bouwen met Retool en Make.', co: 'Ops Studio', source: 'internal', labels: ['intern', 'nieuw'], chips: [{ i: 'spark', t: 'Nieuw' }], match: 88, rate: '\u20ac65\u2013\u20ac80 per uur', dl: 9, h: 5, isNew: true, remote: true, metaChips: ['Remote', '24 u/wk'], desc: 'Ontwerp een veilige no-code architectuur en lever de eerste drie interne operationele tools op.', reasons: ['Direct raakvlak met automation', 'Remote', 'Veel ruimte voor eigenaarschap'] },
     ];
   }
@@ -2422,7 +2422,7 @@ class Component extends DCLogic {
     const nextRound = Number(this.state.refreshCount || 0) + 1;
     this.setState({ refreshCount: nextRound, refreshedAt: Date.now(), feedShown: 24, mobileFiltersOpen: false });
     if (this.isApiMode()) this.syncRemoteOpportunities({ refresh: true });
-    this.showToast('Feed ververst. De nieuwste kansen staan bovenaan.');
+    this.showToast('Feed ververst. De nieuwste opdrachten staan bovenaan.');
   }
   sourceLabelFor(x) {
     if (x && x.source === 'internal') return 'Geplaatst op ProLinker';
@@ -2499,8 +2499,8 @@ class Component extends DCLogic {
   agentPrimaryUi(run, eligible) {
     if (run && run.status === 'running') return { icon: '\u2161', label: 'Pauzeer', aria: 'Automatisch solliciteren pauzeren', disabled: false };
     if (run && run.status === 'paused') return { icon: '\u25b6', label: 'Hervat', aria: 'Automatisch solliciteren hervatten', disabled: false };
-    if (eligible <= 0) return { icon: '\u2713', label: 'Geen kansen over', aria: 'Geen nieuwe passende kansen beschikbaar', disabled: true };
-    return { icon: '\u25b6', label: 'Start automatisch', aria: 'Automatisch solliciteren op alle passende kansen', disabled: false };
+    if (eligible <= 0) return { icon: '\u2713', label: 'Geen opdrachten over', aria: 'Geen nieuwe passende opdrachten beschikbaar', disabled: true };
+    return { icon: '\u25b6', label: 'Start automatisch', aria: 'Automatisch solliciteren op alle passende opdrachten', disabled: false };
   }
   runAgentPrimaryAction() {
     if (!this.requireFreelancerAuth()) return;
@@ -2566,7 +2566,7 @@ class Component extends DCLogic {
     const eligible = this.agentEligibleIds().length;
     panel.dataset.status = run ? (run.status || 'idle') : 'idle';
     const eligibleEl = panel.querySelector('.plk-agent-eligible');
-    if (eligibleEl) eligibleEl.textContent = eligible.toLocaleString('nl-NL') + (eligible === 1 ? ' passende kans' : ' passende kansen');
+    if (eligibleEl) eligibleEl.textContent = eligible.toLocaleString('nl-NL') + (eligible === 1 ? ' passende opdracht' : ' passende opdrachten');
     const statusEl = panel.querySelector('.plk-agent-status');
     if (statusEl) statusEl.textContent = this.agentStatusText(run);
     const countEl = panel.querySelector('.plk-agent-progress-count');
@@ -2588,7 +2588,7 @@ class Component extends DCLogic {
     if (this._agentRun && (this._agentRun.status === 'running' || this._agentRun.status === 'paused')) return;
     const eligible = this.agentEligibleIds();
     const targetIds = eligible.slice();
-    if (!targetIds.length) { this.showToast('Binnen deze filters zijn geen nieuwe kansen meer om op te reageren.'); return; }
+    if (!targetIds.length) { this.showToast('Binnen deze filters zijn geen nieuwe opdrachten meer om op te reageren.'); return; }
     this._agentRun = {
       version: 1, runId: 'run-' + Date.now(), status: 'running', targetIds: targetIds, index: 0,
       succeeded: 0, reviewNeeded: 0, skipped: 0, filterSnapshot: this.agentFilterSnapshot(), startedAt: Date.now(), updatedAt: Date.now()
@@ -2737,7 +2737,7 @@ class Component extends DCLogic {
     const m = Object.assign({}, previous); m[id] = true;
     this.setState({ hidden: m, whyId: null, cardMenuId: null, modalId: null }); this.setLS('plk-vj2-hidden', m);
     clearTimeout(this._focusT); this._focusT = setTimeout(() => { const v = document.querySelector('.plk-map-viewport'); if (v && v.focus) v.focus({ preventScroll: true }); }, 60);
-    this.showToast(msg || 'Verborgen. Deze kans zie je niet meer.', () => this.restore(id));
+    this.showToast(msg || 'Verborgen. Deze opdracht zie je niet meer.', () => this.restore(id));
     if (!this.isApiMode()) return;
     if (!this._hideActionVersion) this._hideActionVersion = {};
     const version = (this._hideActionVersion[id] || 0) + 1;
@@ -2754,7 +2754,7 @@ class Component extends DCLogic {
     const m = Object.assign({}, previous); delete m[id];
     this.setState({ hidden: m, modalId: null }); this.setLS('plk-vj2-hidden', m);
     clearTimeout(this._focusT); this._focusT = setTimeout(() => { const v = document.querySelector('.plk-map-viewport'); if (v && v.focus) v.focus({ preventScroll: true }); }, 60);
-    this.showToast('Kans hersteld op je kaart.');
+    this.showToast('Opdracht hersteld op je kaart.');
     if (!this.isApiMode()) return;
     if (!this._hideActionVersion) this._hideActionVersion = {};
     const version = (this._hideActionVersion[id] || 0) + 1;
@@ -2769,7 +2769,7 @@ class Component extends DCLogic {
   toggleInterest(id, opportunityType) {
     if (!this.requireFreelancerAuth()) return;
     if (this.isApiMode() && ((this.state.sent || {})[id] || (this._applicationPending && this._applicationPending[id]))) {
-      this.showToast('Je sollicitatie voor deze kans is al verstuurd.');
+      this.showToast('Je sollicitatie voor deze opdracht is al verstuurd.');
       return;
     }
     const previousSent = Object.assign({}, this.state.sent);
@@ -2808,7 +2808,7 @@ class Component extends DCLogic {
     const add = (label, fn, danger) => acts.push({ label: label, onClick: () => { this.setState({ cardMenuId: null }); fn(); }, color: danger ? '#C43D3D' : '#152431' });
     add(saved ? 'Verwijderen uit bewaard' : 'Bewaren', () => this.toggleSave(x.id));
     add('Waarom zie ik dit?', () => this.setState({ whyId: x.id }));
-    add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort kansen.'));
+    add('Niet relevant', () => this.hide(x.id, 'Bedankt voor je feedback. We tonen minder van dit soort opdrachten.'));
     add('Verbergen', () => this.hide(x.id));
     add('Meld probleem', () => this.showToast('Bedankt voor je melding. We kijken ernaar.'), true);
     return acts;
@@ -3723,7 +3723,7 @@ class Component extends DCLogic {
         { label: 'Verdiensten', description: 'Inkomsten en 2% referrals', href: 'Prolinker Verdiensten.dc.html', symbol: '2%', current: false, bg: 'transparent', iconBg: '#E8F5EF', iconColor: '#12835B', weight: 650 },
         { label: 'Instellingen', description: 'Account en meldingen', href: 'Prolinker Instellingen.dc.html', symbol: 'I', current: false, bg: 'transparent', iconBg: 'var(--panel,#F3F4F6)', iconColor: '#424444', weight: 650 },
         { section: 'Werk' },
-        { label: 'Kansen voor jou', description: 'Jouw persoonlijke opdrachtfeed', href: 'Prolinker Voor jou v2.dc.html', symbol: 'K', current: 'page', bg: '#E9EFF5', iconBg: '#DCEBFA', iconColor: '#2F5B85', weight: 800 },
+        { label: 'Werk voor jou', description: 'Jouw persoonlijke opdrachtfeed', href: 'Prolinker Voor jou v2.dc.html', symbol: 'W', current: 'page', bg: '#E9EFF5', iconBg: '#DCEBFA', iconColor: '#2F5B85', weight: 800 },
         { label: 'Uitloggen', description: 'Sessie veilig afsluiten', href: 'Prolinker Login.dc.html?mode=login&role=freelancer', onClick: (e) => { if (e && e.preventDefault) e.preventDefault(); this.logoutFreelancer(); }, symbol: '\u2192', current: false, bg: 'transparent', iconBg: '#F7ECEC', iconColor: '#A84A4A', weight: 650 }
       ],
       onToggleTheme: () => this.toggleTheme(),
@@ -3740,7 +3740,7 @@ class Component extends DCLogic {
       chatEl: this.iconEl('chat', 'rgba(255,255,255,0.78)', 17),
       bellEl: this.iconEl('bell', 'rgba(255,255,255,0.78)', 17),
       onMessages: () => this.showToast('Je hebt geen ongelezen berichten.'),
-      onNotifications: () => this.showToast('3 nieuwe kansen zijn aan je feed toegevoegd.'),
+      onNotifications: () => this.showToast('3 nieuwe opdrachten zijn aan je feed toegevoegd.'),
       chevronNavEl: this.iconEl('chevron', 'rgba(255,255,255,0.6)', 13),
       chevronEl: this.iconEl('chevron', '#8C8E8F', 13),
       searchEl: this.iconEl('search', '#8C8E8F', 15),
@@ -3804,7 +3804,7 @@ class Component extends DCLogic {
       marketDensityEl: null,
       wallLinesEl: this.wallLines(wallItems),
       mapClusters: [],
-      mapCountLabel: visibleLabel + ' van ' + scopeLabel + ' kansen',
+      mapCountLabel: visibleLabel + ' van ' + scopeLabel + ' opdrachten',
       clusterFocusVisible: false,
       onClusterClear: () => this.recenterMap(),
       locationOpen: this.state.locationOpen,
@@ -3829,8 +3829,8 @@ class Component extends DCLogic {
       remoteKnobLeft: this.state.includeRemote ? '18px' : '2px',
       locationLoading: this.state.locationLoading,
       currentLocationLabel: this.state.locationLoading ? 'Locatie bepalen...' : (this.state.locationKey === 'current' ? 'Mijn locatie opnieuw bepalen' : 'Gebruik mijn locatie'),
-      locationScopeLabel: remoteOnly ? scopeLabel + ' remote kansen' : (locationCenter ? scopeLabel + ' binnen ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : scopeLabel + ' remote kansen'),
-      marketCountLabel: scopeLabel + (scopeCount === 1 ? ' kans in je markt' : ' kansen in je markt'),
+      locationScopeLabel: remoteOnly ? scopeLabel + ' remote opdrachten' : (locationCenter ? scopeLabel + ' binnen ' + this.state.radiusKm + ' km' + (this.state.includeRemote ? ' + remote' : '') : scopeLabel + ' remote opdrachten'),
+      marketCountLabel: scopeLabel + (scopeCount === 1 ? ' opdracht in je markt' : ' opdrachten in je markt'),
       marketNewLabel: newInScope.toLocaleString('nl-NL') + ' nieuw',
       onToggleLocation: () => this.setState((s) => ({ locationOpen: !s.locationOpen, menuOpen: false, sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false })),
       onCloseLocation: () => this.setState({ locationOpen: false, locationQuery: '' }),
@@ -3857,7 +3857,7 @@ class Component extends DCLogic {
       onMapZoomIn: () => this.zoomMap(0.1),
       onMapRecenter: () => this.recenterMap(),
       agentStatus: agentRun ? (agentRun.status || 'idle') : 'idle',
-      agentEligibleLabel: agentEligibleCount.toLocaleString('nl-NL') + (agentEligibleCount === 1 ? ' passende kans' : ' passende kansen'),
+      agentEligibleLabel: agentEligibleCount.toLocaleString('nl-NL') + (agentEligibleCount === 1 ? ' passende opdracht' : ' passende opdrachten'),
       agentStatusText: this.agentStatusText(agentRun),
       agentProgressPct: agentProgressPct,
       agentProgressText: agentTotal ? agentDone.toLocaleString('nl-NL') + ' / ' + agentTotal.toLocaleString('nl-NL') : '',
@@ -3887,7 +3887,7 @@ class Component extends DCLogic {
       hoursOptions: hoursOptions,
       marketFilterSummary: visibleLabel + (visibleCount === 1 ? ' match' : ' matches'),
       feedItems: feedItems,
-      feedRangeLabel: visibleCount ? feedVisible.toLocaleString('nl-NL') + ' van ' + visibleLabel : '0 kansen',
+      feedRangeLabel: visibleCount ? feedVisible.toLocaleString('nl-NL') + ' van ' + visibleLabel : '0 opdrachten',
       feedHasMore: feedVisible < visibleCount,
       onLoadMore: () => this.setState({ feedShown: Math.min(visibleCount, feedLimit + 24) }),
       legacyFeedUiVisible: false,
@@ -3905,7 +3905,7 @@ class Component extends DCLogic {
       onHidePromo: () => { this.setState({ promoHidden: true }); try { localStorage.setItem('plk-vj2-promo', '1'); } catch (e) {} },
       showMap: false,
       emptyFilter: visibleCount === 0,
-      emptyText: this.state.filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik Bewaren bij een opdracht om kansen hier terug te vinden.' : (remoteOnly ? 'Geen remote kansen met deze filters. Pas je zoekopdracht of filters aan.' : (locationCenter ? 'Geen kansen binnen ' + this.state.radiusKm + ' km van ' + locationCenter.name + '. Vergroot je afstand of pas je filters aan.' : 'Geen kansen in deze feed. Pas je zoekopdracht of filters aan.')),
+      emptyText: this.state.filter === 'opgeslagen' ? 'Nog niets bewaard. Gebruik Bewaren bij een opdracht om opdrachten hier terug te vinden.' : (remoteOnly ? 'Geen remote opdrachten met deze filters. Pas je zoekopdracht of filters aan.' : (locationCenter ? 'Geen opdrachten binnen ' + this.state.radiusKm + ' km van ' + locationCenter.name + '. Vergroot je afstand of pas je filters aan.' : 'Geen opdrachten in deze feed. Pas je zoekopdracht of filters aan.')),
       onCloseOverlays: () => this.setState({ whyId: null, cardMenuId: null }),
       modalOpen: !!modalSrc, modalItem: modalItem,
       onCloseModal: () => this.closeOpportunity(),

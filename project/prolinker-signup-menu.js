@@ -120,8 +120,8 @@
       if (this._open) this.close(false);
       var nl = language() === 'nl';
       var labels = nl
-        ? { trigger: 'Aanmelden', menu: 'Kies hoe je je wilt aanmelden', freelancer: 'Aanmelden als freelancer', client: 'Aanmelden als opdrachtgever' }
-        : { trigger: 'Sign up', menu: 'Choose how you want to sign up', freelancer: 'Sign up as a freelancer', client: 'Sign up as a client' };
+        ? { trigger: 'Aanmelden', menu: 'Kies hoe je je wilt aanmelden', freelancer: 'Aanmelden als professional', client: 'Aanmelden als opdrachtgever' }
+        : { trigger: 'Sign up', menu: 'Choose how you want to sign up', freelancer: 'Sign up as a professional', client: 'Sign up as a client' };
 
       var style = element('style');
       style.textContent = [
