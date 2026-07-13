@@ -6,75 +6,60 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F3F4F6; --surface:#fff; --panel:#F8FAFC; --text:#152431; --muted:#424444; --faint:#8C8E8F; --border:#DCDFE2; --hair:#ECEEF0; --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; --green:#2FA95B; }
-  :root[data-theme="dark"] { --bg:#0F1A23; --surface:#152431; --panel:#0F1A23; --text:#F3F4F6; --muted:#B4C1CC; --faint:#8C8E8F; --border:#2C3E4E; --hair:#1C2C3A; }
-  * { box-sizing:border-box; }
-  html,body { margin:0; min-height:100%; }
-  body { background:var(--bg); color:var(--text); font-family:'Lato',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
-  a { color:inherit; text-decoration:none; }
-  button,input { font:inherit; }
-  button { -webkit-tap-highlight-color:transparent; }
-  button:focus-visible,a:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
-  .plk-main { max-width:880px; width:100%; margin:0 auto; padding:48px 24px 80px; }
-  .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
-  .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
-  .plk-title { margin:8px 0 0; font-size:34px; line-height:1.12; letter-spacing:-.01em; }
-  .plk-subtitle { margin:8px 0 0; max-width:560px; color:var(--muted); font-size:15px; line-height:1.55; }
-  .plk-head-actions { display:flex; align-items:center; gap:9px; flex-shrink:0; }
-  .plk-btn { min-height:40px; padding:0 15px; border:1px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); cursor:pointer; font-size:13px; font-weight:650; display:inline-flex; align-items:center; justify-content:center; gap:8px; }
-  .plk-btn:hover { border-color:var(--blue); color:var(--blue-dark); }
-  .plk-btn-primary { border-color:var(--orange); background:var(--orange); color:#fff; }
-  .plk-btn-primary:hover { border-color:#C94F2D; background:#C94F2D; color:#fff; }
-  .plk-btn:disabled { cursor:wait; opacity:.6; }
-  .plk-statstrip { margin-top:32px; padding:6px 0; border:1px solid var(--border); border-radius:14px; background:var(--surface); display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); box-shadow:0 16px 36px -30px rgba(21,36,49,.55); }
-  .plk-stat { padding:18px 20px; border-right:1px solid var(--hair); }
-  .plk-stat:last-child { border-right:0; }
-  .plk-stat-value { font-family:'Josefin Sans','Lato',system-ui,sans-serif; font-size:29px; font-weight:500; line-height:1.05; letter-spacing:-.01em; }
-  .plk-stat-label { margin-top:7px; color:var(--muted); font-size:12px; font-weight:600; line-height:1.3; }
-  .plk-focuscard { margin-top:18px; border:1px solid var(--border); border-radius:14px; background:var(--surface); overflow:hidden; box-shadow:0 16px 36px -30px rgba(21,36,49,.55); }
-  .plk-tabs { display:flex; align-items:center; gap:2px; padding:8px 10px 0; border-bottom:1px solid var(--hair); }
-  .plk-tab { min-height:42px; padding:0 16px; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); cursor:pointer; font-size:13.5px; font-weight:650; }
-  .plk-tab:hover { color:var(--text); }
-  .plk-tab[data-active="true"] { color:var(--blue-dark); border-bottom-color:var(--blue); }
-  .plk-tabs-note { margin-left:auto; padding-right:8px; color:var(--faint); font-size:11px; }
-  .plk-activity { display:grid; grid-template-columns:14px minmax(0,1fr) auto; gap:12px; align-items:center; padding:14px 18px; border-bottom:1px solid var(--hair); }
-  .plk-activity:last-child { border-bottom:0; }
-  .plk-activity:hover { background:var(--panel); }
-  .plk-activity-dot { width:8px; height:8px; border-radius:50%; background:var(--blue); justify-self:center; }
-  .plk-activity-title { display:block; font-size:13.5px; font-weight:680; line-height:1.3; }
-  .plk-activity-detail { margin-top:3px; color:var(--muted); font-size:12px; line-height:1.4; }
-  .plk-activity-meta { min-width:92px; text-align:right; }
-  .plk-status { display:inline-block; padding:3px 8px; border-radius:6px; background:#E9F6EE; color:#237A45; font-size:10px; font-weight:700; }
-  .plk-time { margin-top:5px; color:var(--faint); font-size:10px; }
-  .plk-quick-link { display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; min-height:62px; padding:12px 18px; border-bottom:1px solid var(--hair); }
-  .plk-quick-link:last-child { border-bottom:0; }
-  .plk-quick-link:hover { background:var(--panel); }
-  .plk-quick-title { font-size:13px; font-weight:680; }
-  .plk-quick-desc { margin-top:2px; font-size:11px; color:var(--faint); }
-  .plk-arrow { color:var(--blue); font-size:17px; }
-  .plk-loading { margin-top:32px; padding:38px; border:1px solid var(--border); border-radius:14px; background:var(--surface); color:var(--muted); text-align:center; font-size:13px; }
-  .plk-error { margin-top:32px; padding:16px; border:1px solid #FF9D82; border-radius:12px; background:#FFE9E2; color:#8B3227; display:flex; align-items:center; justify-content:space-between; gap:16px; font-size:13px; }
-  .plk-footer { max-width:880px; margin:0 auto; padding:0 24px 28px; color:var(--faint); font-size:11px; }
-  @media (max-width:760px) { .plk-statstrip { grid-template-columns:repeat(2,minmax(0,1fr)); } .plk-stat:nth-child(2) { border-right:0; } .plk-stat:nth-child(-n+2) { border-bottom:1px solid var(--hair); } }
-  @media (max-width:560px) {
-    .plk-main { padding:28px 14px 58px; }
-    .plk-page-head { flex-direction:column; align-items:flex-start; gap:14px; }
-    .plk-title { font-size:27px; } .plk-subtitle { font-size:13.5px; }
-    .plk-stat { padding:14px 16px; } .plk-stat-value { font-size:24px; }
-    .plk-activity { grid-template-columns:14px minmax(0,1fr); padding:12px 14px; }
-    .plk-activity-meta { grid-column:2; text-align:left; display:flex; gap:8px; align-items:center; }
-    .plk-tabs-note { display:none; }
-    .plk-footer { padding:0 14px 22px; }
-  }
-  @media (prefers-reduced-motion:reduce) { * { scroll-behavior:auto !important; transition:none !important; } }
+  :root{--bg:#F3F4F6;--text:#152431;--muted:#424444;--faint:#8C8E8F;--surface:#fff;--panel:#F8FAFC;--border:#DCDFE2;--hair:#ECEEF0;--glass:rgba(255,255,255,.82);--blue:#2F5B85;--blue-dark:#24476A;--orange:#E65F39;--green:#27834A;--link:#4A90D9}
+  :root[data-theme="dark"]{--bg:#0F1A23;--text:#F3F4F6;--muted:#B4C1CC;--faint:#8C8E8F;--surface:#152431;--panel:#0F1A23;--border:#2C3E4E;--hair:#1C2C3A;--glass:rgba(13,20,27,.72);--link:#7FB3E8}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Lato',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid rgba(47,91,133,.23);outline-offset:2px}
+  @keyframes plk-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .plk-main{max-width:1180px;width:100%;margin:0 auto;padding:22px 24px 90px;flex:1}
+  .plk-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;animation:plk-rise .5s ease both}
+  .plk-title{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .plk-subtitle{margin:8px 0 0;color:var(--muted);font-size:13.5px;line-height:1.55}
+  .plk-head-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:58px}
+  @media(max-width:780px){.plk-head-actions{margin-top:6px}}
+  .plk-btn-blue{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid #3F7CB4;border-radius:5px;background:#4A90D9;color:#fff;cursor:pointer;font-size:13px;font-weight:650}
+  .plk-btn-blue:hover{background:#3F7CB4}
+  .plk-btn-orange{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 16px;border:1px solid #C94F2D;border-radius:5px;background:#E65F39;color:#fff;cursor:pointer;font-size:13px;font-weight:650}
+  .plk-btn-orange:hover{background:#D14F2B}
+  .plk-tabline{margin-top:34px;border-bottom:1px solid var(--border);animation:plk-rise .5s ease .05s both}
+  .plk-tab{display:inline-block;padding:0 4px 11px;margin-left:2px;border-bottom:2px solid var(--orange);color:var(--orange);font-size:12.5px;font-weight:700;letter-spacing:.01em}
+  .plk-stats{margin-top:24px;display:grid;grid-template-columns:150px 150px 150px minmax(0,1fr);gap:18px;animation:plk-rise .5s ease .08s both}
+  .plk-stat{border:1px solid var(--border);border-radius:5px;background:var(--surface);padding:18px;box-shadow:0 1px 2px rgba(20,36,49,.04)}
+  .plk-stat-icon{color:var(--blue);margin-bottom:14px}
+  .plk-stat-value{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .plk-stat-label{margin-top:4px;color:var(--muted);font-size:12.5px;line-height:1.4}
+  .plk-stat-sub{margin-top:12px;padding-top:10px;border-top:1px solid var(--hair);font-size:11.5px;color:var(--muted)}
+  .plk-stat-sub b{color:var(--text);font-weight:750}
+  .plk-stat-sub span{color:var(--link)}
+  .plk-money{display:flex;gap:26px;align-items:flex-start}
+  .plk-money-left{min-width:118px}
+  .plk-money-table{flex:1;min-width:0;margin-top:2px}
+  .plk-money-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--hair);font-size:12px}
+  .plk-money-row:first-child{border-top:0;padding-top:0}
+  .plk-money-amount{min-width:72px;font-weight:750}
+  .plk-money-link{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+  .plk-money-link:hover{color:var(--blue-dark)}
+  .plk-help{width:17px;height:17px;flex:0 0 auto;margin-left:auto;border-radius:50%;background:#4A90D9;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;cursor:help}
+  .plk-empty-band{margin-top:24px;padding:15px 20px;border:1px solid var(--border);border-radius:5px;background:var(--surface);text-align:center;color:var(--muted);font-size:13px;animation:plk-rise .5s ease .12s both}
+  .plk-hired-row{margin-top:24px;border:1px solid var(--border);border-radius:5px;background:var(--surface);overflow:hidden}
+  .plk-hired-item{display:flex;align-items:center;gap:13px;padding:13px 18px;border-top:1px solid var(--hair)}
+  .plk-hired-item:first-child{border-top:0}
+  .plk-loading{padding:48px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);text-align:center;font-size:13px}
+  .plk-error{margin-bottom:14px;padding:12px 14px;border:1px solid #FF9D82;border-radius:8px;background:#FFE9E2;color:#8B3227;font-size:12.5px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .plk-btn{min-height:34px;padding:0 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);cursor:pointer;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center}
+  .plk-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;max-width:calc(100vw - 28px);padding:10px 15px;border-radius:7px;background:#152431;color:#fff;box-shadow:0 10px 32px rgba(16,39,58,.28);font-size:12px;font-weight:650}
+  @media(min-width:781px){.plk-page-head{padding-right:225px}}
+  @media(max-width:980px){.plk-stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}}
+  @media(max-width:780px){.plk-main{padding:72px 14px 60px}.plk-page-head{flex-direction:column}.plk-money{flex-direction:column;gap:14px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="prolinker-theme.css">
 <link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
@@ -82,61 +67,77 @@
 <meta name="robots" content="noindex,nofollow">
 </helmet>
 
-<div style="min-height:100vh; display:flex; flex-direction:column;">
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker"></a>
-    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;">
-      <prolinker-account-menu current="dashboard"></prolinker-account-menu>
-    </div>
+<div style="min-height:100vh;display:flex;flex-direction:column;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;z-index:50;">
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="dashboard"></prolinker-account-menu></div>
   </header>
 
-  <main class="plk-main" style="flex:1;">
-    <div class="plk-page-head">
-      <div><div class="plk-eyebrow">{{ roleLabel }}</div><h1 class="plk-title">Hallo {{ firstName }}</h1><p class="plk-subtitle">{{ subtitle }}</p></div>
-      <div class="plk-head-actions">
-        <button class="plk-btn" type="button" onClick="{{ onRefresh }}" disabled="{{ refreshing }}" aria-label="{{ refreshLabel }}" title="{{ refreshLabel }}"><span>{{ refreshSymbol }}</span></button>
-        <a class="plk-btn plk-btn-primary" href="{{ primaryHref }}">{{ primaryLabel }}</a>
-      </div>
-    </div>
-
+  <main class="plk-main">
     <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">Je dashboard wordt geladen...</div></sc-if>
     <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ errorMessage }}</span><button class="plk-btn" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
-    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
-      <section class="plk-statstrip" aria-label="Belangrijkste cijfers">
-        <sc-for list="{{ metrics }}" as="metric" hint-placeholder-count="4">
-          <div class="plk-stat"><div class="plk-stat-value">{{ metric.value }}</div><div class="plk-stat-label">{{ metric.label }}</div></div>
-        </sc-for>
-      </section>
 
-      <section class="plk-focuscard" aria-label="Overzicht">
-        <div class="plk-tabs" role="tablist">
-          <button class="plk-tab" type="button" role="tab" aria-selected="{{ tabActivity }}" data-active="{{ tabActivity }}" onClick="{{ onTabActivity }}">Recente activiteit</button>
-          <button class="plk-tab" type="button" role="tab" aria-selected="{{ tabQuick }}" data-active="{{ tabQuick }}" onClick="{{ onTabQuick }}">Direct doen</button>
-          <span class="plk-tabs-note">Bijgewerkt {{ updatedLabel }}</span>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <div class="plk-page-head">
+        <div style="min-width:0;">
+          <h1 class="plk-title">Hallo {{ firstName }}</h1>
+          <p class="plk-subtitle">{{ subtitle }}</p>
         </div>
-        <sc-if value="{{ tabActivity }}" hint-placeholder-val="{{ true }}">
-          <div role="tabpanel" aria-label="Recente activiteit">
-            <sc-for list="{{ activity }}" as="activity" hint-placeholder-count="4">
-              <a class="plk-activity" href="{{ activity.href }}"><span class="plk-activity-dot" aria-hidden="true"></span><span><span class="plk-activity-title">{{ activity.title }}</span><span class="plk-activity-detail">{{ activity.detail }}</span></span><span class="plk-activity-meta"><span class="plk-status">{{ activity.status }}</span><span class="plk-time">{{ activity.time }}</span></span></a>
-            </sc-for>
+        <div class="plk-head-actions">
+          <a class="plk-btn-blue" href="{{ payoutHref }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 8 17 17 8 17"></polyline></svg>Saldo uitbetalen</a>
+          <a class="plk-btn-orange" href="{{ primaryHref }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>{{ primaryLabel }}</a>
+        </div>
+      </div>
+
+      <div class="plk-tabline"><span class="plk-tab">{{ roleTab }}</span></div>
+
+      <div class="plk-stats">
+        <div class="plk-stat">
+          <div class="plk-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></div>
+          <div class="plk-stat-value">{{ statPosted }}</div>
+          <div class="plk-stat-label">{{ statPostedLabel }}</div>
+          <div class="plk-stat-sub"><b>{{ statPostedMonth }}</b> <span>Deze maand</span></div>
+        </div>
+        <div class="plk-stat">
+          <div class="plk-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+          <div class="plk-stat-value">{{ statHired }}</div>
+          <div class="plk-stat-label">Ingehuurd</div>
+          <div class="plk-stat-sub"><b>{{ statHiredMonth }}</b> <span>Deze maand</span></div>
+        </div>
+        <div class="plk-stat">
+          <div class="plk-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+          <div class="plk-stat-value">{{ statHours }}</div>
+          <div class="plk-stat-label">{{ statHoursLabel }}</div>
+        </div>
+        <div class="plk-stat">
+          <div class="plk-money">
+            <div class="plk-money-left">
+              <div class="plk-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"></ellipse><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"></path><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"></path></svg></div>
+              <div class="plk-stat-value">{{ statPaid }}</div>
+              <div class="plk-stat-label">{{ statPaidLabel }}</div>
+            </div>
+            <div class="plk-money-table">
+              <div class="plk-money-row"><span class="plk-money-amount">{{ saldoLabel }}</span><a class="plk-money-link" href="{{ payoutHref }}">Saldo totaal</a></div>
+              <div class="plk-money-row"><span class="plk-money-amount">{{ bonusLabel }}</span><a class="plk-money-link" href="{{ referralHref }}">Aanmeld bonus</a><span class="plk-help" title="Eenmalige bonus die je ontving bij het aanmaken van je account.">?</span></div>
+              <div class="plk-money-row"><span class="plk-money-amount">{{ inviteLabel }}</span><a class="plk-money-link" href="{{ referralHref }}">Verdiensten uit uitnodigingen</a><span class="plk-help" title="Je verdient 2% van de eerste opdrachtwaarde van iedereen die je uitnodigt.">?</span></div>
+            </div>
           </div>
-        </sc-if>
-        <sc-if value="{{ tabQuick }}" hint-placeholder-val="{{ false }}">
-          <div role="tabpanel" aria-label="Direct doen">
-            <sc-for list="{{ quickActions }}" as="action" hint-placeholder-count="4">
-              <a class="plk-quick-link" href="{{ action.href }}"><span><span class="plk-quick-title">{{ action.title }}</span><span class="plk-quick-desc">{{ action.description }}</span></span><span class="plk-arrow">&rsaquo;</span></a>
-            </sc-for>
-          </div>
-        </sc-if>
-      </section>
+        </div>
+      </div>
+
+      <div class="plk-tabline" style="margin-top:38px;"><span class="plk-tab">{{ hiredTab }}</span></div>
+      <sc-if value="{{ noHired }}" hint-placeholder-val="{{ true }}"><div class="plk-empty-band">{{ hiredEmpty }}</div></sc-if>
+      <sc-if value="{{ hasHired }}" hint-placeholder-val="{{ false }}"><div class="plk-hired-row"><sc-for list="{{ hired }}" as="item" hint-placeholder-count="2"><div class="plk-hired-item"><span style="font-size:13px;font-weight:700;">{{ item.name }}</span><span style="color:var(--faint);font-size:12px;">{{ item.meta }}</span></div></sc-for></div></sc-if>
     </sc-if>
   </main>
-  <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Werk slimmer met je netwerk.</footer>
+
+  <footer style="padding:20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}"><div class="plk-toast" role="status">{{ toast }}</div></sc-if>
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860}}">
 class Component extends DCLogic {
-  state = { loading: true, refreshing: false, error: '', data: null, session: null, menuOpen: false, theme: 'light', tab: 'activity' };
+  state = { loading: true, error: '', session: null, assignments: [], balance: null, toast: '', theme: 'light' };
 
   componentDidMount() {
     document.documentElement.setAttribute('lang', 'nl');
@@ -145,84 +146,65 @@ class Component extends DCLogic {
     const session = window.ProLinkerApp.session.require({ next: 'Prolinker Dashboard.dc.html' });
     if (!session) return;
     this.setState({ session: session });
-    this.load(false);
-    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
-    window.addEventListener('keydown', this._keyHandler);
+    this.load();
   }
 
-  componentWillUnmount() { if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler); }
+  componentWillUnmount() { clearTimeout(this._toastTimer); }
 
-  async load(refresh) {
-    this.setState({ loading: !this.state.data, refreshing: !!refresh, error: '' });
+  async load() {
+    this.setState({ loading: true, error: '' });
     try {
-      const data = refresh ? await window.ProLinkerApp.dashboard.refresh() : await window.ProLinkerApp.dashboard.get();
-      this.setState({ data: data, loading: false, refreshing: false, error: '' });
+      const results = await Promise.all([
+        window.ProLinkerApp.assignments.list({ archived: false }).catch(() => []),
+        window.ProLinkerApp.assignments.list({ archived: true }).catch(() => []),
+        window.ProLinkerApp.earnings.transactions().catch(() => null)
+      ]);
+      const assignments = [].concat(Array.isArray(results[0]) ? results[0] : [], Array.isArray(results[1]) ? results[1] : []);
+      this.setState({ assignments: assignments, balance: results[2] && results[2].balance ? results[2].balance : { available: 0, bonus: 0 }, loading: false, error: '' });
     } catch (error) {
-      this.setState({ loading: false, refreshing: false, error: error && error.message ? error.message : 'Dashboard laden is niet gelukt.' });
+      this.setState({ loading: false, error: error && error.message ? error.message : 'Het dashboard laden is niet gelukt.' });
     }
   }
 
-  toggleTheme() {
-    const next = this.state.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('plk-theme', next); } catch (error) {}
-    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
-    this.setState({ theme: next, menuOpen: false });
-  }
-
-  activityIcon(type) { return ({ response: 'R', message: 'B', assignment: 'O', network: 'N', match: 'M', application: 'S' })[type] || 'A'; }
-
-  timeLabel(value) {
-    if (!value) return '';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return '';
-    const today = new Date();
-    if (date.toDateString() === today.toDateString()) return 'vandaag ' + date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
-    return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
-  }
-
-  quickActions(role) {
-    if (role === 'client') return [
-      { icon: '+', title: 'Opdracht plaatsen', description: 'Start een nieuwe aanvraag', href: 'Prolinker Brief.dc.html', bg: '#E9EFF5', color: '#24476A' },
-      { icon: 'F', title: 'Professionals zoeken', description: 'Bekijk direct je beste matches', href: 'Prolinker Results.dc.html', bg: '#EAF5EE', color: '#237A45' },
-      { icon: 'B', title: 'Berichten openen', description: 'Reageer op nieuwe gesprekken', href: 'Prolinker Berichten.dc.html', bg: '#FFE0D6', color: '#C94F2D' },
-      { icon: 'N', title: 'Netwerk beheren', description: 'Nodig professionals uit', href: 'Prolinker Netwerk.dc.html', bg: '#F0EDF9', color: '#5A49A8' }
-    ];
-    return [
-      { icon: 'K', title: 'Opdrachten bekijken', description: 'Open je persoonlijke opdrachtfeed', href: 'Prolinker Voor jou v2.dc.html', bg: '#E9EFF5', color: '#24476A' },
-      { icon: 'O', title: 'Sollicitaties volgen', description: 'Bekijk status en vervolgstappen', href: 'Prolinker Mijn opdrachten.dc.html?role=freelancer', bg: '#EAF5EE', color: '#237A45' },
-      { icon: 'B', title: 'Berichten openen', description: 'Reageer op opdrachtgevers', href: 'Prolinker Berichten.dc.html', bg: '#FFE0D6', color: '#C94F2D' },
-      { icon: 'P', title: 'Profiel verbeteren', description: 'Werk je CV en expertise bij', href: 'Prolinker Profiel.dc.html', bg: '#F0EDF9', color: '#5A49A8' }
-    ];
-  }
+  toast(message) { clearTimeout(this._toastTimer); this.setState({ toast: message }); this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 3000); }
+  eur(value) { return '€ ' + Number(value || 0).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
   renderVals() {
-    const session = this.state.session || { role: 'freelancer', name: 'ProLinker gebruiker' };
-    const data = this.state.data || { metrics: [], activity: [], updatedAt: '' };
+    const session = this.state.session || { role: 'client', name: '' };
     const role = session.role === 'client' ? 'client' : 'freelancer';
-    const menuItems = window.ProLinkerApp ? window.ProLinkerApp.routes.accountMenu(role).map((item) => Object.assign({}, item, { bg: item.key === 'dashboard' ? 'var(--panel)' : 'transparent' })) : [];
-    const metrics = data.metrics || [];
-    const activity = (data.activity || []).map((item) => Object.assign({}, item, { icon: this.activityIcon(item.type), time: this.timeLabel(item.at), href: item.href || 'Prolinker Dashboard.dc.html' }));
-    const userName = String(session.name || (data.user && data.user.name) || 'ProLinker gebruiker').trim();
-    const firstName = userName.split(/\s+/)[0] || 'daar';
-    const userInitials = (data.user && data.user.initials) || userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
+    const firstName = String(session.name || (role === 'client' ? 'opdrachtgever' : 'professional')).trim().split(/\s+/)[0];
+    const assignments = this.state.assignments;
+    const now = new Date();
+    const thisMonth = assignments.filter((item) => { const date = new Date(item.updatedAt || item.createdAt || 0); return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth(); }).length;
+    const hiredStatuses = ['hired', 'accepted', 'completed', 'complete', 'done', 'finished'];
+    const hiredCount = assignments.filter((item) => hiredStatuses.indexOf(String(item.status || '').toLowerCase()) >= 0).length;
+    const balance = this.state.balance || { available: 0, bonus: 0 };
     return {
-      menuOpen: this.state.menuOpen,
-      menuChevron: this.state.menuOpen ? '▲' : '▼',
-      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })), onCloseMenu: () => this.setState({ menuOpen: false }),
-      menuItems: menuItems, userName: userName, userInitials: userInitials, firstName: firstName,
-      roleLabel: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
-      subtitle: role === 'client' ? 'Alles wat aandacht vraagt staat hieronder in een rustig overzicht.' : 'Alles wat aandacht vraagt staat hieronder in een rustig overzicht.',
-      primaryHref: role === 'client' ? 'Prolinker Brief.dc.html' : 'Prolinker Voor jou v2.dc.html',
-      primaryLabel: role === 'client' ? 'Opdracht plaatsen' : 'Opdrachten bekijken',
-      loading: this.state.loading, ready: !this.state.loading && !this.state.error && !!this.state.data,
-      hasError: !!this.state.error, errorMessage: this.state.error,
-      refreshing: this.state.refreshing, refreshLabel: this.state.refreshing ? 'Verversen...' : 'Verversen', refreshSymbol: this.state.refreshing ? '•' : '↻',
-      onRefresh: () => this.load(true), onRetry: () => this.load(false),
-      tabActivity: this.state.tab === 'activity', tabQuick: this.state.tab === 'quick',
-      onTabActivity: () => this.setState({ tab: 'activity' }), onTabQuick: () => this.setState({ tab: 'quick' }),
-      metrics: metrics, activity: activity, quickActions: this.quickActions(role), updatedLabel: this.timeLabel(data.updatedAt),
-      onTheme: () => this.toggleTheme(), themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
-      onLogout: () => window.ProLinkerApp.session.logout()
+      loading: this.state.loading, hasError: !!this.state.error, errorMessage: this.state.error, onRetry: () => this.load(),
+      ready: !this.state.loading && !this.state.error,
+      firstName: firstName,
+      subtitle: role === 'client' ? 'Maximaliseer uw productiviteit door projecten te plaatsen en freelancers in te huren' : 'Maximaliseer je inkomsten door te reageren op opdrachten die bij je passen',
+      payoutHref: 'Prolinker Verdiensten.dc.html',
+      referralHref: 'Prolinker Verdiensten.dc.html#referral',
+      primaryHref: role === 'client' ? 'Prolinker Results.dc.html' : 'Prolinker Voor jou v2.dc.html',
+      primaryLabel: role === 'client' ? 'Zoek professionals' : 'Zoek opdrachten',
+      roleTab: role === 'client' ? 'Opdrachtgever' : 'Freelancer',
+      statPosted: assignments.length,
+      statPostedLabel: role === 'client' ? 'Opdrachten geplaatst' : 'Sollicitaties verstuurd',
+      statPostedMonth: thisMonth,
+      statHired: hiredCount,
+      statHiredMonth: hiredCount,
+      statHours: 0,
+      statHoursLabel: role === 'client' ? 'Uren ingehuurd' : 'Uren gewerkt',
+      statPaid: this.eur(0),
+      statPaidLabel: role === 'client' ? 'Betaald' : 'Ontvangen',
+      saldoLabel: this.eur(balance.available),
+      bonusLabel: this.eur(balance.bonus),
+      inviteLabel: this.eur(0),
+      hiredTab: role === 'client' ? 'Freelancers ingehuurd' : 'Actieve opdrachten',
+      hiredEmpty: role === 'client' ? 'Je hebt nog geen freelancers aangenomen' : 'Je hebt nog geen actieve opdrachten',
+      noHired: true, hasHired: false, hired: [],
+      showToast: !!this.state.toast, toast: this.state.toast
     };
   }
 }

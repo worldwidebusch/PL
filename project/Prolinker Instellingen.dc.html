@@ -6,6 +6,7 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -24,7 +25,7 @@
   button,input,select { font:inherit; }
   button { -webkit-tap-highlight-color:transparent; }
   button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
-  .plk-main { max-width:1060px; width:100%; margin:0 auto; padding:38px 24px 80px; }
+  .plk-main { max-width:1060px; width:100%; margin:0 auto; padding:18px 24px 80px; }@media(min-width:781px){ .plk-page-head { padding-right:225px; } }
   .plk-page-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:24px; }
   .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-dark); }
   .plk-title { margin:8px 0 0; font-size:29px; line-height:1.15; letter-spacing:-.025em; }
@@ -83,7 +84,7 @@
   .plk-footer { max-width:1060px; margin:0 auto; padding:0 24px 28px; color:var(--faint); font-size:11px; }
   @media (max-width:850px) { .plk-settings-layout { grid-template-columns:1fr; } .plk-side { position:static; display:flex; overflow:auto; gap:3px; } .plk-side-link { flex:0 0 auto; } }
   @media (max-width:560px) {
-    .plk-main { padding:26px 14px 62px; } .plk-page-head { align-items:flex-start; margin-bottom:18px; } .plk-title { font-size:25px; } .plk-subtitle { font-size:13px; }
+    .plk-main { padding:72px 14px 62px; } .plk-page-head { align-items:flex-start; margin-bottom:18px; } .plk-title { font-size:25px; } .plk-subtitle { font-size:13px; }
     .plk-unsaved { display:none; } .plk-side-link { min-height:34px; padding:7px 9px; font-size:11.5px; }
     .plk-section-head { padding:14px; } .plk-section-body { padding:14px; } .plk-identity-grid,.plk-field-grid { grid-template-columns:1fr; }
     .plk-choice-row { padding:12px 14px; } .plk-choice-desc { font-size:10.5px; }
@@ -99,8 +100,7 @@
 </helmet>
 
 <div style="min-height:100vh; display:flex; flex-direction:column;">
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker"></a>
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;position:absolute;top:0;left:0;right:0;z-index:50;">
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="settings"></prolinker-account-menu></div>
   </header>
 
@@ -162,6 +162,7 @@
   </main>
   <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Werk slimmer met je netwerk.</footer>
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1100}}">
 class Component extends DCLogic {

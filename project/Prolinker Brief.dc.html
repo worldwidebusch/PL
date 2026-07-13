@@ -7,6 +7,7 @@
 <script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -35,7 +36,8 @@
   button { -webkit-tap-highlight-color: transparent; }
   button:active { transform: scale(0.955) !important; }
   a:active { transform: scale(0.985); }
-  .plk-brief-main { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 32px 48px; }
+  .plk-brief-main { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 18px 32px 48px; }
+  @media(min-width:781px){ .plk-brief-progress { padding-right: 225px; } }
   .plk-brief-progress { position: relative; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin: 0 auto 8px; max-width: 300px; }
   .plk-brief-progress::before { content: ''; position: absolute; top: 11px; left: 25%; right: 25%; height: 1px; background: var(--border,#DCDFE2); }
   .plk-brief-progress-item { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; color: var(--muted,#424444); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -70,7 +72,7 @@
   .plk-brief-continue { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 24px; border: 1px solid #65BD6A !important; border-radius: 8px !important; background: #65BD6A !important; color: #fff; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: none !important; }
   .plk-brief-continue:hover { border-color: #51A958 !important; background: #51A958 !important; }
   @media (max-width: 640px) {
-    .plk-brief-main { padding: 24px 14px 48px; }
+    .plk-brief-main { padding: 72px 14px 48px; }
     .plk-brief-progress { margin-bottom: 22px; }
     .plk-brief-card { margin-top: 22px; padding: 20px 14px; }
     .plk-brief-budget-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; }
@@ -95,8 +97,7 @@
 
 <div data-screen-label="Brief" style="min-height: 100vh; background: radial-gradient(60% 40% at 50% 0%, var(--glow,rgba(47,91,133,0.06)), rgba(47,91,133,0) 62%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header class="plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+  <header class="plk-public-header" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 16px 28px; background: transparent; position: absolute; top: 0; left: 0; right: 0; z-index: 5;">
     <div class="plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 5px; backdrop-filter: blur(8px); position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <div class="plk-public-menu-wrap" style="position: relative;">
@@ -105,7 +106,7 @@
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
           <div style="position: absolute; right: 0; top: 46px; z-index: 40; width: 232px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
             <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
-              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F3F4F6);"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+              <a href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;" style-hover="background: var(--panel,#F3F4F6);">{{ mi.label }}</a>
             </sc-for>
             <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
@@ -243,6 +244,7 @@
   </main>
 
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1120,&quot;height&quot;:1100},&quot;query&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand &amp; logo design&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {

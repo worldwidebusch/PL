@@ -7,6 +7,7 @@
 <script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -20,6 +21,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body { font-family: 'Lato', system-ui, sans-serif; background: #F3F4F6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  @media (min-width: 781px) { body { zoom: 0.8; } }
   a { color: #2F5B85; text-decoration: none; }
   a:hover { color: #14498F; }
   ::selection { background: #B0D8FE; }
@@ -67,17 +69,27 @@
   .plk-map-viewport:focus-visible { outline: 3px solid rgba(47,91,133,0.55) !important; outline-offset: -3px; }
   .plk-market-density-tile { transition: opacity 0.18s ease, filter 0.18s ease; }
   .plk-market-density-tile:hover { opacity: 1 !important; filter: brightness(0.94) saturate(1.14); }
-  .plk-feed-shell { width: 100%; max-width: 1120px; margin: 30px auto 0; }
+  .plk-feed-shell { width: 100%; max-width: 1120px; margin: 22px auto 0; }
+  header.plk-vj-header { position: absolute !important; top: 0 !important; left: 0; right: 0; }
+  main.plk-main { padding-top: 20px !important; }
+  @media (max-width: 900px) { main.plk-main { padding-top: 70px !important; } }
   .plk-feed-list { display: flex; flex-direction: column; gap: 12px; }
+  .plk-feed-list[data-layout="grid"] { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; align-items: stretch; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-result { height: 100%; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-card { display: flex; flex-direction: column; gap: 10px; height: 100%; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-card > div { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-side { order: -1; width: 100%; flex-direction: row; align-items: center; justify-content: space-between; text-align: left; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-category { align-self: flex-start; }
+  .plk-feed-list[data-layout="grid"] .plk-feed-description { -webkit-line-clamp: 2; }
   .plk-feed-result { display: block; }
-  .plk-feed-card { min-height: 220px; display: grid; grid-template-columns: 82px minmax(0,1fr) 164px; gap: 22px; padding: 24px 26px; border: 1px solid #DCDFE2; border-radius: 10px; background: var(--surface,#FFFFFF); box-shadow: 0 1px 2px rgba(20,36,49,0.035); transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }
+  .plk-feed-card { display: grid; grid-template-columns: 52px minmax(0,1fr) 150px; gap: 14px; padding: 14px 18px; border: 1px solid #DCDFE2; border-radius: 10px; background: var(--surface,#FFFFFF); box-shadow: 0 1px 2px rgba(20,36,49,0.035); transition: box-shadow 0.18s ease, border-color 0.18s ease, transform 0.18s ease; }
   .plk-feed-card:hover { border-color: #96B4D6; box-shadow: 0 16px 34px -28px rgba(20,36,49,0.5); transform: translateY(-1px); }
   .plk-feed-card[data-state="sent"] { border-color: #77C8A7; background: linear-gradient(145deg, rgba(239,251,245,0.98), var(--surface,#FFFFFF)); }
   .plk-feed-card[data-state="review"] { border-color: #D9B66E; background: linear-gradient(145deg, rgba(255,249,234,0.98), var(--surface,#FFFFFF)); }
-  .plk-feed-category { width: 68px; height: 68px; align-self: start; justify-self: center; border-radius: 50%; border: 1px solid rgba(109,128,153,0.17); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 0 0 4px rgba(255,255,255,0.34); }
-  .plk-feed-category:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 4px rgba(255,255,255,0.4), 0 10px 22px -17px rgba(20,36,49,0.44); }
-  .plk-feed-category svg { width: 29px; height: 29px; }
-  .plk-feed-facts { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 9px 17px; margin-top: 12px; }
+  .plk-feed-category { width: 44px; height: 44px; align-self: start; justify-self: center; border-radius: 50%; border: 1px solid rgba(109,128,153,0.17); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 0 0 3px rgba(255,255,255,0.34); }
+  .plk-feed-category:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 3px rgba(255,255,255,0.4), 0 10px 22px -17px rgba(20,36,49,0.44); }
+  .plk-feed-category svg { width: 20px; height: 20px; }
+  .plk-feed-facts { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; }
   .plk-feed-fact { min-width: 142px; flex: 1 1 156px; display: inline-flex; align-items: flex-start; gap: 7px; color: var(--text,#152431); }
   .plk-feed-fact-icon { width: 18px; height: 18px; margin-top: 1px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #738096; }
   .plk-feed-fact-copy { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
@@ -85,8 +97,8 @@
   .plk-feed-fact-value { font-size: 11.5px; line-height: 1.3; font-weight: 700; color: var(--muted,#526071); text-wrap: pretty; }
   .plk-modal-category { width: 52px; height: 52px; flex-shrink: 0; border-radius: 50%; border: 1px solid rgba(109,128,153,0.16); display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 0 0 4px rgba(255,255,255,0.34); }
   .plk-modal-facts { margin-top: 15px; padding: 13px 15px; border-radius: 12px; background: #F3F4F6; }
-  .plk-feed-description { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .plk-feed-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 16px; }
+  .plk-feed-description { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .plk-feed-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 10px; }
   .plk-feed-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; text-align: right; }
   .plk-search-row { position: relative; overflow: visible; transform: none !important; }
   .plk-search-row[data-location-open="true"] { z-index: 49; }
@@ -118,9 +130,9 @@
     .plk-nav-tabs button, .plk-nav-tabs a { display: none !important; }
     .plk-nav-inner { padding-left: 18px !important; padding-right: 18px !important; gap: 14px !important; }
     .plk-search-row { width: 100%; }
-    .plk-feed-card { grid-template-columns: 70px minmax(0,1fr); }
-    .plk-feed-category { width: 62px; height: 62px; }
-    .plk-feed-category svg { width: 27px; height: 27px; }
+    .plk-feed-card { grid-template-columns: 48px minmax(0,1fr); }
+    .plk-feed-category { width: 42px; height: 42px; }
+    .plk-feed-category svg { width: 19px; height: 19px; }
     .plk-feed-side { grid-column: 2; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; text-align: left; }
   }
   @media (max-width: 600px) {
@@ -157,8 +169,7 @@
 
 <div class="plk-page" data-screen-label="Voor jou" style="min-height: 100vh; background: #F3F4F6; color: #152431; font-family: 'Lato', system-ui, sans-serif; display: flex; flex-direction: column;">
 
-  <header class="plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker"></a>
+  <header class="plk-public-header plk-vj-header" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 16px 28px; background: transparent; z-index: 5;">
     <div class="plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 5px; backdrop-filter: blur(8px); position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
         <div class="plk-public-menu-wrap" style="position: relative;">
@@ -249,6 +260,10 @@
             <sc-if value="{{ moreOpen }}" hint-placeholder-val="false"><div onClick="{{ onCloseFilters }}" style="position: fixed; inset: 0; z-index: 47;"></div><div class="plk-filter-popover plk-more-panel" role="dialog" aria-label="Meer filters"><div style="font-size: 12px; font-weight: 800; color: #2E3B50;">Start</div><div role="radiogroup" aria-label="Start opdracht" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;"><sc-for list="{{ startOptions }}" as="so" hint-placeholder-count="4"><button role="radio" aria-checked="{{ so.active }}" onClick="{{ so.onClick }}" style="height: 32px; padding: 0 10px; border: 1px solid {{ so.border }}; border-radius: 7px; background: {{ so.bg }}; color: {{ so.color }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ so.label }}</button></sc-for></div><div style="height: 1px; margin: 14px 0; background: #ECEEF0;"></div><div style="font-size: 12px; font-weight: 800; color: #2E3B50;">Uren per week</div><div role="radiogroup" aria-label="Uren per week" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;"><sc-for list="{{ hoursOptions }}" as="ho" hint-placeholder-count="5"><button role="radio" aria-checked="{{ ho.active }}" onClick="{{ ho.onClick }}" style="height: 32px; padding: 0 10px; border: 1px solid {{ ho.border }}; border-radius: 7px; background: {{ ho.bg }}; color: {{ ho.color }}; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">{{ ho.label }}</button></sc-for></div><div style="display: flex; justify-content: flex-end; margin-top: 14px;"><button onClick="{{ onResetMoreFilters }}" style="height: 32px; padding: 0 10px; border: 1px solid #DCDFE2; border-radius: 7px; background: #FFFFFF; color: #424444; font-family: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer;">Wissen</button></div></div></sc-if>
           </div>
           <span aria-live="polite" style="margin-left: auto; font-size: 12px; font-weight: 700; color: #424444;">{{ resultLabel }}</span>
+          <div role="group" aria-label="Weergave" style="display: inline-flex; gap: 5px;">
+            <button class="plk-filter-control" data-active="{{ layoutListActive }}" onClick="{{ onLayoutList }}" aria-pressed="{{ layoutListActive }}" title="Lijstweergave" aria-label="Lijstweergave" style="padding: 0 10px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg></button>
+            <button class="plk-filter-control" data-active="{{ layoutGridActive }}" onClick="{{ onLayoutGrid }}" aria-pressed="{{ layoutGridActive }}" title="Rasterweergave" aria-label="Rasterweergave" style="padding: 0 10px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg></button>
+          </div>
         </div>
       </div>
 
@@ -271,12 +286,12 @@
 
     <section class="plk-feed-shell plk-desktop-feed" aria-label="Gerangschikte opdrachten voor jou">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 15px;"><div><h2 style="margin: 0; font-size: 21px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">Beste kansen voor jou</h2><p style="margin: 5px 0 0; font-size: 13.5px; color: var(--muted,#424444);">Automatisch gerangschikt op jouw profiel.</p></div><span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F);">{{ feedRangeLabel }}</span></div>
-      <div class="plk-feed-list"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><div class="plk-feed-result" data-reveal><article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
+      <div class="plk-feed-list" data-layout="{{ feedLayout }}"><sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24"><div class="plk-feed-result" data-reveal><article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
         <button class="plk-feed-category" onClick="{{ job.onOpen }}" aria-label="Bekijk {{ job.title }}, categorie {{ job.categoryLabel }}" title="{{ job.categoryLabel }}" style="background: {{ job.categoryBg }}; color: {{ job.categoryColor }};">{{ job.categoryIconEl }}</button>
-        <div style="min-width: 0; display: flex; flex-direction: column;"><div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 18px; line-height: 1.25; font-weight: 800; letter-spacing: -0.018em; text-align: left; cursor: pointer;">{{ job.title }}</button><span style="padding: 3px 8px; border-radius: 999px; background: {{ job.kindBg }}; color: {{ job.kindColor }}; font-size: 10.5px; font-weight: 800; white-space: nowrap;">{{ job.kindLabel }}</span><sc-if value="{{ job.isNew }}" hint-placeholder-val="false"><span style="padding: 3px 8px; border-radius: 999px; background: #F2ECFC; color: #7653A8; font-size: 10.5px; font-weight: 800;">Nieuw</span></sc-if></div><div style="margin-top: 5px; font-size: 13px; color: var(--faint,#8C8E8F);">{{ job.metaLine }}</div><p class="plk-feed-description" style="margin: 9px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted,#424444);">{{ job.description }}</p>
+        <div style="min-width: 0; display: flex; flex-direction: column;"><div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 15.5px; line-height: 1.3; font-weight: 800; letter-spacing: -0.015em; text-align: left; cursor: pointer;">{{ job.title }}</button><span style="padding: 3px 8px; border-radius: 999px; background: {{ job.kindBg }}; color: {{ job.kindColor }}; font-size: 10.5px; font-weight: 800; white-space: nowrap;">{{ job.kindLabel }}</span><sc-if value="{{ job.isNew }}" hint-placeholder-val="false"><span style="padding: 3px 8px; border-radius: 999px; background: #F2ECFC; color: #7653A8; font-size: 10.5px; font-weight: 800;">Nieuw</span></sc-if></div><div style="margin-top: 5px; font-size: 13px; color: var(--faint,#8C8E8F);">{{ job.metaLine }}</div><p class="plk-feed-description" style="margin: 5px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted,#424444);">{{ job.description }}</p>
         <div class="plk-feed-facts" aria-label="Belangrijkste opdrachtgegevens"><sc-for list="{{ job.facts }}" as="fact" hint-placeholder-count="6"><span class="plk-feed-fact" title="{{ fact.label }}: {{ fact.value }}"><span class="plk-feed-fact-icon" style="color: {{ fact.color }};">{{ fact.iconEl }}</span><span class="plk-feed-fact-copy"><span class="plk-feed-fact-label">{{ fact.label }}</span><span class="plk-feed-fact-value">{{ fact.value }}</span></span></span></sc-for></div>
-        <div class="plk-feed-actions"><button onClick="{{ job.onOpen }}" style="height: 38px; padding: 0 15px; border: none; border-radius: 8px; background: #0F1A23; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">Bekijk opdracht</button><button onClick="{{ job.onApply }}" style="height: 38px; padding: 0 15px; border: 1px solid {{ job.applyBorder }}; border-radius: 8px; background: {{ job.applyBg }}; color: {{ job.applyColor }}; font-family: inherit; font-size: 13px; font-weight: 750; cursor: pointer;">{{ job.applyLabel }}</button><button onClick="{{ job.onSave }}" aria-pressed="{{ job.saved }}" style="height: 38px; padding: 0 12px; border: 1px solid {{ job.saveBorder }}; border-radius: 8px; background: transparent; color: var(--muted,#424444); font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer;">{{ job.saveLabel }}</button></div></div>
-        <aside class="plk-feed-side"><span style="padding: 6px 13px; border-radius: 999px; background: {{ job.matchBg }}; color: {{ job.matchColor }}; font-size: 13px; font-weight: 850; white-space: nowrap;">{{ job.relevance }}% match</span><span style="font-size: 11.5px; color: var(--faint,#8C8E8F);">{{ job.valueLabel }}</span></aside>
+        <div class="plk-feed-actions"><button onClick="{{ job.onOpen }}" style="height: 32px; padding: 0 13px; border: none; border-radius: 8px; background: #2F5B85; color: #FFFFFF; font-family: inherit; font-size: 12.5px; font-weight: 750; cursor: pointer;">Bekijk opdracht</button><button onClick="{{ job.onApply }}" style="height: 32px; padding: 0 13px; border: 1px solid {{ job.applyBorder }}; border-radius: 8px; background: {{ job.applyBg }}; color: {{ job.applyColor }}; font-family: inherit; font-size: 12.5px; font-weight: 750; cursor: pointer;">{{ job.applyLabel }}</button><button onClick="{{ job.onSave }}" aria-pressed="{{ job.saved }}" style="height: 32px; padding: 0 11px; border: 1px solid {{ job.saveBorder }}; border-radius: 8px; background: transparent; color: var(--muted,#424444); font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer;">{{ job.saveLabel }}</button></div></div>
+        <aside class="plk-feed-side"><span style="padding: 6px 13px; border-radius: 7px; background: {{ job.matchBg }}; color: {{ job.matchColor }}; font-size: 13px; font-weight: 850; white-space: nowrap;">{{ job.relevance }}% match</span><span style="font-size: 11.5px; color: var(--faint,#8C8E8F);">{{ job.valueLabel }}</span></aside>
       </article></div></sc-for></div>
     </section>
 
@@ -398,7 +413,7 @@
         <span aria-live="polite" style="flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--faint,#8C8E8F);">{{ feedRangeLabel }}</span>
       </div>
 
-      <div class="plk-feed-list">
+      <div class="plk-feed-list" data-layout="{{ feedLayout }}">
         <sc-for list="{{ feedItems }}" as="job" hint-placeholder-count="24">
           <div class="plk-feed-result" data-reveal>
             <article class="plk-feed-card" data-state="{{ job.state }}" aria-label="{{ job.ariaLabel }}">
@@ -406,12 +421,12 @@
 
               <div style="min-width: 0; display: flex; flex-direction: column;">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                  <button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 18px; line-height: 1.25; font-weight: 800; letter-spacing: -0.018em; text-align: left; cursor: pointer;">{{ job.title }}</button>
+                  <button onClick="{{ job.onOpen }}" style="padding: 0; border: none; background: none; color: var(--text,#152431); font-family: inherit; font-size: 15.5px; line-height: 1.3; font-weight: 800; letter-spacing: -0.015em; text-align: left; cursor: pointer;">{{ job.title }}</button>
                   <span style="padding: 3px 8px; border-radius: 999px; background: {{ job.kindBg }}; color: {{ job.kindColor }}; font-size: 10.5px; font-weight: 800; white-space: nowrap;">{{ job.kindLabel }}</span>
                   <sc-if value="{{ job.isNew }}" hint-placeholder-val="false"><span style="padding: 3px 8px; border-radius: 999px; background: #F2ECFC; color: #7653A8; font-size: 10.5px; font-weight: 800;">Nieuw</span></sc-if>
                 </div>
                 <div style="margin-top: 5px; font-size: 13px; color: var(--faint,#8C8E8F);">{{ job.metaLine }}</div>
-                <p class="plk-feed-description" style="margin: 9px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--muted,#424444);">{{ job.description }}</p>
+                <p class="plk-feed-description" style="margin: 5px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted,#424444);">{{ job.description }}</p>
 
                 <div class="plk-feed-facts" aria-label="Belangrijkste opdrachtgegevens">
                   <sc-for list="{{ job.facts }}" as="fact" hint-placeholder-count="6">
@@ -441,7 +456,7 @@
               </div>
 
               <aside class="plk-feed-side">
-                <span style="padding: 6px 13px; border-radius: 999px; background: {{ job.matchBg }}; color: {{ job.matchColor }}; font-size: 13px; font-weight: 850; white-space: nowrap;">{{ job.relevance }}% match</span>
+                <span style="padding: 6px 13px; border-radius: 7px; background: {{ job.matchBg }}; color: {{ job.matchColor }}; font-size: 13px; font-weight: 850; white-space: nowrap;">{{ job.relevance }}% match</span>
                 <span style="font-size: 11.5px; color: var(--faint,#8C8E8F);">{{ job.valueLabel }}</span>
               </aside>
             </article>
@@ -784,10 +799,11 @@
   <footer style="padding: 18px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #A2A9B4;">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { menuOpen: false, theme: 'light', sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false, mobileFiltersOpen: false, refreshCount: 0, filter: 'alles', sort: 'aanbevolen', query: '', locationOpen: false, locationKey: 'remote', locationQuery: '', radiusKm: 75, includeRemote: false, currentLat: null, currentLng: null, locationLoading: false, opportunityType: 'freelance', relevanceFloor: 0, postedFilter: 'all', startFilter: 'all', hoursFilter: 'all', saved: {}, hidden: {}, sent: {}, review: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, promoHidden: false, cols: 3, name: '', authenticated: false, authRole: null, mapZoom: 0.32, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, listening: false, feedShown: 24, apiSyncStatus: 'idle', apiSyncMessage: '' };
+  state = { menuOpen: false, theme: 'light', feedLayout: 'list', sortOpen: false, workformOpen: false, postedOpen: false, moreOpen: false, mobileFiltersOpen: false, refreshCount: 0, filter: 'alles', sort: 'aanbevolen', query: '', locationOpen: false, locationKey: 'remote', locationQuery: '', radiusKm: 75, includeRemote: false, currentLat: null, currentLng: null, locationLoading: false, opportunityType: 'freelance', relevanceFloor: 0, postedFilter: 'all', startFilter: 'all', hoursFilter: 'all', saved: {}, hidden: {}, sent: {}, review: {}, whyId: null, cardMenuId: null, modalId: null, toast: null, promoHidden: false, cols: 3, name: '', authenticated: false, authRole: null, mapZoom: 0.32, mapX: 0, mapY: 0, mapDragging: false, activeCluster: null, listening: false, feedShown: 24, apiSyncStatus: 'idle', apiSyncMessage: '' };
 
   isValidWhatsappSession(session, requiredRole) {
     if (window.ProLinkerApp && window.ProLinkerApp.session) return window.ProLinkerApp.session.isValid(session, requiredRole);
@@ -803,6 +819,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this._mounted = true;
+    try { if (localStorage.getItem('plk-feed-layout') === 'grid') this.setState({ feedLayout: 'grid' }); } catch (e) {}
     let freelancerSession = false;
     let anySession = false;
     try {
@@ -2173,7 +2190,7 @@ class Component extends DCLogic {
 
   opportunityCategory(x) {
     const text = [x && x.title, x && x.sub, x && x.desc].filter(Boolean).join(' ').toLowerCase();
-    const category = (key, label, icon, bg, color) => ({ key: key, label: label, icon: icon, bg: bg, color: color });
+    const category = (key, label, icon) => ({ key: key, label: label, icon: icon, bg: '#E9EFF5', color: '#2F5B85' });
     if (/\b(ai|automation|automatisering|data|analytics|machine learning|artificial intelligence|no-code|retool|make|zapier)\b/.test(text)) return category('automation', 'AI en automatisering', 'cpu', '#EEEAFB', '#7048BF');
     if (/\b(developer|development|engineer|engineering|software|react|frontend|backend|full-stack|full stack|web|mobile|cloud|devops|cyber|security|qa|testing|wordpress|shopify|architect|api|erp)\b/.test(text)) return category('technology', 'IT en development', 'code', '#E9EFF5', '#2F5B85');
     if (/\b(design|designer|ux|ui|brand|visual|creative|figma|video|motion|illustration)\b/.test(text)) return category('design', 'Design en creatie', 'design', '#F8EAF2', '#B23E78');
@@ -2248,11 +2265,11 @@ class Component extends DCLogic {
     const size = iconSize || 13;
     return [
       { label: 'Categorie', value: category.label + ' \u00b7 ' + this.opportunitySpecialization(x, category), color: category.color, iconEl: this.iconEl(category.icon, category.color, size) },
-      { label: 'Geplaatst', value: this.postedFeedLabel(x), color: '#68778D', iconEl: this.iconEl('clock', '#68778D', size) },
-      { label: 'Prijs', value: this.opportunityPriceSummary(x), color: '#147553', iconEl: this.iconEl('money', '#147553', size) },
+      { label: 'Geplaatst', value: this.postedFeedLabel(x), color: '#2F5B85', iconEl: this.iconEl('clock', '#2F5B85', size) },
+      { label: 'Prijs', value: this.opportunityPriceSummary(x), color: '#2F5B85', iconEl: this.iconEl('money', '#2F5B85', size) },
       { label: 'Locatie', value: this.opportunityWorkplaceLabel(x), color: '#2F5B85', iconEl: this.iconEl('pin', '#2F5B85', size) },
-      { label: 'Status', value: this.marketStatusLabel(x), color: '#C94F2D', iconEl: this.iconEl('clock', '#C94F2D', size) },
-      { label: 'Interesse', value: interested + (interested === 1 ? ' geïnteresseerde' : ' geïnteresseerden'), color: '#7048BF', iconEl: this.iconEl('users', '#7048BF', size) }
+      { label: 'Status', value: this.marketStatusLabel(x), color: '#2F5B85', iconEl: this.iconEl('clock', '#2F5B85', size) },
+      { label: 'Interesse', value: interested + (interested === 1 ? ' geïnteresseerde' : ' geïnteresseerden'), color: '#2F5B85', iconEl: this.iconEl('users', '#2F5B85', size) }
     ];
   }
 
@@ -3410,9 +3427,9 @@ class Component extends DCLogic {
       saveLabel: saved ? 'Bewaard' : 'Bewaren',
       saveBorder: saved ? '#B0D8FE' : '#D5DCE5',
       applyLabel: sent ? 'Verstuurd' : (review ? 'Controleer' : 'Solliciteer'),
-      applyBg: sent ? '#E8F6F0' : (review ? '#B8780E' : '#2F5B85'),
+      applyBg: sent ? '#E8F6F0' : (review ? '#B8780E' : '#E65F39'),
       applyColor: sent ? '#147553' : '#FFFFFF',
-      applyBorder: sent ? '#91CDB5' : (review ? '#B8780E' : '#2F5B85'),
+      applyBorder: sent ? '#91CDB5' : (review ? '#B8780E' : '#E65F39'),
       state: sent ? 'sent' : (review ? 'review' : 'open'),
       ariaLabel: x.title + ', ' + relevance + '% match, ' + (x.co || 'opdrachtgever') + ', ' + this.marketStatusLabel(x) + ', ' + interestedLabel + ', ' + closingLabel,
       onOpen: (e) => this.openOpportunityLink(x.id, e),
@@ -3851,6 +3868,11 @@ class Component extends DCLogic {
       onAgentPrimary: () => this.runAgentPrimaryAction(),
       onQuery: (e) => this.setQuery(e.target.value),
       resultLabel: resultLabel,
+      feedLayout: this.state.feedLayout === 'grid' ? 'grid' : 'list',
+      layoutListActive: this.state.feedLayout !== 'grid',
+      layoutGridActive: this.state.feedLayout === 'grid',
+      onLayoutList: () => { try { localStorage.setItem('plk-feed-layout', 'list'); } catch (e) {} this.setState({ feedLayout: 'list' }); },
+      onLayoutGrid: () => { try { localStorage.setItem('plk-feed-layout', 'grid'); } catch (e) {} this.setState({ feedLayout: 'grid' }); },
       sortLabel: sortLabels[sortKey],
       sortOpen: this.state.sortOpen,
       sortChevronRotate: this.state.sortOpen ? 'rotate(180deg)' : 'rotate(0deg)',

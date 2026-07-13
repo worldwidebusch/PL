@@ -6,6 +6,7 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
+<script src="./prolinker-home-network.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -15,10 +16,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#FFFFFF; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#E1E5EB; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.84); --glow:rgba(47,91,133,0.055); --footer:#152431; --footer-line:#2C3E4E; --footer-text:#DCDFE2; }
-  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#1C2C3A; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); --glow:rgba(47,91,133,0.12); }
+  :root { --bg:#FFFFFF; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#E1E5EB; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.84); --glow:rgba(47,91,133,0.07); --glow2:rgba(230,95,57,0.045); --footer:#152431; --footer-line:#2C3E4E; --footer-text:#DCDFE2; }
+  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#1C2C3A; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); --glow:rgba(47,91,133,0.16); --glow2:rgba(230,95,57,0.07); }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; overflow-x: clip; }
   body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
   a { color: #2F5B85; text-decoration: none; }
   a:hover { color: #24476A; }
@@ -27,6 +28,14 @@
   textarea:focus, input:focus { outline: none; }
   ::selection { background: #B0D8FE; }
   @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .plk-hero-stack > * { animation: plk-rise 0.55s cubic-bezier(0.22,0.7,0.24,1) both; }
+  .plk-hero-stack > *:nth-child(1) { animation-delay: 0.02s; }
+  .plk-hero-stack > *:nth-child(2) { animation-delay: 0.09s; }
+  .plk-hero-stack > *:nth-child(3) { animation-delay: 0.16s; }
+  .plk-hero-stack > *:nth-child(4) { animation-delay: 0.23s; }
+  .plk-category-section { animation: plk-rise 0.6s cubic-bezier(0.22,0.7,0.24,1) 0.3s both; }
+  .plk-brand-mark { filter: drop-shadow(0 10px 22px rgba(21,36,49,0.16)) !important; }
+  :root[data-theme="dark"] .plk-brand-mark { filter: brightness(0) invert(1) drop-shadow(0 10px 22px rgba(0,0,0,0.4)) !important; }
   @keyframes plk-pulse { 0% { box-shadow: 0 0 0 0 rgba(47,91,133,0.30); } 100% { box-shadow: 0 0 0 12px rgba(47,91,133,0); } }
   button, a, input, textarea { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease, opacity 0.16s ease, filter 0.18s ease; }
   button { -webkit-tap-highlight-color: transparent; }
@@ -39,35 +48,99 @@
   .plk-brand:hover { opacity: 0.78; }
   .plk-menu-trigger:hover { border-color: #AFC8DF !important; background: var(--panel,#F3F4F6) !important; }
   .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431) !important; }
-  .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #2F5B85 !important; border-radius: 3px !important; background: #2F5B85 !important; color: #fff !important; }
+  .plk-company-button, .plk-auth-text { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 15px !important; border: 1px solid #2F5B85 !important; border-radius: 8px !important; background: #2F5B85 !important; color: #fff !important; }
   .plk-company-button:hover, .plk-auth-text:hover { border-color: #24476A !important; background: #24476A !important; color: #fff !important; }
-  .plk-register-button { border: 1px solid #E65F39 !important; border-radius: 3px !important; background: #E65F39 !important; box-shadow: none !important; }
+  .plk-home-header .plk-company-button { border-color: transparent !important; background: transparent !important; color: var(--text,#152431) !important; font-weight: 600 !important; }
+  .plk-home-header .plk-company-button:hover { border-color: transparent !important; background: var(--panel,#F3F4F6) !important; color: #24476A !important; }
+  :root[data-theme="dark"] .plk-home-header .plk-company-button:hover { color: #B0D8FE !important; }
+  .plk-register-button { border: 1px solid #E65F39 !important; border-radius: 8px !important; background: #E65F39 !important; box-shadow: none !important; }
   .plk-register-button:hover { border-color: #C94F2D !important; background: #C94F2D !important; }
   .plk-primary:hover:not(:disabled) { filter: brightness(0.94); transform: translateY(-1px); box-shadow: 0 9px 22px -12px rgba(47,91,133,0.56) !important; }
-  .plk-search-shell { border-radius: 5px !important; }
+  .plk-search-shell { border-radius: 14px !important; }
   .plk-search-shell:hover { border-color: #B7C7D8 !important; }
-  .plk-search-submit { border-radius: 3px !important; }
+  .plk-search-submit { border-radius: 10px !important; }
   .plk-search-submit:not(:disabled) { background: #E65F39 !important; color: #fff !important; box-shadow: none !important; }
   .plk-search-submit:hover:not(:disabled) { background: #C94F2D !important; box-shadow: none !important; }
-  .plk-search-mode { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 3px; width: min(420px,100%); margin: 0 auto 12px; padding: 3px; border: 1px solid var(--border,#DCDFE2); border-radius: 5px; background: var(--panel,#F3F4F6); }
-  .plk-search-mode button { min-height: 38px; padding: 0 14px; border: 0; border-radius: 3px; background: transparent; color: var(--muted,#424444); font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
-  .plk-search-mode button[data-active="true"] { background: var(--surface,#fff); color: var(--text,#152431); box-shadow: 0 3px 10px rgba(21,36,49,0.10); }
+  .plk-search-mode { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px; width: min(420px,100%); margin: 0 auto 14px; padding: 4px; border: 1px solid var(--border,#DCDFE2); border-radius: 12px; background: var(--panel,#F3F4F6); }
+  .plk-search-mode button { min-height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: transparent; color: var(--muted,#424444); font-family: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+  .plk-search-mode button:hover:not([data-active="true"]) { color: var(--text,#152431); }
+  .plk-search-mode button[data-active="true"] { background: var(--surface,#fff); color: var(--text,#152431); box-shadow: 0 1px 2px rgba(21,36,49,0.06), 0 4px 14px -6px rgba(21,36,49,0.18); }
   .plk-mic:hover { background: rgba(47,91,133,0.10) !important; color: #2F5B85 !important; }
   .plk-skill-chip:hover { border-color: #B0D8FE !important; color: #24476A !important; box-shadow: 0 8px 22px -16px rgba(47,91,133,0.5) !important; transform: translateY(-1px); }
   .plk-secondary:hover { border-color: #AFC4D9 !important; color: var(--text,#152431) !important; background: var(--panel,#F3F4F6) !important; }
   .plk-category-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; }
-  .plk-category-chip { min-height: 32px; padding: 6px 13px; border: 1px solid transparent; border-radius: 9px; background: #ECEEF0; color: #152431; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 500; line-height: 1.2; }
-  .plk-category-chip:hover { border-color: #9dbbd1 !important; background: #F3F4F6 !important; color: #24476A !important; box-shadow: 0 8px 20px -16px rgba(47,91,133,0.72) !important; transform: translateY(-1px); }
+  .plk-category-list[data-collapsed="true"] { max-height: 110px; overflow: hidden; }
+  .plk-category-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; padding: 6px 13px; border: 1px solid transparent; border-radius: 9px; background: #ECEEF0; color: #152431; cursor: pointer; font-family: inherit; font-size: 12.5px; font-weight: 500; line-height: 1.2; }
+  .plk-category-chip:hover { border-color: #9dbbd1 !important; background: var(--surface,#fff) !important; color: #24476A !important; box-shadow: 0 8px 20px -16px rgba(47,91,133,0.72) !important; transform: translateY(-1px); }
+  .plk-chip-icon { display: inline-flex; flex-shrink: 0; opacity: 0.62; transition: opacity 0.16s ease; }
+  .plk-category-chip:hover .plk-chip-icon { opacity: 1; }
   :root[data-theme="dark"] .plk-category-chip { background: #1C2C3A; color: #e9f1f5; border-color: #2C3E4E; }
-  .plk-suggestion-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; align-items: start; }
-  .plk-suggestion-panel { min-width: 0; min-height: 100%; padding: 22px; border: 1px solid var(--border,#DCDFE2); border-radius: 5px; background: var(--surface,#fff); }
-  .plk-suggestion-panel[data-kind="hire"] { border-top: 3px solid #E65F39; }
-  .plk-suggestion-panel[data-kind="work"] { border-top: 3px solid #2F5B85; }
-  .plk-suggestion-panel .plk-category-list { justify-content: flex-start; }
-  .plk-suggestion-kicker { margin-bottom: 6px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
-  .plk-suggestion-panel[data-kind="hire"] .plk-suggestion-kicker { color: #C94F2D; }
-  .plk-suggestion-panel[data-kind="work"] .plk-suggestion-kicker { color: #2F5B85; }
+  :root[data-theme="dark"] .plk-category-chip:hover { color: #B0D8FE !important; }
+  .plk-suggestion-grid { display: grid; grid-template-columns: 1fr; width: 100vw; margin-left: calc(50% - 50vw); }
+  .plk-suggestion-panel { min-width: 0; padding: 30px 24px 36px; border: 0; border-top: 3px solid #2F5B85; border-radius: 0; text-align: center; background: linear-gradient(180deg, rgba(47,91,133,0.06), rgba(47,91,133,0.015)); animation: plk-rise 0.32s ease both; }
+  .plk-suggestion-kicker { margin-bottom: 6px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #2F5B85; }
+  :root[data-theme="dark"] .plk-suggestion-kicker { color: #B0D8FE; }
   .plk-start-plain:hover { color: #24476A !important; text-decoration: underline; text-underline-offset: 3px; }
+  .plk-network-section { position: relative; overflow: hidden; padding: 96px 24px 104px; background: #F7F7F7; border-top: 1px solid #ECEEF0; }
+  .plk-network-inner { width: 100%; max-width: 1240px; margin: 0 auto; }
+  .plk-network-eyebrow { margin: 0; color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-align: center; text-transform: uppercase; }
+  .plk-network-title { max-width: 760px; margin: 15px auto 0; color: #152431; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: clamp(38px,5vw,64px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.02; text-align: center; text-wrap: balance; }
+  .plk-network-intro { max-width: 720px; margin: 20px auto 0; color: #424444; font-size: 17px; line-height: 1.65; text-align: center; text-wrap: pretty; }
+  .plk-network-grid { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin-top: 54px; }
+  .plk-network-grid::before { position: absolute; z-index: 0; top: 166px; right: 27%; left: 27%; height: 1px; background: #2F5B85; content: ""; opacity: 0.72; }
+  .plk-network-node { position: absolute; z-index: 3; top: 161px; width: 11px; height: 11px; border: 2px solid #F7F7F7; border-radius: 50%; background: #E65F39; box-shadow: 0 0 0 1px rgba(230,95,57,0.22); }
+  .plk-network-node.is-first { left: calc(33.333% - 5px); }
+  .plk-network-node.is-second { left: calc(66.666% - 5px); }
+  .plk-network-card { position: relative; z-index: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #DCDFE2; border-radius: 10px; background: #FFFFFF; box-shadow: 0 18px 48px -38px rgba(21,36,49,0.45); transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+  .plk-network-card:hover { border-color: #B8C8D7; box-shadow: 0 28px 58px -38px rgba(21,36,49,0.48); transform: translateY(-3px); }
+  .plk-network-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #ECEEF0; }
+  .plk-network-media::after { position: absolute; inset: 0; background: linear-gradient(180deg,rgba(21,36,49,0.02) 50%,rgba(21,36,49,0.34) 100%); content: ""; pointer-events: none; }
+  .plk-network-media > img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.5s cubic-bezier(0.22,0.7,0.24,1); }
+  .plk-network-card:hover .plk-network-media > img { transform: scale(1.025); }
+  .plk-network-instant { position: absolute; z-index: 2; top: 16px; left: 16px; display: inline-flex; align-items: center; min-height: 27px; padding: 0 10px; border-radius: 5px; background: #E65F39; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .plk-network-match-overlay { position: absolute; z-index: 2; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.72); border-radius: 6px; background: rgba(255,255,255,0.9); box-shadow: 0 8px 24px -16px rgba(21,36,49,0.65); color: #152431; font-size: 11.5px; font-weight: 800; backdrop-filter: blur(8px); }
+  .plk-network-match-dots { display: inline-flex; align-items: center; }
+  .plk-network-match-dots i { width: 19px; height: 19px; display: block; margin-left: -5px; border: 2px solid #FFFFFF; border-radius: 50%; background: #B0D8FE; }
+  .plk-network-match-dots i:first-child { margin-left: 0; background: #2F5B85; }
+  .plk-network-match-dots i:last-child { background: #E65F39; }
+  .plk-focus-square { position: absolute; z-index: 2; right: 22px; bottom: 20px; width: 42%; aspect-ratio: 1; border: 2px solid rgba(255,255,255,0.94); border-radius: 4px; box-shadow: 0 10px 30px -22px rgba(21,36,49,0.7); }
+  .plk-focus-square::before, .plk-focus-square::after { position: absolute; width: 9px; height: 9px; border: solid #FFFFFF; content: ""; }
+  .plk-focus-square::before { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+  .plk-focus-square::after { right: -2px; bottom: -2px; border-width: 0 3px 3px 0; }
+  .plk-network-photo-graphic { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
+  .plk-network-photo-graphic .line { position: absolute; height: 1px; background: rgba(255,255,255,0.88); transform-origin: left center; }
+  .plk-network-photo-graphic .line.a { top: 30%; left: 19%; width: 42%; transform: rotate(18deg); }
+  .plk-network-photo-graphic .line.b { top: 46%; left: 49%; width: 32%; transform: rotate(-31deg); }
+  .plk-network-photo-graphic .line.c { top: 64%; left: 31%; width: 43%; transform: rotate(-12deg); }
+  .plk-network-photo-graphic .dot { position: absolute; width: 11px; height: 11px; border: 2px solid rgba(255,255,255,0.95); border-radius: 50%; background: #E65F39; box-shadow: 0 2px 8px rgba(21,36,49,0.22); }
+  .plk-network-photo-graphic .dot.a { top: 27%; left: 18%; }
+  .plk-network-photo-graphic .dot.b { top: 39%; left: 59%; }
+  .plk-network-photo-graphic .dot.c { top: 59%; left: 29%; }
+  .plk-network-photo-graphic .dot.d { top: 47%; left: 78%; }
+  .plk-network-card-body { flex: 1; display: flex; flex-direction: column; padding: 25px 25px 27px; }
+  .plk-network-label-row { min-height: 27px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .plk-network-card-label { margin: 0; color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .plk-network-coming-soon { display: inline-flex; align-items: center; min-height: 23px; padding: 0 8px; border: 1px solid #FFD1C4; border-radius: 4px; background: #FFF0EB; color: #B94727; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .plk-network-card-title { margin: 16px 0 0; color: #152431; font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; text-wrap: balance; }
+  .plk-network-card-copy { margin: 15px 0 0; color: #424444; font-size: 14.5px; line-height: 1.62; text-wrap: pretty; }
+  .plk-network-trust { display: flex; align-items: flex-start; gap: 8px; margin: 17px 0 0; color: #2F5B85; font-size: 12px; font-weight: 700; line-height: 1.45; }
+  .plk-network-trust::before { width: 7px; height: 7px; flex: 0 0 auto; margin-top: 5px; border-radius: 50%; background: #E65F39; content: ""; }
+  .plk-network-referral-basis { margin: 10px 0 0; color: #6B7480; font-size: 10.5px; line-height: 1.48; }
+  .plk-network-cta { width: fit-content; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin-top: auto; padding: 0 16px; border: 1px solid #2F5B85; border-radius: 5px; background: #FFFFFF; color: #2F5B85; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+  .plk-network-card-copy + .plk-network-cta, .plk-network-referral-basis + .plk-network-cta { margin-top: 24px; }
+  .plk-network-cta:hover { background: #2F5B85; color: #FFFFFF; transform: translateY(-1px); }
+  .plk-network-cta.is-disabled { border-color: #C9CDD2; background: #F3F4F6; color: #8C8E8F; cursor: not-allowed; }
+  .plk-network-cta.is-disabled:hover { border-color: #C9CDD2; background: #F3F4F6; color: #8C8E8F; transform: none; }
+  :root[data-theme="dark"] .plk-network-section { background: #0F1A23; border-top-color: #2C3E4E; }
+  :root[data-theme="dark"] .plk-network-title, :root[data-theme="dark"] .plk-network-card-title { color: #FFFFFF; }
+  :root[data-theme="dark"] .plk-network-intro, :root[data-theme="dark"] .plk-network-card-copy { color: rgba(255,255,255,0.72); }
+  :root[data-theme="dark"] .plk-network-card { border-color: #2C3E4E; background: #152431; }
+  :root[data-theme="dark"] .plk-network-card:hover { border-color: #48647A; }
+  :root[data-theme="dark"] .plk-network-node { border-color: #0F1A23; }
+  :root[data-theme="dark"] .plk-network-cta { background: #152431; color: #B0D8FE; border-color: #5F8AB4; }
+  :root[data-theme="dark"] .plk-network-cta:hover { background: #2F5B85; color: #FFFFFF; }
+  :root[data-theme="dark"] .plk-network-cta.is-disabled { border-color: #2C3E4E; background: #1C2C3A; color: rgba(255,255,255,0.42); }
+  :root[data-theme="dark"] .plk-network-referral-basis { color: rgba(255,255,255,0.52); }
   .plk-site-footer { background: var(--footer,#152431); color: #fff; }
   .plk-site-footer a { color: var(--footer-text,#DCDFE2); }
   .plk-site-footer a:hover { color: #fff; }
@@ -75,20 +148,21 @@
   .plk-footer-column { display: flex; flex-direction: column; gap: 10px; }
   .plk-footer-link { display: inline-flex; width: fit-content; font-size: 13px; line-height: 1.45; }
   .plk-footer-link:hover { transform: translateX(2px); }
-  .plk-footer-language { width: 100%; height: 40px; padding: 0 34px 0 12px; border: 1px solid #6f8290; border-radius: 4px; color: #fff; background: #22374A; font: inherit; font-size: 13px; cursor: pointer; }
+  .plk-footer-language { width: 100%; height: 40px; padding: 0 34px 0 12px; border: 1px solid #6f8290; border-radius: 9px; color: #fff; background: #22374A; font: inherit; font-size: 13px; cursor: pointer; }
+  .plk-footer-heading { margin-bottom: 5px; color: #9FB0BD; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
   .plk-footer-legal { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; margin-top: 28px; border-top: 1px solid var(--footer-line,#2C3E4E); }
   .plk-footer-legal-links, .plk-footer-socials { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
   .plk-footer-legal a, .plk-footer-copyright { font-size: 11.5px; color: #8C8E8F; }
-  .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 30px; padding: 0 7px; border: 1px solid #496170; border-radius: 4px; color: #DCDFE2 !important; font-size: 11px; font-weight: 700; }
+  .plk-footer-social { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; padding: 0 7px; border: 1px solid #496170; border-radius: 9px; color: #DCDFE2 !important; font-size: 11px; font-weight: 700; }
   .plk-footer-social:hover { border-color: #92a9b8; color: #fff !important; transform: translateY(-1px); }
   .plk-footer-social img { display: block; width: 15px; height: 15px; opacity: 0.92; transition: filter 0.16s ease, opacity 0.16s ease; }
   .plk-footer-social:hover img, .plk-footer-social:focus-visible img { filter: brightness(1.45); opacity: 1; }
   .plk-footer-social:focus-visible { outline: 2px solid #92a9b8; outline-offset: 2px; }
-  .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 16px; border: 1px solid #DCDFE2; border-radius: 6px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); }
+  .plk-login-popup { position: fixed; z-index: 82; top: 70px; right: 28px; width: min(320px, calc(100vw - 28px)); max-height: calc(100vh - 84px); max-height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; padding: 18px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); box-shadow: 0 18px 45px -22px rgba(16,37,50,0.5); color: var(--text,#152431); animation: plk-rise 0.25s ease both; }
   .plk-login-popup-label { display: block; margin: 0 0 6px; color: var(--text,#152431); font-size: 12px; font-weight: 650; }
-  .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#DCDFE2); border-radius: 4px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
+  .plk-login-popup-input, .plk-login-popup-select { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--border,#DCDFE2); border-radius: 9px; background: var(--panel,#F3F6F8); color: var(--text,#152431); font: inherit; font-size: 13px; }
   .plk-login-popup-input:focus, .plk-login-popup-select:focus { border-color: #B0D8FE; box-shadow: 0 0 0 3px rgba(47,91,133,0.11); }
-  .plk-login-popup-primary, .plk-login-popup-social { width: 100%; min-height: 40px; border: 0; border-radius: 4px; color: #fff; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
+  .plk-login-popup-primary, .plk-login-popup-social { width: 100%; min-height: 40px; border: 0; border-radius: 9px; color: #fff; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; }
   .plk-login-popup-primary { background: #E65F39; }
   .plk-login-popup-primary:hover { background: #C94F2D; }
   .plk-login-popup-social { display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -97,11 +171,14 @@
   .plk-login-popup-provider-icon { width: 20px; font-size: 18px; font-weight: 800; line-height: 1; text-align: center; }
   .plk-login-popup-error { margin-top: 8px; color: #C43F3F; font-size: 11.5px; line-height: 1.4; }
   @media (max-width: 920px) {
+    .plk-network-section { padding: 78px 22px 86px; }
+    .plk-network-grid { grid-template-columns: 1fr; gap: 42px; max-width: 620px; margin-right: auto; margin-left: auto; }
+    .plk-network-grid::before { top: 14%; right: auto; bottom: 14%; left: 50%; width: 1px; height: auto; }
+    .plk-network-node { top: auto; left: calc(50% - 5px) !important; }
+    .plk-network-node.is-first { top: calc(33.333% - 5px); }
+    .plk-network-node.is-second { top: calc(66.666% - 5px); }
     .plk-footer-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px 36px; }
     .plk-footer-brand { grid-column: 1 / -1; }
-  }
-  @media (max-width: 760px) {
-    .plk-suggestion-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 640px) {
     .plk-home-header { padding: 12px 14px !important; }
@@ -113,8 +190,16 @@
     .plk-home-subtitle { font-size: 15.5px !important; }
     .plk-search-shell { height: 58px !important; padding-left: 18px !important; }
     .plk-category-section { margin-top: 46px !important; }
-    .plk-category-list { justify-content: flex-start; gap: 6px; }
+    .plk-category-list { gap: 6px; }
+    .plk-category-list[data-collapsed="true"] { max-height: 102px; }
     .plk-category-chip { font-size: 12px; min-height: 30px; padding: 6px 10px; }
+    .plk-network-section { padding: 66px 16px 72px; }
+    .plk-network-title { font-size: clamp(36px,12vw,48px); }
+    .plk-network-intro { font-size: 15.5px; }
+    .plk-network-grid { gap: 36px; margin-top: 40px; }
+    .plk-network-card-body { padding: 22px 20px 24px; }
+    .plk-network-card-title { font-size: 27px; }
+    .plk-network-card:hover { transform: none; }
     .plk-site-footer { padding: 38px 18px 22px !important; }
     .plk-footer-grid { grid-template-columns: 1fr; gap: 27px; }
     .plk-footer-brand { grid-column: auto; }
@@ -143,7 +228,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ProLinker","url":"https://prolinker.com","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://prolinker.com/freelancers?q={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"Organization","name":"ProLinker","url":"https://prolinker.com","logo":"https://prolinker.com/images/logo_pro/main-logo.png","description":"AI-powered freelance network connecting businesses with vetted professionals across design, IT, marketing, sales, finance, legal and admin."},{"@type":"WebApplication","name":"ProLinker AI Project Assistant","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
 </helmet>
 
-<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
+<div style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(52% 42% at 50% 0%, var(--glow,rgba(47,91,133,0.07)), rgba(47,91,133,0) 70%), radial-gradient(34% 28% at 84% 8%, var(--glow2,rgba(230,95,57,0.045)), rgba(230,95,57,0) 72%), radial-gradient(30% 26% at 12% 16%, var(--glow,rgba(47,91,133,0.07)), rgba(47,91,133,0) 74%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
   <header class="plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <div class="plk-glass-nav plk-public-nav" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 5px; position: static; z-index: 30;">
@@ -154,7 +239,7 @@
             <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
             <div role="menu" aria-label="Hoofdnavigatie" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
               <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
-                <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+                <a class="plk-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;">{{ mi.label }}</a>
               </sc-for>
               <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
               <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
@@ -178,14 +263,14 @@
   </header>
 
   <main class="plk-home-main" style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 72px 24px 72px; width: 100%;">
-    <div style="width: 100%; max-width: 760px; display: flex; flex-direction: column; align-items: center; animation: plk-rise 0.5s ease both;">
+    <div class="plk-hero-stack" style="width: 100%; max-width: 760px; display: flex; flex-direction: column; align-items: center;">
 
       <img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="width: 100px; height: 100px; display: block; margin-bottom: 22px; filter: {{ logoFilter }};">
 
-      <h1 class="plk-home-title" style="margin: 0; text-align: center; font-size: 46px; line-height: 1.08; font-weight: 700; letter-spacing: -0.025em; max-width: 620px; text-wrap: balance;">
+      <h1 class="plk-home-title" style="margin: 0; text-align: center; font-size: 52px; line-height: 1.06; font-weight: 700; letter-spacing: -0.025em; max-width: 640px; text-wrap: balance;">
         {{ t.headA }}<span style="color: {{ nameColor }};">{{ firstName }}</span>{{ t.headB }}
       </h1>
-      <p class="plk-home-subtitle" style="margin: 16px 0 0; text-align: center; font-size: 17px; line-height: 1.5; color: var(--muted,#424444); max-width: 480px; text-wrap: pretty;">
+      <p class="plk-home-subtitle" style="margin: 15px 0 0; text-align: center; font-size: 17px; line-height: 1.55; color: var(--muted,#424444); max-width: 480px; text-wrap: pretty;">
         {{ t.subtitle }}
       </p>
 
@@ -196,7 +281,7 @@
           </sc-for>
         </div>
         <label class="plk-visually-hidden" for="plk-home-query">{{ t.searchLabel }}</label>
-        <div class="plk-search-shell" style="display: flex; align-items: center; gap: 10px; border: 1.5px solid {{ borderColor }}; border-radius: 5px; background: var(--surface,#fff); box-shadow: {{ boxShadow }}; height: 58px; padding: 0 7px 0 18px; transition: border-color 0.15s, box-shadow 0.15s;">
+        <div class="plk-search-shell" style="display: flex; align-items: center; gap: 10px; border: 1.5px solid {{ borderColor }}; border-radius: 14px; background: var(--surface,#fff); box-shadow: {{ boxShadow }}; height: 62px; padding: 0 8px 0 20px; transition: border-color 0.15s, box-shadow 0.15s;">
           <input
             id="plk-home-query"
             name="query"
@@ -211,7 +296,7 @@
             ref="{{ searchRef }}"
             aria-invalid="{{ queryInvalid }}"
             aria-describedby="plk-home-query-help"
-            maxLength="60"
+            maxLength="90"
             placeholder="{{ animPlaceholder }}"
             style="flex: 1; min-width: 0; height: 100%; border: none; background: transparent; outline: none; font-size: 16.5px; color: var(--text,#152431);">
           <sc-if value="{{ micShow }}" hint-placeholder-val="{{ true }}">
@@ -219,7 +304,7 @@
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="{{ micColor }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
             </button>
           </sc-if>
-          <button class="plk-primary plk-search-submit" type="button" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" aria-label="{{ t.continueLabel }}" title="{{ t.continueLabel }}" style="flex-shrink: 0; width: 46px; height: 42px; border-radius: 3px; border: none; display: flex; align-items: center; justify-content: center; padding: 0; cursor: {{ continueCursor }}; background: {{ goBg }}; color: {{ goColor }}; font-size: 18px; line-height: 1; box-shadow: {{ goShadow }};">→</button>
+          <button class="plk-primary plk-search-submit" type="button" onClick="{{ onContinue }}" disabled="{{ continueDisabled }}" aria-label="{{ t.continueLabel }}" title="{{ t.continueLabel }}" style="flex-shrink: 0; width: 48px; height: 46px; border-radius: 10px; border: none; display: flex; align-items: center; justify-content: center; padding: 0; cursor: {{ continueCursor }}; background: {{ goBg }}; color: {{ goColor }}; line-height: 1; box-shadow: {{ goShadow }};"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg></button>
         </div>
 
         <div id="plk-home-query-help" role="status" aria-live="polite" style="min-height: 24px; margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
@@ -236,34 +321,37 @@
 
     </div>
 
-    <section class="plk-category-section" aria-labelledby="plk-category-title" style="width: 100%; max-width: 1240px; margin-top: 58px; padding-top: 30px; border-top: 1px solid var(--hairline,#ECEEF0);">
-      <div id="plk-category-title" style="text-align: center; font-size: 17px; line-height: 1.3; font-weight: 700; color: var(--text,#152431);">{{ t.tryLabel }}</div>
-      <p style="margin: 7px auto 18px; text-align: center; font-size: 13px; line-height: 1.45; color: var(--muted,#424444);">{{ t.categoryHint }}</p>
+    <section class="plk-category-section" aria-labelledby="plk-category-title" style="width: 100%; max-width: 1240px; margin-top: 58px;">
+      <div id="plk-category-title" style="margin-bottom: 16px; text-align: center; font-size: 17px; line-height: 1.3; font-weight: 700; color: var(--text,#152431);">{{ t.tryLabel }}</div>
       <div class="plk-suggestion-grid">
+        <sc-if value="{{ hireMode }}" hint-placeholder-val="true">
         <section class="plk-suggestion-panel" data-kind="hire" aria-labelledby="plk-hire-suggestions-title">
           <div class="plk-suggestion-kicker">{{ t.hireKicker }}</div>
           <h2 id="plk-hire-suggestions-title" style="margin: 0; font-size: 19px; line-height: 1.25;">{{ t.hireSuggestionsTitle }}</h2>
           <p style="margin: 7px 0 16px; color: var(--muted,#424444); font-size: 13px; line-height: 1.45;">{{ t.hireSuggestionsHint }}</p>
-          <div id="plk-hire-category-list" class="plk-category-list">
+          <div id="plk-hire-category-list" class="plk-category-list" data-collapsed="{{ collapsed }}">
             <sc-for list="{{ hireSuggestions }}" as="s" hint-placeholder-count="12">
-              <button class="plk-category-chip" type="button" onClick="{{ s.pick }}" aria-label="{{ s.ariaLabel }}">{{ s.label }}</button>
+              <button class="plk-category-chip" type="button" onClick="{{ s.pick }}" aria-label="{{ s.ariaLabel }}"><span class="plk-chip-icon" aria-hidden="true">{{ s.icon }}</span>{{ s.label }}</button>
             </sc-for>
           </div>
         </section>
+        </sc-if>
+        <sc-if value="{{ workMode }}" hint-placeholder-val="{{ false }}">
         <section class="plk-suggestion-panel" data-kind="work" aria-labelledby="plk-work-suggestions-title">
           <div class="plk-suggestion-kicker">{{ t.workKicker }}</div>
           <h2 id="plk-work-suggestions-title" style="margin: 0; font-size: 19px; line-height: 1.25;">{{ t.workSuggestionsTitle }}</h2>
           <p style="margin: 7px 0 16px; color: var(--muted,#424444); font-size: 13px; line-height: 1.45;">{{ t.workSuggestionsHint }}</p>
-          <div id="plk-work-category-list" class="plk-category-list">
+          <div id="plk-work-category-list" class="plk-category-list" data-collapsed="{{ collapsed }}">
             <sc-for list="{{ workSuggestions }}" as="s" hint-placeholder-count="12">
-              <button class="plk-category-chip" type="button" onClick="{{ s.pick }}" aria-label="{{ s.ariaLabel }}">{{ s.label }}</button>
+              <button class="plk-category-chip" type="button" onClick="{{ s.pick }}" aria-label="{{ s.ariaLabel }}"><span class="plk-chip-icon" aria-hidden="true">{{ s.icon }}</span>{{ s.label }}</button>
             </sc-for>
           </div>
         </section>
+        </sc-if>
       </div>
       <sc-if value="{{ showExpandBtn }}" hint-placeholder-val="{{ true }}">
         <div style="display: flex; justify-content: center; margin-top: 20px;">
-          <button class="plk-secondary" type="button" onClick="{{ onToggleExpand }}" aria-expanded="{{ categoriesExpanded }}" aria-controls="plk-hire-category-list plk-work-category-list" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--border,#DCDFE2); border-radius: 7px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted,#424444); white-space: nowrap;">
+          <button class="plk-secondary" type="button" onClick="{{ onToggleExpand }}" aria-expanded="{{ categoriesExpanded }}" aria-controls="{{ expandControlsId }}" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border: 1px solid var(--border,#DCDFE2); border-radius: 999px; background: var(--surface,#fff); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--muted,#424444); white-space: nowrap;">
             <span>{{ expandLabel }}</span>
             <span style="font-size: 15px; line-height: 1; transform: {{ arrowTransform }}; transition: transform 0.2s;">⌄</span>
           </button>
@@ -278,7 +366,7 @@
     <section id="plk-login-popup-dialog" class="plk-login-popup" role="dialog" aria-modal="true" aria-label="{{ loginDialogLabel }}" onClick="{{ onStopLoginClick }}">
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
         <strong style="font-size: 17px; line-height: 1.2;">{{ loginDialogLabel }}</strong>
-        <button type="button" onClick="{{ onCloseLogin }}" aria-label="{{ loginCloseLabel }}" style="width: 28px; height: 28px; border: 1px solid var(--border,#DCDFE2); border-radius: 4px; background: var(--surface,#fff); color: var(--muted,#424444); font: inherit; font-size: 17px; cursor: pointer;">&times;</button>
+        <button type="button" onClick="{{ onCloseLogin }}" aria-label="{{ loginCloseLabel }}" style="width: 28px; height: 28px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--muted,#424444); font: inherit; font-size: 17px; cursor: pointer;">&times;</button>
       </div>
 
       <sc-if value="{{ loginFormVisible }}" hint-placeholder-val="true">
@@ -321,6 +409,8 @@
     </section>
   </sc-if>
 
+  <prolinker-home-network></prolinker-home-network>
+
   <footer class="plk-site-footer" style="padding: 54px 28px 24px;">
     <div style="width: 100%; max-width: 1280px; margin: 0 auto;">
       <div class="plk-footer-grid">
@@ -332,28 +422,28 @@
         </div>
 
         <nav class="plk-footer-column" aria-label="{{ t.footerMarketplace }}">
-          <div style="margin-bottom: 3px; color: #fff; font-size: 12px; font-weight: 700;">{{ t.footerMarketplace }}</div>
+          <div class="plk-footer-heading">{{ t.footerMarketplace }}</div>
           <a class="plk-footer-link" href="Prolinker Results.dc.html">{{ t.nav1 }}</a>
           <a class="plk-footer-link" href="Prolinker Voor jou v2.dc.html">{{ t.nav2 }}</a>
           <a class="plk-footer-link" href="https://prolinker.com/nl/hoe-werkt-het">{{ t.nav3 }}</a>
         </nav>
 
         <nav class="plk-footer-column" aria-label="{{ t.footerGetStarted }}">
-          <div style="margin-bottom: 3px; color: #fff; font-size: 12px; font-weight: 700;">{{ t.footerGetStarted }}</div>
+          <div class="plk-footer-heading">{{ t.footerGetStarted }}</div>
           <a class="plk-footer-link" href="Prolinker Brief.dc.html">{{ t.nav4 }}</a>
           <a class="plk-footer-link" href="Prolinker Login.dc.html?mode=register&amp;role=freelancer">{{ t.becomeFreelancer }}</a>
           <a class="plk-footer-link" href="https://prolinker.com/nl/faq">{{ t.faq }}</a>
         </nav>
 
         <nav class="plk-footer-column" aria-label="{{ t.footerCompany }}">
-          <div style="margin-bottom: 3px; color: #fff; font-size: 12px; font-weight: 700;">{{ t.footerCompany }}</div>
+          <div class="plk-footer-heading">{{ t.footerCompany }}</div>
           <a class="plk-footer-link" href="https://prolinker.com/nl/vacatures">{{ t.careers }}</a>
           <a class="plk-footer-link" href="https://prolinker.com/nl/blog?page=1">{{ t.nav5 }}</a>
           <a class="plk-footer-link" href="https://prolinker.com/nl/contact">{{ t.contact }}</a>
         </nav>
 
         <div class="plk-footer-column">
-          <label for="plk-footer-language" style="margin-bottom: 3px; color: #fff; font-size: 12px; font-weight: 700;">{{ t.language }}</label>
+          <label for="plk-footer-language" class="plk-footer-heading">{{ t.language }}</label>
           <select id="plk-footer-language" class="plk-footer-language" value="{{ currentLanguage }}" onChange="{{ onLanguageChange }}">
             <option value="nl">Nederlands</option>
             <option value="en">English</option>
@@ -382,7 +472,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;jobCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Design&quot;,&quot;IT &amp; Development&quot;,&quot;Marketing&quot;,&quot;Sales&quot;,&quot;Finance&quot;,&quot;Legal&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
-  state = { text: '', focused: false, touched: false, cols: 4, rowsShown: 3, shownCount: 0, anim: '', listening: false, theme: 'light', language: '', menuOpen: false, authenticated: false, authRole: null, authName: '', loginOpen: false, loginStep: 'form', loginRole: 'client', loginContact: '', loginChallengeId: '', loginCode: '', loginRemember: true, loginError: '', loginBusy: false, searchMode: 'hire' };
+  state = { text: '', focused: false, touched: false, cols: 4, expanded: false, anim: '', listening: false, theme: 'light', language: '', menuOpen: false, authenticated: false, authRole: null, authName: '', loginOpen: false, loginStep: 'form', loginRole: 'client', loginContact: '', loginChallengeId: '', loginCode: '', loginRemember: true, loginError: '', loginBusy: false, searchMode: 'hire' };
 
   isValidWhatsappSession(session, requiredRole) {
     if (window.ProLinkerApp && window.ProLinkerApp.session && typeof window.ProLinkerApp.session.isValid === 'function') return window.ProLinkerApp.session.isValid(session, requiredRole);
@@ -610,7 +700,7 @@ class Component extends DCLogic {
     if (next === this.state.searchMode) return;
     try { localStorage.setItem('plk-home-search-mode', next); } catch (e) {}
     clearTimeout(this._typeTimer);
-    this.setState({ searchMode: next, anim: '', touched: false });
+    this.setState({ searchMode: next, anim: '', touched: false, expanded: false });
     setTimeout(() => {
       this.startTyping();
       if (this._searchInput && this._searchInput.focus) this._searchInput.focus();
@@ -668,6 +758,13 @@ class Component extends DCLogic {
     setTimeout(() => this.startTyping(), 0);
   }
 
+  enArticle(label) {
+    const first = String(label || '').trim().split(/\s+/)[0] || '';
+    const acronym = /^[A-Z0-9&\/.-]+$/.test(first) && first.length <= 5;
+    if (acronym) return /^[AEFHILMNORSX]/.test(first) ? 'an' : 'a';
+    return /^[aeiou]/i.test(first) ? 'an' : 'a';
+  }
+
   timePersona() {
     const h = new Date().getHours();
     const nl = this.lang() === 'nl';
@@ -683,10 +780,10 @@ class Component extends DCLogic {
       search: 'Search', headA: 'What are you looking for, ', headB: '?',
       subtitle: 'Find the right professional or your next opportunity, all from one search.',
       tryLabel: 'Popular searches', categoryHint: 'Choose an example or enter your own search above.', startWithout: 'Start directly', continueLabel: 'Continue',
-      showMore: (n) => 'Show ' + n + ' more', showLess: 'Show fewer',
+      showMore: 'Show all', showLess: 'Show fewer',
       errMin: 'Enter at least 3 characters (e.g. SEO)',
       errCaps: 'Avoid writing your whole brief in capital letters',
-      speak: 'Speak your search', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer', workPlaceholder: 'e.g. React developer or remote copywriter', hirePlaceholder: 'e.g. Shopify developer or SEO specialist',
+      speak: 'Speak your search', theme: 'Toggle dark mode', egPh: 'e.g. Shopify developer', workPlaceholder: 'e.g. I am looking for a B2B sales job', hirePlaceholder: 'e.g. I need a photographer for a product shoot',
       settings: 'Settings', darkMode: 'Dark mode', companies: 'For companies', login: 'Log in', register: 'Sign up', logout: 'Log out', searchLabel: 'Describe the role, skill or work you are looking for', dashboardClient: 'Post a project', dashboardFreelancer: 'View projects', referrals: 'Earn 2% with referrals',
       modeLabel: 'Choose a direction', modeWork: 'Find work', modeHire: 'Hire someone',
       hireKicker: 'For your project', hireSuggestionsTitle: 'In-demand expertise', hireSuggestionsHint: 'Start with a skill or specialty.',
@@ -702,10 +799,10 @@ class Component extends DCLogic {
       search: 'Zoeken', headA: 'Wat zoek je, ', headB: '?',
       subtitle: 'Vind de juiste professional of je volgende opdracht, vanuit één zoekopdracht.',
       tryLabel: 'Populaire zoekopdrachten', categoryHint: 'Kies een voorbeeld of vul hierboven je eigen zoekopdracht in.', startWithout: 'Direct beginnen', continueLabel: 'Doorgaan',
-      showMore: (n) => 'Toon ' + n + ' meer', showLess: 'Toon minder',
+      showMore: 'Toon alles', showLess: 'Toon minder',
       errMin: 'Voer minstens 3 tekens in (bijv. SEO)',
       errCaps: 'Schrijf je briefing niet volledig in hoofdletters',
-      speak: 'Spreek je zoekopdracht in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer', workPlaceholder: 'Bijv. React developer of remote copywriter', hirePlaceholder: 'Bijv. Shopify-developer of SEO-specialist',
+      speak: 'Spreek je zoekopdracht in', theme: 'Donkere modus', egPh: 'Bijv. Shopify-developer', workPlaceholder: 'Bijv. ik zoek een B2B salesopdracht', hirePlaceholder: 'Bijv. ik zoek een fotograaf voor een productshoot',
       settings: 'Instellingen', darkMode: 'Donkere modus', companies: 'Voor bedrijven', login: 'Inloggen', register: 'Aanmelden', logout: 'Uitloggen', searchLabel: 'Beschrijf de functie, skill of opdracht die je zoekt', dashboardClient: 'Opdracht plaatsen', dashboardFreelancer: 'Bekijk opdrachten', referrals: 'Verdien 2% met referrals',
       modeLabel: 'Kies een richting', modeWork: 'Werk zoeken', modeHire: 'Iemand inhuren',
       hireKicker: 'Voor je project', hireSuggestionsTitle: 'Veelgevraagde expertise', hireSuggestionsHint: 'Start met een skill of specialisme.',
@@ -721,11 +818,11 @@ class Component extends DCLogic {
   phrases(mode) {
     const work = mode === 'work';
     const en = work
-      ? ['React developer', 'Remote copywriter', 'UX designer', 'Marketing consultant', 'Financial controller', 'Virtual assistant']
-      : ['Shopify developer', 'SEO specialist', 'Video editor', 'Bookkeeper', 'Mobile app developer', 'Sales consultant'];
+      ? ['I am looking for a B2B sales job', 'I am looking for remote copywriting work', 'I want a project as a React developer', 'I am looking for freelance UX projects', 'I want interim finance assignments', 'I am looking for work as a virtual assistant']
+      : ['I am looking for a photographer for a product shoot', 'I need a Shopify developer for my webshop', 'Who can design my logo and brand identity?', 'I am looking for a bookkeeper for my business', 'I need an SEO specialist to grow my sales', 'I want someone to manage my Google Ads'];
     const nl = work
-      ? ['React developer', 'Remote copywriter', 'UX designer', 'Marketingconsultant', 'Financial controller', 'Virtual assistant']
-      : ['Shopify-developer', 'SEO-specialist', 'Videobewerker', 'Boekhouder', 'Mobiele app-developer', 'Salesconsultant'];
+      ? ['Ik zoek een B2B salesopdracht', 'Ik zoek remote copywriting werk', 'Ik zoek een opdracht als React developer', 'Ik zoek freelance UX-projecten', 'Ik zoek interim finance opdrachten', 'Ik zoek werk als virtual assistant']
+      : ['Ik zoek een fotograaf voor een productshoot', 'Ik zoek een Shopify-developer voor mijn webshop', 'Wie kan mijn logo en huisstijl ontwerpen?', 'Ik zoek een boekhouder voor mijn eenmanszaak', 'Ik zoek een SEO-specialist voor meer omzet', 'Ik zoek iemand die mijn Google Ads beheert'];
     return this.lang() === 'nl' ? nl : en;
   }
 
@@ -843,6 +940,9 @@ class Component extends DCLogic {
       ['transcribe','mic'],['notes','mic'],
       ['travel','mapPin'],['booking','mapPin'],
       ['document','file'],
+      ['telemarket','phone'],['sales development','phone'],['sales representative','phone'],['account executive','briefcase'],['illustrator','pen'],['translat','pen'],['scrum','users'],['credit control','calculator'],['pr consultant','megaphone'],['content creator','video'],
+      ['data scien','bar'],['voice-over','mic'],['ghostwrit','pen'],['media buyer','megaphone'],['ppc','megaphone'],['cro specialist','trend'],['affiliate','trend'],['podcast','mic'],['paralegal','file'],['accountant','calculator'],['salesforce','cloud'],['solution architect','layers'],['systems administrator','monitor'],['technical writer','pen'],['strategist','filter'],['coordinator','users'],['talent acquisition','users'],['3d artist','box'],['art director','pen'],['creative director','pen'],['webflow','monitor'],
+      ['developer','code'],['engineer','code'],['designer','layout'],['marketer','trend'],['analyst','bar'],['controller','calculator'],['recruiter','users'],['hr advisor','users'],['manager','users'],['product owner','filter'],['counsel','file'],['builder','zap'],
     ];
     for (let i = 0; i < map.length; i++) { if (s.indexOf(map[i][0]) !== -1) return map[i][1]; }
     return 'spark';
@@ -860,7 +960,7 @@ class Component extends DCLogic {
   iconEl(label, color) {
     const shapes = this.iconDefs()[this.iconName(label)] || this.iconDefs().spark;
     return React.createElement('svg', {
-      width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: color,
+      width: 15, height: 15, viewBox: '0 0 24 24', fill: 'none', stroke: color,
       strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round',
     }, shapes.map((sh, i) => this.shapeEl(sh, i)));
   }
@@ -898,7 +998,7 @@ class Component extends DCLogic {
   renderVals() {
     const text = this.state.text;
     const trimmed = text.trim();
-    const max = 60;
+    const max = 90;
 
     const accent = this.props.accentColor || '#2F5B85';
     const accentShadow = this.hexToRgba(accent, 0.28);
@@ -920,7 +1020,7 @@ class Component extends DCLogic {
     const boxShadow = hasError ? '0 0 0 4px rgba(217,45,32,0.10), 0 10px 30px -14px rgba(217,45,32,0.35)'
       : (this.state.focused
         ? '0 0 0 4px ' + accentRing + ', 0 14px 34px -14px ' + this.hexToRgba(accent, 0.34)
-        : '0 1px 2px rgba(20,36,49,0.04), 0 10px 26px -16px rgba(20,36,49,0.20)');
+        : '0 1px 2px rgba(20,36,49,0.05), 0 16px 40px -20px rgba(20,36,49,0.25)');
 
     const catalog = {
       'Design': [
@@ -1114,29 +1214,119 @@ class Component extends DCLogic {
       { en: 'E-mail Marketer', nl: 'E-mailmarketeer' },
       { en: 'Community Manager', nl: 'Communitymanager' },
       { en: 'Video Editor', nl: 'Videobewerker' },
+      { en: 'B2B Sales Representative', nl: 'B2B salesmedewerker' },
+      { en: 'Sales Development Representative', nl: 'Sales development representative' },
+      { en: 'Account Executive', nl: 'Account executive' },
+      { en: 'Telemarketer', nl: 'Telemarketeer' },
+      { en: 'Lead Generation Specialist', nl: 'Leadgeneratie-specialist' },
+      { en: 'Photographer', nl: 'Fotograaf' },
+      { en: 'Videographer', nl: 'Videograaf' },
+      { en: 'Content Creator', nl: 'Contentcreator' },
+      { en: 'Illustrator', nl: 'Illustrator' },
+      { en: 'Motion Designer', nl: 'Motion designer' },
+      { en: 'Brand Designer', nl: 'Merkontwerper' },
+      { en: 'Translator', nl: 'Vertaler' },
+      { en: 'WordPress Developer', nl: 'WordPress-developer' },
+      { en: 'Shopify Developer', nl: 'Shopify-developer' },
+      { en: 'Mobile App Developer', nl: 'Mobiele app-developer' },
+      { en: 'Backend Developer', nl: 'Backend developer' },
+      { en: 'DevOps Engineer', nl: 'DevOps engineer' },
+      { en: 'Scrum Master', nl: 'Scrum master' },
+      { en: 'Google Ads Specialist', nl: 'Google Ads-specialist' },
+      { en: 'PR Consultant', nl: 'PR-consultant' },
+      { en: 'Financial Analyst', nl: 'Financieel analist' },
+      { en: 'Credit Controller', nl: 'Credit controller' },
+      { en: 'Payroll Administrator', nl: 'Salarisadministrateur' },
+      { en: 'Tax Advisor', nl: 'Belastingadviseur' },
+      { en: 'Compliance Officer', nl: 'Compliance officer' },
+      { en: 'Contract Manager', nl: 'Contractmanager' },
+      { en: 'Interim Manager', nl: 'Interim manager' },
+      { en: 'Executive Assistant', nl: 'Executive assistant' },
+      { en: 'Office Manager', nl: 'Officemanager' },
+      { en: 'Customer Service Agent', nl: 'Klantenservicemedewerker' },
+      { en: 'Event Coordinator', nl: 'Evenementencoördinator' },
+      { en: 'Art Director', nl: 'Artdirector' },
+      { en: 'Creative Director', nl: 'Creative director' },
+      { en: '3D Artist', nl: '3D-artist' },
+      { en: 'Webflow Designer', nl: 'Webflow-designer' },
+      { en: 'Presentation Designer', nl: 'Presentatieontwerper' },
+      { en: 'UX Researcher', nl: 'UX-researcher' },
+      { en: 'Video Animator', nl: 'Video-animator' },
+      { en: 'Voice-over Artist', nl: 'Voice-over artiest' },
+      { en: 'Python Developer', nl: 'Python-developer' },
+      { en: 'PHP Developer', nl: 'PHP-developer' },
+      { en: 'Java Developer', nl: 'Java-developer' },
+      { en: '.NET Developer', nl: '.NET-developer' },
+      { en: 'Node.js Developer', nl: 'Node.js-developer' },
+      { en: 'Flutter Developer', nl: 'Flutter-developer' },
+      { en: 'iOS Developer', nl: 'iOS-developer' },
+      { en: 'Android Developer', nl: 'Android-developer' },
+      { en: 'Game Developer', nl: 'Game developer' },
+      { en: 'Data Engineer', nl: 'Data engineer' },
+      { en: 'Data Scientist', nl: 'Data scientist' },
+      { en: 'Machine Learning Engineer', nl: 'Machine learning engineer' },
+      { en: 'Blockchain Developer', nl: 'Blockchain-developer' },
+      { en: 'Salesforce Consultant', nl: 'Salesforce-consultant' },
+      { en: 'IT Support Specialist', nl: 'IT-supportspecialist' },
+      { en: 'Systems Administrator', nl: 'Systeembeheerder' },
+      { en: 'Network Engineer', nl: 'Netwerkengineer' },
+      { en: 'Database Administrator', nl: 'Databasebeheerder' },
+      { en: 'Penetration Tester', nl: 'Penetratietester' },
+      { en: 'Solution Architect', nl: 'Solution architect' },
+      { en: 'Technical Writer', nl: 'Technisch schrijver' },
+      { en: 'Performance Marketer', nl: 'Performance marketeer' },
+      { en: 'PPC Specialist', nl: 'PPC-specialist' },
+      { en: 'Media Buyer', nl: 'Media buyer' },
+      { en: 'Content Strategist', nl: 'Contentstrateeg' },
+      { en: 'Brand Strategist', nl: 'Merkstrateeg' },
+      { en: 'Marketing Automation Specialist', nl: 'Marketing automation specialist' },
+      { en: 'CRO Specialist', nl: 'CRO-specialist' },
+      { en: 'Technical SEO Specialist', nl: 'Technisch SEO-specialist' },
+      { en: 'Affiliate Marketing Manager', nl: 'Affiliate marketing manager' },
+      { en: 'Podcast Producer', nl: 'Podcastproducer' },
+      { en: 'Ghostwriter', nl: 'Ghostwriter' },
+      { en: 'Blog Writer', nl: 'Blogschrijver' },
+      { en: 'Newsletter Writer', nl: 'Nieuwsbriefschrijver' },
+      { en: 'Proofreader', nl: 'Corrector' },
+      { en: 'Business Development Manager', nl: 'Business development manager' },
+      { en: 'Sales Manager', nl: 'Salesmanager' },
+      { en: 'Inside Sales Representative', nl: 'Inside sales medewerker' },
+      { en: 'Partnership Manager', nl: 'Partnershipmanager' },
+      { en: 'Accountant', nl: 'Accountant' },
+      { en: 'Investment Analyst', nl: 'Investeringsanalist' },
+      { en: 'Risk Analyst', nl: 'Risicoanalist' },
+      { en: 'Auditor', nl: 'Auditor' },
+      { en: 'Privacy Officer', nl: 'Privacy officer' },
+      { en: 'Paralegal', nl: 'Paralegal' },
+      { en: 'Legal Advisor', nl: 'Juridisch adviseur' },
+      { en: 'Product Manager', nl: 'Productmanager' },
+      { en: 'HR Manager', nl: 'HR-manager' },
+      { en: 'Talent Acquisition Specialist', nl: 'Talent acquisition specialist' },
+      { en: 'Project Coordinator', nl: 'Projectcoördinator' },
+      { en: 'SAP Consultant', nl: 'SAP-consultant' },
     ];
     const hirePool = pool;
     const workPool = workRoles;
-    const step = this.state.cols <= 1 ? 8 : (this.state.cols === 2 ? 12 : (this.state.cols === 3 ? 16 : 20));
-    const shownCount = this.state.shownCount > 0 ? this.state.shownCount : step;
-    const hireVisible = hirePool.slice(0, Math.min(shownCount, hirePool.length));
-    const workVisible = workPool.slice(0, Math.min(shownCount, workPool.length));
-    const hireRemaining = Math.max(0, hirePool.length - hireVisible.length);
-    const workRemaining = Math.max(0, workPool.length - workVisible.length);
-    const canExpand = hireRemaining > 0 || workRemaining > 0;
-    const nextReveal = Math.min(step, hireRemaining) + Math.min(step, workRemaining);
-    const maxPoolLength = Math.max(hirePool.length, workPool.length);
-    const showExpandBtn = maxPoolLength > step;
+    const workMode = this.state.searchMode === 'work';
+    const activePool = workMode ? workPool : hirePool;
+    const hireVisible = workMode ? [] : hirePool;
+    const workVisible = workMode ? workPool : [];
+    const categoriesExpanded = this.state.expanded === true;
+    const showExpandBtn = activePool.length > 12;
     const t = this.strings();
     const hireSuggestions = hireVisible.map((s) => {
       const label = this.tLabel(s.label);
       return {
         label: label,
+        icon: this.iconEl(s.label, 'currentColor'),
         ariaLabel: t.pickHire(label),
         pick: () => {
           try { localStorage.setItem('plk-home-search-mode', 'hire'); } catch (e) {}
           clearTimeout(this._typeTimer);
-          this.setState({ text: label, searchMode: 'hire', focused: true, touched: true, anim: '' });
+          const seed = this.lang() === 'nl'
+            ? 'Ik zoek een expert in ' + label + ' die '
+            : 'I am looking for ' + this.enArticle(label) + ' ' + label + ' expert who can ';
+          this.setState({ text: seed, searchMode: 'hire', focused: true, touched: true, anim: '' });
           setTimeout(() => { if (this._searchInput && this._searchInput.focus) this._searchInput.focus(); }, 0);
         },
       };
@@ -1145,11 +1335,15 @@ class Component extends DCLogic {
       const label = this.lang() === 'nl' ? role.nl : role.en;
       return {
         label: label,
+        icon: this.iconEl(role.en, 'currentColor'),
         ariaLabel: t.pickWork(label),
         pick: () => {
           try { localStorage.setItem('plk-home-search-mode', 'work'); } catch (e) {}
           clearTimeout(this._typeTimer);
-          this.setState({ text: label, searchMode: 'work', focused: true, touched: true, anim: '' });
+          const seed = this.lang() === 'nl'
+            ? 'Ik zoek werk als ' + label
+            : 'I am looking for work as ' + this.enArticle(label) + ' ' + label;
+          this.setState({ text: seed, searchMode: 'work', focused: true, touched: true, anim: '' });
           setTimeout(() => { if (this._searchInput && this._searchInput.focus) this._searchInput.focus(); }, 0);
         },
       };
@@ -1205,7 +1399,7 @@ class Component extends DCLogic {
       isDark: this.state.theme === 'dark',
       isLight: this.state.theme !== 'dark',
       logoFilter: this.state.theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
-      nameColor: this.state.theme === 'dark' ? '#ffffff' : accent,
+      nameColor: this.state.theme === 'dark' ? '#B0D8FE' : accent,
       fontStack: "'Lato', system-ui, sans-serif",
       onToggleTheme: () => this.toggleTheme(),
       menuOpen: this.state.menuOpen, onToggleMenu: () => this.toggleMenu(), onCloseMenu: () => this.closeMenu(),
@@ -1268,14 +1462,15 @@ class Component extends DCLogic {
       onFacebookLogin: () => this.socialLogin('facebook'),
       onLinkedinLogin: () => this.socialLogin('linkedin'),
       menuItems: menuItems,
+      hireMode: !workMode,
+      workMode: workMode,
+      expandControlsId: workMode ? 'plk-work-category-list' : 'plk-hire-category-list',
       showExpandBtn,
-      categoriesExpanded: shownCount > step,
-      expandLabel: canExpand ? t.showMore(nextReveal) : t.showLess,
-      arrowTransform: canExpand ? 'rotate(0deg)' : 'rotate(180deg)',
-      onToggleExpand: () => this.setState((s) => {
-        const cur = s.shownCount || step;
-        return canExpand ? { shownCount: Math.min(cur + step, maxPoolLength) } : { shownCount: 0 };
-      }),
+      categoriesExpanded: categoriesExpanded,
+      collapsed: categoriesExpanded ? 'false' : 'true',
+      expandLabel: categoriesExpanded ? t.showLess : t.showMore,
+      arrowTransform: categoriesExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+      onToggleExpand: () => this.setState((s) => ({ expanded: s.expanded !== true })),
       currentLanguage: this.lang(),
       onLanguageChange: (e) => this.setLanguage(e.target.value),
       copyrightYear: new Date().getFullYear(),

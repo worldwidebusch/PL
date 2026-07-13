@@ -158,6 +158,14 @@ registration profile, persist the exact consent versions/timestamp, and copy the
 verified consent to `user_consents` when registration succeeds. Do not put a raw
 phone, password or code in `referral_context`.
 
+For login, `context.profile` contains only the normalized email address and
+`context.credentials` contains the password in transit. Resolve the account by the
+email lookup, verify the password hash, and confirm that the supplied WhatsApp number
+belongs to the same active account before sending the OTP. Return the same generic
+accepted response for unknown emails, wrong passwords, and mismatched numbers so the
+public route cannot reveal account membership. Never persist or log the plaintext
+login password.
+
 ### `verifyOtpChallenge`
 
 Input:

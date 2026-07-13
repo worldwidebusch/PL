@@ -6,6 +6,7 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -20,6 +21,7 @@
   body { background:var(--bg); color:var(--text); font-family:'Lato',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; } button,input { font:inherit; } button { -webkit-tap-highlight-color:transparent; }
   button:focus-visible,a:focus-visible,input:focus-visible { outline:3px solid rgba(47,91,133,.23); outline-offset:2px; }
+  header.plk-net-header { position:absolute !important; top:0 !important; left:0; right:0; }
   .plk-netmain { flex:1; display:flex; flex-direction:column; position:relative; }
   .plk-net-meta { position:absolute; left:28px; top:10px; z-index:5; }
   .plk-eyebrow { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); }
@@ -40,7 +42,7 @@
   .plk-lact { display:flex; gap:6px; }
   .plk-lact .plk-btn { min-height:32px; padding:0 11px; font-size:11px; }
   .plk-learned { min-width:86px; text-align:right; font-family:'Josefin Sans','Lato',sans-serif; font-size:15px; font-weight:600; color:var(--blue-dark); }
-  .plk-total-chip { position:absolute; right:24px; top:14px; z-index:6; text-align:right; padding:10px 16px; border:1px solid var(--border); border-radius:12px; background:var(--surface); box-shadow:0 10px 26px -20px rgba(21,36,49,.5); }
+  .plk-total-chip { position:absolute; right:24px; top:80px; z-index:6; text-align:right; padding:10px 16px; border:1px solid var(--border); border-radius:12px; background:var(--surface); box-shadow:0 10px 26px -20px rgba(21,36,49,.5); }
   .plk-total-label { display:block; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
   .plk-total-value { display:block; margin-top:3px; font-family:'Josefin Sans','Lato',sans-serif; font-size:22px; font-weight:600; color:var(--blue-dark); }
   .plk-listhead { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid var(--hair); background:var(--panel); }
@@ -122,8 +124,7 @@
 </helmet>
 
 <div style="min-height:100vh; display:flex; flex-direction:column;">
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:900;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker"></a>
+  <header class="plk-public-header plk-net-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;z-index:900;">
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="network"></prolinker-account-menu></div>
   </header>
 
@@ -141,10 +142,10 @@
         <div class="plk-listwrap" aria-label="Netwerklijst">
           <div class="plk-listhead"><div><span class="plk-total-label">Verdiend via je netwerk</span><span class="plk-total-value">{{ totalEarnedLabel }}</span></div><div class="plk-sortbar" role="tablist" aria-label="Sorteren"><button type="button" class="{{ sortEarnedClass }}" onClick="{{ onSortEarned }}">Verdiensten</button><button type="button" class="{{ sortNameClass }}" onClick="{{ onSortName }}">Naam</button><button type="button" class="{{ sortMutualClass }}" onClick="{{ onSortMutual }}">Gedeeld</button></div></div>
           <sc-for list="{{ pendingList }}" as="pi" hint-placeholder-count="1">
-            <div class="plk-lrow"><span class="plk-lava plk-lava-pending">{{ pi.initials }}</span><span class="plk-linfo"><span class="plk-lname">{{ pi.name }}</span><span class="plk-lrole">{{ pi.headline }} · Wacht op jou</span></span><span class="plk-lact"><button class="plk-btn plk-btn-primary" type="button" onClick="{{ pi.onAccept }}" disabled="{{ pi.busy }}">Accepteren</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ pi.onReject }}" disabled="{{ pi.busy }}">Weigeren</button></span></div>
+            <div class="plk-lrow"><span class="plk-lava plk-lava-pending"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span class="plk-linfo"><span class="plk-lname">{{ pi.name }}</span><span class="plk-lrole">{{ pi.headline }} · Wacht op jou</span></span><span class="plk-lact"><button class="plk-btn plk-btn-primary" type="button" onClick="{{ pi.onAccept }}" disabled="{{ pi.busy }}">Accepteren</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ pi.onReject }}" disabled="{{ pi.busy }}">Weigeren</button></span></div>
           </sc-for>
           <sc-for list="{{ memberList }}" as="mi" hint-placeholder-count="5">
-            <div class="plk-lrow"><span class="plk-lava"><sc-if value="{{ mi.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ mi.photo }}" alt=""></sc-if><sc-if value="{{ mi.noPhoto }}" hint-placeholder-val="{{ true }}">{{ mi.initials }}</sc-if></span><span class="plk-linfo"><span class="plk-lname">{{ mi.name }}</span><span class="plk-lrole">{{ mi.headline }}</span></span><span class="plk-learned">{{ mi.earnedLabel }}</span><span class="plk-lact"><button class="plk-btn" type="button" onClick="{{ mi.onProfile }}">Profiel</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ mi.onRemove }}" disabled="{{ mi.busy }}">Verwijderen</button></span></div>
+            <div class="plk-lrow"><span class="plk-lava"><sc-if value="{{ mi.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ mi.photo }}" alt=""></sc-if><sc-if value="{{ mi.noPhoto }}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></sc-if></span><span class="plk-linfo"><span class="plk-lname">{{ mi.name }}</span><span class="plk-lrole">{{ mi.headline }}</span></span><span class="plk-learned">{{ mi.earnedLabel }}</span><span class="plk-lact"><button class="plk-btn" type="button" onClick="{{ mi.onProfile }}">Profiel</button><button class="plk-btn plk-btn-danger" type="button" onClick="{{ mi.onRemove }}" disabled="{{ mi.busy }}">Verwijderen</button></span></div>
           </sc-for>
         </div>
           </sc-if>
@@ -159,7 +160,7 @@
         <div onClick="{{ onCloseProfile }}" style="position: fixed; inset: 0; z-index: 700; background: rgba(11,17,25,0.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: 44px 20px; overflow: auto;">
           <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" style="position: relative; width: 100%; max-width: 440px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 26px; text-align: center;">
             <button onClick="{{ onCloseProfile }}" aria-label="Sluiten" style="position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); color: var(--muted,#424444); cursor: pointer; font-size: 16px; line-height: 1;">&times;</button>
-            <span style="margin: 0 auto; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; background: {{ pv.color }}; color: #24557C; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800;"><sc-if value="{{ pv.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ pv.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if><sc-if value="{{ pv.noPhoto }}" hint-placeholder-val="{{ true }}">{{ pv.initials }}</sc-if></span>
+            <span style="margin: 0 auto; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; background: {{ pv.color }}; color: #24557C; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800;"><sc-if value="{{ pv.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ pv.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if><sc-if value="{{ pv.noPhoto }}" hint-placeholder-val="{{ true }}"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></sc-if></span>
             <h2 style="margin: 16px 0 0; font-size: 24px; letter-spacing: -0.01em;">{{ pv.name }}</h2>
             <div style="margin-top: 5px; color: var(--muted,#424444); font-size: 13.5px;">{{ pv.headline }}</div>
             <span style="display: inline-block; margin-top: 10px; padding: 5px 12px; border-radius: 7px; font-size: 12px; font-weight: 700; color: #fff; background: {{ pv.availBg }};">{{ pv.availLabel }}</span>
@@ -213,6 +214,7 @@
   <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Jouw netwerk blijft van jou.</footer>
   <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}"><div class="plk-toast" role="status">{{ toast }}</div></sc-if>
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:980}}">
 class Component extends DCLogic {
@@ -306,7 +308,7 @@ class Component extends DCLogic {
         const lng = base[1] + ((((hash >> 7) % 100) - 50) / 2000);
         const photo = item.avatarUrl || item.pictureUrl || item.photoUrl || '';
         const initials = item.initials || String(item.name || '?').split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase();
-        const inner = photo ? '<img src="' + photo + '" alt="">' : initials;
+        const inner = photo ? '<img src="' + photo + '" alt="">' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
         const icon = window.L.divIcon({ html: '<span class="plk-mpin">' + inner + '</span><span class="plk-mname">' + String(item.name || '').replace(/</g, '&lt;') + '</span>', iconSize: [90, 66], iconAnchor: [45, 33] });
         const marker = window.L.marker([lat, lng], { icon: icon }).addTo(map);
         marker.on('click', () => this.setState({ profileId: item.id }));

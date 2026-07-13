@@ -87,6 +87,11 @@ export async function handler(event) {
     const attribution = intent === 'register' ? readReferralAttribution(event) : null;
     const consent = intent === 'register' ? registrationConsent(body.consent) : null;
     if (intent === 'register' && !consent) return json(400, { error: { code: 'CONSENT_REQUIRED', message: 'Accept the terms and privacy policy to register.' } });
+    const profile = registrationProfile(body.profile || body);
+    const credentials = registrationCredentials(body.profile || body);
+    if (intent === 'login' && (!profile.email || !credentials.password)) {
+      return json(400, { error: { code: 'CREDENTIALS_REQUIRED', message: 'Enter your email address and password.' } });
+    }
     await callPrivateAdapter('createOtpChallenge', {
       challenge: {
         id: challengeId,
@@ -109,8 +114,8 @@ export async function handler(event) {
           entityId: attribution.entityId,
           capturedAt: attribution.capturedAt
         } : null,
-        profile: intent === 'register' ? registrationProfile(body.profile || body) : {},
-        credentials: intent === 'register' ? registrationCredentials(body.profile || body) : {},
+        profile: intent === 'register' ? profile : { email: profile.email },
+        credentials,
         consent,
         ...requestContext(event)
       }

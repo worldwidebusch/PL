@@ -67,10 +67,17 @@ h2, h3, .plk-section-title, .plk-page-title, .plk-auth-title {
   justify-content: space-between;
   gap: 16px;
   padding: 12px 28px;
-  position: relative !important;
-  top: auto !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0;
+  right: 0;
   z-index: 20;
   background: transparent;
+  pointer-events: none;
+}
+
+.plk-public-header > * {
+  pointer-events: auto;
 }
 
 .plk-public-brand {
@@ -285,7 +292,11 @@ details.plk-public-menu-wrap > summary::-webkit-details-marker {
 }
 
 /* ===== Account pages polish: brand cards, spacing, hierarchy ===== */
-.plk-main { padding-top: 48px !important; }
+.plk-main { padding-top: 22px !important; }
+
+@media (max-width: 780px) {
+  .plk-main { padding-top: 72px !important; }
+}
 
 .plk-eyebrow { color: var(--blue, #2F5B85) !important; letter-spacing: 0.12em !important; }
 

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./prolinker-app.js"></script>
+<script src="./prolinker-account-menu.js"></script>
+<script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F3F4F6;--surface:#fff;--panel:#F8FAFC;--text:#152431;--muted:#424444;--faint:#8C8E8F;--border:#DCDFE2;--hair:#ECEEF0;--blue:#2F5B85;--blue-dark:#24476A;--orange:#E65F39;--green:#27834A;--danger:#A2463B;--wa-bg:#E9F6EE;--wa-fg:#237A45;--pf-bg:#E9EFF5;--pf-fg:#24476A}
+  :root[data-theme="dark"]{--bg:#0F1A23;--surface:#152431;--panel:#0F1A23;--text:#F3F4F6;--muted:#B4C1CC;--faint:#8C8E8F;--border:#2C3E4E;--hair:#1C2C3A;--wa-bg:#173226;--wa-fg:#7ED8A4;--pf-bg:#1C2C3A;--pf-fg:#9CC0E0}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Lato',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid rgba(47,91,133,.23);outline-offset:2px}
+  .plk-main{max-width:1080px;width:100%;margin:0 auto;padding:18px 24px 80px}@media(min-width:781px){.plk-crumbs{padding-right:225px}}
+  .plk-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--blue-dark)}
+  .plk-btn{min-height:36px;padding:0 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);cursor:pointer;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:7px}.plk-btn:hover{border-color:#B0D8FE;color:var(--blue-dark)}.plk-btn-primary{border-color:var(--blue);background:var(--blue);color:#fff}.plk-btn-primary:hover{background:var(--blue-dark);color:#fff}.plk-btn-danger{color:var(--danger)}.plk-btn:disabled{cursor:wait;opacity:.58}
+  .plk-crumbs{display:flex;align-items:center;gap:7px;color:var(--faint);font-size:12px}.plk-crumbs a{color:var(--blue-dark);font-weight:650}.plk-crumbs a:hover{text-decoration:underline}.plk-crumb-here{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:340px}
+  .plk-jobhead{margin-top:24px;padding:18px 20px;border:1px solid var(--border);border-radius:10px;background:var(--surface);display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+  .plk-jobhead-title{margin:6px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:11px;font-size:25px;line-height:1.15;letter-spacing:-.02em}
+  .plk-jobhead-meta{margin-top:8px;color:var(--muted);font-size:12.5px;line-height:1.55}
+  .plk-status{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:5px;background:var(--status-bg,#E9EFF5);color:var(--status-color,#24476A);font-size:10.5px;font-weight:700;letter-spacing:.01em}
+  .plk-stats{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .plk-stat{padding:13px 15px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+  .plk-stat-link{display:block;width:100%;margin:0;color:var(--text);font-family:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+  .plk-stat-link:hover{border-color:#96B4D6;box-shadow:0 14px 30px -26px rgba(20,36,49,.55);transform:translateY(-1px)}
+  .plk-stat-hint{color:var(--blue-dark);font-weight:750}
+  .plk-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .plk-stat-value{margin-top:5px;font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .plk-stat-sub{margin-top:6px;display:flex;align-items:center;gap:5px;color:var(--muted);font-size:11px;font-weight:650}
+  .plk-grid{margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) 264px;gap:12px;align-items:start}
+  .plk-cands{border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden}
+  .plk-cand-tabs{display:flex;flex-wrap:wrap;gap:5px;padding:11px 14px;border-bottom:1px solid var(--border);background:var(--panel)}
+  .plk-cand-tab{min-height:30px;padding:0 11px;border:1px solid transparent;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;font-size:11.5px;font-weight:700}.plk-cand-tab:hover{color:var(--blue-dark)}.plk-cand-tab.active{border-color:#B9D2E8;background:var(--pf-bg);color:var(--pf-fg)}
+  .plk-cand{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding:13px 14px;border-bottom:1px solid var(--hair)}.plk-cand:last-child{border-bottom:0}
+  .plk-cand-topline{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .plk-cand-name{border:0;background:transparent;padding:0;color:var(--text);cursor:pointer;font-size:13.5px;font-weight:800}.plk-cand-name:hover{color:var(--blue-dark);text-decoration:underline}
+  .plk-cand-match{font-size:12px;font-weight:800;color:var(--green)}.plk-cand-match.low{color:var(--muted)}
+  .plk-chip{display:inline-flex;align-items:center;gap:4px;min-height:20px;padding:0 7px;border-radius:999px;font-size:9.5px;font-weight:800;letter-spacing:.02em}
+  .plk-chip-wa{background:var(--wa-bg);color:var(--wa-fg)}.plk-chip-pf{background:var(--pf-bg);color:var(--pf-fg)}
+  .plk-chip-state{background:#F0EDF9;color:#5A49A8}:root[data-theme="dark"] .plk-chip-state{background:#241E3D;color:#B9ACF2}
+  .plk-chip-rej{background:#FFE0D6;color:#984339}:root[data-theme="dark"] .plk-chip-rej{background:#3A211B;color:#F0A794}
+  .plk-cand-headline{margin-top:2px;color:var(--faint);font-size:11px}
+  .plk-cand-preview{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .plk-cand-when{color:var(--faint);font-size:10.5px}
+  .plk-cand-actions{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px}
+  .plk-btn-sm{min-height:30px;padding:0 10px;font-size:11px;border-radius:6px}
+  .plk-iconbtn{min-width:30px;padding:0 8px}
+  .plk-iconbtn.on{border-color:#E3B341;background:#FBF3DC;color:#8A6410}:root[data-theme="dark"] .plk-iconbtn.on{border-color:#7A6320;background:#332A12;color:#EFD48A}
+  .plk-btn-orange{border-color:#E65F39;background:#E65F39;color:#fff;font-weight:600}.plk-btn-orange:hover{border-color:#D14F2B;background:#D14F2B;color:#fff}
+  .plk-side{display:flex;flex-direction:column;gap:12px}
+  .plk-panel{border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:14px 15px}
+  .plk-panel-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .plk-panel-stack{margin-top:11px;display:flex;flex-direction:column;gap:7px}.plk-panel-stack .plk-btn{width:100%;justify-content:flex-start}
+  .plk-act{margin-top:11px;display:flex;flex-direction:column;gap:10px}
+  .plk-act-item{display:grid;grid-template-columns:8px minmax(0,1fr);gap:9px}
+  .plk-act-dot{width:8px;height:8px;margin-top:4px;border-radius:50%;background:#B9D2E8}
+  .plk-act-text{color:var(--muted);font-size:11.5px;line-height:1.45}.plk-act-text strong{color:var(--text)}
+  .plk-act-when{display:block;margin-top:1px;color:var(--faint);font-size:10px}
+  .plk-empty{padding:44px 20px;text-align:center}.plk-empty-title{font-size:14.5px;font-weight:700}.plk-empty-text{max-width:400px;margin:7px auto 0;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .plk-loading{margin-top:24px;padding:42px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--muted);text-align:center;font-size:13px}
+  .plk-error{margin-top:24px;padding:15px;border:1px solid #FF9D82;border-radius:8px;background:#FFE9E2;color:#8B3227;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12.5px}
+  .plk-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;max-width:calc(100vw - 28px);padding:10px 15px;border-radius:7px;background:#152431;color:#fff;box-shadow:0 10px 32px rgba(16,39,58,.28);font-size:12px;font-weight:650}
+  .plk-footer{max-width:1080px;margin:0 auto;padding:0 24px 28px;color:var(--faint);font-size:11px}
+  @media(max-width:900px){.plk-grid{grid-template-columns:1fr}.plk-side{flex-direction:row;flex-wrap:wrap}.plk-side .plk-panel{flex:1 1 260px}}
+  @media(max-width:780px){.plk-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.plk-jobhead{flex-direction:column}.plk-jobhead .plk-btn{align-self:flex-start}}
+  @media(max-width:560px){.plk-main{padding:72px 14px 58px}.plk-jobhead-title{font-size:21px}.plk-crumb-here{max-width:180px}.plk-cand{grid-template-columns:1fr}.plk-cand>span:first-child{display:none}.plk-footer{padding:0 14px 22px}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<link rel="stylesheet" href="prolinker-theme.css">
+<link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
+<title>Opdracht | ProLinker</title>
+<meta name="robots" content="noindex,nofollow">
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;position:absolute;top:0;left:0;right:0;z-index:50;">
+    <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="assignments"></prolinker-account-menu></div>
+  </header>
+
+  <main class="plk-main" style="flex:1;">
+    <nav class="plk-crumbs" aria-label="Kruimelpad"><a href="Prolinker Mijn opdrachten.dc.html">Mijn opdrachten</a><span aria-hidden="true">&rsaquo;</span><span class="plk-crumb-here">{{ crumbTitle }}</span></nav>
+
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">De opdracht wordt geladen...</div></sc-if>
+    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ errorMessage }}</span><button class="plk-btn" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
+
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <section class="plk-jobhead" aria-label="Opdrachtoverzicht">
+        <div style="min-width:0;">
+          <div class="plk-eyebrow">Opdrachtgever</div>
+          <h1 class="plk-jobhead-title"><span>{{ jobTitle }}</span><span class="plk-status" style="--status-bg:{{ statusBg }};--status-color:{{ statusColor }};">{{ statusLabel }}</span></h1>
+          <p class="plk-jobhead-meta">{{ jobMeta }}</p>
+        </div>
+        <a class="plk-btn" href="{{ editHref }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>Bewerken</a>
+      </section>
+
+      <section class="plk-stats" aria-label="Statistieken van deze opdracht">
+        <a class="plk-stat plk-stat-link" href="{{ matchesHref }}" aria-label="Bekijk de opgeslagen Instant Match-lijst voor deze opdracht"><div class="plk-stat-label">Instant match verzonden</div><div class="plk-stat-value">{{ statSent }}</div><div class="plk-stat-sub">kandidaten benaderd &middot; <span class="plk-stat-hint">bekijk lijst</span></div></a>
+        <a class="plk-stat plk-stat-link" href="{{ messagesHref }}" aria-label="Open je berichteninbox"><div class="plk-stat-label">Reacties</div><div class="plk-stat-value">{{ statResponses }}</div><div class="plk-stat-sub"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--wa-fg)"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"></path></svg>{{ statWhatsapp }} &middot; <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--pf-fg)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>{{ statPlatform }} platform &middot; <span class="plk-stat-hint">naar inbox</span></div></a>
+        <div class="plk-stat"><div class="plk-stat-label">Bekeken</div><div class="plk-stat-value">{{ statViews }}</div><div class="plk-stat-sub">weergaven van je opdracht</div></div>
+        <button class="plk-stat plk-stat-link" type="button" onClick="{{ onBestMatch }}" aria-label="Open het profiel van je beste match"><div class="plk-stat-label">Beste match</div><div class="plk-stat-value">{{ statBestMatch }}</div><div class="plk-stat-sub">{{ statBestName }}<sc-if value="{{ hasBestMatch }}" hint-placeholder-val="{{ false }}"> &middot; <span class="plk-stat-hint">bekijk profiel</span></sc-if></div></button>
+      </section>
+
+      <div class="plk-grid">
+        <section class="plk-cands" aria-label="Reacties van kandidaten">
+          <div class="plk-cand-tabs" role="tablist" aria-label="Filter kandidaten">
+            <button class="plk-cand-tab {{ tabAllClass }}" type="button" role="tab" aria-selected="{{ tabAllSelected }}" onClick="{{ onTabAll }}">Alle {{ countAll }}</button>
+            <button class="plk-cand-tab {{ tabNewClass }}" type="button" role="tab" aria-selected="{{ tabNewSelected }}" onClick="{{ onTabNew }}">Nieuw {{ countNew }}</button>
+            <button class="plk-cand-tab {{ tabShortClass }}" type="button" role="tab" aria-selected="{{ tabShortSelected }}" onClick="{{ onTabShort }}">Shortlist {{ countShort }}</button>
+            <button class="plk-cand-tab {{ tabRejClass }}" type="button" role="tab" aria-selected="{{ tabRejSelected }}" onClick="{{ onTabRej }}">Afgewezen {{ countRej }}</button>
+          </div>
+          <sc-if value="{{ hasCands }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ cands }}" as="item" hint-placeholder-count="3"><article class="plk-cand">
+            <span aria-hidden="true">{{ item.avatarEl }}</span>
+            <div style="min-width:0;">
+              <div class="plk-cand-topline">
+                <button class="plk-cand-name" type="button" onClick="{{ item.onProfile }}">{{ item.displayName }}</button>
+                <span class="plk-cand-match {{ item.matchClass }}">{{ item.matchLabel }}</span>
+                <span class="plk-chip {{ item.channelChipClass }}">{{ item.channelIconEl }}{{ item.channelLabel }}</span>
+                <sc-if value="{{ item.showStateChip }}" hint-placeholder-val="{{ false }}"><span class="plk-chip {{ item.stateChipClass }}">{{ item.stateLabel }}</span></sc-if>
+              </div>
+              <div class="plk-cand-headline">{{ item.headline }} &middot; {{ item.location }}</div>
+              <p class="plk-cand-preview">&ldquo;{{ item.preview }}&rdquo; <span class="plk-cand-when">&middot; {{ item.whenLabel }}</span></p>
+              <div class="plk-cand-actions">
+                <button class="plk-btn plk-btn-sm plk-btn-orange" type="button" onClick="{{ item.onProfile }}">Bekijk profiel</button>
+                <button class="plk-btn plk-btn-sm" type="button" onClick="{{ item.onMessage }}" disabled="{{ actionBusy }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Bericht</button>
+                <button class="plk-btn plk-btn-sm plk-iconbtn {{ item.shortlistClass }}" type="button" onClick="{{ item.onShortlist }}" disabled="{{ actionBusy }}" aria-label="{{ item.shortlistAria }}" aria-pressed="{{ item.isShortlisted }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></button>
+                <button class="plk-btn plk-btn-sm plk-iconbtn plk-btn-danger" type="button" onClick="{{ item.onReject }}" disabled="{{ actionBusy }}" aria-label="{{ item.rejectAria }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              </div>
+            </div>
+          </article></sc-for></sc-if>
+          <sc-if value="{{ noCands }}" hint-placeholder-val="{{ false }}"><div class="plk-empty"><div class="plk-empty-title">{{ emptyTitle }}</div><p class="plk-empty-text">{{ emptyText }}</p></div></sc-if>
+        </section>
+
+        <aside class="plk-side" aria-label="Opdrachtbeheer">
+          <div class="plk-panel">
+            <div class="plk-panel-title">Opdracht beheren</div>
+            <div class="plk-panel-stack">
+              <button class="plk-btn" type="button" onClick="{{ onResend }}" disabled="{{ actionBusy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>Instant match opnieuw</button>
+              <button class="plk-btn" type="button" onClick="{{ onShare }}" disabled="{{ actionBusy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="10.49" x2="15.42" y2="6.51"></line><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line></svg>Opdracht delen</button>
+              <button class="plk-btn" type="button" onClick="{{ onArchive }}" disabled="{{ actionBusy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>{{ archiveLabel }}</button>
+              <sc-if value="{{ showWithdraw }}" hint-placeholder-val="{{ true }}"><button class="plk-btn plk-btn-danger" type="button" onClick="{{ onWithdraw }}" disabled="{{ actionBusy }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>Opdracht intrekken</button></sc-if>
+            </div>
+          </div>
+          <div class="plk-panel">
+            <div class="plk-panel-title">Activiteit</div>
+            <div class="plk-act">
+              <sc-for list="{{ activity }}" as="item" hint-placeholder-count="3"><div class="plk-act-item"><span class="plk-act-dot" aria-hidden="true"></span><span class="plk-act-text"><strong>{{ item.who }}</strong> {{ item.what }}<span class="plk-act-when">{{ item.when }}</span></span></div></sc-for>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </sc-if>
+  </main>
+  <footer class="plk-footer">&copy; 2012&ndash;2026 ProLinker. Houd overzicht over iedere samenwerking.</footer>
+
+  <sc-if value="{{ profileOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ onCloseProfile }}" style="position: fixed; inset: 0; z-index: 60; background: rgba(11,17,25,0.55); backdrop-filter: blur(3px); display: flex; align-items: flex-start; justify-content: center; padding: 44px 20px; overflow-y: auto;">
+      <div onClick="{{ onModalClick }}" role="dialog" aria-modal="true" aria-labelledby="candidate-profile-name" style="position: relative; width: 100%; max-width: 560px; background: var(--surface,#fff); border-radius: 16px; box-shadow: 0 40px 100px -30px rgba(11,17,25,0.6); padding: 30px 36px 38px;">
+        <button onClick="{{ onCloseProfile }}" aria-label="Profiel sluiten" style="position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border,#DCDFE2); background: var(--surface,#fff); color: var(--muted,#424444); font-size: 18px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">&#215;</button>
+
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 6px; text-align: center;">
+          <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            {{ pAvatarEl }}
+            <div style="position: relative; margin-top: 16px; width: 100%; max-width: 300px;">
+              <button onClick="{{ onToggleContact }}" style="width: 100%; height: 44px; border: none; border-radius: 8px; background: #E65F39; color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(230,95,57,0.28);">Contact<span style="display: inline-flex;">{{ contactChevronEl }}</span></button>
+              <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ onCloseContact }}" style="position: fixed; inset: 0; z-index: 1;"></div>
+                <div style="position: absolute; left: 0; right: 0; top: 50px; z-index: 2; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; box-shadow: 0 18px 40px -18px rgba(11,17,25,0.4); overflow: hidden; text-align: left;">
+                  <div onClick="{{ onProfileMessage }}" style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer;">Stuur bericht</div>
+                  <div onClick="{{ onProfileWhatsapp }}" title="De uitnodiging wordt via WhatsApp verstuurd door je ProLinker-assistent" style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hair,#ECEEF0); display: flex; align-items: center; gap: 9px;"><span style="display: inline-flex; flex-shrink: 0;">{{ waEl }}</span>Uitnodigen via WhatsApp</div>
+                  <div onClick="{{ onProfileCopy }}" style="padding: 11px 15px; font-size: 14px; color: var(--text,#152431); cursor: pointer; border-top: 1px solid var(--hair,#ECEEF0);">Profiellink kopi&euml;ren</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="width: 100%; margin-top: 16px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 9px;">
+              <div>
+                <h2 id="candidate-profile-name" style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; color: var(--text,#152431);">{{ pName }}</h2>
+                <div style="margin-top: 8px; display: inline-flex; gap: 2px;">{{ pStarsEl }}</div>
+              </div>
+              <span style="flex-shrink: 0; display: inline-block; padding: 6px 12px; border-radius: 7px; font-size: 13px; font-weight: 600; color: #fff; background: {{ pAvailBg }};">{{ pAvailLabel }}</span>
+            </div>
+            <div style="margin: 20px auto 0; max-width: 400px; display: flex; flex-direction: column; gap: 11px; text-align: left;">
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">Branche</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ pBranche }}</span></div>
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">Locatie</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ pLocation }}</span></div>
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">Beschikbaarheid</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ pHours }}</span></div>
+              <div style="display: flex; gap: 16px;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">Tarief</span><span style="font-size: 14.5px; font-weight: 600; color: var(--text,#152431);">{{ pRate }}</span></div>
+              <div style="display: flex; gap: 16px; align-items: flex-start;"><span style="width: 118px; flex-shrink: 0; font-size: 14.5px; color: var(--muted,#424444);">Skills</span><span style="display: flex; flex-wrap: wrap; gap: 7px;"><sc-for list="{{ pSkills }}" as="sk" hint-placeholder-count="3"><span style="font-size: 12.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--border,#DCDFE2); border-radius: 6px; padding: 3px 9px; white-space: nowrap;">{{ sk.label }}</span></sc-for></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 2px; margin-top: 26px; border-bottom: 1px solid var(--hair,#ECEEF0); justify-content: center; flex-wrap: wrap;">
+          <sc-for list="{{ profileTabs }}" as="tb" hint-placeholder-count="5">
+            <button onClick="{{ tb.on }}" style="background: none; border: none; border-bottom: {{ tb.bar }}; cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: {{ tb.weight }}; color: {{ tb.color }}; padding: 10px 14px; margin-bottom: -1px;">{{ tb.label }}</button>
+          </sc-for>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <sc-if value="{{ pDescActive }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <sc-for list="{{ pParas }}" as="para" hint-placeholder-count="2">
+                <p style="margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--muted,#424444);">{{ para.label }}</p>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ pCvActive }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ pCvHasFile }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 13px; padding: 13px 15px; border: 1px solid var(--border,#DCDFE2); border-radius: 10px; background: var(--surface,#fff); flex-wrap: wrap;">
+                <span aria-hidden="true" style="width: 38px; height: 46px; flex-shrink: 0; border: 1px solid #DCC2BC; border-radius: 6px; background: #FBEDE8; color: #C2401C; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                  <span style="font-size: 7.5px; font-weight: 800; letter-spacing: .06em;">PDF</span>
+                </span>
+                <div style="min-width: 160px; flex: 1;">
+                  <div style="font-size: 13.5px; font-weight: 800; overflow-wrap: anywhere;">{{ pCvFileName }}</div>
+                  <div style="margin-top: 3px; font-size: 11px; color: var(--faint,#8C8E8F);">{{ pCvFileMeta }}</div>
+                  <div style="margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; min-height: 20px; padding: 0 8px; border-radius: 999px; background: var(--wa-bg,#E9F6EE); color: var(--wa-fg,#237A45); font-size: 9.5px; font-weight: 800;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Door AI gescand en goedgekeurd</div>
+                </div>
+                <div style="display: flex; gap: 7px; flex-wrap: wrap;">
+                  <button class="plk-btn plk-btn-sm plk-btn-orange" type="button" onClick="{{ onToggleCvView }}">{{ pCvViewLabel }}</button>
+                  <button class="plk-btn plk-btn-sm" type="button" onClick="{{ onOpenCvTab }}">Open in tabblad</button>
+                </div>
+              </div>
+              <sc-if value="{{ cvViewOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 12px; padding: 22px 24px; border: 1px solid var(--border,#DCDFE2); border-radius: 10px; background: var(--panel,#F8FAFC);">
+                  <sc-for list="{{ pCvLines }}" as="line" hint-placeholder-count="6">
+                    <div style="{{ line.style }}">{{ line.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="margin-top: 10px; display: flex; align-items: flex-start; gap: 7px; color: var(--faint,#8C8E8F); font-size: 11.5px; line-height: 1.5;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Dit cv is bij het uploaden door ProLinker AI gecontroleerd en geanonimiseerd: contactgegevens, volledige namen en externe links zijn afgeschermd{{ pCvRedactions }}.</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ pCvNoFile }}" hint-placeholder-val="{{ false }}"><div style="padding: 30px 20px; text-align: center; color: var(--faint,#8C8E8F); font-size: 13.5px;">Deze professional heeft nog geen cv geüpload.</div></sc-if>
+          </sc-if>
+          <sc-if value="{{ pRatingsActive }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div style="display: inline-flex; padding: 4px; border: 1px solid var(--border,#DCDFE2); border-radius: 10px; background: var(--panel,#F3F4F6); margin-bottom: 16px;">
+                <button onClick="{{ onSideClient }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 7px; background: {{ clientBg }}; color: {{ clientColor }};">Opdrachtgever</button>
+                <button onClick="{{ onSideFreelancer }}" style="border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 7px; background: {{ freelancerBg }}; color: {{ freelancerColor }};">Freelancer</button>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 360px;">
+                <sc-for list="{{ catRows }}" as="cr" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                    <span style="font-size: 14px; color: var(--text,#152431);">{{ cr.label }}</span>
+                    <span style="display: inline-flex; gap: 2px;">{{ cr.starsEl }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ pOtherActive }}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 44px 20px; text-align: center; color: var(--faint,#8C8E8F); font-size: 14.5px;">Hier staat nog niets.</div>
+          </sc-if>
+        </div>
+
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}"><div class="plk-toast" role="status">{{ toast }}</div></sc-if>
+</div>
+<prolinker-footer></prolinker-footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1050}}">
+class Component extends DCLogic {
+  state = { loading: true, error: '', session: null, assignment: null, responses: null, tab: 'all', profileId: null, profileTab: 'desc', ratingSide: 'freelancer', contactOpen: false, cvViewOpen: false, actionBusy: false, toast: '', theme: 'light' };
+
+  componentDidMount() {
+    document.documentElement.setAttribute('lang', 'nl');
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (error) {}
+    if (!window.ProLinkerApp) { this.setState({ loading: false, error: 'De app-service kon niet worden geladen.' }); return; }
+    const session = window.ProLinkerApp.session.require({ next: 'Prolinker Opdracht.dc.html' + window.location.search });
+    if (!session) return;
+    if (session.role !== 'client') { window.location.href = window.ProLinkerApp.routes.assignments; return; }
+    this.setState({ session: session });
+    this.load();
+    this._keyHandler = (event) => { if (event.key === 'Escape') { if (this.state.contactOpen) this.setState({ contactOpen: false }); else if (this.state.profileId) this.closeProfile(); } };
+    window.addEventListener('keydown', this._keyHandler);
+  }
+
+  componentWillUnmount() { if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler); clearTimeout(this._toastTimer); try { document.body.style.overflow = ''; } catch (error) {} }
+
+  assignmentId() {
+    try { return new URLSearchParams(window.location.search).get('assignment') || ''; } catch (error) { return ''; }
+  }
+
+  async load() {
+    const id = this.assignmentId();
+    if (!id) { this.setState({ loading: false, error: 'Er is geen opdracht geselecteerd. Ga terug naar Mijn opdrachten en kies een opdracht.' }); return; }
+    this.setState({ loading: true, error: '' });
+    try {
+      const results = await Promise.all([window.ProLinkerApp.assignments.get(id), window.ProLinkerApp.assignments.responses(id)]);
+      let assignment = results[0];
+      if (assignment && typeof assignment === 'object' && !assignment.id && !assignment.title) assignment = assignment.assignment || assignment.item || assignment.project || assignment;
+      this.setState({ assignment: assignment || {}, responses: results[1], loading: false, error: '' });
+    } catch (error) {
+      this.setState({ loading: false, error: error && error.message ? error.message : 'De opdracht laden is niet gelukt.' });
+    }
+  }
+
+  hash(value) { let hash = 0; const src = String(value || 'plk'); for (let i = 0; i < src.length; i += 1) hash = (hash * 31 + src.charCodeAt(i)) >>> 0; return hash; }
+
+  shortName(value) {
+    const parts = String(value || '').trim().split(/\s+/).filter(Boolean);
+    if (parts.length < 2) return parts[0] || 'Professional';
+    return parts[0] + ' ' + parts[parts.length - 1].charAt(0).toUpperCase() + '.';
+  }
+
+  palette() {
+    return [
+      { bg: '#E9EFF5', fg: '#1E63B0' }, { bg: '#E9F6EF', fg: '#2F9E5B' }, { bg: '#FFE0D6', fg: '#C2691C' },
+      { bg: '#F0EBFB', fg: '#6D4BC7' }, { bg: '#FBE9EF', fg: '#C23C6B' }, { bg: '#E7F6FB', fg: '#1B8AA8' }
+    ];
+  }
+
+  enrich(assignment) {
+    const t = String(assignment.title || '').toLowerCase();
+    let cat = 'Anders';
+    if (/react|developer|website|app|shopify|stack|software/.test(t)) cat = 'Website en Apps';
+    else if (/marketing|ads|automation|seo|campagne|growth|content/.test(t)) cat = 'Marketing en Communicatie';
+    else if (/design|ux|logo|brand/.test(t)) cat = 'Design en Creatie';
+    else if (/finance|controller|boekhoud/.test(t)) cat = 'Finance en Control';
+    else if (/\bai\b|data|engineer|consultant/.test(t)) cat = 'Data en AI';
+    const hash = this.hash(assignment.id || t);
+    const low = 40 + (hash % 8) * 10;
+    const cities = ['Op afstand', 'Amsterdam', 'Utrecht', 'Rotterdam', 'Op afstand', 'Eindhoven'];
+    const loc = assignment.location && assignment.location !== 'Nog niet vermeld' ? assignment.location : cities[hash % cities.length];
+    let date = assignment.createdAt || assignment.updatedAt ? new Date(assignment.createdAt || assignment.updatedAt) : null;
+    if (!date || Number.isNaN(date.getTime())) date = new Date(Date.now() - (30 + (hash % 90)) * 3600000);
+    return { cat: cat, budget: '€ ' + low + ' - € ' + (low + 20 + (hash % 3) * 10) + ' per uur', loc: loc, posted: 'geplaatst ' + date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' }) };
+  }
+
+  statusInfo(assignment) {
+    if (assignment.archived === true) return { label: 'Gearchiveerd', bg: '#ECEEF0', color: '#536474' };
+    const map = { open: ['Actief', '#E9F6EE', '#237A45'], active: ['Actief', '#E9F6EE', '#237A45'], published: ['Actief', '#E9F6EE', '#237A45'], draft: ['Concept', '#ECEEF0', '#536474'], withdrawn: ['Ingetrokken', '#FFE0D6', '#984339'], completed: ['Afgerond', '#E9F6EE', '#237A45'], closed: ['Gesloten', '#ECEEF0', '#536474'] };
+    const status = String(assignment.status || 'open').toLowerCase();
+    const value = map[status] || ['Actief', '#E9F6EE', '#237A45'];
+    return { label: value[0], bg: value[1], color: value[2] };
+  }
+
+  whenLabel(value) {
+    if (!value) return 'onlangs';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'onlangs';
+    const hours = Math.max(0, Math.round((Date.now() - date.getTime()) / 3600000));
+    if (hours < 1) return 'zojuist';
+    if (hours < 24) return hours + ' u geleden';
+    if (hours < 48) return 'gisteren';
+    return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' });
+  }
+
+  channelIconEl(channel) {
+    if (channel === 'whatsapp') return React.createElement('svg', { width: 11, height: 11, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21' }));
+    return React.createElement('svg', { width: 11, height: 11, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' }));
+  }
+
+  avatarEl(candidate, pal, size, fontSize) {
+    const iconSize = Math.round(size * 0.46);
+    const children = [React.createElement('svg', { key: 'icon', width: iconSize, height: iconSize, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, [
+      React.createElement('path', { key: 'body', d: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2' }),
+      React.createElement('circle', { key: 'head', cx: 12, cy: 7, r: 4 })
+    ])];
+    if (candidate.avatarUrl) {
+      children.push(React.createElement('img', {
+        src: candidate.avatarUrl, alt: '', loading: 'lazy', referrerPolicy: 'no-referrer',
+        style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' },
+        onError: (event) => { try { event.target.style.display = 'none'; } catch (error) {} }
+      }));
+    }
+    return React.createElement('span', {
+      style: { width: size + 'px', height: size + 'px', borderRadius: '50%', background: pal.bg, color: pal.fg, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: fontSize + 'px', fontWeight: 700, position: 'relative', overflow: 'hidden', flexShrink: 0 }
+    }, children);
+  }
+
+  starsEl(filled) {
+    const isDark = this.state.theme === 'dark';
+    const empty = isDark ? 'rgba(255,255,255,0.28)' : '#D4D8DE';
+    const star = (color, isFilled, key) => React.createElement('svg', { key: key, width: 14, height: 14, viewBox: '0 0 24 24', fill: isFilled ? color : 'none', stroke: isFilled ? 'none' : color, strokeWidth: 1.7, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('polygon', { points: '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2' }));
+    return React.createElement('span', { style: { display: 'inline-flex', gap: '2px' } }, [0, 1, 2, 3, 4].map((k) => k < filled ? star('#F5B301', true, k) : star(empty, false, k)));
+  }
+
+  toast(message) { clearTimeout(this._toastTimer); this.setState({ toast: message }); this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 2800); }
+  openProfile(id) { this.setState({ profileId: id, profileTab: 'desc', ratingSide: 'freelancer', contactOpen: false, cvViewOpen: false }); try { document.body.style.overflow = 'hidden'; } catch (error) {} }
+
+  formatFileSize(bytes) {
+    const value = Number(bytes) || 0;
+    if (value >= 1048576) return (value / 1048576).toFixed(1).replace('.', ',') + ' MB';
+    return Math.max(1, Math.round(value / 1024)) + ' kB';
+  }
+
+  openCvTab() {
+    const candidate = this.candidateById(this.state.profileId);
+    if (!candidate || !candidate.cvFile) return;
+    try { window.ProLinkerApp.cv.open(candidate.cvFile); }
+    catch (error) { this.toast(error && error.message ? error.message : 'De cv-weergave kon niet worden geopend.'); }
+  }
+
+  cvLineStyle(kind) {
+    const styles = {
+      title: 'font-size:18px;font-weight:800;color:var(--text,#152431);',
+      subtitle: 'margin-top:2px;font-size:13px;color:var(--faint,#8C8E8F);',
+      contact: 'margin-top:9px;font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:.01em;color:var(--muted,#424444);word-break:break-word;line-height:1.7;',
+      header: 'margin-top:16px;padding-bottom:5px;border-bottom:1px solid var(--hair,#ECEEF0);font-family:JetBrains Mono,monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-dark,#24476A);',
+      bullet: 'margin-top:7px;font-size:13.5px;line-height:1.6;color:var(--muted,#424444);',
+      text: 'margin-top:8px;font-size:13.5px;line-height:1.65;color:var(--muted,#424444);'
+    };
+    return styles[kind] || styles.text;
+  }
+
+  parseCv(text) {
+    const lines = String(text || '').split('\n');
+    const blocks = [];
+    let bodyIndex = 0;
+    lines.forEach((raw) => {
+      const line = raw.trim();
+      if (!line) return;
+      let kind = 'text';
+      let label = line;
+      if (line.indexOf('## ') === 0) { kind = 'header'; label = line.slice(3); }
+      else if (line.indexOf('- ') === 0) { kind = 'bullet'; label = '• ' + line.slice(2); }
+      else if (bodyIndex === 0) kind = 'title';
+      else if (bodyIndex === 1) kind = 'subtitle';
+      else if (bodyIndex === 2 && /E-mail|Telefoon|LinkedIn|█/i.test(line)) kind = 'contact';
+      bodyIndex += 1;
+      blocks.push({ label: label, style: this.cvLineStyle(kind) });
+    });
+    return blocks;
+  }
+
+  closeProfile() { this.setState({ profileId: null, contactOpen: false }); try { document.body.style.overflow = ''; } catch (error) {} }
+
+  candidateById(id) {
+    const items = this.state.responses && Array.isArray(this.state.responses.items) ? this.state.responses.items : [];
+    return items.find((item) => item.id === id) || null;
+  }
+
+  candidateIndex(id) {
+    const items = this.state.responses && Array.isArray(this.state.responses.items) ? this.state.responses.items : [];
+    return Math.max(0, items.findIndex((item) => item.id === id));
+  }
+
+  async setCandidateStatus(candidate, next, message) {
+    if (!candidate || this.state.actionBusy) return;
+    this.setState({ actionBusy: true });
+    try {
+      await window.ProLinkerApp.assignments.updateResponseStatus(this.assignmentId(), candidate.id, next);
+      const responses = Object.assign({}, this.state.responses);
+      responses.items = responses.items.map((item) => item.id === candidate.id ? Object.assign({}, item, { status: next }) : item);
+      this.setState({ responses: responses });
+      this.toast(message);
+    } catch (error) { this.toast(error && error.message ? error.message : 'Actie uitvoeren is niet gelukt.'); }
+    this.setState({ actionBusy: false });
+  }
+
+  toggleShortlist(candidate) {
+    const next = candidate.status === 'shortlisted' ? 'new' : 'shortlisted';
+    this.setCandidateStatus(candidate, next, next === 'shortlisted' ? candidate.name.split(' ')[0] + ' staat op je shortlist.' : 'Shortlist bijgewerkt.');
+  }
+
+  toggleReject(candidate) {
+    const next = candidate.status === 'rejected' ? 'new' : 'rejected';
+    this.setCandidateStatus(candidate, next, next === 'rejected' ? candidate.name.split(' ')[0] + ' is afgewezen.' : 'Afwijzing ongedaan gemaakt.');
+  }
+
+  async openConversation(candidate) {
+    if (!candidate || this.state.actionBusy) return;
+    this.setState({ actionBusy: true });
+    try {
+      const thread = await window.ProLinkerApp.messages.ensure({ sender: this.shortName(candidate.name), subject: 'Reactie op ' + String(this.state.assignment && this.state.assignment.title || 'je opdracht'), preview: candidate.preview, at: candidate.respondedAt, channel: candidate.channel, avatarUrl: candidate.avatarUrl, assignmentId: this.assignmentId(), assignmentTitle: String(this.state.assignment && this.state.assignment.title || '') });
+      window.location.href = thread && thread.href ? thread.href : window.ProLinkerApp.routes.messages;
+      return;
+    } catch (error) { this.toast(error && error.message ? error.message : 'Het gesprek openen is niet gelukt.'); }
+    this.setState({ actionBusy: false });
+  }
+
+  whatsappInvite(candidate) {
+    if (!candidate) return;
+    const title = String(this.state.assignment && this.state.assignment.title || 'onze opdracht');
+    const text = 'Hoi ' + candidate.name.split(' ')[0] + ', bedankt voor je reactie op "' + title + '" via ProLinker. Zullen we kort kennismaken?';
+    try { window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener'); } catch (error) {}
+    this.setState({ contactOpen: false });
+  }
+
+  async copyProfileLink(candidate) {
+    if (!candidate) return;
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('kandidaat', candidate.id);
+      await window.ProLinkerApp.referrals.copy(url.href);
+      this.toast('Profiellink gekopieerd naar je klembord.');
+    } catch (error) { this.toast('Kopiëren is niet gelukt.'); }
+    this.setState({ contactOpen: false });
+  }
+
+  async archiveToggle() {
+    const assignment = this.state.assignment;
+    if (!assignment || this.state.actionBusy) return;
+    this.setState({ actionBusy: true });
+    try {
+      await window.ProLinkerApp.assignments.updateStatus(this.assignmentId(), assignment.archived ? 'unarchive' : 'archive');
+      this.toast(assignment.archived ? 'Opdracht teruggezet naar actief.' : 'Opdracht gearchiveerd.');
+      const updated = await window.ProLinkerApp.assignments.get(this.assignmentId());
+      this.setState({ assignment: updated });
+    } catch (error) { this.toast(error && error.message ? error.message : 'Actie uitvoeren is niet gelukt.'); }
+    this.setState({ actionBusy: false });
+  }
+
+  async withdraw() {
+    if (this.state.actionBusy) return;
+    this.setState({ actionBusy: true });
+    try {
+      await window.ProLinkerApp.assignments.updateStatus(this.assignmentId(), 'withdraw');
+      this.toast('Opdracht ingetrokken. Kandidaten ontvangen automatisch bericht.');
+      const updated = await window.ProLinkerApp.assignments.get(this.assignmentId());
+      this.setState({ assignment: updated });
+    } catch (error) { this.toast(error && error.message ? error.message : 'Actie uitvoeren is niet gelukt.'); }
+    this.setState({ actionBusy: false });
+  }
+
+  async share() {
+    try {
+      const link = await window.ProLinkerApp.referrals.createLink({ entityType: 'project', entityId: this.assignmentId(), targetUrl: window.location.href });
+      await window.ProLinkerApp.referrals.copy(link && link.url ? link.url : window.location.href);
+      this.toast('Deel-link gekopieerd naar je klembord.');
+    } catch (error) {
+      try { await window.ProLinkerApp.referrals.copy(window.location.href); this.toast('Link gekopieerd naar je klembord.'); }
+      catch (inner) { this.toast('Kopiëren is niet gelukt.'); }
+    }
+  }
+
+  resend() {
+    const sent = this.state.responses && this.state.responses.stats ? this.state.responses.stats.sent : 0;
+    this.toast('Instant Match zoekt nieuwe kandidaten. Eerder benaderde professionals (' + sent + ') ontvangen geen dubbel bericht.');
+  }
+
+  candidateView(item, index) {
+    const shortlisted = item.status === 'shortlisted';
+    const rejected = item.status === 'rejected';
+    const pal = this.palette()[index % this.palette().length];
+    return Object.assign({}, item, {
+      avatarEl: this.avatarEl(item, pal, 44, 15),
+      displayName: this.shortName(item.name),
+      matchLabel: item.match === null ? 'Match onbekend' : item.match + '% match',
+      matchClass: item.match !== null && item.match >= 85 ? '' : 'low',
+      channelChipClass: item.channel === 'whatsapp' ? 'plk-chip-wa' : 'plk-chip-pf',
+      channelLabel: item.channel === 'whatsapp' ? 'WhatsApp' : 'Platform',
+      channelIconEl: this.channelIconEl(item.channel),
+      showStateChip: shortlisted || rejected,
+      stateChipClass: shortlisted ? 'plk-chip-state' : 'plk-chip-rej',
+      stateLabel: shortlisted ? 'Shortlist' : 'Afgewezen',
+      whenLabel: this.whenLabel(item.respondedAt),
+      isShortlisted: shortlisted,
+      shortlistClass: shortlisted ? 'on' : '',
+      shortlistAria: shortlisted ? item.name + ' van shortlist halen' : item.name + ' op shortlist zetten',
+      rejectAria: rejected ? 'Afwijzing van ' + item.name + ' ongedaan maken' : item.name + ' afwijzen',
+      onProfile: () => this.openProfile(item.id),
+      onMessage: () => this.openConversation(item),
+      onShortlist: () => this.toggleShortlist(item),
+      onReject: () => this.toggleReject(item)
+    });
+  }
+
+  renderVals() {
+    const assignment = this.state.assignment || {};
+    const responses = this.state.responses || { stats: {}, items: [] };
+    const stats = responses.stats || {};
+    const items = Array.isArray(responses.items) ? responses.items : [];
+    const enriched = this.state.assignment ? this.enrich(assignment) : { cat: '', budget: '', loc: '', posted: '' };
+    const status = this.statusInfo(assignment);
+    const isDark = this.state.theme === 'dark';
+    const counts = {
+      all: items.length,
+      newer: items.filter((item) => item.status === 'new').length,
+      short: items.filter((item) => item.status === 'shortlisted').length,
+      rej: items.filter((item) => item.status === 'rejected').length
+    };
+    const tab = this.state.tab;
+    const filtered = items.filter((item) => tab === 'all' ? true : (tab === 'new' ? item.status === 'new' : (tab === 'short' ? item.status === 'shortlisted' : item.status === 'rejected')));
+    const cands = filtered.map((item) => this.candidateView(item, items.indexOf(item)));
+    const activity = items.slice(0, 3).map((item) => ({
+      who: item.name.split(' ')[0],
+      what: 'reageerde via ' + (item.channel === 'whatsapp' ? 'WhatsApp' : 'het platform'),
+      when: this.whenLabel(item.respondedAt)
+    })).concat([{ who: 'Instant Match', what: 'verstuurd naar ' + (stats.sent || 0) + ' kandidaten', when: enriched.posted.replace('geplaatst ', '') }]);
+    const emptyByTab = { all: ['Nog geen reacties', 'Zodra kandidaten via WhatsApp of het platform reageren, verschijnen ze hier automatisch.'], new: ['Geen nieuwe reacties', 'Alle reacties zijn beoordeeld. Bekijk je shortlist of wacht op nieuwe kandidaten.'], short: ['Nog niemand op de shortlist', 'Markeer kansrijke kandidaten met de ster om ze hier terug te vinden.'], rej: ['Geen afgewezen kandidaten', 'Afgewezen kandidaten verschijnen hier en zijn altijd terug te zetten.'] };
+    const empty = emptyByTab[tab] || emptyByTab.all;
+
+    const profile = this.state.profileId ? this.candidateById(this.state.profileId) : null;
+    const cvFile = profile && profile.cvFile && profile.cvFile.status === 'approved' ? profile.cvFile : null;
+    const pal = profile ? this.palette()[this.candidateIndex(profile.id) % this.palette().length] : this.palette()[0];
+    const availableNow = profile ? /per direct/i.test(profile.availability || '') : false;
+    const profileTab = this.state.profileTab;
+    const tabDefs = [['desc', 'Omschrijving'], ['ratings', 'Reviews'], ['refs', 'Referenties'], ['cv', 'CV'], ['portfolio', 'Portfolio']];
+    const profileTabs = profile ? tabDefs.map((td) => {
+      const on = profileTab === td[0];
+      return { label: td[1], on: () => this.setState({ profileTab: td[0] }), color: on ? 'var(--blue-dark,#24476A)' : 'var(--muted,#424444)', weight: on ? 700 : 500, bar: on ? '2px solid #2F5B85' : '2px solid transparent' };
+    }) : [];
+    const profileHash = profile ? this.hash(profile.id) : 0;
+    const baseCat = profile ? [profile.rating || 4, Math.max(3, (profile.rating || 4) - (profileHash % 2)), profile.rating || 4, Math.max(3, (profile.rating || 4) - ((profileHash >> 2) % 2))] : [4, 4, 4, 4];
+    const catVals = this.state.ratingSide === 'client' ? baseCat.map((v) => Math.max(3, v - 1)) : baseCat;
+    const catRows = profile ? ['Kwaliteit', 'Communicatie', 'Stiptheid', 'Professionaliteit'].map((label, k) => ({ label: label, starsEl: this.starsEl(catVals[k]) })) : [];
+    const sideActive = { background: '#2F5B85', color: '#fff' };
+    const sideIdle = { background: 'transparent', color: isDark ? 'rgba(255,255,255,0.72)' : '#424444' };
+
+    return {
+      crumbTitle: String(assignment.title || 'Opdracht'),
+      loading: this.state.loading, hasError: !!this.state.error, errorMessage: this.state.error, onRetry: () => this.load(),
+      ready: !this.state.loading && !this.state.error,
+      jobTitle: String(assignment.title || 'Opdracht zonder titel'),
+      statusLabel: status.label, statusBg: status.bg, statusColor: status.color,
+      jobMeta: [enriched.cat, enriched.budget, enriched.loc, enriched.posted].filter(Boolean).join(' · '),
+      editHref: 'Prolinker Brief.dc.html?assignment=' + encodeURIComponent(this.assignmentId()),
+      matchesHref: 'Prolinker Results.dc.html?assignment=' + encodeURIComponent(this.assignmentId()) + '&q=' + encodeURIComponent(String(assignment.title || '')),
+      messagesHref: window.ProLinkerApp ? window.ProLinkerApp.routes.messages : 'Prolinker Berichten.dc.html',
+      onBestMatch: () => { const best = items.reduce((result, item) => item.match !== null && (result === null || item.match > result.match) ? item : result, null); if (best) this.openProfile(best.id); },
+      hasBestMatch: items.length > 0,
+      statSent: stats.sent || 0,
+      statResponses: counts.all,
+      statWhatsapp: stats.whatsapp || 0,
+      statPlatform: stats.platform || 0,
+      statViews: stats.views || 0,
+      statBestMatch: stats.bestMatch !== null && stats.bestMatch !== undefined ? stats.bestMatch + '%' : '—',
+      statBestName: stats.bestMatchName ? this.shortName(stats.bestMatchName) : 'nog geen reacties',
+      tabAllClass: tab === 'all' ? 'active' : '', tabNewClass: tab === 'new' ? 'active' : '', tabShortClass: tab === 'short' ? 'active' : '', tabRejClass: tab === 'rej' ? 'active' : '',
+      tabAllSelected: tab === 'all', tabNewSelected: tab === 'new', tabShortSelected: tab === 'short', tabRejSelected: tab === 'rej',
+      onTabAll: () => this.setState({ tab: 'all' }), onTabNew: () => this.setState({ tab: 'new' }), onTabShort: () => this.setState({ tab: 'short' }), onTabRej: () => this.setState({ tab: 'rej' }),
+      countAll: counts.all, countNew: counts.newer, countShort: counts.short, countRej: counts.rej,
+      cands: cands, hasCands: cands.length > 0, noCands: cands.length === 0,
+      emptyTitle: empty[0], emptyText: empty[1],
+      activity: activity,
+      onResend: () => this.resend(), onShare: () => this.share(), onArchive: () => this.archiveToggle(), onWithdraw: () => this.withdraw(),
+      archiveLabel: assignment.archived ? 'Terugzetten naar actief' : 'Archiveren',
+      showWithdraw: !assignment.archived && String(assignment.status || 'open').toLowerCase() !== 'withdrawn',
+      actionBusy: this.state.actionBusy,
+      profileOpen: !!profile,
+      pAvatarEl: profile ? this.avatarEl(profile, pal, 96, 34) : null,
+      pName: profile ? this.shortName(profile.name) : '',
+      pStarsEl: profile ? this.starsEl(profile.rating || 4) : null,
+      pAvailBg: availableNow ? '#2FA35B' : '#E65F39',
+      pAvailLabel: profile ? (availableNow ? 'Beschikbaar' : (profile.availability || 'In overleg')) : '',
+      pBranche: profile ? (profile.branche || 'Anders') : '',
+      pLocation: profile ? profile.location : '',
+      pHours: profile ? ((profile.hours ? profile.hours + ' uur per week' : 'In overleg')) : '',
+      pRate: profile ? (profile.rateLabel || 'In overleg') : '',
+      pSkills: profile ? profile.skills.map((skill) => ({ label: skill })) : [],
+      profileTabs: profileTabs,
+      pDescActive: profileTab === 'desc', pCvActive: profileTab === 'cv', pRatingsActive: profileTab === 'ratings',
+      pOtherActive: profileTab === 'refs' || profileTab === 'portfolio',
+      pParas: profile ? [profile.bio, profile.focus].filter(Boolean).map((line) => ({ label: line })) : [],
+      pCvHasFile: !!cvFile,
+      pCvNoFile: !cvFile,
+      pCvFileName: cvFile ? cvFile.fileName : '',
+      pCvFileMeta: cvFile ? this.formatFileSize(cvFile.size) + ' · geüpload ' + this.whenLabel(cvFile.uploadedAt) : '',
+      pCvViewLabel: this.state.cvViewOpen ? 'Verberg cv' : 'Bekijk cv',
+      onToggleCvView: () => this.setState({ cvViewOpen: !this.state.cvViewOpen }),
+      onOpenCvTab: () => this.openCvTab(),
+      cvViewOpen: this.state.cvViewOpen,
+      pCvLines: cvFile && this.state.cvViewOpen ? this.parseCv(cvFile.text) : [],
+      pCvRedactions: cvFile && cvFile.redactions ? ' (' + cvFile.redactions + ' gegevens)' : '',
+      catRows: catRows,
+      onSideClient: () => this.setState({ ratingSide: 'client' }), onSideFreelancer: () => this.setState({ ratingSide: 'freelancer' }),
+      clientBg: this.state.ratingSide === 'client' ? sideActive.background : sideIdle.background,
+      clientColor: this.state.ratingSide === 'client' ? sideActive.color : sideIdle.color,
+      freelancerBg: this.state.ratingSide === 'freelancer' ? sideActive.background : sideIdle.background,
+      freelancerColor: this.state.ratingSide === 'freelancer' ? sideActive.color : sideIdle.color,
+      contactOpen: this.state.contactOpen,
+      onToggleContact: () => this.setState({ contactOpen: !this.state.contactOpen }),
+      onCloseContact: () => this.setState({ contactOpen: false }),
+      contactChevronEl: React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: '#fff', strokeWidth: 2, strokeLinecap: 'round', strokeLinejoin: 'round', style: { transform: this.state.contactOpen ? 'rotate(180deg)' : 'rotate(0deg)' } }, React.createElement('polyline', { points: '6 9 12 15 18 9' })),
+      waEl: React.createElement('svg', { width: 15, height: 15, viewBox: '0 0 24 24', fill: '#25D366' }, React.createElement('path', { d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' })),
+      onProfileMessage: () => { const candidate = this.candidateById(this.state.profileId); if (candidate) this.openConversation(candidate); },
+      onProfileWhatsapp: () => this.whatsappInvite(this.candidateById(this.state.profileId)),
+      onProfileCopy: () => this.copyProfileLink(this.candidateById(this.state.profileId)),
+      onCloseProfile: () => this.closeProfile(), onModalClick: (event) => event.stopPropagation(),
+      showToast: !!this.state.toast, toast: this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

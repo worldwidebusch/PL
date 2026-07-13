@@ -6,403 +6,280 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F3F4F6; --text:#152431; --muted:#424444; --faint:#8C8E8F; --surface:#ffffff; --panel:#F3F4F6; --border:#DCDFE2; --hairline:#ECEEF0; --glass:rgba(255,255,255,0.82); --blue:#2F5B85; --blue-dark:#24476A; --orange:#E65F39; }
-  :root[data-theme="dark"] { --bg:#0F1A23; --text:#ffffff; --muted:rgba(255,255,255,0.72); --faint:rgba(255,255,255,0.52); --surface:#152431; --panel:#0F1A23; --border:#2C3E4E; --hairline:#1C2C3A; --glass:rgba(13,20,27,0.72); }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body { font-family: 'Lato', system-ui, sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background 0.25s ease; }
-  a { color: #2F5B85; text-decoration: none; }
-  a:hover { color: #24476A; }
-  ::selection { background: #B0D8FE; }
-  @keyframes plk-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  button, a { transition: transform 0.16s cubic-bezier(0.22,0.7,0.24,1), box-shadow 0.22s ease, background-color 0.18s ease, border-color 0.16s ease, color 0.15s ease; }
-  button { -webkit-tap-highlight-color: transparent; }
-  button:active { transform: scale(0.955) !important; }
-  a:active { transform: scale(0.985); }
-  button:focus-visible, a:focus-visible { outline: 3px solid rgba(47,91,133,0.22); outline-offset: 2px; }
-  .plk-shell-header { height: 58px; background: var(--surface,#fff); border-bottom: 1px solid var(--border,#DCDFE2); position: relative; z-index: 50; }
-  .plk-shell-inner { max-width: 1240px; height: 100%; margin: 0 auto; padding: 0 22px; display: flex; align-items: center; gap: 24px; }
-  .plk-logo { width: 112px; height: auto; display: block; }
-  .plk-header-links { margin-left: auto; display: flex; align-items: center; gap: 22px; font-size: 13px; font-weight: 550; }
-  .plk-header-link { color: var(--text,#152431); }
-  .plk-header-link:hover { color: var(--blue,#2F5B85); }
-  .plk-account-wrap { position: relative; margin-left: auto; }
-  .plk-account-btn { min-height: 38px; border: 0; background: transparent; padding: 4px 6px; display: flex; align-items: center; gap: 9px; color: var(--text,#152431); cursor: pointer; }
-  .plk-avatar { width: 31px; height: 31px; border-radius: 50%; background: #E9EFF5; color: var(--blue-dark,#24476A); border: 1px solid #C9DEEF; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
-  .plk-account-menu { position: absolute; right: 0; top: 44px; width: 278px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 8px; box-shadow: 0 18px 42px rgba(16,39,58,0.16); overflow: hidden; z-index: 70; }
-  .plk-menu-link { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--text,#152431); }
-  .plk-menu-link:hover { background: var(--panel,#F3F4F6) !important; color: var(--text,#152431); }
-  .plk-menu-icon { width: 28px; height: 28px; border-radius: 6px; background: #E9EFF5; color: var(--blue-dark,#24476A); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
-  .plk-menu-label { display: block; font-size: 13px; font-weight: 650; line-height: 1.2; }
-  .plk-menu-desc { display: block; margin-top: 2px; color: var(--faint,#8C8E8F); font-size: 10.5px; line-height: 1.25; }
-  .plk-menu-action { min-height: 42px; border: 0; background: var(--surface,#fff); color: var(--muted,#424444); cursor: pointer; font-size: 11px; font-weight: 650; }
-  .plk-menu-action:hover { background: var(--panel,#F3F4F6); }
-  .plk-menu-scrim:active { transform: none !important; }
-  .plk-ref-row:last-child { border-bottom: none !important; }
-  @media (max-width: 850px) { .plk-header-links { display: none; } }
-  @media (max-width: 660px) {
-    .plk-earnings-main { padding: 20px 14px 64px !important; }
-    .plk-ledger-head { display: none !important; }
-    .plk-ref-row { grid-template-columns: 42px 1fr auto !important; gap: 10px !important; }
-    .plk-ref-gross { grid-column: 2; }
-    .plk-ref-status { grid-column: 3; grid-row: 1; }
-    .plk-ref-earned { grid-column: 3; grid-row: 2; }
-    .plk-share-line { align-items: stretch !important; }
-    .plk-share-actions { width: 100%; }
-    .plk-share-actions > * { flex: 1; }
-  }
-  @media (max-width: 560px) {
-    .plk-shell-header { height: 54px; }
-    .plk-shell-inner { padding: 0 14px; }
-    .plk-logo { width: 100px; }
-    .plk-account-name { display: none; }
-    .plk-account-menu { position: fixed; left: 10px; right: 10px; top: 60px; width: auto; max-height: calc(100vh - 72px); overflow: auto; }
-  }
-  .plk-vtab { min-height: 44px; padding: 0 15px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--muted,#424444); cursor: pointer; font-family: inherit; font-size: 13.5px; font-weight: 650; }
-  .plk-vtab:hover { color: var(--text,#152431); }
-  .plk-vtab[data-active="true"] { color: var(--blue-dark,#24476A); border-bottom-color: #2F5B85; }
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  :root{--bg:#F3F4F6;--text:#152431;--muted:#424444;--faint:#8C8E8F;--surface:#fff;--panel:#F8FAFC;--band:#EEF1F4;--border:#DCDFE2;--hair:#ECEEF0;--glass:rgba(255,255,255,.82);--blue:#2F5B85;--blue-dark:#24476A;--orange:#E65F39;--green:#27834A}
+  :root[data-theme="dark"]{--bg:#0F1A23;--text:#F3F4F6;--muted:#B4C1CC;--faint:#8C8E8F;--surface:#152431;--panel:#0F1A23;--band:#101E2A;--border:#2C3E4E;--hair:#1C2C3A;--glass:rgba(13,20,27,.72)}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--bg);color:var(--text);font-family:'Lato',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--blue);text-decoration:none}a:hover{color:var(--blue-dark)}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible{outline:3px solid rgba(47,91,133,.23);outline-offset:2px}
+  @keyframes plk-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .plk-main{max-width:1180px;width:100%;margin:0 auto;padding:18px 24px 90px;flex:1}
+  main.plk-main{padding-top:78px !important}
+  .plk-grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:start}
+  .plk-card{border:1px solid var(--border);border-radius:12px;background:var(--surface);box-shadow:0 16px 36px -30px rgba(21,36,49,.55)}
+  .plk-balance{padding:24px 24px 22px;animation:plk-rise .5s ease both}
+  .plk-balance-label{font-size:14.5px;font-weight:750}
+  .plk-balance-value{margin-top:4px;font-family:'Josefin Sans','Lato',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .plk-balance-usd{margin-left:5px;color:var(--faint);font-size:12px;font-weight:400}
+  .plk-btn-pay{display:flex;align-items:center;justify-content:center;width:100%;min-height:42px;margin-top:22px;padding:0 16px;border:1px solid #C94F2D;border-radius:6px;background:var(--orange);color:#fff;cursor:pointer;font-size:14px;font-weight:700}
+  .plk-btn-pay:hover{background:#D14F2B}
+  .plk-btn-pay.small{width:auto;min-height:36px;margin-top:0;font-size:13px}
+  .plk-referral{margin-top:18px;padding:20px 22px;animation:plk-rise .5s ease .06s both}
+  .plk-referral-title{font-size:14px;font-weight:750}
+  .plk-referral-copy{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.55}
+  .plk-referral-link{display:block;margin-top:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:9px 11px;border:1px solid var(--hair);border-radius:8px;background:var(--panel);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10.5px}
+  .plk-referral-actions{margin-top:9px;display:flex;gap:8px}
+  .plk-btn{min-height:34px;padding:0 12px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);cursor:pointer;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:1}
+  .plk-btn:hover{border-color:#B0D8FE;color:var(--blue-dark)}
+  .plk-payments{animation:plk-rise .5s ease .05s both;overflow:hidden}
+  .plk-payments-head{padding:24px 28px 20px}
+  .plk-payments-title{margin:0;font-family:'Josefin Sans','Lato',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .plk-payments-intro{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+  .plk-txn{display:grid;grid-template-columns:112px minmax(0,1fr) auto 150px 22px 30px;gap:16px;align-items:center;padding:17px 22px 17px 28px;border-top:1px solid var(--hair)}
+  .plk-txn-date{font-size:13px;font-weight:700;color:var(--blue-dark)}
+  .plk-txn-title{font-size:13.5px;font-weight:650;line-height:1.35}
+  .plk-txn-sub{margin-top:3px;color:var(--faint);font-size:12.5px}
+  .plk-txn-mid{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:96px}
+  .plk-pill{display:inline-flex;align-items:center;min-height:22px;padding:0 10px;border-radius:999px;font-size:10.5px;font-weight:700}
+  .plk-pill-wait{background:#FBEFD9;color:#C08A2D;border:1px solid #F2DDB2}
+  .plk-pill-done{background:#E9F6EE;color:#4CAF7D;border:1px solid #CDEBDA}
+  .plk-pill-fail{background:#FFE0D6;color:#984339;border:1px solid #F5C4B3}
+  :root[data-theme="dark"] .plk-pill-wait{background:#33270F;color:#EFC073;border-color:#57431C}
+  :root[data-theme="dark"] .plk-pill-done{background:#173226;color:#7ED8A4;border-color:#245C40}
+  .plk-txn-amount{text-align:right;font-size:13.5px;font-weight:750;white-space:nowrap}
+  .plk-txn-usd{display:block;margin-top:2px;color:var(--faint);font-size:11px;font-weight:400}
+  .plk-txn-dir{color:#4CAF7D;font-size:15px;font-weight:700;text-align:center}
+  .plk-txn-dir.out{color:var(--faint)}
+  .plk-txn-toggle{width:30px;height:30px;border:0;border-radius:7px;background:transparent;color:var(--faint);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+  .plk-txn-toggle:hover{background:var(--panel);color:var(--blue-dark)}
+  .plk-txn-detail{padding:20px 28px 22px;border-top:1px solid var(--hair);background:var(--band)}
+  .plk-detail-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,340px);gap:22px;align-items:start}
+  .plk-detail-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:10px;align-items:center;margin-top:10px}
+  .plk-detail-row:first-child{margin-top:0}
+  .plk-detail-label{font-size:12.5px;font-weight:750}
+  .plk-detail-value{font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+  .plk-detail-pay{margin-top:14px}
+  .plk-totals{padding:14px 16px;border:1px solid var(--hair);border-radius:8px;background:var(--surface)}
+  .plk-totals-row{display:flex;justify-content:space-between;gap:14px;font-size:12.5px;color:var(--muted);padding:3px 0}
+  .plk-totals-divider{height:1px;margin:9px 0;background:var(--hair)}
+  .plk-totals-total{display:flex;justify-content:space-between;gap:14px;font-size:13px;font-weight:750;color:var(--text)}
+  .plk-empty{padding:44px 24px;border-top:1px solid var(--hair);text-align:center;color:var(--faint);font-size:13px}
+  .plk-error{margin-bottom:14px;padding:12px 14px;border:1px solid #FF9D82;border-radius:8px;background:#FFE9E2;color:#8B3227;font-size:12.5px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+  .plk-loading{padding:48px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--muted);text-align:center;font-size:13px}
+  .plk-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;max-width:calc(100vw - 28px);padding:10px 15px;border-radius:7px;background:#152431;color:#fff;box-shadow:0 10px 32px rgba(16,39,58,.28);font-size:12px;font-weight:650}
+  @media(max-width:900px){.plk-grid{grid-template-columns:1fr}.plk-txn{grid-template-columns:96px minmax(0,1fr) auto 30px;row-gap:10px}.plk-txn-amount{grid-column:2;text-align:left}.plk-txn-dir{display:none}.plk-txn-mid{grid-column:3;grid-row:1}.plk-txn-toggle{grid-column:4;grid-row:1}.plk-detail-grid{grid-template-columns:1fr}}
+  @media(max-width:560px){.plk-main{padding:72px 14px 60px}.plk-payments-head{padding:18px 16px 16px}.plk-txn{padding:15px 14px}.plk-txn-detail{padding:16px 14px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="prolinker-theme.css">
-<link rel="icon" type="image/png" href="assets/prolinker-mark.png">
-<title>Verdiensten &amp; referrals | ProLinker</title>
-<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/prolinker-favicon.png">
+<title>Mijn transacties | ProLinker</title>
+<meta name="robots" content="noindex,nofollow">
 </helmet>
 
-<div data-screen-label="Verdiensten" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: 'Lato', system-ui, sans-serif; display: flex; flex-direction: column;">
-
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+<div style="min-height:100vh;display:flex;flex-direction:column;">
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;position:absolute;top:0;left:0;right:0;z-index:50;">
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="earnings"></prolinker-account-menu></div>
   </header>
 
-  <main class="plk-earnings-main" style="max-width: 920px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
-    <div style="animation: plk-rise 0.5s ease both;">
-      <h1 style="margin: 0; font-size: 30px; font-weight: 750; letter-spacing: -0.025em;">{{ pageTitle }}</h1>
-      <p style="margin: 8px 0 0; max-width: 650px; color: var(--muted,#424444); font-size: 15px; line-height: 1.55;">{{ pageSubtitle }}</p>
-    </div>
+  <main class="plk-main">
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}"><div class="plk-loading" role="status">Je transacties worden geladen...</div></sc-if>
+    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><div class="plk-error" role="alert"><span>{{ errorMessage }}</span><button class="plk-btn" style="flex:0 0 auto;" type="button" onClick="{{ onRetry }}">Opnieuw proberen</button></div></sc-if>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 0; margin-top: 26px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); overflow: hidden; animation: plk-rise 0.5s ease 0.05s both;">
-      <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}">
-        <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPaid }}</span>
-          <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ workPaid }}</span>
-        </div>
-        <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.workPending }}</span>
-          <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ workPending }}</span>
-        </div>
-      </sc-if>
-      <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPaid }}</span>
-        <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600; color: #087A55;">{{ referralPaid }}</span>
-      </div>
-      <div style="padding: 19px 20px; border-right: 1px solid var(--hairline,#ECEEF0); display: flex; flex-direction: column; gap: 6px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.refPending }}</span>
-        <span style="font-family: 'Josefin Sans', 'Lato', sans-serif; font-size: 26px; font-weight: 600;">{{ referralPending }}</span>
-      </div>
-    </div>
-    <sc-if value="{{ earningsErrorVisible }}" hint-placeholder-val="{{ false }}"><div role="alert" style="margin-top: 10px; padding: 10px 12px; border: 1px solid #FF9D82; border-radius: 8px; background: #FFE9E2; color: #8B3227; font-size: 12.5px;">{{ earningsError }}</div></sc-if>
+    <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+      <div class="plk-grid">
+        <div>
+          <section class="plk-card plk-balance" aria-label="Saldo">
+            <div class="plk-balance-label">Je saldo:</div>
+            <div class="plk-balance-value">{{ balanceLabel }}</div>
+            <div class="plk-balance-label" style="margin-top:20px;">Aanmeld bonus:</div>
+            <div class="plk-balance-value" style="font-size:19px;">{{ bonusLabel }}<span class="plk-balance-usd">{{ bonusUsd }}</span></div>
+            <button class="plk-btn-pay" type="button" onClick="{{ onPayout }}">Uitbetaling</button>
+          </section>
 
-    <section style="margin-top: 20px; border: 1px solid var(--border,#DCDFE2); border-radius: 14px; background: var(--surface,#fff); box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); overflow: hidden; animation: plk-rise 0.5s ease 0.1s both;">
-      <div style="display: flex; align-items: center; gap: 2px; padding: 8px 12px 0; border-bottom: 1px solid var(--hairline,#ECEEF0);">
-        <sc-if value="{{ showFreelancerPayouts }}" hint-placeholder-val="{{ true }}"><button type="button" role="tab" class="plk-vtab" data-active="{{ tabPayouts }}" onClick="{{ onTabPayouts }}">{{ t.payouts }}</button></sc-if>
-        <button type="button" role="tab" class="plk-vtab" data-active="{{ tabReferrals }}" onClick="{{ onTabReferrals }}">{{ t.referrals }}</button>
-        <button type="button" role="tab" class="plk-vtab" data-active="{{ tabShare }}" onClick="{{ onTabShare }}">Delen &amp; verdienen</button>
-        <span style="margin-left: auto; padding: 5px 9px; border: 1px solid rgba(47,91,133,0.2); border-radius: 7px; background: rgba(47,91,133,0.07); color: #2F5B85; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;">2% referral</span>
-      </div>
-      <sc-if value="{{ tabPayouts }}" hint-placeholder-val="{{ false }}">
-        <div role="tabpanel">
-          <sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
-            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
-              <div style="flex-shrink: 0; width: 38px; height: 38px; border-radius: 8px; background: {{ p.mBg }}; color: {{ p.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">{{ p.mLetter }}</div>
-              <div style="flex: 1; min-width: 0;"><div style="font-size: 14px; font-weight: 650;">{{ p.project }}</div><div style="margin-top: 2px; font-size: 12.5px; color: var(--faint,#8C8E8F);">{{ p.client }} &middot; {{ p.date }}</div></div>
-              <span style="flex-shrink: 0; padding: 4px 9px; border-radius: 7px; font-size: 11.5px; font-weight: 650; background: {{ p.statusBg }}; color: {{ p.statusColor }};">{{ p.statusLabel }}</span>
-              <span style="flex-shrink: 0; width: 82px; text-align: right; font-size: 14.5px; font-weight: 700;">{{ p.amount }}</span>
+          <section class="plk-card plk-referral" id="referral" aria-label="Referralprogramma">
+            <div class="plk-referral-title">Verdien 2% met referrals</div>
+            <p class="plk-referral-copy">Nodig freelancers of opdrachtgevers uit met jouw link en ontvang 2% van hun eerste opdrachtwaarde als bonus op je saldo.</p>
+            <span class="plk-referral-link" title="{{ referralLink }}">{{ referralLink }}</span>
+            <div class="plk-referral-actions">
+              <button class="plk-btn" type="button" onClick="{{ onCopy }}">{{ copyLabel }}</button>
+              <a class="plk-btn" href="{{ waShareHref }}" target="_blank" rel="noopener">WhatsApp</a>
             </div>
-          </sc-for>
-          <div style="display: flex; justify-content: flex-end; padding: 12px 18px; background: var(--panel,#F3F4F6);"><span style="font-size: 12.5px; font-weight: 700;">{{ t.total }}: &euro; 5.530</span></div>
+          </section>
         </div>
-      </sc-if>
-      <sc-if value="{{ tabReferrals }}" hint-placeholder-val="{{ true }}">
-        <div role="tabpanel">
-        <div class="plk-ledger-head" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; padding: 10px 18px; background: var(--panel,#F3F4F6); border-bottom: 1px solid var(--hairline,#ECEEF0); color: var(--faint,#8C8E8F); font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase;"><span></span><span>{{ t.freelancer }}</span><span>{{ t.grossValue }}</span><span>{{ t.status }}</span><span style="text-align:right;">{{ t.yourTwoPercent }}</span></div>
-        <sc-for list="{{ referrals }}" as="r" hint-placeholder-count="3">
-          <div class="plk-ref-row" style="display: grid; grid-template-columns: 42px minmax(150px,1.5fr) minmax(120px,1fr) 72px 100px; gap: 12px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--hairline,#ECEEF0);">
-            <div style="width: 38px; height: 38px; border-radius: 8px; background: {{ r.mBg }}; color: {{ r.mColor }}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">{{ r.initials }}</div>
-            <div><div style="font-size: 14px; font-weight: 650;">{{ r.name }}</div><div style="margin-top: 2px; font-size: 12px; color: var(--faint,#8C8E8F);">{{ r.meta }}</div></div>
-            <div class="plk-ref-gross" style="font-size: 13px; color: var(--muted,#424444);">{{ r.grossLabel }}</div>
-            <span class="plk-ref-status" style="justify-self: start; padding: 4px 8px; border-radius: 7px; font-size: 11px; font-weight: 650; background: {{ r.statusBg }}; color: {{ r.statusColor }};">{{ r.statusLabel }}</span>
-            <span class="plk-ref-earned" style="text-align: right; font-size: 14.5px; font-weight: 750;">{{ r.earnedLabel }}</span>
-          </div>
-        </sc-for>
-        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; padding: 13px 18px; background: var(--panel,#F3F4F6); font-size: 12.5px;"><span>{{ t.paid }}: <b>{{ referralPaid }}</b></span><span>{{ t.pending }}: <b>{{ referralPending }}</b></span></div>
-        </div>
-      </sc-if>
-      <sc-if value="{{ tabShare }}" hint-placeholder-val="{{ false }}">
-        <div role="tabpanel" style="padding: 26px 22px 24px; text-align: center;">
-          <p style="max-width: 460px; margin: 0 auto; color: var(--muted,#424444); font-size: 13.5px; line-height: 1.55;">{{ t.refExplanation }}</p>
-          <div class="plk-share-line" style="max-width: 560px; margin: 18px auto 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
-          <span title="{{ referralLink }}" style="flex: 1; min-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted,#424444); background: var(--panel,#F3F4F6); border: 1px solid var(--hairline,#ECEEF0); border-radius: 8px; padding: 10px 12px;">{{ referralLink }}</span>
-          <div class="plk-share-actions" style="display: flex; gap: 8px;">
-            <button onClick="{{ onCopy }}" style="height: 38px; padding: 0 14px; border: 1px solid {{ copyBorder }}; border-radius: 8px; background: {{ copyBg }}; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 650; color: {{ copyColor }};">{{ copyLabel }}</button>
-            <a href="{{ waShareHref }}" target="_blank" rel="noopener" title="{{ t.shareWa }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 38px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); font-size: 13px; font-weight: 650; color: var(--text,#152431);"><span style="display: inline-flex;">{{ waEl }}</span>{{ t.share }}</a>
-          </div>
-          </div>
-        </div>
-      </sc-if>
-    </section>
-    <p style="margin: 10px 2px 0; color: var(--faint,#8C8E8F); font-size: 12px; line-height: 1.5;">{{ t.prototypeNote }}</p>
 
+        <section class="plk-card plk-payments" aria-label="Betalingen">
+          <div class="plk-payments-head">
+            <h1 class="plk-payments-title">Betalingen</h1>
+            <p class="plk-payments-intro">Hier vind je jouw transacties nadat je bent ingehuurd voor een project of gaat betalen voor de inhuur van een professional.<br>Je kan op elk moment een uitbetaling van je saldo aanvragen. Wij storten het geld binnen 3 werkdagen op je opgegeven bankrekening.<br>Om uren goed te keuren en de details van je project te bekijken, ga je naar "Mijn opdrachten" en klik je op de titel van een lopende opdracht.</p>
+          </div>
+          <sc-if value="{{ hasTxns }}" hint-placeholder-val="{{ true }}"><sc-for list="{{ txns }}" as="txn" hint-placeholder-count="5">
+            <div class="plk-txn">
+              <span class="plk-txn-date">{{ txn.dateLabel }}</span>
+              <span style="min-width:0;">
+                <span class="plk-txn-title" style="display:block;">{{ txn.title }}<sc-if value="{{ txn.hasInfo }}" hint-placeholder-val="{{ false }}"> <a href="{{ txn.infoHref }}" style="color:var(--orange);text-decoration:underline;font-weight:650;">{{ txn.infoLabel }}</a></sc-if></span>
+                <sc-if value="{{ txn.hasSub }}" hint-placeholder-val="{{ false }}"><span class="plk-txn-sub" style="display:block;">{{ txn.subtitle }}</span></sc-if>
+              </span>
+              <span class="plk-txn-mid">
+                <span class="plk-pill {{ txn.pillClass }}">{{ txn.statusLabel }}</span>
+                <sc-if value="{{ txn.payable }}" hint-placeholder-val="{{ false }}"><button class="plk-btn-pay small" type="button" onClick="{{ txn.onPay }}">Betalen</button></sc-if>
+              </span>
+              <span class="plk-txn-amount">{{ txn.amountLabel }}<span class="plk-txn-usd">{{ txn.usdLabel }}</span></span>
+              <span class="plk-txn-dir {{ txn.dirClass }}" aria-hidden="true">{{ txn.dirSymbol }}</span>
+              <button class="plk-txn-toggle" type="button" onClick="{{ txn.onToggle }}" aria-expanded="{{ txn.open }}" aria-label="{{ txn.toggleAria }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ txn.chevron }};"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+            </div>
+            <sc-if value="{{ txn.open }}" hint-placeholder-val="{{ false }}">
+              <div class="plk-txn-detail">
+                <div class="plk-detail-grid">
+                  <div>
+                    <div class="plk-detail-row"><span class="plk-detail-label">Transactie Type:</span><span class="plk-detail-value">{{ txn.typeLabel }}</span></div>
+                    <div class="plk-detail-row"><span class="plk-detail-label">Status:</span><span><span class="plk-pill {{ txn.pillClass }}">{{ txn.statusLabel }}</span></span></div>
+                    <sc-if value="{{ txn.payable }}" hint-placeholder-val="{{ false }}"><div class="plk-detail-pay"><button class="plk-btn-pay small" type="button" onClick="{{ txn.onPay }}">Betalen</button></div></sc-if>
+                  </div>
+                  <div class="plk-totals">
+                    <sc-if value="{{ txn.showBreakdown }}" hint-placeholder-val="{{ false }}">
+                      <div class="plk-totals-row"><span>Tarief:</span><span>{{ txn.feeLabel }}</span></div>
+                      <div class="plk-totals-row"><span>Fee BTW ({{ txn.vatRateLabel }}%):</span><span>{{ txn.vatLabel }}</span></div>
+                      <div class="plk-totals-divider"></div>
+                    </sc-if>
+                    <div class="plk-totals-total"><span>Totaal:</span><span>{{ txn.totalLabel }} <span style="color:var(--faint);font-weight:400;font-size:11px;">{{ txn.totalUsd }}</span></span></div>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </sc-for></sc-if>
+          <sc-if value="{{ noTxns }}" hint-placeholder-val="{{ false }}"><div class="plk-empty">Nog geen transacties. Zodra je een project start of een bonus ontvangt, verschijnt hij hier.</div></sc-if>
+        </section>
+      </div>
+    </sc-if>
   </main>
 
-  <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
-
+  <footer style="padding:20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}"><div class="plk-toast" role="status">{{ toast }}</div></sc-if>
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1040},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:980}}">
 class Component extends DCLogic {
-  state = { copied: false, theme: 'light', session: null, earnings: null, earningsError: '', menuOpen: false, tab: '' };
-
-  isValidWhatsappSession(session) {
-    if (window.ProLinkerApp && window.ProLinkerApp.session) return window.ProLinkerApp.session.isValid(session);
-    if (!session || session.authenticated !== true) return false;
-    if (session.role !== 'client' && session.role !== 'freelancer') return false;
-    if (session.channel === 'linkedin' || session.channel === 'facebook') return !!(session.id || session.providerSubject || session.email);
-    if (session.channel !== 'whatsapp') return false;
-    if (session.phoneVerified === true || (session.auth && session.auth.phoneVerified === true)) return true;
-    const contact = typeof session.contact === 'string' ? session.contact.trim() : '';
-    if (!contact || !/^\+?[\d\s().-]+$/.test(contact)) return false;
-    return (contact.match(/\d/g) || []).length >= 8;
-  }
-
-  requireSession() {
-    if (window.ProLinkerApp && window.ProLinkerApp.session) {
-      const session = window.ProLinkerApp.session.require({ next: 'Prolinker Verdiensten.dc.html' });
-      if (this.isValidWhatsappSession(session)) {
-        this.setState({ session: session });
-        return true;
-      }
-      return false;
-    }
-    try {
-      const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
-      if (this.isValidWhatsappSession(session)) {
-        this.setState({ session: session });
-        return true;
-      }
-    } catch (e) {}
-    window.location.href = 'Prolinker Login.dc.html?mode=login&next=Prolinker%20Verdiensten.dc.html';
-    return false;
-  }
+  state = { loading: true, error: '', session: null, data: null, expanded: {}, referralLink: '', copied: false, toast: '', theme: 'light' };
 
   componentDidMount() {
-    if (!this.requireSession()) return;
-    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (e) {}
-    this._keyHandler = (event) => { if (event.key === 'Escape' && this.state.menuOpen) this.setState({ menuOpen: false }); };
-    window.addEventListener('keydown', this._keyHandler);
-    this.loadEarnings();
-  }
-  componentWillUnmount() {
-    clearTimeout(this._copyT);
-    if (this._keyHandler) window.removeEventListener('keydown', this._keyHandler);
-  }
-
-  toggleTheme() {
-    const next = this.state.theme === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem('plk-theme', next); } catch (e) {}
-    if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
-    this.setState({ theme: next, menuOpen: false });
+    document.documentElement.setAttribute('lang', 'nl');
+    try { if (localStorage.getItem('plk-theme') === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); this.setState({ theme: 'dark' }); } } catch (error) {}
+    if (!window.ProLinkerApp) { this.setState({ loading: false, error: 'De app-service kon niet worden geladen.' }); return; }
+    const session = window.ProLinkerApp.session.require({ next: 'Prolinker Verdiensten.dc.html' });
+    if (!session) return;
+    this.setState({ session: session });
+    this.load();
+    this.prepareReferralLink();
   }
 
-  lang() {
+  componentWillUnmount() { clearTimeout(this._toastTimer); clearTimeout(this._copyTimer); }
+
+  async load() {
+    this.setState({ loading: true, error: '' });
     try {
-      const saved = localStorage.getItem('plk-language');
-      if (saved === 'nl' || saved === 'en') return saved;
-    } catch (e) {}
-    const htmlLang = ((document.documentElement && document.documentElement.lang) || '').toLowerCase();
-    if (htmlLang.indexOf('nl') === 0) return 'nl';
-    if (htmlLang.indexOf('en') === 0) return 'en';
-    const l = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    return l.indexOf('nl') === 0 ? 'nl' : 'en';
-  }
-
-  async loadEarnings() {
-    if (!window.ProLinkerApp || !window.ProLinkerApp.earnings) return;
-    try {
-      const earnings = await window.ProLinkerApp.earnings.get();
-      this.setState({ earnings: earnings && typeof earnings === 'object' ? earnings : null, earningsError: '' });
+      const data = await window.ProLinkerApp.earnings.transactions();
+      this.setState({ data: data, loading: false, error: '' });
     } catch (error) {
-      this.setState({ earningsError: this.strings().apiError });
+      this.setState({ loading: false, error: error && error.message ? error.message : 'Je transacties laden is niet gelukt.' });
     }
   }
 
-  strings() {
-    const en = {
-      back: 'Back', freelancerTitle: 'Earnings & referrals', clientTitle: 'Referral program', apiError: 'Live earnings could not be loaded. Local referral data remains available.',
-      freelancerSubtitle: 'Your work payouts and referral earnings in one place.', clientSubtitle: 'Invite freelancers and follow your referral earnings.',
-      workPaid: 'Work paid in 2026', workPending: 'Work pending', refPaid: 'Referral paid', refPending: 'Referral pending',
-      payouts: 'Freelancer payouts', total: 'Total',
-      paid: 'Paid', pending: 'Pending',
-      referrals: 'Invite freelancers, earn 2%', refExplanation: 'You earn 2% of the gross value of work your referrals process through ProLinker.',
-      copy: 'Copy link', copied: 'Copied', share: 'Share', shareWa: 'Share your link via WhatsApp',
-      freelancer: 'Freelancer', grossValue: 'Processed value', status: 'Status', yourTwoPercent: 'Your 2%',
-      processed: 'processed via ProLinker', projects: (n) => n + ' projects',
-      prototypeNote: 'Prototype: this ledger and its payouts are simulated locally in this browser. Production attribution and payouts require a secure backend.',
-      shareMessage: (link) => 'Join ProLinker as a freelancer through my referral link: ' + link,
-    };
-    const nl = {
-      back: 'Terug', freelancerTitle: 'Verdiensten & referrals', clientTitle: 'Referralprogramma', apiError: 'Live verdiensten konden niet worden geladen. Lokale referralgegevens blijven beschikbaar.',
-      freelancerSubtitle: 'Je uitbetalingen en referral-inkomsten op een plek.', clientSubtitle: 'Nodig freelancers uit en volg je referral-inkomsten.',
-      workPaid: 'Werk uitbetaald in 2026', workPending: 'Werk in behandeling', refPaid: 'Referral uitbetaald', refPending: 'Referral in behandeling',
-      payouts: 'Freelanceruitbetalingen', total: 'Totaal',
-      paid: 'Uitbetaald', pending: 'In behandeling',
-      referrals: 'Nodig freelancers uit, verdien 2%', refExplanation: 'Je verdient 2% van de bruto waarde van werk dat jouw referrals via ProLinker verwerken.',
-      copy: 'Kopieer link', copied: 'Gekopieerd', share: 'Delen', shareWa: 'Deel je link via WhatsApp',
-      freelancer: 'Freelancer', grossValue: 'Verwerkte waarde', status: 'Status', yourTwoPercent: 'Jouw 2%',
-      processed: 'verwerkt via ProLinker', projects: (n) => n + ' opdrachten',
-      prototypeNote: 'Prototype: dit overzicht en de uitbetalingen zijn lokaal gesimuleerd in deze browser. Voor echte toewijzing en uitbetaling is een beveiligde backend nodig.',
-      shareMessage: (link) => 'Word freelancer op ProLinker via mijn referrallink: ' + link,
-    };
-    return this.lang() === 'nl' ? nl : en;
-  }
-
-  waIcon(color, size) {
-    return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: color }, React.createElement('path', { d: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z' }));
-  }
-
-  referralCode(session) {
-    const rawName = String((session && session.name) || 'member').toLowerCase();
-    const slug = rawName.normalize ? rawName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 20) : 'member';
-    const source = String((session && session.contact) || '') + '|' + rawName;
-    let hash = 2166136261;
-    for (let i = 0; i < source.length; i += 1) { hash ^= source.charCodeAt(i); hash = Math.imul(hash, 16777619); }
-    const suffix = (hash >>> 0).toString(36).slice(0, 8);
-    const code = ((slug || 'member') + '-' + suffix).replace(/[^a-z0-9-]/g, '').slice(0, 48);
-    return /^[a-z0-9-]{4,48}$/.test(code) ? code : 'member-2percent';
-  }
-
-  referralLink(session) {
+  async prepareReferralLink() {
     try {
-      const url = new URL('Prolinker Login.dc.html', window.location.href);
-      url.search = '';
-      url.searchParams.set('mode', 'register');
-      url.searchParams.set('role', 'freelancer');
-      url.searchParams.set('ref', this.referralCode(session));
-      return url.href;
-    } catch (e) {
-      return 'Prolinker Login.dc.html?mode=register&role=freelancer&ref=' + encodeURIComponent(this.referralCode(session));
-    }
+      const link = await window.ProLinkerApp.referrals.createLink({ entityType: 'general', targetUrl: 'Prolinker Login.dc.html?mode=register' });
+      this.setState({ referralLink: link && link.url ? link.url : '' });
+    } catch (error) { this.setState({ referralLink: '' }); }
   }
 
-  copyLink(link) {
+  toast(message) { clearTimeout(this._toastTimer); this.setState({ toast: message }); this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 3000); }
+
+  eur(value) { return '€ ' + Number(value || 0).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  usd(value, rate) { return '($ ' + (Number(value || 0) * rate).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')'; }
+  dateLabel(value) {
+    const date = new Date(value || 0);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('nl-NL', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
+
+  payout() {
+    const balance = this.state.data && this.state.data.balance ? this.state.data.balance : { available: 0 };
+    if (!balance.available) { this.toast('Je saldo is € 0,00. Er is op dit moment niets uit te betalen.'); return; }
+    this.toast('Uitbetaling aangevraagd. Het bedrag staat binnen 3 werkdagen op je opgegeven bankrekening.');
+  }
+
+  pay(txn) { this.toast('Je wordt doorgestuurd naar de beveiligde betaalomgeving voor "' + txn.title + '"...'); }
+
+  async copyLink() {
     try {
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link);
-      else {
-        const area = document.createElement('textarea'); area.value = link; area.setAttribute('readonly', 'readonly'); area.style.position = 'fixed'; area.style.opacity = '0'; document.body.appendChild(area); area.select(); document.execCommand('copy'); document.body.removeChild(area);
-      }
-    } catch (e) {}
-    this.setState({ copied: true });
-    clearTimeout(this._copyT);
-    this._copyT = setTimeout(() => this.setState({ copied: false }), 2000);
+      await window.ProLinkerApp.referrals.copy(this.state.referralLink);
+      this.setState({ copied: true });
+      clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => this.setState({ copied: false }), 1800);
+    } catch (error) { this.toast('Kopiëren is niet gelukt.'); }
+  }
+
+  statusInfo(txn) {
+    if (txn.status === 'pending') return { label: 'Wachten...', pill: 'plk-pill-wait' };
+    if (txn.status === 'failed') return { label: 'Mislukt', pill: 'plk-pill-fail' };
+    return { label: 'Verwerkt', pill: 'plk-pill-done' };
   }
 
   renderVals() {
-    const t = this.strings();
-    const accent = this.props.accentColor || '#2F5B85';
-    const isDark = this.state.theme === 'dark';
-    const nl = this.lang() === 'nl';
-    const session = this.state.session || { role: 'client', name: 'Member', contact: '+31000000000' };
-    const isFreelancer = session.role === 'freelancer';
-    const role = isFreelancer ? 'freelancer' : 'client';
-    const userName = String(session.name || (isFreelancer ? 'ProLinker professional' : 'ProLinker opdrachtgever')).trim();
-    const userInitials = userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
-    const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
-      ? window.ProLinkerApp.routes.accountMenu(role).map((item) => {
-        const active = item.key === 'earnings';
-        return Object.assign({}, item, { bg: active ? 'var(--panel,#F3F4F6)' : 'transparent', activeShadow: active ? 'inset 3px 0 0 var(--blue,#2F5B85)' : 'none', current: active ? 'page' : 'false' });
-      })
-      : [];
-    const referralLink = this.referralLink(session);
-    const earnings = this.state.earnings || {};
-
-    const dim = (bg, color) => isDark ? { mBg: 'rgba(255,255,255,0.10)', mColor: '#ffffff' } : { mBg: bg, mColor: color };
-    const paidStyle = { statusBg: 'rgba(31,138,91,0.12)', statusColor: '#1F8A5B', statusLabel: t.paid };
-    const pendStyle = { statusBg: 'rgba(180,89,10,0.12)', statusColor: '#C94F2D', statusLabel: t.pending };
-
-    const payouts = [
-      Object.assign({ project: nl ? 'Webshop redesign' : 'Store redesign', client: 'De Lindeboom', date: nl ? '8 jul 2026' : 'Jul 8, 2026', amount: '\u20ac 1.280', mLetter: 'D' }, dim('#EEEBFB', '#5B4CC4'), pendStyle),
-      Object.assign({ project: nl ? 'Shopify-koppeling kassa' : 'Shopify POS integration', client: 'Bakkerij Vermeer', date: nl ? '12 jun 2026' : 'Jun 12, 2026', amount: '\u20ac 1.800', mLetter: 'B' }, dim('#E9EFF5', '#2F5B85'), paidStyle),
-      Object.assign({ project: nl ? 'Klaviyo-flows' : 'Klaviyo flows', client: 'GroenGoed', date: nl ? '28 apr 2026' : 'Apr 28, 2026', amount: '\u20ac 1.450', mLetter: 'G' }, dim('#E7F5EE', '#1F8A5B'), paidStyle),
-      Object.assign({ project: nl ? 'Checkout-optimalisatie' : 'Checkout optimization', client: 'Studio Kade', date: nl ? '15 feb 2026' : 'Feb 15, 2026', amount: '\u20ac 1.000', mLetter: 'S' }, dim('#FFE0D6', '#C94F2D'), paidStyle),
-    ];
-
-    const formatMoney = (value) => new Intl.NumberFormat(nl ? 'nl-NL' : 'en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
-    const ledger = [
-      { name: 'Lisa de Wit', initials: 'LW', projects: 3, gross: 2700, status: 'paid' },
-      { name: 'Tom Jansen', initials: 'TJ', projects: 2, gross: 1600, status: 'pending' },
-      { name: 'Nora Bakker', initials: 'NB', projects: 4, gross: 4550, status: 'paid' },
-    ].map((entry, index) => {
-      const style = entry.status === 'paid' ? paidStyle : pendStyle;
-      const colors = [dim('#FBEDEF', '#B42334'), dim('#E6F4F6', '#0E7C8A'), dim('#E9EFF5', '#2F5B85')][index];
-      return Object.assign({}, entry, colors, style, {
-        meta: t.projects(entry.projects),
-        grossLabel: formatMoney(entry.gross) + ' ' + t.processed,
-        earned: entry.gross * 0.02,
-        earnedLabel: formatMoney(entry.gross * 0.02),
-      });
+    const data = this.state.data || { balance: { available: 0, bonus: 0, usdRate: 1.1418 }, items: [] };
+    const balance = data.balance || { available: 0, bonus: 0, usdRate: 1.1418 };
+    const rate = balance.usdRate || 1.1418;
+    const items = Array.isArray(data.items) ? data.items : [];
+    const txns = items.map((txn) => {
+      const status = this.statusInfo(txn);
+      const open = !!this.state.expanded[txn.id];
+      const sign = txn.direction === 'out' ? '- ' : '+ ';
+      return {
+        id: txn.id,
+        dateLabel: this.dateLabel(txn.at),
+        title: txn.title,
+        hasInfo: !!txn.infoLabel, infoLabel: txn.infoLabel, infoHref: txn.infoHref || '#referral',
+        hasSub: !!txn.subtitle, subtitle: txn.subtitle,
+        statusLabel: status.label, pillClass: status.pill,
+        payable: !!txn.payable,
+        onPay: () => this.pay(txn),
+        amountLabel: sign + this.eur(txn.total),
+        usdLabel: this.usd(txn.total, rate),
+        dirClass: txn.direction === 'out' ? 'out' : '',
+        dirSymbol: txn.direction === 'out' ? '↖' : (txn.type === 'deposit' ? '+' : '↗'),
+        open: open,
+        chevron: open ? 'rotate(180deg)' : 'rotate(0deg)',
+        toggleAria: open ? 'Details van ' + txn.title + ' verbergen' : 'Details van ' + txn.title + ' tonen',
+        onToggle: () => this.setState({ expanded: Object.assign({}, this.state.expanded, { [txn.id]: !open }) }),
+        typeLabel: txn.type,
+        showBreakdown: txn.type === 'deposit',
+        feeLabel: this.eur(txn.fee),
+        vatRateLabel: String(Math.round(txn.vatRate)),
+        vatLabel: this.eur(txn.vat),
+        totalLabel: this.eur(txn.total),
+        totalUsd: this.usd(txn.total, rate)
+      };
     });
-    const referralPaidValue = ledger.filter((r) => r.status === 'paid').reduce((sum, r) => sum + r.earned, 0);
-    const referralPendingValue = ledger.filter((r) => r.status === 'pending').reduce((sum, r) => sum + r.earned, 0);
-    const shareMsg = t.shareMessage(referralLink);
-
     return {
-      t: t, accent: accent,
-      logoFilter: isDark ? 'brightness(0) invert(1)' : 'none',
-      menuOpen: this.state.menuOpen,
-      menuChevron: this.state.menuOpen ? '\u25B2' : '\u25BC',
-      onToggleMenu: () => this.setState((state) => ({ menuOpen: !state.menuOpen })),
-      onCloseMenu: () => this.setState({ menuOpen: false }),
-      menuItems: menuItems,
-      userName: userName,
-      userInitials: userInitials,
-      roleLabel: isFreelancer ? 'Freelancer' : 'Opdrachtgever',
-      onTheme: () => this.toggleTheme(),
-      themeLabel: this.state.theme === 'dark' ? 'Lichte modus' : 'Donkere modus',
-      onLogout: () => { if (window.ProLinkerApp && window.ProLinkerApp.session) window.ProLinkerApp.session.logout(); },
-      pageTitle: isFreelancer ? t.freelancerTitle : t.clientTitle,
-      pageSubtitle: isFreelancer ? t.freelancerSubtitle : t.clientSubtitle,
-      tabPayouts: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'payouts',
-      tabReferrals: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'referrals',
-      tabShare: (this.state.tab || (isFreelancer ? 'payouts' : 'referrals')) === 'share',
-      onTabPayouts: () => this.setState({ tab: 'payouts' }),
-      onTabReferrals: () => this.setState({ tab: 'referrals' }),
-      onTabShare: () => this.setState({ tab: 'share' }),
-      showFreelancerPayouts: isFreelancer,
-      workPaid: formatMoney(Number(earnings.available || 4250)),
-      workPending: formatMoney(Number(earnings.pending || 1280)),
-      earningsErrorVisible: !!this.state.earningsError,
-      earningsError: this.state.earningsError,
-      backHref: isFreelancer ? 'Prolinker Voor jou v2.dc.html' : 'Prolinker Homepage.dc.html',
-      payouts: payouts, referrals: ledger,
-      referralPaid: formatMoney(referralPaidValue),
-      referralPending: formatMoney(referralPendingValue),
-      referralLink: referralLink,
-      onCopy: () => this.copyLink(referralLink),
-      copyLabel: this.state.copied ? t.copied : t.copy,
-      copyBorder: this.state.copied ? '#1F8A5B' : 'var(--border,#DCDFE2)',
-      copyBg: this.state.copied ? 'rgba(31,138,91,0.1)' : 'var(--surface,#fff)',
-      copyColor: this.state.copied ? '#1F8A5B' : 'var(--text,#152431)',
-      waEl: this.waIcon('#25D366', 15),
-      waShareHref: 'https://wa.me/?text=' + encodeURIComponent(shareMsg),
+      loading: this.state.loading, hasError: !!this.state.error, errorMessage: this.state.error, onRetry: () => this.load(),
+      ready: !this.state.loading && !this.state.error,
+      balanceLabel: this.eur(balance.available),
+      bonusLabel: this.eur(balance.bonus),
+      bonusUsd: this.usd(balance.bonus, rate),
+      onPayout: () => this.payout(),
+      referralLink: this.state.referralLink || 'Je referral-link wordt geladen...',
+      copyLabel: this.state.copied ? 'Gekopieerd!' : 'Kopieer link',
+      onCopy: () => this.copyLink(),
+      waShareHref: 'https://wa.me/?text=' + encodeURIComponent('Ken je iemand die hier goed bij past? ' + (this.state.referralLink || '')),
+      txns: txns, hasTxns: txns.length > 0, noTxns: txns.length === 0,
+      showToast: !!this.state.toast, toast: this.state.toast
     };
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_VERSION = "v29-backend-auth";
+const CACHE_VERSION = "v35-shareable-demo";
 const CACHE_PREFIX = "prolinker-";
 const PRECACHE = `${CACHE_PREFIX}precache-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;

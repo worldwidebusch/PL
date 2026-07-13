@@ -46,20 +46,20 @@
     return [
       { key: 'dashboard', label: english ? 'My dashboard' : 'Mijn Dashboard', href: 'Prolinker Dashboard.dc.html', badgeText: '' },
       { key: 'network', label: english ? 'My network' : 'Mijn Netwerk', href: 'Prolinker Netwerk.dc.html', badgeText: '' },
-      { key: 'assignments', label: english ? 'My jobs' : 'Mijn Opdrachten', href: 'Prolinker Mijn opdrachten.dc.html?role=' + safeRole, badgeText: '' },
+      { key: 'assignments', label: english ? (safeRole === 'client' ? 'My jobs' : 'My applications') : (safeRole === 'client' ? 'Mijn Opdrachten' : 'Mijn Sollicitaties'), href: 'Prolinker Mijn opdrachten.dc.html?role=' + safeRole, badgeText: '' },
       { key: 'messages', label: english ? 'My messages' : 'Mijn Berichten', href: 'Prolinker Berichten.dc.html', badgeText: '' },
-      { key: 'profile', label: english ? 'My profile' : 'Mijn Profiel', href: safeRole === 'client' ? 'Prolinker Instellingen.dc.html?section=profiel' : 'Prolinker Profiel.dc.html', badgeText: '' },
+      { key: 'profile', label: english ? 'My profile' : 'Mijn Profiel', href: 'Prolinker Profiel.dc.html', badgeText: '' },
       { key: 'earnings', label: english ? 'My transactions' : 'Mijn Transacties', href: 'Prolinker Verdiensten.dc.html', badgeText: '' },
       { key: 'settings', label: english ? 'Settings' : 'Instellingen', href: 'Prolinker Instellingen.dc.html', badgeText: '' }
     ];
   }
 
-  function accountItemLabel(item, lang) {
+  function accountItemLabel(item, lang, role) {
     if (lang !== 'en') return item.label;
     var labels = {
       dashboard: 'My dashboard',
       network: 'My network',
-      assignments: 'My jobs',
+      assignments: role === 'client' ? 'My jobs' : 'My applications',
       messages: 'My messages',
       profile: 'My profile',
       earnings: 'My transactions',
@@ -258,8 +258,8 @@
       var current = this.getAttribute('current') || '';
       var identity = identityDetails(session, role, lang);
       var avatarUrl = safeAvatar(session, role);
-      var profileItem = items.find(function (item) { return item.key === 'profile'; });
-      var profileHref = profileItem ? profileItem.href : fallbackAccountItems(role, lang)[4].href;
+      var dashboardItem = items.find(function (item) { return item.key === 'dashboard'; });
+      var dashboardHref = dashboardItem ? dashboardItem.href : fallbackAccountItems(role, lang)[0].href;
 
       var style = element('style');
       style.textContent = [
@@ -326,7 +326,7 @@
         accountLink.href = item.href;
         accountLink.setAttribute('role', 'menuitem');
         if (item.key === current) accountLink.setAttribute('aria-current', 'page');
-        accountLink.appendChild(element('span', 'account-main-label', accountItemLabel(item, lang)));
+        accountLink.appendChild(element('span', 'account-main-label', accountItemLabel(item, lang, role)));
         if (item.badgeText !== undefined && item.badgeText !== null && String(item.badgeText) !== '') {
           accountLink.appendChild(element('span', 'account-main-badge', item.badgeText));
         }
@@ -362,9 +362,9 @@
       mainWrap.appendChild(mainPanel);
 
       var identityLink = element('a', 'identity');
-      identityLink.href = profileHref;
+      identityLink.href = dashboardHref;
       identityLink.title = identity.label;
-      identityLink.setAttribute('aria-label', (lang === 'en' ? 'Open profile for ' : 'Profiel openen van ') + identity.label);
+      identityLink.setAttribute('aria-label', (lang === 'en' ? 'Go to the dashboard of ' : 'Naar het dashboard van ') + identity.label);
       var identityAvatar = element('span', 'identity-avatar');
       identityAvatar.setAttribute('aria-hidden', 'true');
       if (avatarUrl) {
@@ -372,7 +372,7 @@
         avatarImage.src = avatarUrl;
         avatarImage.alt = '';
         identityAvatar.appendChild(avatarImage);
-      } else identityAvatar.appendChild(document.createTextNode(identity.initials));
+      } else identityAvatar.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
       identityLink.appendChild(identityAvatar);
       identityLink.appendChild(element('span', 'identity-name', identity.label));
 

@@ -6,6 +6,7 @@
 <script src="./prolinker-app.js"></script>
 <script src="./prolinker-account-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -49,6 +50,27 @@
   .plk-menu-action:hover { background: var(--panel,#F3F4F6); }
   .plk-menu-scrim:active { transform: none !important; }
   @media (max-width: 850px) { .plk-header-links { display: none; } }
+  .plk-gg { margin-top: 22px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; padding: 26px 26px 24px; box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); animation: plk-rise 0.5s ease 0.05s both; }
+  .plk-gg h2 { margin: 0 0 16px; font-size: 19px; letter-spacing: -0.01em; }
+  .plk-gg-row { display: grid; grid-template-columns: 190px minmax(0,1fr); gap: 14px; align-items: center; padding: 9px 0; }
+  .plk-gg-label { font-size: 13px; color: var(--text,#152431); }
+  .plk-gg-label .req { color: var(--muted,#424444); }
+  .plk-gg-badge { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; margin-left: 6px; border-radius: 50%; background: #E24B4A; color: #fff; font-size: 10px; font-weight: 800; }
+  .plk-gg input[type="text"], .plk-gg select, .plk-gg textarea { width: 100%; border: 1px solid var(--border,#DCDFE2); border-radius: 6px; background: var(--panel,#F8FAFC); color: var(--text,#152431); padding: 9px 12px; font-size: 13px; font-family: inherit; }
+  .plk-gg textarea { min-height: 150px; resize: vertical; line-height: 1.55; }
+  .plk-gg-photo { width: 96px; height: 96px; flex: 0 0 96px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border,#DCDFE2); background: var(--panel,#F8FAFC); }
+  .plk-btn-kies { display: inline-flex; align-items: center; min-height: 34px; padding: 0 16px; border: 1px solid #C94F2D; border-radius: 5px; background: #E65F39; color: #fff; cursor: pointer; font-size: 12.5px; font-weight: 700; }
+  .plk-btn-kies:hover { background: #D14F2B; }
+  .plk-gg-hint { margin-top: 10px; color: #7A9BC0; font-size: 12px; line-height: 1.5; }
+  .plk-btn-opslaan { display: inline-flex; align-items: center; min-height: 38px; padding: 0 22px; border: 1px solid #3F7CB4; border-radius: 5px; background: #4A90D9; color: #fff; cursor: pointer; font-size: 13px; font-weight: 700; margin-top: 18px; }
+  .plk-btn-opslaan:hover { background: #3F7CB4; }
+  .plk-gg-verified { color: #27A567; font-size: 13px; font-weight: 650; }
+  .plk-gg-unverified { color: var(--faint,#8C8E8F); font-size: 13px; }
+  .plk-gg-phone { display: flex; gap: 8px; }
+  .plk-gg-phone select { width: 88px; flex: 0 0 88px; }
+  @media (max-width: 640px) { .plk-gg-row { grid-template-columns: 1fr; gap: 6px; } }
+  @media(min-width:781px){ .plk-topline { padding-right: 225px; } }
+  @media(max-width:780px){ .plk-profile-main { padding-top: 72px !important; } }
   @media (max-width: 600px) {
     [data-screen-label="Mijn profiel"] main { padding-left: 18px !important; padding-right: 18px !important; }
     .plk-cv-card { padding: 18px !important; }
@@ -75,32 +97,44 @@
 
 <div data-screen-label="Mijn profiel" style="min-height: 100vh; background: var(--bg,#F3F4F6); color: var(--text,#152431); font-family: 'Lato', system-ui, sans-serif; display: flex; flex-direction: column;">
 
-  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:transparent;position:relative;z-index:50;">
-    <a class="plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="filter: {{ logoFilter }};"></a>
+  <header class="plk-public-header" style="display:flex;align-items:center;justify-content:flex-end;gap:16px;padding:16px 28px;background:transparent;position:absolute;top:0;left:0;right:0;z-index:50;">
     <div class="plk-public-nav" style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--glass,rgba(255,255,255,.82));border:1px solid var(--border,#DCDFE2);border-radius:10px;position:static;z-index:30;"><prolinker-account-menu current="profile"></prolinker-account-menu></div>
   </header>
 
-  <main style="max-width: 720px; width: 100%; margin: 0 auto; padding: 26px 32px 90px; flex: 1;">
+  <main class="plk-profile-main" style="max-width: 720px; width: 100%; margin: 0 auto; padding: 18px 32px 90px; flex: 1;">
 
-    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; animation: plk-rise 0.5s ease both;">
+    <div class="plk-topline" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; animation: plk-rise 0.5s ease both;">
       <h1 style="margin: 0; font-size: 32px; letter-spacing: -0.01em;">{{ t.title }}</h1>
       <span style="font-size: 13px; font-weight: 600; color: {{ savedColor }}; display: inline-flex; align-items: center; gap: 6px;"><sc-if value="{{ savedVisible }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex;">{{ savedCheckEl }}</span></sc-if>{{ savedLabel }}</span>
     </div>
 
-    <div style="margin-top: 22px; padding: 0 2px; animation: plk-rise 0.5s ease 0.05s both;">
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint,#8C8E8F);">{{ t.completeness }}</span>
-        <span style="font-size: 14px; font-weight: 700;">{{ pct }}%</span>
-      </div>
-      <div style="margin-top: 9px; height: 6px; border-radius: 999px; background: var(--hairline,#ECEEF0); overflow: hidden;"><div style="width: {{ pctW }}; height: 100%; border-radius: 999px; background: {{ accent }}; transition: width 0.4s ease;"></div></div>
-      <sc-if value="{{ hasMissing }}" hint-placeholder-val="{{ false }}">
-        <div style="margin-top: 11px; display: flex; flex-wrap: wrap; gap: 6px;">
-          <sc-for list="{{ missing }}" as="m" hint-placeholder-count="1">
-            <span style="padding: 4px 11px; border-radius: 7px; background: {{ accentTint }}; color: {{ accent }}; font-size: 12px; font-weight: 600;">{{ m }}</span>
-          </sc-for>
+    <section class="plk-gg" aria-labelledby="gg-title">
+      <h2 id="gg-title">Mijn gegevens</h2>
+      <div class="plk-gg-row" style="align-items: flex-start;">
+        <span class="plk-gg-label" style="padding-top: 6px;">Afbeelding</span>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}"><img class="plk-gg-photo" src="{{ photoSrc }}" alt="Profielfoto"></sc-if>
+          <sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}"><span class="plk-gg-photo" style="display: inline-flex; align-items: center; justify-content: center; color: #7A9BC0;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span></sc-if>
+          <div>
+            <input id="plk-photo-file" type="file" accept="image/png,image/jpeg,image/webp" onChange="{{ onPhotoInput }}" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;">
+            <button class="plk-btn-kies" type="button" onClick="{{ onPickPhoto }}">Kies foto</button>
+            <div class="plk-gg-hint">Max. 1200px bij 1200px<br>Max. 5Mb</div>
+          </div>
         </div>
-      </sc-if>
-    </div>
+      </div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Voornaam <span class="req">*</span></span><input type="text" value="{{ gFirstName }}" onInput="{{ onGFirstName }}" aria-label="Voornaam"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Achternaam <span class="req">*</span></span><input type="text" value="{{ gLastName }}" onInput="{{ onGLastName }}" aria-label="Achternaam"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Bedrijfsnaam<sc-if value="{{ companyMissing }}" hint-placeholder-val="{{ false }}"><span class="plk-gg-badge">1</span></sc-if></span><input type="text" value="{{ gCompany }}" onInput="{{ onGCompany }}" aria-label="Bedrijfsnaam"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Land <span class="req">*</span></span><select value="{{ gCountry }}" onChange="{{ onGCountry }}" aria-label="Land"><sc-for list="{{ countries }}" as="c" hint-placeholder-count="5"><option value="{{ c.v }}">{{ c.v }}</option></sc-for></select></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Postcode <span class="req">*</span></span><input type="text" value="{{ gPostcode }}" onInput="{{ onGPostcode }}" aria-label="Postcode"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Stad <span class="req">*</span></span><input type="text" value="{{ gCity }}" onInput="{{ onGCity }}" aria-label="Stad"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Adres</span><input type="text" value="{{ gAddress }}" onInput="{{ onGAddress }}" placeholder="Jouw adres" aria-label="Adres"></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Mobiel nummer <span class="req">*</span></span><div class="plk-gg-phone"><select value="{{ gDial }}" onChange="{{ onGDial }}" aria-label="Landcode"><sc-for list="{{ dials }}" as="d" hint-placeholder-count="4"><option value="{{ d.v }}">{{ d.v }}</option></sc-for></select><input type="text" value="{{ gPhone }}" onInput="{{ onGPhone }}" aria-label="Mobiel nummer"></div></div>
+      <div class="plk-gg-row"><span class="plk-gg-label">Verificatie van telefoonnummer</span><span><sc-if value="{{ phoneIsVerified }}" hint-placeholder-val="{{ true }}"><span class="plk-gg-verified">Telefoonnummer geverifieerd</span></sc-if><sc-if value="{{ phoneNotVerified }}" hint-placeholder-val="{{ false }}"><span class="plk-gg-unverified">Nog niet geverifieerd. Verifieer je nummer via WhatsApp bij het inloggen.</span></sc-if></span></div>
+      <div class="plk-gg-row" style="align-items: flex-start;"><span class="plk-gg-label" style="padding-top: 8px;">Omschrijving <span class="req">*</span></span><textarea value="{{ pBio }}" onInput="{{ onBio }}" aria-label="Omschrijving"></textarea></div>
+      <button class="plk-btn-opslaan" type="button" onClick="{{ onSaveAll }}">Opslaan</button>
+      <sc-if value="{{ hasGgToast }}" hint-placeholder-val="{{ false }}"><div role="status" style="margin-top: 10px; font-size: 12.5px; color: var(--muted,#424444);">{{ ggToast }}</div></sc-if>
+    </section>
 
     <section class="plk-cv-card" aria-labelledby="cv-upload-title" style="position: relative; margin-top: 14px; background: var(--surface,#fff); border: 1px solid {{ cvBorder }}; border-radius: 14px; padding: 22px; box-shadow: 0 1px 2px rgba(20,36,49,0.04); animation: plk-rise 0.5s ease 0.08s both; transition: border-color 0.18s ease, background-color 0.18s ease;" onDragEnter="{{ onCvDragEnter }}" onDragOver="{{ onCvDragOver }}" onDragLeave="{{ onCvDragLeave }}" onDrop="{{ onCvDrop }}">
       <input id="plk-cv-file" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" onChange="{{ onCvInput }}" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;">
@@ -135,6 +169,12 @@
             <sc-if value="{{ cvIsError }}" hint-placeholder-val="{{ false }}">
               <div role="alert" style="padding: 10px 12px; border-radius: 8px; background: #FFF2F0; color: #A33A2B; font-size: 12.5px; line-height: 1.5;">{{ cvStatusLabel }}</div>
             </sc-if>
+            <sc-if value="{{ cvHasDoc }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top: 11px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <button type="button" onClick="{{ onCvView }}" style="height: 34px; padding: 0 14px; border: 1px solid var(--border,#DCDFE2); border-radius: 8px; background: var(--surface,#fff); color: var(--text,#152431); font-family: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer;">{{ t.cvViewButton }}</button>
+                <span style="font-size: 12px; color: var(--faint,#8C8E8F);">{{ t.cvCensorNote }}</span>
+              </div>
+            </sc-if>
           </div>
 
           <p style="margin: 13px 0 0; padding-top: 12px; border-top: 1px solid var(--hairline,#ECEEF0); color: var(--faint,#8C8E8F); font-size: 11.5px; line-height: 1.5;">{{ t.cvPrivacy }}</p>
@@ -142,7 +182,7 @@
       </div>
     </section>
 
-    <div style="margin-top: 14px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 16px 36px -30px rgba(21,36,49,0.55); animation: plk-rise 0.5s ease 0.1s both;">
+    <div style="display: none;">
 
       <div style="padding: 22px; display: flex; gap: 20px; align-items: center; border-bottom: 1px solid var(--hairline,#ECEEF0);">
         <div style="flex-shrink: 0; width: 86px; height: 86px; border-radius: 50%; overflow: hidden;">
@@ -209,6 +249,7 @@
   <footer style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1080},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
@@ -242,8 +283,8 @@ class Component extends DCLogic {
 
   requireFreelancerSession() {
     if (window.ProLinkerApp && window.ProLinkerApp.session) {
-      const session = window.ProLinkerApp.session.require({ role: 'freelancer', next: 'Prolinker Profiel.dc.html' });
-      if (this.isValidWhatsappFreelancerSession(session)) {
+      const session = window.ProLinkerApp.session.require({ next: 'Prolinker Profiel.dc.html' });
+      if (session) {
         this.setState({ session: session });
         return true;
       }
@@ -251,17 +292,18 @@ class Component extends DCLogic {
     }
     try {
       const session = JSON.parse(localStorage.getItem('plk-auth-session') || 'null');
-      if (this.isValidWhatsappFreelancerSession(session)) {
+      if (session && session.authenticated === true) {
         this.setState({ session: session });
         return true;
       }
     } catch (e) {}
-    window.location.href = 'Prolinker Login.dc.html?mode=login&role=freelancer&next=Prolinker%20Profiel.dc.html';
+    window.location.href = 'Prolinker Login.dc.html?mode=login&next=Prolinker%20Profiel.dc.html';
     return false;
   }
 
   static seed(name) {
-    return { name: name || 'Rachid Benali', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '', portfolio: [] };
+    const parts = String(name || '').trim().split(/\s+/).filter(Boolean);
+    return { name: name || '', firstName: parts[0] || '', lastName: parts.slice(1).join(' '), company: '', country: 'Nederland', postcode: '', city: '', address: '', phoneDial: '+31', phone: '', avatarUrl: '', headline: 'Full-stack e-commerce developer', rate: '75', availability: 'now', skills: ['Shopify', 'Next.js', 'Klaviyo', 'Liquid', 'CRO'], bio: '', portfolio: [] };
   }
 
   static sanitizeProfile(raw, seed) {
@@ -276,6 +318,16 @@ class Component extends DCLogic {
     }
     if (typeof source.bio === 'string') safe.bio = source.bio.slice(0, 1600);
     if (Array.isArray(source.portfolio)) safe.portfolio = source.portfolio.slice(0, 12);
+    if (typeof source.firstName === 'string') safe.firstName = source.firstName.slice(0, 60);
+    if (typeof source.lastName === 'string') safe.lastName = source.lastName.slice(0, 60);
+    if (typeof source.company === 'string') safe.company = source.company.slice(0, 120);
+    if (typeof source.country === 'string') safe.country = source.country.slice(0, 56);
+    if (typeof source.postcode === 'string') safe.postcode = source.postcode.slice(0, 12);
+    if (typeof source.city === 'string') safe.city = source.city.slice(0, 80);
+    if (typeof source.address === 'string') safe.address = source.address.slice(0, 160);
+    if (typeof source.phoneDial === 'string' && /^\+\d{1,4}$/.test(source.phoneDial)) safe.phoneDial = source.phoneDial;
+    if (typeof source.phone === 'string') safe.phone = source.phone.replace(/[^0-9 ]/g, '').slice(0, 24);
+    if (typeof source.avatarUrl === 'string' && (/^data:image\/(?:png|jpeg|webp);base64,/.test(source.avatarUrl) || /^https:\/\//.test(source.avatarUrl))) safe.avatarUrl = source.avatarUrl.slice(0, 2500000);
     return safe;
   }
 
@@ -326,6 +378,13 @@ class Component extends DCLogic {
     let cvMeta;
     try { profile = Component.load(); } catch (e) { profile = Component.seed(''); }
     try { cvMeta = Component.loadCvMeta(); } catch (e) { cvMeta = null; }
+    try {
+      const contact = String((this.state.session && this.state.session.contact) || '');
+      if (contact && !(profile.phone || '').trim()) {
+        const dial = ['+599', '+597', '+505', '+44', '+49', '+34', '+33', '+32', '+31', '+1'].find((code) => contact.indexOf(code) === 0) || '+31';
+        profile = Component.sanitizeProfile(Object.assign({}, profile, { phoneDial: dial, phone: contact.slice(dial.length).trim() }), Component.seed(''));
+      }
+    } catch (e) {}
     this.setState({
       profile: profile,
       profileReady: true,
@@ -334,6 +393,9 @@ class Component extends DCLogic {
       cvFields: cvMeta && cvMeta.fields.length ? cvMeta.fields : [],
     });
     this.hydrateProfile(profile);
+    if (window.ProLinkerApp && window.ProLinkerApp.cv) {
+      window.ProLinkerApp.cv.get().then((record) => { if (record) this.setState({ cvRecord: record }); }).catch(() => {});
+    }
   }
   componentWillUnmount() {
     clearTimeout(this._savedT);
@@ -745,6 +807,13 @@ class Component extends DCLogic {
         if (bioIndex >= 0) importedFields.splice(bioIndex, 1);
       }
       const profile = Component.sanitizeProfile(Object.assign({}, current, importedValues), Component.seed(''));
+      let cvRecord = null;
+      if (window.ProLinkerApp && window.ProLinkerApp.cv) {
+        this.setState({ cvStatus: 'building', cvProgress: 92, cvMessage: t.cvScanning });
+        try { cvRecord = await window.ProLinkerApp.cv.upload({ text: clean, fileName: file.name, size: file.size, name: profile.name }); }
+        catch (scanError) { cvRecord = null; }
+        if (runId !== this._cvRunId) return;
+      }
       const meta = {
         name: String(file.name || '').slice(0, 120),
         type: kind,
@@ -768,6 +837,7 @@ class Component extends DCLogic {
         cvMessage: t.cvComplete(file.name),
         cvFields: importedFields,
         cvMeta: meta,
+        cvRecord: cvRecord || this.state.cvRecord,
       });
       this.scheduleProfileSync(profile, meta, true);
       clearTimeout(this._savedT);
@@ -783,6 +853,47 @@ class Component extends DCLogic {
   chooseCv() {
     const input = document.getElementById('plk-cv-file');
     if (input) input.click();
+  }
+
+  pickPhoto() {
+    const input = document.getElementById('plk-photo-file');
+    if (input) input.click();
+  }
+
+  onPhotoInput(event) {
+    const file = event && event.target && event.target.files && event.target.files[0];
+    if (event && event.target) event.target.value = '';
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { this.toastSaved('De foto is groter dan 5 MB. Kies een kleinere afbeelding.'); return; }
+    if (['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) < 0) { this.toastSaved('Kies een PNG-, JPG- of WebP-afbeelding.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result || '');
+      if (url.indexOf('data:image/') === 0) this.save({ avatarUrl: url });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  toastSaved(message) {
+    this.setState({ syncError: '' });
+    clearTimeout(this._ggToastTimer);
+    this.setState({ ggToast: message });
+    this._ggToastTimer = setTimeout(() => this.setState({ ggToast: '' }), 3000);
+  }
+
+  saveAll() {
+    const p = Component.sanitizeProfile(this.state.profile, Component.seed(''));
+    const missing = [];
+    if (!(p.firstName || '').trim()) missing.push('voornaam');
+    if (!(p.lastName || '').trim()) missing.push('achternaam');
+    if (!(p.country || '').trim()) missing.push('land');
+    if (!(p.postcode || '').trim()) missing.push('postcode');
+    if (!(p.city || '').trim()) missing.push('stad');
+    if (!(p.phone || '').trim()) missing.push('mobiel nummer');
+    if (!(p.bio || '').trim()) missing.push('omschrijving');
+    if (missing.length) { this.toastSaved('Vul nog in: ' + missing.join(', ') + '.'); return; }
+    this.save({ name: (p.firstName + ' ' + p.lastName).trim() });
+    this.toastSaved('Je gegevens zijn opgeslagen.');
   }
 
   onCvInput(event) {
@@ -818,6 +929,9 @@ class Component extends DCLogic {
       cvErrorNoText: 'No readable text was found. If this is a scanned PDF, use a text-based PDF or complete the fields manually.',
       cvErrorNoFields: 'We could not identify reliable profile information. Try another CV or complete the fields manually.',
       cvErrorParser: 'The CV reader is temporarily unavailable or this file could not be read. Check your connection, retry, or complete the fields manually.',
+      cvScanning: 'AI checks and anonymises your CV...',
+      cvViewButton: 'View anonymised CV',
+      cvCensorNote: 'AI hides your contact details, full name and external links from clients until you work together via ProLinker.',
       namePh: 'Full name', headlinePh: 'Headline, e.g. Full-stack e-commerce developer',
       rate: 'Hourly rate', perHour: 'per hour', availability: 'Availability',
       availNow: 'Available', availSoon: 'From Sep 1', availBusy: 'Not available',
@@ -845,6 +959,9 @@ class Component extends DCLogic {
       cvErrorNoText: 'Er is geen leesbare tekst gevonden. Gebruik bij een gescande PDF een PDF met selecteerbare tekst, of vul de velden handmatig in.',
       cvErrorNoFields: 'We konden geen betrouwbare profielgegevens herkennen. Probeer een ander cv of vul de velden handmatig in.',
       cvErrorParser: 'De cv-lezer is tijdelijk niet beschikbaar of kon dit bestand niet lezen. Controleer je verbinding, probeer het opnieuw, of vul de velden handmatig in.',
+      cvScanning: 'AI controleert en anonimiseert je cv...',
+      cvViewButton: 'Bekijk geanonimiseerd cv',
+      cvCensorNote: 'AI schermt je contactgegevens, volledige naam en externe links af voor opdrachtgevers totdat jullie via ProLinker samenwerken.',
       namePh: 'Volledige naam', headlinePh: 'Kopregel, bijv. Full-stack e-commerce developer',
       rate: 'Uurtarief', perHour: 'per uur', availability: 'Beschikbaarheid',
       availNow: 'Beschikbaar', availSoon: 'Vanaf 1 sep', availBusy: 'Niet beschikbaar',
@@ -892,7 +1009,7 @@ class Component extends DCLogic {
     const isDark = this.state.theme === 'dark';
     const p = Component.sanitizeProfile(this.state.profile, Component.seed(''));
     const session = this.state.session || { role: 'freelancer', name: '' };
-    const role = 'freelancer';
+    const role = session.role === 'client' ? 'client' : 'freelancer';
     const userName = String(session.name || p.name || 'ProLinker gebruiker').trim();
     const userInitials = userName.split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase() || 'PL';
     const menuItems = window.ProLinkerApp && window.ProLinkerApp.routes && window.ProLinkerApp.routes.accountMenu
@@ -952,6 +1069,8 @@ class Component extends DCLogic {
       cvProgress: this.state.cvProgress || 0,
       cvProgressW: (this.state.cvProgress || 0) + '%',
       cvFilledFields: cvFilledFields,
+      cvHasDoc: !!this.state.cvRecord && !cvBusy,
+      onCvView: () => { try { window.ProLinkerApp.cv.open(this.state.cvRecord); } catch (error) {} },
       cvBorder: this.state.cvDragActive ? accent : (cvStatus === 'error' ? '#E3A89F' : 'var(--border,#DCDFE2)'),
       cvIconBg: this.state.cvDragActive ? accentTint : 'var(--panel,#F3F4F6)',
       cvButtonLabel: cvBusy ? t.cvReading : (cvStatus === 'success' ? t.cvReplace : (cvStatus === 'error' ? t.cvRetry : t.cvUpload)),
@@ -966,6 +1085,24 @@ class Component extends DCLogic {
       onCvDragOver: (e) => { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; if (!cvBusy && !this.state.cvDragActive) this.setState({ cvDragActive: true }); },
       onCvDragLeave: (e) => { e.preventDefault(); if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) this.setState({ cvDragActive: false }); },
       onCvDrop: (e) => { if (cvBusy) { e.preventDefault(); return; } this.onCvDrop(e); },
+      isFreelancer: role === 'freelancer',
+      gFirstName: p.firstName, onGFirstName: (e) => this.save({ firstName: e.target.value, name: (e.target.value + ' ' + (p.lastName || '')).trim() }),
+      gLastName: p.lastName, onGLastName: (e) => this.save({ lastName: e.target.value, name: ((p.firstName || '') + ' ' + e.target.value).trim() }),
+      gCompany: p.company, onGCompany: (e) => this.save({ company: e.target.value }),
+      companyMissing: !(p.company || '').trim(),
+      gCountry: p.country, onGCountry: (e) => this.save({ country: e.target.value }),
+      countries: ['Nederland','België','Duitsland','Frankrijk','Spanje','Portugal','Verenigd Koninkrijk','Ierland','Italië','Oostenrijk','Zwitserland','Polen','Nicaragua','Curaçao','Suriname','Verenigde Staten','Anders'].map((v) => ({ v: v })),
+      gPostcode: p.postcode, onGPostcode: (e) => this.save({ postcode: e.target.value }),
+      gCity: p.city, onGCity: (e) => this.save({ city: e.target.value }),
+      gAddress: p.address, onGAddress: (e) => this.save({ address: e.target.value }),
+      gDial: p.phoneDial || '+31', onGDial: (e) => this.save({ phoneDial: e.target.value }),
+      dials: ['+31','+32','+49','+33','+34','+44','+1','+505','+597','+599'].map((v) => ({ v: v })),
+      gPhone: p.phone, onGPhone: (e) => this.save({ phone: e.target.value }),
+      hasPhoto: !!p.avatarUrl, noPhoto: !p.avatarUrl, photoSrc: p.avatarUrl || '',
+      onPickPhoto: () => this.pickPhoto(), onPhotoInput: (e) => this.onPhotoInput(e),
+      phoneIsVerified: !!(session.phoneVerified || session.contact), phoneNotVerified: !(session.phoneVerified || session.contact),
+      onSaveAll: () => this.saveAll(),
+      hasGgToast: !!this.state.ggToast, ggToast: this.state.ggToast || '',
       pName: p.name, onName: (e) => this.save({ name: e.target.value }),
       pHeadline: p.headline, onHeadline: (e) => this.save({ headline: e.target.value }),
       pRate: p.rate, onRate: (e) => this.save({ rate: e.target.value.replace(/[^0-9]/g, '').slice(0, 3) }),

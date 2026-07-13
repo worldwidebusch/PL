@@ -1,7 +1,8 @@
 (function (global) {
   'use strict';
 
-  var VERSION = '1.3.0';
+  // v1.4.0: adds assignments.responses / updateResponseStatus and messages.ensure
+  var VERSION = '1.4.0';
   var STORAGE_PREFIX = 'plk-app-data-v1:';
   var memoryStore = {};
   var applicationRequestCache = {};
@@ -17,6 +18,11 @@
     profile: '/api/v1/profiles/:id',
     assignments: '/api/v1/assignments',
     assignment: '/api/v1/assignments/:id',
+    assignmentResponses: '/api/v1/assignments/:id/responses',
+    assignmentResponse: '/api/v1/assignments/:id/responses/:responseId',
+    cvRedact: '/api/v1/cv/redactions',
+    cvUpload: '/api/v1/cv/uploads',
+    cvDocument: '/api/v1/cv/documents/me',
     messages: '/api/v1/messages',
     message: '/api/v1/messages/:id',
     messageSend: '/api/v1/messages/:id/replies',
@@ -24,6 +30,7 @@
     messageArchive: '/api/v1/messages/:id/archive',
     messageRestore: '/api/v1/messages/:id/restore',
     earnings: '/api/v1/earnings',
+    transactions: '/api/v1/transactions',
     settings: '/api/v1/settings',
     opportunitiesList: '/api/v1/opportunities',
     opportunityGet: '/api/v1/opportunities/:id',
@@ -48,6 +55,9 @@
   };
 
   var DEFAULT_METHODS = {
+    cvRedact: 'POST',
+    cvUpload: 'POST',
+    cvDocument: 'GET',
     opportunitiesList: 'GET',
     opportunityGet: 'GET',
     opportunitySave: 'PUT',
@@ -91,9 +101,10 @@
     dashboard: 'Prolinker Dashboard.dc.html',
     network: 'Prolinker Netwerk.dc.html',
     assignments: 'Prolinker Mijn opdrachten.dc.html',
+    assignmentDetail: 'Prolinker Opdracht.dc.html',
     messages: 'Prolinker Berichten.dc.html',
     freelancerProfile: 'Prolinker Profiel.dc.html',
-    clientProfile: 'Prolinker Instellingen.dc.html?section=profiel',
+    clientProfile: 'Prolinker Profiel.dc.html',
     earnings: 'Prolinker Verdiensten.dc.html',
     settings: 'Prolinker Instellingen.dc.html',
     freelancerFeed: 'Prolinker Voor jou v2.dc.html',
@@ -388,6 +399,16 @@
     return String((session && session.name) || profile.name || stored || (session && session.role === 'freelancer' ? 'ProLinker professional' : 'ProLinker opdrachtgever')).trim();
   }
 
+  function shortDisplayName(value) {
+    var name = String(value || '').trim();
+    if (!name || name.indexOf('ProLinker') === 0) return name;
+    var parts = name.split(/\s+/).filter(Boolean);
+    if (parts.length < 2) return name;
+    var last = parts[parts.length - 1];
+    if (/^[A-Z]\.$/.test(last)) return name;
+    return parts[0] + ' ' + last.charAt(0).toUpperCase() + '.';
+  }
+
   function initials(name) {
     var parts = String(name || 'PL').trim().split(/\s+/).filter(Boolean);
     return ((parts[0] || 'P').charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : 'L')).toUpperCase();
@@ -404,17 +425,84 @@
     return ROUTES.freelancerProfile + '?networkProfile=' + encodeURIComponent(member.id);
   }
 
+  function seedTransactions(role) {
+    var bonuses = [
+      { id: 'txn-bonus-paul', at: '2026-04-02T10:15:00.000Z', title: 'Aanmeld bonus voor gebruiker Paul van Braam', type: 'transfer_in', status: 'processed', amount: 5, total: 5, direction: 'in' },
+      { id: 'txn-bonus-sjoerd', at: '2026-04-01T09:30:00.000Z', title: 'Aanmeld bonus voor gebruiker Sjoerd Koelewijn', type: 'transfer_in', status: 'processed', amount: 5, total: 5, direction: 'in' },
+      { id: 'txn-bonus-signup', at: '2026-03-10T08:00:00.000Z', title: 'Aanmeld bonus', infoLabel: 'meer informatie', infoHref: '#referral', type: 'transfer_in', status: 'processed', amount: 500, total: 500, direction: 'in' }
+    ];
+    if (role === 'client') {
+      return [
+        { id: 'txn-dep-250', at: '2026-05-30T11:20:00.000Z', title: 'Storting van 250', subtitle: 'Borg', type: 'deposit', status: 'pending', amount: 250, fee: 0, vatRate: 21, vat: 0, total: 250, direction: 'in', payable: true },
+        { id: 'txn-dep-200', at: '2026-05-28T14:05:00.000Z', title: 'Storting van 200', subtitle: 'Borg', type: 'deposit', status: 'pending', amount: 200, fee: 0, vatRate: 21, vat: 0, total: 200, direction: 'in', payable: true }
+      ].concat(bonuses);
+    }
+    return [
+      { id: 'txn-payout-1', at: '2026-05-20T09:45:00.000Z', title: 'Uitbetaling naar je bankrekening', subtitle: 'NL91 ABNA •• 8412', type: 'payout', status: 'processed', amount: 1250, total: 1250, direction: 'out' }
+    ].concat(bonuses);
+  }
+
+  function normalizeTransaction(item, index) {
+    item = isPlainObject(item) ? item : {};
+    var status = String(item.status || 'processed').toLowerCase();
+    var type = String(item.type || item.transactionType || 'transfer_in').toLowerCase();
+    return {
+      id: String(item.id || 'txn-' + (index + 1)),
+      at: item.at || item.date || item.createdAt || '',
+      title: String(item.title || item.description || 'Transactie'),
+      subtitle: String(item.subtitle || item.note || ''),
+      infoLabel: String(item.infoLabel || ''),
+      infoHref: safeHref(item.infoHref, ''),
+      type: type,
+      status: ['pending', 'processed', 'failed'].indexOf(status) >= 0 ? status : 'processed',
+      amount: Math.max(0, finiteNumber(item.amount, 0)),
+      fee: Math.max(0, finiteNumber(item.fee, 0)),
+      vatRate: Math.max(0, finiteNumber(item.vatRate, 21)),
+      vat: Math.max(0, finiteNumber(item.vat, 0)),
+      total: Math.max(0, finiteNumber(item.total, finiteNumber(item.amount, 0))),
+      direction: String(item.direction || 'in').toLowerCase() === 'out' ? 'out' : 'in',
+      payable: item.payable === true && status === 'pending'
+    };
+  }
+
+  async function listTransactions(options) {
+    options = options || {};
+    var session = activeSession();
+    if (configured.baseUrl) {
+      var remote = normalizePayload(await request('transactions', { signal: options.signal }));
+      remote = isPlainObject(remote) ? remote : {};
+      var remoteItems = (Array.isArray(remote) ? remote : (Array.isArray(remote.items) ? remote.items : (Array.isArray(remote.transactions) ? remote.transactions : []))).map(normalizeTransaction);
+      var balance = isPlainObject(remote.balance) ? remote.balance : {};
+      return {
+        balance: { currency: String(balance.currency || 'EUR'), available: Math.max(0, finiteNumber(balance.available, 0)), bonus: Math.max(0, finiteNumber(balance.bonus, 0)), usdRate: Math.max(0.1, finiteNumber(balance.usdRate, 1.1418)) },
+        items: remoteItems
+      };
+    }
+    var repository = readRepository(session);
+    if (!isPlainObject(repository.earnings)) repository.earnings = { currency: 'EUR', available: 0, pending: 0, referralRate: 0.02 };
+    if (!Array.isArray(repository.earnings.transactions)) {
+      repository.earnings.transactions = seedTransactions(session.role);
+      writeRepository(session, repository);
+    }
+    var items = repository.earnings.transactions.map(normalizeTransaction);
+    var bonus = items.filter(function (item) { return item.type === 'transfer_in' && item.status === 'processed'; }).reduce(function (sum, item) { return sum + item.total; }, 0);
+    return {
+      balance: { currency: 'EUR', available: Math.max(0, finiteNumber(repository.earnings.available, 0)), bonus: bonus, usdRate: 1.1418 },
+      items: items
+    };
+  }
+
   function seedRepository(session) {
     var role = session.role;
     var name = displayName(session);
     var id = accountId(session);
     var members = [
-      { id: 'pro-amelie', name: 'Amelie de Jong', headline: 'UX designer en researcher', location: 'Utrecht', availability: 'Beschikbaar', mutual: 12, skills: ['UX research', 'Figma'], color: '#E9EFF5' },
-      { id: 'pro-youssef', name: 'Youssef El Amrani', headline: 'Full-stack developer', location: 'Rotterdam', availability: 'Vanaf augustus', mutual: 8, skills: ['React', 'Node.js'], color: '#E8F5EF' },
-      { id: 'pro-noor', name: 'Noor van Dijk', headline: 'Interim finance consultant', location: 'Amsterdam', availability: 'Beschikbaar', mutual: 6, skills: ['Finance', 'Power BI'], color: '#F5EFFB' },
-      { id: 'pro-bram', name: 'Bram Vermeer', headline: 'B2B growth marketeer', location: 'Antwerpen', availability: '16 u per week', mutual: 4, skills: ['Demand gen', 'HubSpot'], color: '#FFE0D6' },
-      { id: 'pro-sofia', name: 'Sofia Peeters', headline: 'Operations specialist', location: 'Remote', availability: 'Beschikbaar', mutual: 10, skills: ['Automation', 'Notion'], color: '#EAF5F6' },
-      { id: 'pro-lars', name: 'Lars Smit', headline: 'Data engineer', location: 'Eindhoven', availability: 'Vanaf september', mutual: 3, skills: ['Python', 'Snowflake'], color: '#F3F0E8' }
+      { id: 'pro-amelie', name: 'Amelie de Jong', headline: 'UX designer en researcher', location: 'Utrecht', availability: 'Beschikbaar', mutual: 12, skills: ['UX research', 'Figma'], color: '#E9EFF5', avatarUrl: 'https://randomuser.me/api/portraits/women/65.jpg' },
+      { id: 'pro-youssef', name: 'Youssef El Amrani', headline: 'Full-stack developer', location: 'Rotterdam', availability: 'Vanaf augustus', mutual: 8, skills: ['React', 'Node.js'], color: '#E8F5EF', avatarUrl: 'https://randomuser.me/api/portraits/men/51.jpg' },
+      { id: 'pro-noor', name: 'Noor van Dijk', headline: 'Interim finance consultant', location: 'Amsterdam', availability: 'Beschikbaar', mutual: 6, skills: ['Finance', 'Power BI'], color: '#F5EFFB', avatarUrl: 'https://randomuser.me/api/portraits/women/33.jpg' },
+      { id: 'pro-bram', name: 'Bram Vermeer', headline: 'B2B growth marketeer', location: 'Antwerpen', availability: '16 u per week', mutual: 4, skills: ['Demand gen', 'HubSpot'], color: '#FFE0D6', avatarUrl: 'https://randomuser.me/api/portraits/men/64.jpg' },
+      { id: 'pro-sofia', name: 'Sofia Peeters', headline: 'Operations specialist', location: 'Remote', availability: 'Beschikbaar', mutual: 10, skills: ['Automation', 'Notion'], color: '#EAF5F6', avatarUrl: 'https://randomuser.me/api/portraits/women/79.jpg' },
+      { id: 'pro-lars', name: 'Lars Smit', headline: 'Data engineer', location: 'Eindhoven', availability: 'Vanaf september', mutual: 3, skills: ['Python', 'Snowflake'], color: '#F3F0E8', avatarUrl: 'https://randomuser.me/api/portraits/men/58.jpg' }
     ].map(function (item) {
       return Object.assign({}, item, { initials: initials(item.name), status: 'connected', profileHref: profileLinkFor(item, role) });
     });
@@ -424,14 +512,14 @@
     ];
     var activities = role === 'client' ? [
       { id: 'act-client-1', type: 'response', title: 'Nieuwe reactie op Senior React Developer', detail: 'Youssef reageerde met 96% match.', status: 'nieuw', at: isoAt(0, 14, 20), href: ROUTES.assignments },
-      { id: 'act-client-2', type: 'message', title: 'Bericht van Amelie de Jong', detail: 'Amelie heeft twee momenten voor een kennismaking voorgesteld.', status: 'open', at: isoAt(0, 11, 5), href: ROUTES.messages },
+      { id: 'act-client-2', type: 'message', title: 'Bericht van Amelie J.', detail: 'Amelie heeft twee momenten voor een kennismaking voorgesteld.', status: 'open', at: isoAt(0, 11, 5), href: ROUTES.messages },
       { id: 'act-client-3', type: 'assignment', title: 'Opdracht staat live', detail: 'Marketing automation specialist is gepubliceerd.', status: 'actief', at: isoAt(-1, 16, 30), href: ROUTES.assignments },
-      { id: 'act-client-4', type: 'network', title: 'Nieuwe netwerkconnectie', detail: 'Sofia Peeters heeft je uitnodiging geaccepteerd.', status: 'verbonden', at: isoAt(-2, 9, 10), href: ROUTES.network }
+      { id: 'act-client-4', type: 'network', title: 'Nieuwe netwerkconnectie', detail: 'Sofia P. heeft je uitnodiging geaccepteerd.', status: 'verbonden', at: isoAt(-2, 9, 10), href: ROUTES.network }
     ] : [
       { id: 'act-pro-1', type: 'match', title: 'Nieuwe match van 98%', detail: 'AI Automation Consultant, remote, 24-32 uur.', status: 'nieuw', at: isoAt(0, 15, 10), href: ROUTES.freelancerFeed },
       { id: 'act-pro-2', type: 'message', title: 'Bericht van FinBase', detail: 'De opdrachtgever wil een kennismaking inplannen.', status: 'open', at: isoAt(0, 12, 25), href: ROUTES.messages },
       { id: 'act-pro-3', type: 'application', title: 'Sollicitatie bekeken', detail: 'Je reactie op Senior React Developer is geopend.', status: 'bekeken', at: isoAt(-1, 17, 10), href: ROUTES.assignments },
-      { id: 'act-pro-4', type: 'network', title: 'Nieuwe netwerkconnectie', detail: 'Bram Vermeer heeft je uitnodiging geaccepteerd.', status: 'verbonden', at: isoAt(-2, 10, 35), href: ROUTES.network }
+      { id: 'act-pro-4', type: 'network', title: 'Nieuwe netwerkconnectie', detail: 'Bram V. heeft je uitnodiging geaccepteerd.', status: 'verbonden', at: isoAt(-2, 10, 35), href: ROUTES.network }
     ];
 
     return {
@@ -476,11 +564,11 @@
       applications: [],
       opportunityPreferences: { saved: {}, hidden: {} },
       messages: [
-        { id: 'msg-1', sender: role === 'client' ? 'Amelie de Jong' : 'FinBase', subject: 'Kennismaking', preview: 'Zullen we morgen kort bellen?', unread: true, archived: false, at: isoAt(0, 12, 25), href: ROUTES.messages + '?conversation=msg-1', messages: [
-          { id: 'msg-1-1', sender: role === 'client' ? 'Amelie de Jong' : 'FinBase', direction: 'incoming', text: 'Bedankt voor je reactie. Zullen we morgen kort bellen?', at: isoAt(0, 12, 25), read: false }
+        { id: 'msg-1', sender: role === 'client' ? 'Amelie de Jong' : 'Mark Hendriks', avatarUrl: role === 'client' ? 'https://randomuser.me/api/portraits/women/65.jpg' : 'https://randomuser.me/api/portraits/men/49.jpg', assignmentId: role === 'client' ? 'job-react' : 'app-react', assignmentTitle: 'Senior React Developer', subject: 'Kennismaking', preview: 'Zullen we morgen kort bellen?', unread: true, archived: false, at: isoAt(0, 12, 25), href: ROUTES.messages + '?conversation=msg-1', messages: [
+          { id: 'msg-1-1', sender: role === 'client' ? 'Amelie de Jong' : 'Mark Hendriks', direction: 'incoming', text: 'Bedankt voor je reactie. Zullen we morgen kort bellen?', at: isoAt(0, 12, 25), read: false, channel: 'whatsapp' }
         ] },
-        { id: 'msg-2', sender: role === 'client' ? 'Youssef El Amrani' : 'ProLinker support', subject: 'Profiel en planning', preview: 'Bedankt voor de aanvullende informatie.', unread: false, archived: false, at: isoAt(-1, 16, 0), href: ROUTES.messages + '?conversation=msg-2', messages: [
-          { id: 'msg-2-1', sender: role === 'client' ? 'Youssef El Amrani' : 'ProLinker support', direction: 'incoming', text: 'Bedankt voor de aanvullende informatie.', at: isoAt(-1, 16, 0), read: true }
+        { id: 'msg-2', sender: role === 'client' ? 'Youssef El Amrani' : 'ProLinker support', avatarUrl: role === 'client' ? 'https://randomuser.me/api/portraits/men/51.jpg' : '', assignmentId: role === 'client' ? 'job-automation' : '', assignmentTitle: role === 'client' ? 'Marketing automation specialist' : '', subject: 'Profiel en planning', preview: 'Bedankt voor de aanvullende informatie.', unread: false, archived: false, at: isoAt(-1, 16, 0), href: ROUTES.messages + '?conversation=msg-2', messages: [
+          { id: 'msg-2-1', sender: role === 'client' ? 'Youssef El Amrani' : 'ProLinker support', direction: 'incoming', text: 'Bedankt voor de aanvullende informatie.', at: isoAt(-1, 16, 0), read: true, channel: 'platform' }
         ] }
       ],
       earnings: { currency: 'EUR', available: role === 'freelancer' ? 1860 : 0, pending: role === 'freelancer' ? 3200 : 74, referralRate: 0.02 },
@@ -506,6 +594,24 @@
       try { data = JSON.parse(stored); } catch (error) { data = null; }
     }
     if (!data || data.version !== 1 || !data.dashboard || !data.network) data = seedRepository(session);
+    if (data.network && Array.isArray(data.network.members) && data.network.members.length && !data.network.members[0].avatarUrl) {
+      var seededData = seedRepository(session);
+      var seededAvatars = {};
+      seededData.network.members.forEach(function (member) { seededAvatars[member.id] = member.avatarUrl; });
+      data.network.members.forEach(function (member) { if (!member.avatarUrl && seededAvatars[member.id]) member.avatarUrl = seededAvatars[member.id]; });
+      if (data.profiles) Object.keys(seededAvatars).forEach(function (key) { if (data.profiles[key] && !data.profiles[key].avatarUrl) data.profiles[key].avatarUrl = seededAvatars[key]; });
+    }
+    if (Array.isArray(data.messages) && data.messages.length) {
+      seedRepository(session).messages.forEach(function (thread) {
+        var existing = data.messages.find(function (candidate) { return candidate.id === thread.id; });
+        if (!existing) return;
+        if (!existing.avatarUrl && thread.avatarUrl) existing.avatarUrl = thread.avatarUrl;
+        if (thread.sender && existing.sender !== thread.sender) {
+          existing.sender = thread.sender;
+          if (Array.isArray(existing.messages)) existing.messages.forEach(function (entry) { if (entry.direction !== 'outgoing') entry.sender = thread.sender; });
+        }
+      });
+    }
     if (!Array.isArray(data.applications)) data.applications = [];
     if (!isPlainObject(data.opportunityPreferences)) data.opportunityPreferences = { saved: {}, hidden: {} };
     if (!isPlainObject(data.opportunityPreferences.saved)) data.opportunityPreferences.saved = {};
@@ -842,7 +948,7 @@
     item = isPlainObject(item) ? item : {};
     var name = String(item.name || item.displayName || 'ProLinker professional');
     var member = {
-      id: String(item.id || 'member-' + hashString(name)), name: name, initials: item.initials || initials(name),
+      id: String(item.id || 'member-' + hashString(name)), name: shortDisplayName(name), initials: item.initials || initials(name),
       headline: String(item.headline || item.discipline || 'Professional'), location: String(item.location || 'Remote'),
       availability: String(item.availability || 'Beschikbaar'), mutual: Math.max(0, Number(item.mutual || item.sharedConnections) || 0),
       skills: Array.isArray(item.skills) ? item.skills.slice(0, 12) : [], status: item.status || 'connected', color: item.color || '#E9EFF5',
@@ -911,7 +1017,7 @@
     repository.network.members.unshift(invite);
     repository.profiles[invite.id] = Object.assign({}, invite);
     repository.network.updatedAt = new Date().toISOString();
-    addActivity(repository, session, 'Connectie geaccepteerd', invite.name + ' is nu onderdeel van je netwerk.', 'verbonden');
+    addActivity(repository, session, 'Connectie geaccepteerd', shortDisplayName(invite.name) + ' is nu onderdeel van je netwerk.', 'verbonden');
     writeRepository(session, repository);
     return { ok: true, member: normalizeMember(invite, session) };
   }
@@ -1037,23 +1143,454 @@
     return Object.assign({}, current);
   }
 
+  var RESPONSE_POOL = [
+    { name: 'Sanne Vermeer', headline: 'Senior front-end developer', location: 'Amsterdam', skills: ['React', 'TypeScript', 'Next.js'], bio: 'Bouwt al negen jaar productieklare webapplicaties voor scale-ups en corporates. Sterk in performance, toegankelijkheid en design systems.', focus: 'Werkt het liefst in multidisciplinaire productteams en neemt junior developers graag mee in codereviews en pairing.', experience: ['Lead front-end, Coolblue (2022-2025)', 'Front-end developer, Adyen (2018-2022)', 'HBO-ICT, Hogeschool van Amsterdam'], avatarUrl: 'https://randomuser.me/api/portraits/women/44.jpg', rating: 5, branche: 'Software en IT', hours: '32-40' },
+    { name: 'Jesse van den Berg', headline: 'Full-stack JavaScript developer', location: 'Utrecht', skills: ['Node.js', 'React', 'PostgreSQL'], bio: 'Full-stack developer met focus op snelle MVP-trajecten en schaalbare API-architectuur. Werkt graag kort-cyclisch met wekelijkse demo-momenten.', focus: 'Denkt actief mee over productkeuzes en houdt de technische schuld laag met duidelijke documentatie.', experience: ['Freelance full-stack, o.a. bol. en PostNL (2021-heden)', 'Software engineer, Mollie (2019-2021)', 'BSc Informatica, Universiteit Utrecht'], avatarUrl: 'https://randomuser.me/api/portraits/men/32.jpg', rating: 4, branche: 'Software en IT', hours: '24-40' },
+    { name: 'Meryem Aydin', headline: 'Marketing automation specialist', location: 'Rotterdam', skills: ['HubSpot', 'Klaviyo', 'SQL'], bio: 'Zet marketing automation op die aantoonbaar omzet oplevert. Certified HubSpot- en Klaviyo-partner, data-gedreven en pragmatisch.', focus: 'Start iedere samenwerking met een meetplan zodat resultaat vanaf week een zichtbaar is.', experience: ['Automation lead, Rituals (2023-2025)', 'CRM-specialist, Picnic (2020-2023)', 'MSc Marketing, Erasmus Universiteit'], avatarUrl: 'https://randomuser.me/api/portraits/women/68.jpg', rating: 5, branche: 'Marketing en Communicatie', hours: '16-32' },
+    { name: 'Daan Kuipers', headline: 'UX en product designer', location: 'Eindhoven', skills: ['Figma', 'Design systems', 'UX research'], bio: 'Ontwerpt digitale producten van eerste schets tot getest prototype. Combineert onderzoek met een scherp oog voor detail.', focus: 'Test ontwerpen wekelijks met echte gebruikers en levert developer-klare specs in Figma.', experience: ['Senior product designer, ASML (2022-2025)', 'UX designer, VanMoof (2019-2022)', 'MDes, Design Academy Eindhoven'], avatarUrl: 'https://randomuser.me/api/portraits/men/75.jpg', rating: 4, branche: 'Design en Creatie', hours: '24-32' },
+    { name: 'Fleur Jacobs', headline: 'Data engineer en analist', location: 'Op afstand', skills: ['Python', 'dbt', 'Snowflake'], bio: 'Richt datapipelines en dashboards in waar teams echt op sturen. Ervaring met moderne data-stacks in retail en fintech.', focus: 'Bouwt overdraagbaar: heldere datamodellen, versiebeheer en een team dat er zelf mee verder kan.', experience: ['Data engineer, Albert Heijn (2021-2025)', 'BI-analist, ING (2018-2021)', 'MSc Data Science, TU Delft'], avatarUrl: 'https://randomuser.me/api/portraits/women/12.jpg', rating: 5, branche: 'Data en AI', hours: '32-40' },
+    { name: 'Ruben de Wit', headline: 'DevOps en cloud engineer', location: 'Den Haag', skills: ['AWS', 'Kubernetes', 'Terraform'], bio: 'Automatiseert infrastructuur en CI/CD zodat teams sneller en veiliger releasen. AWS-gecertificeerd op professional-niveau.', focus: 'Zet monitoring en alerting direct goed neer, zodat verrassingen in productie uitblijven.', experience: ['Platform engineer, KPN (2022-2025)', 'DevOps engineer, Exact (2019-2022)', 'HBO Technische Informatica, De Haagse Hogeschool'], avatarUrl: 'https://randomuser.me/api/portraits/men/22.jpg', rating: 4, branche: 'Software en IT', hours: '24-40' },
+    { name: 'Lotte Willems', headline: 'Content- en SEO-strateeg', location: 'Antwerpen', skills: ['SEO', 'Contentstrategie', 'Copywriting'], bio: 'Laat organisch verkeer groeien met contentstrategieën die aansluiten op de klantreis. Schrijft zelf mee waar nodig.', focus: 'Combineert zoekwoordonderzoek met merkverhaal, zodat content scoort en klinkt zoals jij.', experience: ['SEO-lead, Coosto (2022-2025)', 'Contentmarketeer, Studio 100 (2019-2022)', 'MA Communicatiewetenschappen, KU Leuven'], avatarUrl: 'https://randomuser.me/api/portraits/women/26.jpg', rating: 5, branche: 'Marketing en Communicatie', hours: '16-24' },
+    { name: 'Omar Benali', headline: 'AI en machine learning consultant', location: 'Amsterdam', skills: ['Python', 'LLM-integraties', 'MLOps'], bio: 'Helpt organisaties van AI-idee naar werkende toepassing, inclusief governance en beheer. Praktisch en resultaatgericht.', focus: 'Levert naast modellen ook de werkinstructies en evaluaties waarmee het team zelf kan bijsturen.', experience: ['ML engineer, Booking (2021-2025)', 'Data scientist, ABN AMRO (2018-2021)', 'MSc AI, Universiteit van Amsterdam'], avatarUrl: 'https://randomuser.me/api/portraits/men/85.jpg', rating: 5, branche: 'Data en AI', hours: '24-32' },
+    { name: 'Iris Mulder', headline: 'Interim finance professional', location: 'Utrecht', skills: ['Financial control', 'Power BI', 'Exact'], bio: 'Interim controller voor mkb en scale-ups. Brengt rust in de cijfers en bouwt rapportages die het hele team begrijpt.', focus: 'Sterk in maandafsluitingen versnellen en forecasting die de directie echt gebruikt.', experience: ['Interim controller, diverse scale-ups (2022-heden)', 'Financial controller, Jumbo (2018-2022)', 'RA-opleiding, Nyenrode'], avatarUrl: 'https://randomuser.me/api/portraits/women/57.jpg', rating: 4, branche: 'Finance en Control', hours: '16-32' },
+    { name: 'Thomas Peeters', headline: 'Mobile developer (iOS en Android)', location: 'Op afstand', skills: ['Flutter', 'Swift', 'Kotlin'], bio: 'Bouwt cross-platform apps met native kwaliteit. Van appstore-strategie tot release en beheer.', focus: 'Regelt ook de releasepijplijn: app-store review, crashmonitoring en gefaseerde uitrol.', experience: ['Mobile lead, Temper (2022-2025)', 'iOS developer, Rabobank (2019-2022)', 'BSc Informatica, KU Leuven'], avatarUrl: 'https://randomuser.me/api/portraits/men/41.jpg', rating: 5, branche: 'Software en IT', hours: '32-40' }
+  ];
+
+  var RESPONSE_MESSAGES = [
+    'Klinkt als een mooie klus, ik ben per direct beschikbaar. Zullen we kort kennismaken?',
+    'Ik heb vergelijkbare opdrachten gedaan en stuur graag mijn portfolio mee. Wanneer schikt een gesprek?',
+    'Interessante opdracht. Ik heb nog een paar vragen over de scope, kunnen we bellen?',
+    'Dit sluit goed aan op mijn ervaring. Ik kan binnen twee weken starten.',
+    'Graag reageer ik op deze opdracht. Mijn uurtarief is bespreekbaar bij een langere samenwerking.',
+    'Is de opdracht ook parttime in te vullen? Ik ben drie dagen per week beschikbaar.',
+    'Mooie uitdaging. Ik werk remote-first maar kom graag langs voor een kennismaking.',
+    'Ik heb je opdracht via Instant Match ontvangen en ben zeker geïnteresseerd.'
+  ];
+
+  function normalizeResponseStatus(value) {
+    var status = String(value || '').trim().toLowerCase();
+    return ['new', 'shortlisted', 'rejected'].indexOf(status) >= 0 ? status : 'new';
+  }
+
+  var REDACTION_MARK = '█████';
+
+  var CONTACT_PATTERNS = [
+    /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g,
+    /(?:\+|00)[\d\s()\/-]{8,}\d/g,
+    /\b0\d{1,3}[\s\/-]?\d{6,8}\b/g,
+    /(?:https?:\/\/|www\.)[^\s|,;)]+/gi,
+    /\b(?:[a-z0-9-]+\.)+[a-z]{2,}\/[^\s|,;)]+/gi
+  ];
+
+  function contactInfoMatches(text) {
+    var value = String(text || '');
+    var count = 0;
+    CONTACT_PATTERNS.forEach(function (pattern) {
+      var matches = value.match(pattern);
+      if (matches) count += matches.length;
+    });
+    return count;
+  }
+
+  function localRedactCv(text, options) {
+    options = isPlainObject(options) ? options : {};
+    var output = String(text || '');
+    var redactions = 0;
+    var censor = function (pattern) {
+      output = output.replace(pattern, function () { redactions += 1; return REDACTION_MARK; });
+    };
+    censor(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g);
+    censor(/(?:\+|00)[\d\s()\/-]{8,}\d/g);
+    censor(/\b0\d{1,3}[\s\/-]?\d{6,8}\b/g);
+    censor(/(?:https?:\/\/|www\.)[^\s|,;)]+/gi);
+    censor(/\b(?:[a-z0-9-]+\.)+[a-z]{2,}\/[^\s|,;)]+/gi);
+    var name = String(options.name || options.fullName || '').trim();
+    if (name && name.split(/\s+/).length > 1) {
+      var parts = name.split(/\s+/);
+      var first = parts[0];
+      var last = parts[parts.length - 1];
+      var short = first + ' ' + last.charAt(0).toUpperCase() + '.';
+      var escape = function (value) { return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+      output = output.replace(new RegExp(escape(name), 'gi'), function () { redactions += 1; return short; });
+      output = output.replace(new RegExp('\\b' + escape(last) + '\\b', 'g'), function () { redactions += 1; return last.charAt(0).toUpperCase() + '.'; });
+    }
+    return { text: output, redactions: redactions, provider: 'local', preview: true };
+  }
+
+  async function redactCv(input, options) {
+    options = options || {};
+    activeSession();
+    input = isPlainObject(input) ? input : { text: input };
+    var text = String(input.text || '');
+    if (!text.trim()) throw new ProLinkerError('Er is geen cv-tekst om te anonimiseren.', { code: 'VALIDATION_ERROR' });
+    if (configured.baseUrl) {
+      var result = normalizePayload(await request('cvRedact', { body: { text: text, name: String(input.name || ''), locale: 'nl' }, signal: options.signal }));
+      result = isPlainObject(result) ? result : {};
+      var redacted = String(result.text || result.redactedText || '');
+      if (redacted) return { text: redacted, redactions: Math.max(0, Math.floor(finiteNumber(result.redactions, 0))), provider: String(result.provider || 'api'), preview: false };
+    }
+    return localRedactCv(text, { name: input.name });
+  }
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function normalizeCvDocument(input) {
+    if (!isPlainObject(input)) return null;
+    var status = String(input.status || 'approved').toLowerCase();
+    return {
+      id: String(input.id || 'cv-' + hashString(String(input.fileName || '') + '|' + String(input.uploadedAt || ''))),
+      fileName: String(input.fileName || input.name || 'cv.pdf').slice(0, 140),
+      size: Math.max(0, Math.floor(finiteNumber(input.size, 0))),
+      uploadedAt: input.uploadedAt || input.processedAt || new Date().toISOString(),
+      status: ['approved', 'rejected', 'scanning'].indexOf(status) >= 0 ? status : 'approved',
+      redactions: Math.max(0, Math.floor(finiteNumber(input.redactions, 0))),
+      text: String(input.text || input.redactedText || '')
+    };
+  }
+
+  async function uploadCvDocument(input, options) {
+    options = options || {};
+    var session = activeSession();
+    input = isPlainObject(input) ? input : {};
+    var text = String(input.text || '').trim();
+    if (!text) throw new ProLinkerError('Er is geen cv-tekst gevonden om te controleren.', { code: 'VALIDATION_ERROR' });
+    var fileName = String(input.fileName || 'cv.pdf').slice(0, 140);
+    if (configured.baseUrl) {
+      var remote = normalizePayload(await request('cvUpload', { body: { text: text, fileName: fileName, size: Math.max(0, Math.floor(finiteNumber(input.size, 0))), name: String(input.name || ''), locale: 'nl' }, signal: options.signal }));
+      var normalizedRemote = normalizeCvDocument(remote);
+      if (!normalizedRemote) throw new ProLinkerError('De cv-controle gaf geen geldig document terug.', { code: 'INVALID_RESPONSE' });
+      return normalizedRemote;
+    }
+    var redacted = localRedactCv(text, { name: String(input.name || displayName(session)) });
+    var record = normalizeCvDocument({
+      id: 'cv-' + hashString(accountId(session) + '|' + fileName + '|' + text.length),
+      fileName: fileName,
+      size: finiteNumber(input.size, 0),
+      uploadedAt: new Date().toISOString(),
+      status: 'approved',
+      redactions: redacted.redactions,
+      text: redacted.text
+    });
+    var repository = readRepository(session);
+    repository.cvDocument = record;
+    writeRepository(session, repository);
+    return record;
+  }
+
+  async function getCvDocument(options) {
+    options = options || {};
+    var session = activeSession();
+    if (configured.baseUrl) {
+      try { return normalizeCvDocument(normalizePayload(await request('cvDocument', { signal: options.signal }))); }
+      catch (error) { if (error && error.status === 404) return null; throw error; }
+    }
+    return normalizeCvDocument(readRepository(session).cvDocument);
+  }
+
+  function cvDocumentHtml(record) {
+    record = normalizeCvDocument(record);
+    if (!record || !record.text) return '';
+    var body = [];
+    var bodyIndex = 0;
+    var listOpen = false;
+    var closeList = function () { if (listOpen) { body.push('</ul>'); listOpen = false; } };
+    record.text.split('\n').forEach(function (raw) {
+      var line = raw.trim();
+      if (!line) return;
+      var safe = escapeHtml(line);
+      if (line.indexOf('- ') === 0) {
+        if (!listOpen) { body.push('<ul>'); listOpen = true; }
+        body.push('<li>' + escapeHtml(line.slice(2)) + '</li>');
+      } else if (line.indexOf('## ') === 0) { closeList(); body.push('<h2>' + escapeHtml(line.slice(3)) + '</h2>'); }
+      else if (bodyIndex === 0) { closeList(); body.push('<h1>' + safe + '</h1>'); }
+      else if (bodyIndex === 1) { closeList(); body.push('<p class="sub">' + safe + '</p>'); }
+      else if (bodyIndex === 2 && /E-mail|Telefoon|LinkedIn|█/i.test(line)) { closeList(); body.push('<p class="contact">' + safe + '</p>'); }
+      else { closeList(); body.push('<p>' + safe + '</p>'); }
+      bodyIndex += 1;
+    });
+    closeList();
+    var html = body.join('\n');
+    return '<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>' + escapeHtml(record.fileName) + ' | ProLinker</title><style>'
+      + 'body{margin:0;background:#E8EBEE;font-family:Lato,system-ui,sans-serif;color:#152431}'
+      + '.bar{position:sticky;top:0;background:#152431;color:#fff;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:12.5px}'
+      + '.bar strong{font-weight:800}.bar .note{opacity:.82}'
+      + '.bar button{border:1px solid rgba(255,255,255,.35);border-radius:7px;background:transparent;color:#fff;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}'
+      + '.page{max-width:820px;margin:26px auto 60px;background:#fff;border:1px solid #DCDFE2;border-radius:10px;box-shadow:0 24px 60px -34px rgba(11,17,25,.45);padding:52px 58px}'
+      + 'h1{margin:0;font-size:27px;letter-spacing:-.02em}h2{margin:26px 0 8px;padding-bottom:7px;border-bottom:1px solid #ECEEF0;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#24476A}'
+      + 'p{margin:10px 0 0;font-size:14.5px;line-height:1.7;color:#424444}.sub{margin-top:4px;color:#8C8E8F;font-size:14px}.contact{font-family:monospace;font-size:12.5px;letter-spacing:.01em}'
+      + 'ul{margin:8px 0 0;padding-left:20px}li{margin-top:7px;font-size:14.5px;line-height:1.65;color:#424444}'
+      + '@media(max-width:640px){.page{margin:0;border-radius:0;padding:30px 22px}}'
+      + '@media print{.bar{display:none}body{background:#fff}.page{margin:0;border:0;box-shadow:none;max-width:none}}'
+      + '</style></head><body>'
+      + '<div class="bar"><span><strong>ProLinker</strong> <span class="note">| Geanonimiseerd cv: contactgegevens, volledige namen en externe links zijn door AI afgeschermd (' + record.redactions + ').</span></span><button onclick="window.print()">Afdrukken of opslaan als pdf</button></div>'
+      + '<div class="page">' + html + '</div>'
+      + '</body></html>';
+  }
+
+  function openCvDocument(record) {
+    var html = cvDocumentHtml(record);
+    if (!html) throw new ProLinkerError('Er is geen goedgekeurd cv om te bekijken.', { code: 'NOT_FOUND' });
+    var blob = new Blob([html], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var opened = global.open(url, '_blank', 'noopener');
+    setTimeout(function () { try { URL.revokeObjectURL(url); } catch (error) {} }, 60000);
+    if (!opened) throw new ProLinkerError('De cv-weergave werd geblokkeerd door je browser.', { code: 'POPUP_BLOCKED' });
+    return true;
+  }
+
+  function seedCvFile(profile, entryHash) {
+    var redacted = localRedactCv(seedCvText(profile, entryHash), { name: profile.name });
+    var parts = profile.name.split(/\s+/);
+    return {
+      id: 'cvfile-' + hashString(profile.name),
+      fileName: 'cv-' + parts[0].toLowerCase() + '-' + parts[parts.length - 1].charAt(0).toLowerCase() + '.pdf',
+      size: 90000 + (entryHash % 290000),
+      uploadedAt: new Date(Date.now() - (240 + (entryHash % 2000)) * 3600000).toISOString(),
+      status: 'approved',
+      redactions: redacted.redactions,
+      text: redacted.text
+    };
+  }
+
+  function seedCvText(profile, entryHash) {
+    var slug = profile.name.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-+|-+$/g, '');
+    var lines = [
+      profile.name,
+      profile.headline + ' | ' + profile.location,
+      'E-mail: ' + slug.replace(/-/g, '.') + '@outlook.com | Telefoon: +31 6 ' + String(10000000 + (entryHash % 89999999)) + ' | LinkedIn: linkedin.com/in/' + slug,
+      '',
+      '## Profiel',
+      profile.bio + ' ' + profile.focus,
+      '',
+      '## Werkervaring en opleiding'
+    ];
+    profile.experience.forEach(function (line) { lines.push('- ' + line); });
+    lines.push('');
+    lines.push('## Vaardigheden');
+    lines.push(profile.skills.join(', '));
+    return lines.join('\n');
+  }
+
+  function seedAssignmentResponses(session, assignment) {
+    var seedBase = accountId(session) + '|' + assignment.id;
+    var hash = parseInt(hashString(seedBase), 36) >>> 0;
+    var count = Number(assignment.responses);
+    if (!Number.isFinite(count) || count < 0) count = 3 + (hash % 6);
+    count = Math.max(0, Math.min(count, RESPONSE_POOL.length));
+    var offset = hash % RESPONSE_POOL.length;
+    var bestMatch = Math.max(60, Math.min(99, Number(assignment.match) || (82 + (hash % 16))));
+    var items = [];
+    for (var i = 0; i < count; i += 1) {
+      var profile = RESPONSE_POOL[(offset + i) % RESPONSE_POOL.length];
+      var entryHash = parseInt(hashString(seedBase + '|' + profile.name), 36) >>> 0;
+      var match = i === 0 ? bestMatch : Math.max(58, bestMatch - 2 - (entryHash % 21));
+      var low = 55 + (entryHash % 7) * 5;
+      items.push({
+        id: 'resp-' + hashString(seedBase + '|' + profile.name),
+        name: profile.name,
+        initials: initials(profile.name),
+        headline: profile.headline,
+        location: profile.location,
+        skills: profile.skills.slice(),
+        bio: profile.bio,
+        focus: profile.focus,
+        experience: profile.experience.slice(),
+        cvFile: seedCvFile(profile, entryHash),
+        avatarUrl: profile.avatarUrl,
+        rating: profile.rating,
+        branche: profile.branche,
+        hours: profile.hours,
+        match: match,
+        channel: entryHash % 5 < 3 ? 'whatsapp' : 'platform',
+        preview: RESPONSE_MESSAGES[entryHash % RESPONSE_MESSAGES.length],
+        respondedAt: new Date(Date.now() - (2 + (entryHash % 70)) * 3600000).toISOString(),
+        status: 'new',
+        rateLabel: '€ ' + low + ' - € ' + (low + 15 + (entryHash % 3) * 10) + ' per uur',
+        availability: entryHash % 3 === 0 ? 'Per direct beschikbaar' : (entryHash % 3 === 1 ? 'Beschikbaar vanaf volgende maand' : '24-32 uur per week')
+      });
+    }
+    items.sort(function (a, b) { return b.match - a.match; });
+    return {
+      seedVersion: 2,
+      stats: {
+        sent: 25,
+        views: Math.max(count, count * 7 + (hash % 30)),
+        whatsapp: items.filter(function (item) { return item.channel === 'whatsapp'; }).length,
+        platform: items.filter(function (item) { return item.channel === 'platform'; }).length,
+        bestMatch: items.length ? items[0].match : null,
+        bestMatchName: items.length ? items[0].name : ''
+      },
+      items: items
+    };
+  }
+
+  function normalizeAssignmentResponse(item, index) {
+    item = isPlainObject(item) ? item : {};
+    var name = String(item.name || item.freelancerName || 'ProLinker professional');
+    var match = Number(item.match !== undefined ? item.match : item.matchPercentage);
+    return {
+      id: String(item.id || item.responseId || 'response-' + (index + 1)),
+      name: name,
+      initials: item.initials || initials(name),
+      headline: String(item.headline || item.discipline || 'Professional'),
+      location: String(item.location || 'Op afstand'),
+      skills: Array.isArray(item.skills) ? item.skills.slice(0, 12) : [],
+      bio: String(item.bio || item.summary || ''),
+      focus: String(item.focus || ''),
+      experience: Array.isArray(item.experience) ? item.experience.slice(0, 12) : [],
+      cvFile: normalizeCvDocument(item.cvFile || item.cvDocument),
+      rating: Number.isFinite(Number(item.rating)) ? Math.max(0, Math.min(5, Math.round(Number(item.rating)))) : 0,
+      branche: String(item.branche || item.industry || ''),
+      hours: String(item.hours || item.hoursPerWeek || ''),
+      match: Number.isFinite(match) ? Math.max(0, Math.min(100, Math.round(match))) : null,
+      channel: String(item.channel || '').toLowerCase() === 'whatsapp' ? 'whatsapp' : 'platform',
+      preview: String(item.preview || item.message || ''),
+      respondedAt: item.respondedAt || item.createdAt || '',
+      status: normalizeResponseStatus(item.status),
+      rateLabel: String(item.rateLabel || item.rate || ''),
+      availability: String(item.availability || ''),
+      avatarUrl: safeHref(item.avatarUrl || item.pictureUrl, '')
+    };
+  }
+
+  function normalizeAssignmentResponses(payload, session, assignment) {
+    payload = isPlainObject(payload) ? payload : {};
+    var list = Array.isArray(payload) ? payload : (Array.isArray(payload.items) ? payload.items : (Array.isArray(payload.responses) ? payload.responses : []));
+    var items = list.map(normalizeAssignmentResponse);
+    var stats = isPlainObject(payload.stats) ? payload.stats : {};
+    var whatsapp = items.filter(function (item) { return item.channel === 'whatsapp'; }).length;
+    var best = items.reduce(function (result, item) { return item.match !== null && (result === null || item.match > result.match) ? item : result; }, null);
+    return {
+      stats: {
+        sent: Math.max(items.length, Math.floor(finiteNumber(stats.sent, finiteNumber(stats.instantMatchSent, items.length)))),
+        views: Math.max(0, Math.floor(finiteNumber(stats.views, 0))),
+        whatsapp: Math.max(0, Math.floor(finiteNumber(stats.whatsapp, whatsapp))),
+        platform: Math.max(0, Math.floor(finiteNumber(stats.platform, items.length - whatsapp))),
+        bestMatch: best ? best.match : null,
+        bestMatchName: best ? best.name : ''
+      },
+      items: items,
+      updatedAt: payload.updatedAt || new Date().toISOString()
+    };
+  }
+
+  async function listAssignmentResponses(id, options) {
+    options = options || {};
+    var session = activeSession('client');
+    var target = requiredId(id, 'Opdracht-id');
+    if (configured.baseUrl) return normalizeAssignmentResponses(normalizePayload(await request('assignmentResponses', { params: { id: target }, signal: options.signal })), session);
+    var repository = readRepository(session);
+    var assignment = repository.assignments.find(function (item) { return item.id === target; });
+    if (!assignment) throw new ProLinkerError('Opdracht niet gevonden.', { code: 'NOT_FOUND', status: 404 });
+    if (!isPlainObject(repository.assignmentResponses)) repository.assignmentResponses = {};
+    if (!isPlainObject(repository.assignmentResponses[target])) {
+      repository.assignmentResponses[target] = seedAssignmentResponses(session, assignment);
+      writeRepository(session, repository);
+    } else {
+      var bucket = repository.assignmentResponses[target];
+      if (bucket.seedVersion !== 2) {
+        var fresh = seedAssignmentResponses(session, assignment);
+        var previousItems = Array.isArray(bucket.items) ? bucket.items : [];
+        fresh.items.forEach(function (item) {
+          var previous = previousItems.find(function (entry) { return entry.id === item.id; });
+          if (previous && previous.status) item.status = normalizeResponseStatus(previous.status);
+        });
+        repository.assignmentResponses[target] = fresh;
+        writeRepository(session, repository);
+      }
+    }
+    return normalizeAssignmentResponses(repository.assignmentResponses[target], session, assignment);
+  }
+
+  async function updateAssignmentResponseStatus(id, responseId, status, options) {
+    options = options || {};
+    var session = activeSession('client');
+    var target = requiredId(id, 'Opdracht-id');
+    var response = requiredId(responseId, 'Reactie-id');
+    var next = String(status || '').trim().toLowerCase();
+    if (['new', 'shortlisted', 'rejected'].indexOf(next) < 0) throw new ProLinkerError('Ongeldige reactiestatus.', { code: 'VALIDATION_ERROR' });
+    if (configured.baseUrl) return normalizePayload(await request('assignmentResponse', { method: 'PATCH', params: { id: target, responseId: response }, body: { status: next }, signal: options.signal }));
+    var repository = readRepository(session);
+    var bucket = isPlainObject(repository.assignmentResponses) ? repository.assignmentResponses[target] : null;
+    var items = bucket && Array.isArray(bucket.items) ? bucket.items : [];
+    var item = items.find(function (entry) { return entry.id === response; });
+    if (!item) throw new ProLinkerError('Reactie niet gevonden.', { code: 'NOT_FOUND', status: 404 });
+    item.status = next;
+    writeRepository(session, repository);
+    return normalizeAssignmentResponse(item, 0);
+  }
+
+  async function ensureConversation(input, options) {
+    options = options || {};
+    input = isPlainObject(input) ? input : {};
+    var session = activeSession();
+    var sender = String(input.sender || input.name || '').trim();
+    if (!sender) throw new ProLinkerError('Een naam is verplicht om een gesprek te openen.', { code: 'VALIDATION_ERROR' });
+    if (configured.baseUrl) {
+      var threads = await listMessages({ signal: options.signal });
+      var existing = threads.find(function (thread) { return thread.sender.toLowerCase() === sender.toLowerCase(); });
+      return existing || null;
+    }
+    var repository = readRepository(session);
+    var found = repository.messages.find(function (thread) { return String(thread.sender || '').toLowerCase() === sender.toLowerCase(); });
+    if (found && ((!found.avatarUrl && input.avatarUrl) || (!found.assignmentId && input.assignmentId))) {
+      if (!found.avatarUrl && input.avatarUrl) found.avatarUrl = safeHref(input.avatarUrl, '');
+      if (!found.assignmentId && input.assignmentId) { found.assignmentId = String(input.assignmentId); found.assignmentTitle = String(input.assignmentTitle || found.assignmentTitle || ''); }
+      writeRepository(session, repository);
+    }
+    if (!found) {
+      found = {
+        id: 'msg-' + hashString(accountId(session) + '|' + sender),
+        sender: sender,
+        avatarUrl: safeHref(input.avatarUrl, ''),
+        assignmentId: String(input.assignmentId || ''),
+        assignmentTitle: String(input.assignmentTitle || ''),
+        subject: String(input.subject || 'Reactie op je opdracht').slice(0, 160),
+        preview: String(input.preview || '').slice(0, 280),
+        unread: false,
+        archived: false,
+        at: input.at || new Date().toISOString(),
+        messages: input.preview ? [{ id: 'seed-' + hashString(sender + '|' + input.preview), sender: sender, direction: 'incoming', text: String(input.preview).slice(0, 2000), at: input.at || new Date().toISOString(), read: true, channel: String(input.channel || '').toLowerCase() === 'platform' ? 'platform' : 'whatsapp' }] : []
+      };
+      repository.messages.unshift(found);
+      writeRepository(session, repository);
+    }
+    return normalizeThread(found, session);
+  }
+
   function normalizeThread(item, session) {
     item = isPlainObject(item) ? item : {};
     var id = String(item.id || 'msg-' + hashString(item.subject || item.sender || 'message'));
     var sender = String(item.sender || 'ProLinker');
     var entries = (Array.isArray(item.messages) ? item.messages : []).map(function (entry, index) {
       entry = isPlainObject(entry) ? entry : {};
+      var outgoing = entry.direction === 'outgoing';
+      var at = entry.at || item.at || new Date().toISOString();
+      var delivery = String(entry.deliveryStatus || entry.messageStatus || '').toLowerCase();
+      if (['sent', 'delivered', 'read'].indexOf(delivery) < 0) {
+        var ageMs = Date.now() - new Date(at).getTime();
+        delivery = outgoing ? (Number.isFinite(ageMs) && ageMs > 3600000 ? 'read' : 'delivered') : '';
+      }
       return {
         id: String(entry.id || id + '-' + (index + 1)),
-        sender: String(entry.sender || (entry.direction === 'outgoing' ? displayName(session) : sender)),
-        direction: entry.direction === 'outgoing' ? 'outgoing' : 'incoming',
+        sender: String(entry.sender || (outgoing ? displayName(session) : sender)),
+        direction: outgoing ? 'outgoing' : 'incoming',
         text: String(entry.text || ''),
-        at: entry.at || item.at || new Date().toISOString(),
-        read: entry.read !== false
+        at: at,
+        read: entry.read !== false,
+        channel: String(entry.channel || '').toLowerCase() === 'platform' ? 'platform' : 'whatsapp',
+        relayed: entry.relayed !== false,
+        deliveryStatus: delivery
       };
     });
+    entries.forEach(function (entry) { entry.sender = shortDisplayName(entry.sender); });
     return {
-      id: id, sender: sender, subject: String(item.subject || 'Bericht'), preview: String(item.preview || (entries.length ? entries[entries.length - 1].text : '')),
+      id: id, sender: shortDisplayName(sender), subject: String(item.subject || 'Bericht'), preview: String(item.preview || (entries.length ? entries[entries.length - 1].text : '')),
+      avatarUrl: safeHref(item.avatarUrl || item.avatar || item.senderAvatarUrl || item.pictureUrl, ''),
+      assignmentId: String(item.assignmentId || item.projectId || ''),
+      assignmentTitle: String(item.assignmentTitle || item.projectTitle || ''),
       unread: item.unread === true, archived: item.archived === true, at: item.at || (entries.length ? entries[entries.length - 1].at : new Date().toISOString()),
       href: item.href || ROUTES.messages + '?conversation=' + encodeURIComponent(id), messages: entries
     };
@@ -1088,13 +1625,15 @@
     var target = String(conversationId || '').trim();
     var body = String(text || '').trim();
     if (!target || !body || body.length > 4000) throw new ProLinkerError('Vul een bericht van maximaal 4000 tekens in.', { code: 'VALIDATION_ERROR' });
+    var blocked = contactInfoMatches(body);
+    if (blocked > 0) throw new ProLinkerError('Geblokkeerd door de ProLinker-agent: deel geen telefoonnummers, e-mailadressen of links in de chat. Alle communicatie loopt via ProLinker totdat de samenwerking start.', { code: 'CONTACT_BLOCKED', details: { matches: blocked } });
     if (configured.baseUrl) return normalizePayload(await request('messageSend', { method: 'POST', params: { id: target }, body: { text: body }, signal: options.signal }));
     var repository = readRepository(session);
     var index = repository.messages.findIndex(function (thread) { return thread.id === target; });
     if (index < 0) throw new ProLinkerError('Gesprek niet gevonden.', { code: 'NOT_FOUND', status: 404 });
     var thread = repository.messages[index];
     if (!Array.isArray(thread.messages)) thread.messages = [];
-    var entry = { id: target + '-reply-' + hashString(body + new Date().toISOString()), sender: displayName(session), direction: 'outgoing', text: body, at: new Date().toISOString(), read: true };
+    var entry = { id: target + '-reply-' + hashString(body + new Date().toISOString()), sender: displayName(session), direction: 'outgoing', text: body, at: new Date().toISOString(), read: true, channel: 'whatsapp', relayed: true, deliveryStatus: 'delivered' };
     thread.messages.push(entry);
     thread.preview = body;
     thread.at = entry.at;
@@ -1664,7 +2203,7 @@
     return [
       { key: 'dashboard', label: 'Mijn Dashboard', description: 'Overzicht en activiteit', href: ROUTES.dashboard, icon: '\u25a3', badgeText: '' },
       { key: 'network', label: 'Mijn Netwerk', description: 'Connecties en uitnodigingen', href: ROUTES.network, icon: '\u2723', badgeText: '' },
-      { key: 'assignments', label: 'Mijn Opdrachten', description: safeRole === 'client' ? 'Plaatsingen en reacties' : 'Sollicitaties en samenwerkingen', href: ROUTES.assignments + '?role=' + safeRole, icon: '\u25a4', badgeText: '' },
+      { key: 'assignments', label: safeRole === 'client' ? 'Mijn Opdrachten' : 'Mijn Sollicitaties', description: safeRole === 'client' ? 'Plaatsingen en reacties' : 'Sollicitaties en samenwerkingen', href: ROUTES.assignments + '?role=' + safeRole, icon: '\u25a4', badgeText: '' },
       { key: 'messages', label: 'Mijn Berichten', description: 'Gesprekken en updates', href: ROUTES.messages, icon: '\u25b1', badgeText: unreadText },
       { key: 'profile', label: 'Mijn Profiel', description: safeRole === 'client' ? 'Account- en organisatieprofiel' : 'CV, expertise en portfolio', href: safeRole === 'client' ? ROUTES.clientProfile : ROUTES.freelancerProfile, icon: '\u25ce', badgeText: profileText },
       { key: 'earnings', label: 'Mijn Transacties', description: 'Betalingen, uitbetalingen en referrals', href: ROUTES.earnings, icon: '\u25cc', badgeText: '' },
@@ -1727,14 +2266,20 @@
     network: '{ currentUser, members[], invitations[], outbound[], totals, updatedAt }',
     member: '{ id, name, initials, headline, location, availability, mutual, skills[], status, profileHref }',
     assignment: '{ id, title, status, archived, href, match?, responses?, company? }',
-    messageThread: '{ id, sender, subject, preview, unread, archived, at, href, messages[] }',
-    messageEntry: '{ id, sender, direction:"incoming|outgoing", text, at, read }',
+    assignmentResponses: '{ stats:{ sent, views, whatsapp, platform, bestMatch, bestMatchName }, items:assignmentResponse[], updatedAt }',
+    assignmentResponse: '{ id, name, initials, headline, location, skills[], bio, focus, experience[], cvFile:cvDocument, rating, branche, hours, avatarUrl, match, channel:"whatsapp|platform", preview, respondedAt, status:"new|shortlisted|rejected", rateLabel, availability }',
+    cvRedaction: '{ text, redactions, provider, preview } - alle cv-weergaven en -uploads horen door cv.redact te gaan zodat contactgegevens, volledige namen en externe links afgeschermd blijven',
+    cvDocument: '{ id, fileName, size, uploadedAt, status:"approved|rejected|scanning", redactions, text } - alleen het door AI goedgekeurde, geanonimiseerde document wordt bewaard en getoond; het origineel verlaat de browser niet',
+    messageThread: '{ id, sender, avatarUrl, assignmentId, assignmentTitle, subject, preview, unread, archived, at, href, messages[] } - sender is altijd de contactpersoon (voornaam + initiaal) met persoonlijke foto, nooit een bedrijfsnaam of logo',
+    messageEntry: '{ id, sender, direction:"incoming|outgoing", text, at, read, channel:"whatsapp|platform", relayed, deliveryStatus:"sent|delivered|read" } - de agent bezorgt alles via WhatsApp; deliveryStatus komt uit WhatsApp status-webhooks (read alleen als de ontvanger leesbevestigingen aan heeft); contactgegevens worden geblokkeerd (CONTACT_BLOCKED)',
     settings: '{ language, notifications:{ whatsapp, matches, messages, applicationUpdates, referralUpdates }, privacy:{ searchable, contactable, location, remotePreference } }',
     opportunityList: '{ items:opportunity[], total, nextCursor }',
     opportunity: '{ id, title, summary, description, company, source, opportunityType, relevance, remote, locationLabel, locationKey, country, latitude, longitude, hoursMin, hoursMax, rateLabel, postedAt, postedHoursAgo, closesAt, startAt, durationWeeks, tags[], reasons[], saved, hidden, applicationStatus }',
     applicationList: '{ items:application[], total, nextCursor }',
     application: '{ id, opportunityId, status, createdAt }',
     freelancerList: '{ items:member[], total, nextCursor }',
+    transactionList: '{ balance:{ currency, available, bonus, usdRate }, items:transaction[] }',
+    transaction: '{ id, at, title, subtitle?, infoLabel?, infoHref?, type:"deposit|transfer_in|payout", status:"pending|processed|failed", amount, fee, vatRate, vat, total, direction:"in|out", payable }',
     referralSummary: '{ currency, rewardRate, availableAmount, pendingAmount, paidAmount, totalEarned, referredCount, convertedCount, shareUrl, referrals[] }',
     referralLink: '{ url, shareId, entityType:"project|opportunity|profile|general", entityId?, channel, campaign }'
   });
@@ -1758,14 +2303,15 @@
     dashboard: Object.freeze({ get: getDashboard, refresh: function (options) { return getDashboard(Object.assign({}, options || {}, { refresh: true })); } }),
     network: Object.freeze({ list: listNetwork, refresh: function (options) { return listNetwork(Object.assign({}, options || {}, { refresh: true })); }, accept: acceptInvitation, reject: rejectInvitation, remove: removeConnection, invite: inviteNetwork, whatsappLink: whatsappInviteLink }),
     profiles: Object.freeze({ get: getProfile, update: updateProfile }),
-    assignments: Object.freeze({ list: listAssignments, get: getAssignment, updateStatus: updateAssignmentStatus }),
-    messages: Object.freeze({ list: listMessages, get: getMessage, send: sendMessage, markRead: markMessageRead, archive: function (id, options) { return setMessageArchive(id, true, options); }, restore: function (id, options) { return setMessageArchive(id, false, options); } }),
-    earnings: Object.freeze({ get: getEarnings }),
+    assignments: Object.freeze({ list: listAssignments, get: getAssignment, updateStatus: updateAssignmentStatus, responses: listAssignmentResponses, updateResponseStatus: updateAssignmentResponseStatus }),
+    messages: Object.freeze({ list: listMessages, get: getMessage, send: sendMessage, markRead: markMessageRead, ensure: ensureConversation, archive: function (id, options) { return setMessageArchive(id, true, options); }, restore: function (id, options) { return setMessageArchive(id, false, options); } }),
+    earnings: Object.freeze({ get: getEarnings, transactions: listTransactions }),
     settings: Object.freeze({ get: getSettings, update: updateSettings }),
     opportunities: Object.freeze({ list: listOpportunities, get: getOpportunity, save: saveOpportunity, unsave: unsaveOpportunity, hide: hideOpportunity }),
     applications: Object.freeze({ create: createApplication, list: listApplications }),
     freelancers: Object.freeze({ search: searchFreelancers }),
     projects: Object.freeze({ create: createProject, invite: inviteProjectProfessional }),
+    cv: Object.freeze({ redact: redactCv, upload: uploadCvDocument, get: getCvDocument, open: openCvDocument, viewerHtml: cvDocumentHtml }),
     referrals: Object.freeze({ getSummary: getReferralSummary, createLink: createReferralLink, track: trackReferralEvent, shareUrls: referralShareUrls, copy: copyReferralLink })
   });
   installHeaderBrandingGuard();

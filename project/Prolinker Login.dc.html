@@ -7,6 +7,7 @@
 <script src="./prolinker-account-menu.js"></script>
 <script src="./prolinker-signup-menu.js"></script>
 <script src="./support.js"></script>
+<script src="./prolinker-footer.js"></script>
 </head>
 <body>
 <x-dc>
@@ -128,6 +129,13 @@
   .plk-auth-provider-linkedin:hover { background: #066b95; }
   .plk-auth-provider-mark { width: 20px; font-size: 19px; font-weight: 800; line-height: 1; text-align: center; }
   .plk-auth-whatsapp-mark { width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .plk-auth-test { width: 100%; margin-top: 18px; padding: 15px; border: 1px dashed var(--plk-line,#DCDFE2); border-radius: 8px; background: var(--plk-panel,#ECEEF0); }
+  .plk-auth-test-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--plk-text,#152431); font-size: 12px; font-weight: 800; }
+  .plk-auth-test-heading span:last-child { color: var(--plk-faint,#8C8E8F); font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .plk-auth-test-copy { margin: 5px 0 12px; color: var(--plk-muted,#424444); font-size: 11px; line-height: 1.45; }
+  .plk-auth-test-presets { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+  .plk-auth-test-preset { min-height: 38px; padding: 0 9px; border: 1px solid #2F5B85; border-radius: 4px; background: #2F5B85; color: #fff; font: inherit; font-size: 10.5px; font-weight: 700; cursor: pointer; }
+  .plk-auth-test-preset:hover { background: #24476A; border-color: #24476A; color: #fff; }
   .plk-auth-mode-links { width: 100%; margin: 17px 0 0; color: var(--plk-muted,#424444); font-size: 10.5px; line-height: 1.55; text-align: center; }
   .plk-auth-mode-link { min-height: 28px; padding: 2px 1px; border: 0; background: transparent; color: #2F5B85; font: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
   .plk-auth-terms { max-width: none !important; text-align: left !important; }
@@ -171,8 +179,7 @@
 
 <div class="plk-auth-page plk-theme-page {{ authModeClass }}" style="min-height: 100vh; min-height: 100dvh; background: radial-gradient(58% 44% at 50% 4%, var(--glow,rgba(47,91,133,0.055)), rgba(47,91,133,0) 66%), var(--bg,#FFFFFF); color: var(--text,#152431); font-family: {{ fontStack }}; display: flex; flex-direction: column;">
 
-  <header class="plk-auth-header plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
-    <a class="plk-auth-brand plk-brand plk-home-brand plk-focusable plk-public-brand" href="Prolinker Homepage.dc.html" aria-label="ProLinker startpagina" style="display: inline-flex; align-items: center; min-height: 100px;"><img class="plk-brand-mark" src="assets/prolinker-mark.png" alt="ProLinker" style="display: block; width: 100px; height: 100px; object-fit: contain; filter: {{ logoFilter }};"></a>
+  <header class="plk-auth-header plk-home-header plk-public-header" style="display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 16px 28px; background: transparent; position: relative; z-index: 5;">
     <nav class="plk-auth-nav plk-glass-nav plk-public-nav" aria-label="Hoofdnavigatie" style="display: flex; align-items: center; gap: 8px; padding: 6px 8px; background: var(--glass,rgba(255,255,255,0.82)); border: 1px solid var(--border,#DCDFE2); border-radius: 10px; position: static; z-index: 30;">
       <sc-if value="{{ anonymous }}" hint-placeholder-val="true">
       <div class="plk-auth-menu plk-public-menu-wrap" style="position: relative;">
@@ -181,7 +188,7 @@
           <div onClick="{{ onCloseMenu }}" style="position: fixed; inset: 0; z-index: 35;"></div>
           <div role="menu" aria-label="{{ t.navMenu }}" style="position: absolute; right: 0; top: 46px; z-index: 40; width: 248px; background: var(--surface,#fff); border: 1px solid var(--border,#DCDFE2); border-radius: 14px; box-shadow: 0 24px 60px -20px rgba(11,17,25,0.4); padding: 8px;">
             <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="7">
-              <a class="plk-menu-link plk-public-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{ accent }}; flex-shrink: 0;"></span>{{ mi.label }}</a>
+              <a class="plk-menu-link plk-public-menu-link" role="menuitem" href="{{ mi.href }}" style="display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text,#152431); cursor: pointer;">{{ mi.label }}</a>
             </sc-for>
             <div style="height: 1px; background: var(--hairline,#ECEEF0); margin: 7px 4px;"></div>
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint,#8C8E8F); padding: 4px 12px 3px;">{{ t.settings }}</div>
@@ -261,6 +268,16 @@
                 <input class="plk-auth-input" id="plk-auth-email" name="emailAddress" type="email" inputMode="email" autocomplete="email" enterKeyHint="next" value="{{ emailVal }}" onInput="{{ onEmailInput }}" ref="{{ emailRef }}" aria-invalid="{{ emailInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.emailPh }}">
               </div>
             </sc-if>
+            <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+              <div class="plk-auth-field">
+                <label class="plk-auth-label" for="plk-auth-login-email">{{ t.emailLabel }} *</label>
+                <input class="plk-auth-input" id="plk-auth-login-email" name="loginEmail" type="email" inputMode="email" autocomplete="username" enterKeyHint="next" value="{{ emailVal }}" onInput="{{ onEmailInput }}" ref="{{ emailRef }}" aria-invalid="{{ emailInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.emailPh }}">
+              </div>
+              <div class="plk-auth-field">
+                <label class="plk-auth-label" for="plk-auth-login-password">{{ t.passwordLabel }} *</label>
+                <input class="plk-auth-input" id="plk-auth-login-password" name="loginPassword" type="password" autocomplete="current-password" enterKeyHint="next" value="{{ passwordVal }}" onInput="{{ onPasswordInput }}" ref="{{ passwordRef }}" aria-invalid="{{ passwordInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.passwordPh }}">
+              </div>
+            </sc-if>
             <div class="plk-auth-field">
               <label class="plk-auth-label" for="plk-auth-contact">{{ t.contactLabel }} *</label>
               <input class="plk-auth-input" id="plk-auth-contact" name="phoneNumber" type="tel" inputMode="tel" autocomplete="tel" enterKeyHint="{{ contactEnterKey }}" value="{{ contactVal }}" onInput="{{ onContactInput }}" ref="{{ contactRef }}" aria-invalid="{{ contactInvalid }}" aria-describedby="plk-auth-errors" placeholder="{{ t.contactPh }}">
@@ -322,6 +339,17 @@
               <button class="plk-auth-provider plk-auth-provider-linkedin" type="button" disabled="{{ socialBusy }}" onClick="{{ onLinkedin }}"><span class="plk-auth-provider-mark" aria-hidden="true">in</span><span>{{ linkedinLabel }}</span></button>
             </div>
           </div>
+
+          <sc-if value="{{ showTestLogin }}" hint-placeholder-val="false">
+            <section class="plk-auth-test" aria-labelledby="plk-auth-test-heading">
+              <div class="plk-auth-test-heading" id="plk-auth-test-heading"><span>{{ t.testTitle }}</span><span>{{ t.testLocalOnly }}</span></div>
+              <p class="plk-auth-test-copy">{{ t.testCopy }}</p>
+              <div class="plk-auth-test-presets">
+                <button class="plk-auth-test-preset" type="button" onClick="{{ onTestFreelancer }}">{{ t.testFreelancer }}</button>
+                <button class="plk-auth-test-preset" type="button" onClick="{{ onTestClient }}">{{ t.testClient }}</button>
+              </div>
+            </section>
+          </sc-if>
 
           <sc-if value="{{ isLogin }}" hint-placeholder-val="true">
             <p class="plk-auth-mode-links">{{ t.noAccount }} <button class="plk-auth-mode-link" type="button" onClick="{{ onRegisterFreelancer }}">{{ t.createFreelancer }}</button> {{ t.orLabel }} <button class="plk-auth-mode-link" type="button" onClick="{{ onRegisterClient }}">{{ t.createClient }}</button></p>
@@ -414,6 +442,7 @@
   <footer class="plk-auth-footer" style="padding: 20px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--faint,#8C8E8F);">&copy; 2012&ndash;2026 ProLinker</footer>
 
 </div>
+<prolinker-footer></prolinker-footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860},&quot;startMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Register&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;fontPairing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Schibsted Grotesk&quot;,&quot;Geist&quot;,&quot;General Sans&quot;],&quot;default&quot;:&quot;Geist&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F5B85&quot;,&quot;options&quot;:[&quot;#2F5B85&quot;,&quot;#152431&quot;,&quot;#0E7C66&quot;,&quot;#C94F2D&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Brand&quot;}}">
 class Component extends DCLogic {
@@ -525,6 +554,39 @@ class Component extends DCLogic {
     const candidate = String(value || '').trim().toLowerCase();
     return /^[a-z0-9-]{4,48}$/.test(candidate) ? candidate : '';
   }
+  isPreviewRuntime() {
+    try {
+      if (window.location.protocol === 'file:') return true;
+      if (/^(?:localhost|127\.0\.0\.1|\[::1\]|::1)$/i.test(window.location.hostname || '')) return true;
+      if (window.ProLinkerApp && window.ProLinkerApp.getConfig && window.ProLinkerApp.getConfig().mode === 'local') return true;
+      return false;
+    } catch (e) { return false; }
+  }
+  testAccounts() {
+    return {
+      freelancer: { role: 'freelancer', id: 'test-freelancer', name: 'Sanne de Wit', firstName: 'Sanne', lastName: 'de Wit', email: 'freelancer@prolinker.test', destination: 'Prolinker Voor jou v2.dc.html' },
+      client: { role: 'client', id: 'test-client', name: 'Studio Noord', firstName: 'Mila', lastName: 'Jansen', companyName: 'Studio Noord', email: 'opdrachtgever@prolinker.test', destination: 'Prolinker Dashboard.dc.html' }
+    };
+  }
+  loginTestAccount(role) {
+    const t = this.strings();
+    if (!this.isPreviewRuntime()) { this.setState({ oauthError: t.testUnavailable }); return; }
+    const account = this.testAccounts()[role];
+    if (!account) { this.setState({ oauthError: t.testUnavailable }); return; }
+    const now = Date.now();
+    const profile = { firstName: account.firstName, lastName: account.lastName, name: account.name, email: account.email, companyName: account.companyName || '', source: 'local-test' };
+    const session = { version: 3, authenticated: true, channel: 'test', authProvider: 'test', id: account.id, userId: account.id, role: account.role, accountType: account.role, name: account.name, email: account.email, profile: profile, demo: true, testAccount: true, createdAt: now, expiresAt: new Date(now + (8 * 60 * 60 * 1000)).toISOString() };
+    try {
+      const cached = window.ProLinkerApp && window.ProLinkerApp.session && typeof window.ProLinkerApp.session.cache === 'function' ? window.ProLinkerApp.session.cache(session) : null;
+      if (!cached) {
+        localStorage.setItem('plk-auth-session', JSON.stringify(session));
+        localStorage.setItem('plk-user-role', account.role);
+        localStorage.setItem('plk-user-name', account.name);
+      }
+      window.dispatchEvent(new Event('plk-session-change'));
+    } catch (e) { this.setState({ oauthError: t.testUnavailable }); return; }
+    window.location.assign(account.destination);
+  }
   setRole(role) {
     if (role !== 'client' && role !== 'freelancer') return;
     this.setState({ role: role, touched: false, socialAttempted: false, oauthError: '' });
@@ -538,14 +600,14 @@ class Component extends DCLogic {
   strings() {
     const en = {
       loginTitle: 'Log in', registerTitle: 'Create your account', registerTitleFreelancer: 'Register as a freelancer', registerTitleClient: 'Register as a client',
-      loginSub: 'Log in securely with your WhatsApp number. No password needed.',
+      loginSub: 'Log in with your email and password, then confirm securely via WhatsApp.',
       registerSub: 'Complete your basic details and verify your WhatsApp number.',
       navMenu: 'Menu', navFreelancers: 'Freelancers', navJobs: 'Jobs', navHow: 'How it works', navPost: 'Post a job', navBlog: 'Blog', navCompanies: 'For companies', navLogin: 'Log in', navRegister: 'Sign up', navReferrals: 'Earn 2% with referrals', navBecomeFreelancer: 'Become a freelancer', navBecomeClient: 'Become a recruiter', settings: 'Settings', darkMode: 'Dark mode',
       switchToRegister: 'No account yet? Register', switchToLogin: 'Already have an account? Log in',
       roleLabel: 'What do you want to do?', roleClient: "I'm looking for freelancers", roleFreelancer: "I'm a freelancer",
       nameLabel: 'Full name', contactLabel: 'WhatsApp number', namePh: 'Full name', contactPh: '+1 202 555 0123',
       categoryLabel: 'Industry', industryLabel: 'Industry', categoryPh: 'Select an industry', addIndustryAria: 'Choose an industry', companyLabel: 'Company name', companyPh: 'Company name', firstNameLabel: 'First name', firstNamePh: 'First name', lastNameLabel: 'Last name', lastNamePh: 'Last name', emailLabel: 'Email', emailPh: 'Email address', passwordLabel: 'Password', passwordPh: 'At least 8 characters', passwordConfirmLabel: 'Repeat password', passwordConfirmPh: 'Repeat password', privacyNote: 'We never share your personal details with third parties', humanLabel: "I'm not a robot", humanHelper: 'Secure verification',
-      continueLogin: 'Log in with WhatsApp', continueRegister: 'Next', codeHint: 'Secure verification via WhatsApp',
+      continueLogin: 'Continue to WhatsApp verification', continueRegister: 'Next', codeHint: 'WhatsApp verification is mandatory',
       errContact: 'Enter an international WhatsApp number beginning with + or 00', errName: 'Enter your name', errRole: 'Choose how you want to use ProLinker', errCategory: 'Select your industry', errCompany: 'Enter your company name', errFirstName: 'Enter your first name', errLastName: 'Enter your last name', errNameLong: 'Keep your full name within 40 characters', errEmail: 'Enter a valid email address', errPassword: 'Use at least 8 characters for your password', errPasswordConfirm: 'The passwords do not match', errTerms: 'Accept the terms and privacy policy to continue', errHuman: 'Confirm that you are not a robot',
       safetyTitle: 'Stay safe', safetyPayment: 'Only accept payments through ProLinker so your work remains protected.', safetyPrivacy: 'Your personal details are never shared with third parties without permission.',
       clientSafetyTitle: 'Stay safe!', clientSafetyPayment: 'Only pay freelancers through ProLinker so payment protection is guaranteed.', clientSafetyPrivacy: 'Payments outside ProLinker violate your user agreement and may lead to legal action.',
@@ -563,18 +625,19 @@ class Component extends DCLogic {
       linkedinLogin: 'Log in with LinkedIn', linkedinRegister: 'Register with LinkedIn',
       facebookUser: 'Facebook user', linkedinUser: 'LinkedIn user',
       noAccount: 'No account yet?', createFreelancer: 'Create a freelancer account', createClient: 'Create a client account', haveAccount: 'Already have an account?', loginLink: 'Log in',
+      testTitle: 'Open a test account', testLocalOnly: 'Preview only', testCopy: 'Skip real login details and open either logged-in version immediately.', testFreelancer: 'Test as freelancer', testClient: 'Test as client', testUnavailable: 'Test login is available only from a local preview.',
       oauthConfigError: 'This login provider is not configured correctly.', oauthUnavailable: 'Social login is not connected yet.', oauthFailed: 'Login could not be completed. Please try again.', otpUnavailable: 'WhatsApp verification is temporarily unavailable. Please try again.',
     };
     const nl = {
       loginTitle: 'Inloggen', registerTitle: 'Account aanmaken', registerTitleFreelancer: 'Aanmelden als freelancer', registerTitleClient: 'Aanmelden als opdrachtgever',
-      loginSub: 'Log veilig in met je WhatsApp-nummer. Geen wachtwoord nodig.',
+      loginSub: 'Log in met je e-mail en wachtwoord en bevestig daarna veilig via WhatsApp.',
       registerSub: 'Vul je basisgegevens in en verifieer daarna je WhatsApp-nummer.',
       navMenu: 'Menu', navFreelancers: 'Freelancers', navJobs: 'Opdrachten', navHow: 'Hoe werkt het', navPost: 'Opdracht plaatsen', navBlog: 'Blog', navCompanies: 'Voor bedrijven', navLogin: 'Inloggen', navRegister: 'Aanmelden', navReferrals: 'Verdien 2% met referrals', navBecomeFreelancer: 'Freelancer worden', navBecomeClient: 'Recruiter worden', settings: 'Instellingen', darkMode: 'Donkere modus',
       switchToRegister: 'Nog geen account? Registreren', switchToLogin: 'Al een account? Inloggen',
       roleLabel: 'Wat wil je doen?', roleClient: 'Ik zoek freelancers', roleFreelancer: 'Ik ben freelancer',
       nameLabel: 'Volledige naam', contactLabel: 'Mobiel nummer', namePh: 'Volledige naam', contactPh: '+31 6 12345678',
       categoryLabel: 'Branche', industryLabel: 'Industrie', categoryPh: 'Selecteer een categorie', addIndustryAria: 'Industrie kiezen', companyLabel: 'Bedrijfsnaam', companyPh: 'Bedrijfsnaam', firstNameLabel: 'Voornaam', firstNamePh: 'Voornaam', lastNameLabel: 'Achternaam', lastNamePh: 'Achternaam', emailLabel: 'E-mail', emailPh: 'E-mailadres', passwordLabel: 'Wachtwoord', passwordPh: 'Minimaal 8 tekens', passwordConfirmLabel: 'Wachtwoord herhalen', passwordConfirmPh: 'Wachtwoord herhalen', privacyNote: 'Wij delen uw persoonlijke gegevens nooit met derden', humanLabel: 'Ik ben geen robot', humanHelper: 'Beveiligde controle',
-      continueLogin: 'Inloggen met WhatsApp', continueRegister: 'Volgende', codeHint: 'Veilige verificatie via WhatsApp',
+      continueLogin: 'Doorgaan naar WhatsApp-verificatie', continueRegister: 'Volgende', codeHint: 'WhatsApp-verificatie is verplicht',
       errContact: 'Vul een internationaal mobiel nummer in dat begint met + of 00', errName: 'Vul je naam in', errRole: 'Kies hoe je ProLinker wilt gebruiken', errCategory: 'Selecteer je branche', errCompany: 'Vul je bedrijfsnaam in', errFirstName: 'Vul je voornaam in', errLastName: 'Vul je achternaam in', errNameLong: 'Gebruik maximaal 40 tekens voor je volledige naam', errEmail: 'Vul een geldig e-mailadres in', errPassword: 'Gebruik minimaal 8 tekens voor je wachtwoord', errPasswordConfirm: 'De wachtwoorden komen niet overeen', errTerms: 'Ga akkoord met de voorwaarden en het privacybeleid', errHuman: 'Bevestig dat je geen robot bent',
       safetyTitle: 'Blijf veilig', safetyPayment: 'Ontvang betalingen alleen via ProLinker, zodat je veilig samenwerkt.', safetyPrivacy: 'Wij delen je persoonlijke gegevens nooit zonder toestemming met derden.',
       clientSafetyTitle: 'Blijf veilig!', clientSafetyPayment: 'Betaal freelancers alleen via ProLinker, zodat betalingsbescherming gegarandeerd is.', clientSafetyPrivacy: 'Betalingen buiten ProLinker om schenden je gebruikersovereenkomst en kunnen leiden tot juridische stappen.',
@@ -592,6 +655,7 @@ class Component extends DCLogic {
       linkedinLogin: 'Inloggen met LinkedIn', linkedinRegister: 'Registreren met LinkedIn',
       facebookUser: 'Facebook-gebruiker', linkedinUser: 'LinkedIn-gebruiker',
       noAccount: 'Nog geen account?', createFreelancer: 'Maak een account aan als freelancer', createClient: 'Account aanmaken als opdrachtgever', haveAccount: 'Al een account?', loginLink: 'Inloggen',
+      testTitle: 'Open een testaccount', testLocalOnly: 'Alleen preview', testCopy: 'Sla echte inloggegevens over en open direct een van de ingelogde versies.', testFreelancer: 'Test als freelancer', testClient: 'Test als opdrachtgever', testUnavailable: 'Testlogin werkt alleen in een lokale preview.',
       oauthConfigError: 'Deze loginprovider is niet juist ingesteld.', oauthUnavailable: 'Social login is nog niet gekoppeld.', oauthFailed: 'Inloggen is niet gelukt. Probeer het opnieuw.', otpUnavailable: 'WhatsApp-verificatie is tijdelijk niet beschikbaar. Probeer het opnieuw.',
     };
     return this.lang() === 'nl' ? nl : en;
@@ -680,8 +744,8 @@ class Component extends DCLogic {
     const lastNameOk = !isRegister || lastName.length >= 2;
     const nameLengthOk = !isRegister || fullName.length <= 40;
     const categoryOk = !isRegister || !!String(this.state.category || '').trim();
-    const emailOk = !isRegister || this.isEmail(this.state.email);
-    const passwordOk = !isRegister || String(this.state.password || '').length >= 8;
+    const emailOk = this.isEmail(this.state.email);
+    const passwordOk = String(this.state.password || '').length >= 8;
     const passwordConfirmOk = !isRegister || (passwordOk && this.state.passwordConfirm === this.state.password);
     const termsOk = !isRegister || this.state.termsAccepted === true;
     const companyNameOk = !isClientRegister || (companyName.length >= 2 && companyName.length <= 100);
@@ -723,7 +787,7 @@ class Component extends DCLogic {
       email: String(this.state.email || '').trim(),
       companyName: role === 'client' ? String(this.state.companyName || '').trim() : '',
       category: String(this.state.category || '').trim(),
-      password: this.state.mode === 'register' ? String(this.state.password || '') : ''
+      password: String(this.state.password || '')
     };
     this.setState({ socialBusy: 'whatsapp', oauthError: '', codeError: false });
     try {
@@ -1000,8 +1064,8 @@ class Component extends DCLogic {
     const lastNameOk = !isRegister || lastName.length >= 2;
     const nameLengthOk = !isRegister || [firstName, lastName].filter(Boolean).join(' ').length <= 40;
     const categoryOk = !isRegister || !!String(this.state.category || '').trim();
-    const emailOk = !isRegister || this.isEmail(this.state.email);
-    const passwordOk = !isRegister || String(this.state.password || '').length >= 8;
+    const emailOk = this.isEmail(this.state.email);
+    const passwordOk = String(this.state.password || '').length >= 8;
     const passwordConfirmOk = !isRegister || (passwordOk && this.state.passwordConfirm === this.state.password);
     const termsOk = !isRegister || this.state.termsAccepted === true;
     const companyNameOk = !isClientRegister || (companyName.length >= 2 && companyName.length <= 100);
@@ -1016,9 +1080,9 @@ class Component extends DCLogic {
       if (isRegister && !firstNameOk) errors.push(t.errFirstName);
       if (isRegister && !lastNameOk) errors.push(t.errLastName);
       if (isRegister && !nameLengthOk) errors.push(t.errNameLong);
-      if (isRegister && !emailOk) errors.push(t.errEmail);
+      if (!emailOk) errors.push(t.errEmail);
       if (!this.state.socialAttempted && !contactOk) errors.push(t.errContact);
-      if (isRegister && !this.state.socialAttempted && !passwordOk) errors.push(t.errPassword);
+      if (!this.state.socialAttempted && !passwordOk) errors.push(t.errPassword);
       if (isRegister && !this.state.socialAttempted && passwordOk && !passwordConfirmOk) errors.push(t.errPasswordConfirm);
       if (isRegister && !termsOk) errors.push(t.errTerms);
       if (isClientRegister && !humanOk) errors.push(t.errHuman);
@@ -1092,6 +1156,9 @@ class Component extends DCLogic {
       linkedinLabel: isRegister ? t.linkedinRegister : t.linkedinLogin,
       onFacebook: () => this.startSocialAuth('facebook'),
       onLinkedin: () => this.startSocialAuth('linkedin'),
+      showTestLogin: !isRegister && this.isPreviewRuntime(),
+      onTestFreelancer: () => this.loginTestAccount('freelancer'),
+      onTestClient: () => this.loginTestAccount('client'),
       onRoleClient: () => this.setRole('client'),
       onRoleFreelancer: () => this.setRole('freelancer'),
       roleClientRef: (el) => { this._roleClientButton = el; },
